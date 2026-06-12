@@ -139,7 +139,7 @@
 
 <div class="sidebar">
   <div class="sidebar-logo">
-    <a href="index.html">Show<span>One</span></a>
+    <a href="/">Show<span>One</span></a>
     <p>Espace Talent</p>
   </div>
   <div class="sidebar-avatar">
@@ -170,7 +170,7 @@
       <h1 id="topbarNom">Bonjour 👋</h1>
       <p>Voici un résumé de votre activité ShowOne.</p>
     </div>
-    <button class="btn-pro" onclick="window.location.href='paiement-talent.html'">⚡ Passer Pro — 4,99€/mois</button>
+    <button class="btn-pro" onclick="window.location.href='/paiement-talent'">⚡ Passer Pro — 4,99€/mois</button>
   </div>
 
   <div class="stats-grid">
@@ -185,7 +185,7 @@
       <h3>Plan Gratuit</h3>
       <p>Passez en Pro pour débloquer jusqu'à 10 vidéos</p>
     </div>
-    <button class="btn-upgrade-banner" onclick="window.location.href='paiement-talent.html'">⚡ Upgrader</button>
+    <button class="btn-upgrade-banner" onclick="window.location.href='/paiement-talent'">⚡ Upgrader</button>
   </div>
 
   <div class="content-grid">
@@ -388,7 +388,7 @@
       const diffH=Math.round((Date.now()-new Date(m.created_at))/36e5);
       const temps=diffH<1?'À l\'instant':diffH<24?`Il y a ${diffH}h`:diffH<48?'Hier':`Il y a ${Math.round(diffH/24)}j`;
       const initiale=(m.objet||'R')[0].toUpperCase();
-      return `<div class="msg-item ${!m.lu?'unread':''}" onclick="cacherBadge();window.location.href='messagerie.html'">
+      return `<div class="msg-item ${!m.lu?'unread':''}" onclick="cacherBadge();window.location.href='/messagerie'">
         <div class="msg-avatar">${initiale}</div>
         <div style="flex:1;min-width:0;">
           <div style="display:flex;justify-content:space-between;"><div class="msg-name">${m.objet||'Message'}</div><div class="msg-time">${temps}</div></div>
@@ -611,7 +611,7 @@
   function seDeconnecter() {
     localStorage.removeItem('showone_token');
     localStorage.removeItem('showone_user');
-    window.location.href='connexion.html';
+    window.location.href='/connexion';
   }
 
   chargerDonnees();

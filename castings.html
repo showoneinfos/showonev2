@@ -118,7 +118,7 @@
 <body>
 
 <nav>
-  <a href="index.html" class="logo">Show<span>One</span></a>
+  <a href="/" class="logo">Show<span>One</span></a>
   <div id="navRight">
     <a href="connexion.html" class="btn-outline">Connexion</a>
     <a href="inscription.html" class="btn-fill">Rejoindre</a>
@@ -337,7 +337,7 @@ function afficherVide() {
 
 function ouvrirModal(castingId, titre, categorie, ville) {
   const us = localStorage.getItem('showone_user');
-  if (!us) { if (confirm('Vous devez être connecté pour postuler. Se connecter ?')) window.location.href='connexion.html'; return; }
+  if (!us) { if (confirm('Vous devez être connecté pour postuler. Se connecter ?')) window.location.href='/connexion'; return; }
   const u = JSON.parse(us);
   if (u.type_compte === 'recruteur') { alert('Seuls les talents peuvent postuler.'); return; }
   castingSelectionne = castingId;
@@ -354,7 +354,7 @@ function fermerModal() { document.getElementById('modalOverlay').classList.remov
 
 async function envoyerCandidature() {
   const token = localStorage.getItem('showone_token'); const userStr = localStorage.getItem('showone_user');
-  if (!token || !userStr) { window.location.href='connexion.html'; return; }
+  if (!token || !userStr) { window.location.href='/connexion'; return; }
   const message = document.getElementById('msgCandidature').value.trim();
   if (!message) { alert('Veuillez écrire un message !'); return; }
   const btn = document.querySelector('.btn-send'); btn.textContent='Envoi…'; btn.disabled=true;
@@ -363,7 +363,7 @@ async function envoyerCandidature() {
     const profRes = await fetch(`${SUPABASE_URL}/rest/v1/profils_talents?utilisateur_id=eq.${userObj.id}&select=id`,{headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`}});
     const profData = await profRes.json();
     const talentId = profData[0]?.id;
-    if (!talentId) { alert('Vous devez être inscrit comme talent !'); window.location.href='inscription.html'; return; }
+    if (!talentId) { alert('Vous devez être inscrit comme talent !'); window.location.href='/inscription'; return; }
     await fetch(`${SUPABASE_URL}/rest/v1/candidatures`,{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`,'Prefer':'return=minimal'},body:JSON.stringify({casting_id:castingSelectionne,talent_id:talentId,message,statut:'en_attente'})});
     fermerModal();
     const notif=document.createElement('div'); notif.style.cssText='position:fixed;bottom:24px;right:24px;background:#10b981;color:#fff;padding:14px 20px;border-radius:10px;font-weight:700;font-size:13px;z-index:9999;'; notif.textContent='✅ Candidature envoyée !'; document.body.appendChild(notif); setTimeout(()=>notif.remove(),4000);

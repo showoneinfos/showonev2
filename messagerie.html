@@ -109,7 +109,7 @@
 
 <!-- SIDEBAR -->
 <div class="sidebar">
-  <div class="sidebar-logo"><a href="index.html">Show<span>One</span></a></div>
+  <div class="sidebar-logo"><a href="/">Show<span>One</span></a></div>
   <div class="sidebar-avatar">
     <div class="side-av" id="sideAv">?</div>
     <div><div class="side-nom" id="sideNom">—</div><div class="side-role" id="sideRole">—</div></div>
@@ -193,7 +193,7 @@ async function post(url, body) {
 async function init() {
   token = localStorage.getItem('showone_token');
   const us = localStorage.getItem('showone_user');
-  if (!token || !us) { location.href='connexion.html'; return; }
+  if (!token || !us) { location.href='/connexion'; return; }
   const u = JSON.parse(us); role = u.type_compte||'talent';
   document.getElementById('sideNom').textContent = ((u.prenom||'')+' '+(u.nom||'')).trim()||u.email;
   document.getElementById('sideRole').textContent = role==='recruteur'?'Recruteur':'Talent';
@@ -293,7 +293,7 @@ async function envoyerNouveauMsg() {
   await charger(); const el=document.querySelector(`.conv-item[data-r="${profilId}"][data-t="${tId}"]`); if(el) setTimeout(()=>ouvrir(el),300);
 }
 
-function deconnecter() { localStorage.removeItem('showone_token'); localStorage.removeItem('showone_user'); location.href='connexion.html'; }
+function deconnecter() { localStorage.removeItem('showone_token'); localStorage.removeItem('showone_user'); location.href='/connexion'; }
 
 document.getElementById('modalOv').addEventListener('click',function(e){if(e.target===this)fermerModal();});
 init();

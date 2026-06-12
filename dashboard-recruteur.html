@@ -205,7 +205,7 @@
 <!-- SIDEBAR -->
 <div class="sidebar">
   <div class="sidebar-logo">
-    <a href="index.html">Show<span>One</span></a>
+    <a href="/">Show<span>One</span></a>
     <p>Espace Recruteur</p>
   </div>
   <div class="sidebar-avatar">
@@ -513,7 +513,7 @@ function voirCandidatures() {
     document.getElementById('upgradeOverlay').classList.add('open');
     return;
   }
-  window.location.href='castings.html';
+  window.location.href='/castings';
 }
 
 async function sendMsg() {
@@ -547,7 +547,7 @@ async function lancerPaiementRecruteur() {
 }
 
 function seDeconnecter() {
-  localStorage.removeItem('showone_token'); localStorage.removeItem('showone_user'); window.location.href='connexion.html';
+  localStorage.removeItem('showone_token'); localStorage.removeItem('showone_user'); window.location.href='/connexion';
 }
 
 document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
