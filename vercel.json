@@ -9,6 +9,9 @@
     { "src": "/dashboard-recruteur", "dest": "/dashboard-recruteur.html" },
     { "src": "/castings", "dest": "/castings.html" },
     { "src": "/profil-talent", "dest": "/profil-talent.html" },
-    { "src": "/messagerie", "dest": "/messagerie.html" }
+    { "src": "/messagerie", "dest": "/messagerie.html" },
+    { "src": "/contact", "dest": "/contact.html" },
+    { "src": "/legal", "dest": "/legal.html" },
+    { "src": "/qui-sommes-nous", "dest": "/qui-sommes-nous.html" }
   ]
 }
