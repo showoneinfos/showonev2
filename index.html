@@ -10,7 +10,7 @@
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; overflow: hidden; }
+    html, body { height: 100%; }
     body { font-family: 'Inter', sans-serif; background: #fff; color: #111; display: flex; }
 
     /* SIDEBAR */
@@ -18,7 +18,7 @@
       width: 200px; border-right: 1px solid #f0f0f0;
       display: flex; flex-direction: column;
       padding: 14px 10px; flex-shrink: 0; height: 100vh;
-      position: fixed; left: 0; top: 0; bottom: 0; z-index: 50; background: #fff;
+      position: fixed; left: 0; top: 0; z-index: 50; background: #fff;
     }
     .logo { font-size: 19px; font-weight: 900; color: #111; letter-spacing: -0.5px; padding: 4px 8px 12px; text-decoration: none; display: block; }
     .logo span { color: #E8383A; }
@@ -28,94 +28,113 @@
     .nav-item { display: flex; align-items: center; gap: 9px; padding: 9px 8px; border-radius: 8px; font-size: 13px; font-weight: 500; color: #888; cursor: pointer; text-decoration: none; transition: all 0.1s; margin-bottom: 2px; }
     .nav-item:hover { background: #f5f5f5; color: #111; }
     .nav-item.active { color: #111; font-weight: 700; background: #f5f5f5; }
-    .nav-badge { margin-left: auto; background: #E8383A; color: #fff; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 100px; }
-
-    /* CONNECTE */
     #side-deconnecte { display: flex; flex-direction: column; }
-    #side-connecte { display: none; flex-direction: column; gap: 2px; }
+    #side-connecte { display: none; flex-direction: column; }
     .side-user { display: flex; align-items: center; gap: 8px; padding: 8px; margin-bottom: 8px; }
     .side-avatar { width: 32px; height: 32px; border-radius: 50%; background: #111; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; flex-shrink: 0; }
     .side-prenom { font-size: 13px; font-weight: 700; color: #111; }
     .side-role { font-size: 10px; color: #bbb; }
-    .btn-deco { padding: 7px; border-radius: 7px; background: transparent; color: #bbb; border: 1px solid #f0f0f0; font-size: 11px; cursor: pointer; width: 100%; margin-top: 8px; }
 
     /* MAIN */
-    .main { margin-left: 200px; flex: 1; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-
-    /* TABS */
-    .tabs { display: flex; border-bottom: 1px solid #f0f0f0; flex-shrink: 0; }
-    .tab { flex: 1; padding: 13px; text-align: center; font-size: 13px; font-weight: 600; color: #bbb; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.15s; }
-    .tab.active { color: #111; border-bottom-color: #111; }
+    .main { margin-left: 200px; flex: 1; overflow-y: auto; height: 100vh; }
 
     /* FILTRES */
-    .cats { padding: 8px 14px; display: flex; gap: 6px; overflow-x: auto; border-bottom: 1px solid #f0f0f0; flex-shrink: 0; }
+    .cats {
+      padding: 10px 16px; display: flex; gap: 6px;
+      overflow-x: auto; border-bottom: 1px solid #f0f0f0;
+      position: sticky; top: 0; background: #fff; z-index: 10;
+    }
     .cats::-webkit-scrollbar { display: none; }
-    .chip { padding: 5px 14px; border-radius: 100px; font-size: 11px; font-weight: 600; white-space: nowrap; border: 1px solid #e8e8e8; color: #888; cursor: pointer; background: #fff; flex-shrink: 0; transition: all 0.1s; }
+    .chip { padding: 5px 14px; border-radius: 100px; font-size: 11px; font-weight: 600; white-space: nowrap; border: 1px solid #e8e8e8; color: #888; cursor: pointer; background: #fff; flex-shrink: 0; }
     .chip:hover { border-color: #bbb; }
     .chip.active { background: #111; border-color: #111; color: #fff; }
 
-    /* FEED */
-    .feed { flex: 1; overflow-y: auto; }
-    .feed::-webkit-scrollbar { width: 3px; }
-    .feed::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 2px; }
-
-    /* VIDEO CARD */
-    .video-card {
-      position: relative; height: 260px; border-bottom: 1px solid #f0f0f0;
-      overflow: hidden; cursor: pointer; flex-shrink: 0;
-      display: flex;
+    /* SECTION HEADER */
+    .section-header {
+      padding: 20px 16px 12px;
+      display: flex; align-items: baseline; gap: 10px;
     }
-    .video-thumb {
-      width: 180px; flex-shrink: 0; background: #f0f0f0;
+    .section-title { font-size: 16px; font-weight: 900; color: #111; letter-spacing: -0.3px; }
+    .section-count { font-size: 12px; color: #bbb; font-weight: 500; }
+
+    /* GRILLE 3 COLONNES */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+      padding: 0 3px 3px;
+    }
+
+    /* CARD THUMBNAIL */
+    .thumb-card {
+      position: relative; aspect-ratio: 9/16;
+      overflow: hidden; cursor: pointer;
+      background: #f0f0f0;
+    }
+    .thumb-card img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block; transition: transform 0.2s;
+    }
+    .thumb-card:hover img { transform: scale(1.03); }
+    .thumb-bg {
+      width: 100%; height: 100%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 32px; font-weight: 900; color: rgba(0,0,0,0.08);
-      position: relative; overflow: hidden;
+      font-size: 28px; font-weight: 900; color: rgba(0,0,0,0.08);
     }
-    .video-thumb img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
-    .video-thumb video { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; display: none; }
-    .play-btn {
-      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    .thumb-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 50%);
+    }
+    .thumb-play {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
       width: 36px; height: 36px; border-radius: 50%;
-      background: rgba(232,56,58,0.9); display: flex; align-items: center; justify-content: center;
-      font-size: 12px; color: #fff; z-index: 2;
+      background: rgba(232,56,58,0.85);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; color: #fff; opacity: 0; transition: opacity 0.15s;
     }
-    .video-info { flex: 1; padding: 10px 14px 10px 14px; display: flex; flex-direction: column; justify-content: space-between; }
-    .video-top { flex: 1; }
-    .video-cat { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #E8383A; margin-bottom: 5px; }
-    .video-name { font-size: 15px; font-weight: 700; color: #111; margin-bottom: 3px; letter-spacing: -0.3px; }
-    .video-ville { font-size: 12px; color: #bbb; }
-    .video-desc { font-size: 12px; color: #888; margin-top: 6px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .video-bottom { display: flex; align-items: center; justify-content: space-between; }
-    .video-views { font-size: 11px; color: #ccc; display: flex; align-items: center; gap: 4px; }
-    .btn-contact { padding: 7px 16px; border-radius: 7px; background: #111; color: #fff; border: none; font-size: 11px; font-weight: 700; cursor: pointer; }
-    .btn-contact.red { background: #E8383A; }
+    .thumb-card:hover .thumb-play { opacity: 1; }
+    .thumb-info {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 8px 8px 10px;
+    }
+    .thumb-name { font-size: 12px; font-weight: 700; color: #fff; margin-bottom: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .thumb-cat { font-size: 10px; color: rgba(255,255,255,0.65); }
+    .thumb-views { position: absolute; top: 6px; right: 6px; font-size: 9px; font-weight: 600; color: #fff; background: rgba(0,0,0,0.45); padding: 2px 6px; border-radius: 100px; }
 
-    /* EMPTY */
-    .empty { text-align: center; padding: 60px 20px; color: #bbb; }
-    .empty-ico { font-size: 36px; margin-bottom: 12px; }
-    .empty-title { font-size: 15px; font-weight: 700; color: #888; margin-bottom: 6px; }
+    /* SÉPARATEUR */
+    .section-divider { height: 8px; background: #f5f5f5; margin: 16px 0 0; }
+
+    /* CASTINGS LABEL */
+    .castings-label {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: #E8383A; margin-bottom: 3px;
+    }
+    .recruiter-name { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 1px; }
+
+    /* LOADING */
+    .loading { text-align: center; padding: 40px; color: #bbb; font-size: 13px; }
 
     /* MODAL VIDEO */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 1000; align-items: center; justify-content: center; }
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center; }
     .modal-overlay.open { display: flex; }
-    .modal-box { background: #fff; border-radius: 14px; overflow: hidden; width: 100%; max-width: 400px; margin: 20px; position: relative; }
-    .modal-close { position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; border-radius: 50%; background: rgba(0,0,0,0.5); color: #fff; border: none; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 5; }
-    .modal-video { aspect-ratio: 9/16; background: #000; position: relative; }
+    .modal-box { background: #000; border-radius: 14px; overflow: hidden; width: 100%; max-width: 380px; margin: 20px; position: relative; }
+    .modal-close { position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,0.2); color: #fff; border: none; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 5; }
+    .modal-video { aspect-ratio: 9/16; position: relative; }
     .modal-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .modal-info { padding: 14px 16px 16px; }
-    .modal-name { font-size: 15px; font-weight: 700; color: #111; margin-bottom: 3px; }
-    .modal-cat { font-size: 12px; color: #999; margin-bottom: 12px; }
+    .modal-info { padding: 14px 16px 16px; background: #fff; }
+    .modal-name { font-size: 15px; font-weight: 700; color: #111; margin-bottom: 2px; }
+    .modal-cat { font-size: 12px; color: #999; margin-bottom: 10px; }
     .modal-btn { width: 100%; padding: 11px; border-radius: 9px; background: #E8383A; color: #fff; border: none; font-size: 13px; font-weight: 700; cursor: pointer; }
 
     /* MOBILE */
     @media (max-width: 768px) {
-      .sidebar { width: 100%; height: auto; position: fixed; bottom: 0; top: auto; left: 0; right: 0; border-right: none; border-top: 1px solid #f0f0f0; flex-direction: row; padding: 8px 12px 14px; z-index: 100; }
-      .logo, #side-deconnecte, #side-connecte, .side-divider, .btn-join, .btn-login, .side-user, .btn-deco { display: none !important; }
-      .nav-item { flex-direction: column; gap: 2px; padding: 6px 4px; font-size: 10px; flex: 1; justify-content: center; border-radius: 6px; }
-      .main { margin-left: 0; padding-bottom: 70px; }
-    }
-    @media (min-width: 769px) {
-      .mobile-logo { display: none; }
+      .sidebar { width: 100%; height: 56px; top: auto; bottom: 0; left: 0; right: 0; border-right: none; border-top: 1px solid #f0f0f0; flex-direction: row; padding: 6px 8px 10px; align-items: center; }
+      .logo, #side-deconnecte, #side-connecte, .side-divider { display: none !important; }
+      .nav-item { flex-direction: column; gap: 1px; padding: 4px 2px; font-size: 9px; flex: 1; justify-content: center; border-radius: 6px; background: transparent !important; }
+      .main { margin-left: 0; padding-bottom: 60px; }
+      .grid-3 { grid-template-columns: repeat(3, 1fr); }
     }
   </style>
 </head>
@@ -124,12 +143,10 @@
 <!-- SIDEBAR -->
 <div class="sidebar">
   <a href="/" class="logo">Show<span>One</span></a>
-
   <div id="side-deconnecte">
     <button class="btn-join" onclick="window.location.href='/inscription'">Rejoindre gratuitement</button>
     <button class="btn-login" onclick="window.location.href='/connexion'">Connexion</button>
   </div>
-
   <div id="side-connecte">
     <div class="side-user">
       <div class="side-avatar" id="sideAvatar">?</div>
@@ -139,26 +156,24 @@
       </div>
     </div>
   </div>
-
   <div class="side-divider"></div>
-
   <a href="/" class="nav-item active">🏠 Accueil</a>
   <a href="/castings" class="nav-item">🎬 Castings</a>
-  <a href="/messagerie" class="nav-item" id="navMsg">💬 Messages <span class="nav-badge" id="msgBadge" style="display:none">0</span></a>
+  <a href="/messagerie" class="nav-item">💬 Messages</a>
   <a href="#" class="nav-item" id="navDashboard" style="display:none">👤 Mon espace</a>
   <a href="#" class="nav-item" onclick="seDeconnecter()" id="navDeco" style="display:none; color:#E8383A;">🚪 Déconnexion</a>
+
+  <!-- MOBILE NAV -->
+  <a href="/" class="nav-item active" style="display:none" id="mobileHome">🏠<span>Accueil</span></a>
+  <a href="/castings" class="nav-item" style="display:none" id="mobileCastings">🎬<span>Castings</span></a>
+  <a href="/messagerie" class="nav-item" style="display:none" id="mobileMsg">💬<span>Messages</span></a>
+  <a href="/inscription" class="nav-item" style="display:none" id="mobileJoin">➕<span>Rejoindre</span></a>
 </div>
 
 <!-- MAIN -->
 <div class="main">
 
-  <!-- TABS -->
-  <div class="tabs">
-    <div class="tab active" id="tabTalents" onclick="setTab('talents')">🎤 Talents</div>
-    <div class="tab" id="tabCastings" onclick="setTab('castings')">🎬 Castings recruteurs</div>
-  </div>
-
-  <!-- FILTRES TALENTS -->
+  <!-- FILTRES -->
   <div class="cats" id="catsTalents">
     <div class="chip active" onclick="filtrerCat(this, '')">Tous</div>
     <div class="chip" onclick="filtrerCat(this, 'acting')">🎬 Acting</div>
@@ -170,24 +185,25 @@
     <div class="chip" onclick="filtrerCat(this, 'animaux')">🐾 Animaux</div>
   </div>
 
-  <!-- FILTRES CASTINGS -->
-  <div class="cats" id="catsCastings" style="display:none">
-    <div class="chip active" onclick="filtrerCatCasting(this, '')">Tous</div>
-    <div class="chip" onclick="filtrerCatCasting(this, 'Acting / Cinéma & TV')">🎬 Acting</div>
-    <div class="chip" onclick="filtrerCatCasting(this, 'Musique / Chant')">🎤 Musique</div>
-    <div class="chip" onclick="filtrerCatCasting(this, 'Danse')">💃 Danse</div>
-    <div class="chip" onclick="filtrerCatCasting(this, 'Sport')">⚽ Sport</div>
-    <div class="chip" onclick="filtrerCatCasting(this, 'Mode / Mannequinat')">👗 Mode</div>
+  <!-- SECTION TALENTS -->
+  <div class="section-header">
+    <div class="section-title">Talents</div>
+    <div class="section-count" id="talentsCount">—</div>
+  </div>
+  <div class="grid-3" id="gridTalents">
+    <div class="loading" style="grid-column:1/-1">Chargement…</div>
   </div>
 
-  <!-- FEED TALENTS -->
-  <div class="feed" id="feedTalents">
-    <div class="empty"><div class="empty-ico">🎬</div><div class="empty-title">Chargement des talents…</div></div>
-  </div>
+  <!-- SÉPARATEUR -->
+  <div class="section-divider"></div>
 
-  <!-- FEED CASTINGS -->
-  <div class="feed" id="feedCastings" style="display:none">
-    <div class="empty"><div class="empty-ico">🎬</div><div class="empty-title">Chargement des castings…</div></div>
+  <!-- SECTION CASTINGS RECRUTEURS -->
+  <div class="section-header">
+    <div class="section-title">Castings recruteurs</div>
+    <div class="section-count" id="castingsCount">—</div>
+  </div>
+  <div class="grid-3" id="gridCastings" style="padding-bottom: 32px;">
+    <div class="loading" style="grid-column:1/-1">Chargement…</div>
   </div>
 
 </div>
@@ -202,7 +218,7 @@
     <div class="modal-info">
       <div class="modal-name" id="modalName">—</div>
       <div class="modal-cat" id="modalCat">—</div>
-      <button class="modal-btn" id="modalBtn">✉ Contacter ce talent</button>
+      <button class="modal-btn" id="modalBtn">✉ Contacter</button>
     </div>
   </div>
 </div>
@@ -213,13 +229,11 @@
   const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   let tousTalents = [], tousCastings = [];
-  let catActive = '', catCastingActive = '';
-  let tabActif = 'talents';
+  let catActive = '';
   let _hls = null;
 
   // INIT
   async function init() {
-    // Session
     const { data: { session } } = await sb.auth.getSession();
     if (session) {
       document.getElementById('side-deconnecte').style.display = 'none';
@@ -234,32 +248,19 @@
       document.getElementById('navDashboard').href = type === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
       document.getElementById('navDeco').style.display = 'flex';
     }
-
     await chargerTalents();
     await chargerCastings();
   }
 
-  // TABS
-  function setTab(tab) {
-    tabActif = tab;
-    document.getElementById('tabTalents').classList.toggle('active', tab === 'talents');
-    document.getElementById('tabCastings').classList.toggle('active', tab === 'castings');
-    document.getElementById('feedTalents').style.display = tab === 'talents' ? 'block' : 'none';
-    document.getElementById('feedCastings').style.display = tab === 'castings' ? 'block' : 'none';
-    document.getElementById('catsTalents').style.display = tab === 'talents' ? 'flex' : 'none';
-    document.getElementById('catsCastings').style.display = tab === 'castings' ? 'flex' : 'none';
-  }
-
-  // CHARGER TALENTS
+  // TALENTS
   async function chargerTalents() {
-    const { data, error } = await sb
+    const { data } = await sb
       .from('videos')
       .select('id, playback_id, vues, titre, profils_talents!inner(id, nom_scene, categorie, sous_categorie, photo_url, utilisateurs(prenom, nom, ville))')
       .eq('statut', 'en_ligne')
       .not('playback_id', 'is', null)
       .order('vues', { ascending: false })
-      .limit(50);
-
+      .limit(60);
     tousTalents = data || [];
     afficherTalents(tousTalents);
   }
@@ -273,127 +274,97 @@
   }
 
   function afficherTalents(liste) {
-    const feed = document.getElementById('feedTalents');
-    if (!liste.length) {
-      feed.innerHTML = '<div class="empty"><div class="empty-ico">🎤</div><div class="empty-title">Aucun talent pour le moment.</div></div>';
-      return;
-    }
-    feed.innerHTML = liste.map(v => {
+    const grid = document.getElementById('gridTalents');
+    document.getElementById('talentsCount').textContent = liste.length + ' talent' + (liste.length > 1 ? 's' : '');
+    if (!liste.length) { grid.innerHTML = '<div class="loading" style="grid-column:1/-1">Aucun talent pour le moment.</div>'; return; }
+    grid.innerHTML = liste.map(v => {
       const p = v.profils_talents;
       const u = p?.utilisateurs;
       const nom = p?.nom_scene || ((u?.prenom || '') + ' ' + (u?.nom || '')).trim();
       const cat = p?.sous_categorie || p?.categorie || '';
-      const ville = u?.ville || '';
-      const thumb = v.playback_id ? `https://image.mux.com/${v.playback_id}/thumbnail.jpg?width=240&height=360&fit_mode=crop` : '';
-      return `
-        <div class="video-card" onclick="ouvrirVideo('${v.playback_id}','${nom.replace(/'/g,"\\'")}','${cat}','${p?.id}')">
-          <div class="video-thumb">
-            ${thumb ? `<img src="${thumb}" alt="${nom}" loading="lazy">` : nom.substring(0,2).toUpperCase()}
-            <div class="play-btn">▶</div>
-          </div>
-          <div class="video-info">
-            <div class="video-top">
-              <div class="video-cat">${cat}</div>
-              <div class="video-name">${nom}</div>
-              <div class="video-ville">${ville ? '📍 ' + ville : ''}</div>
-            </div>
-            <div class="video-bottom">
-              <div class="video-views">👁 ${(v.vues || 0).toLocaleString('fr-FR')} vues</div>
-              <button class="btn-contact" onclick="event.stopPropagation();contacter('${p?.id}')">Contacter</button>
-            </div>
-          </div>
-        </div>`;
+      const thumb = v.playback_id ? `https://image.mux.com/${v.playback_id}/thumbnail.jpg?width=300&height=534&fit_mode=crop` : '';
+      return `<div class="thumb-card" onclick="ouvrirVideo('${v.playback_id}','${nom.replace(/'/g,"\\'")}','${cat}','${p?.id}')">
+        ${thumb ? `<img src="${thumb}" alt="${nom}" loading="lazy">` : `<div class="thumb-bg">${nom.substring(0,2).toUpperCase()}</div>`}
+        <div class="thumb-overlay"></div>
+        <div class="thumb-play">▶</div>
+        <div class="thumb-views">👁 ${(v.vues||0).toLocaleString('fr-FR')}</div>
+        <div class="thumb-info">
+          <div class="thumb-name">${nom}</div>
+          <div class="thumb-cat">${cat}</div>
+        </div>
+      </div>`;
     }).join('');
   }
 
-  // CHARGER CASTINGS
+  // CASTINGS
   async function chargerCastings() {
-    const { data, error } = await sb
+    const { data } = await sb
       .from('castings')
-      .select('id, titre, categorie, ville, description, video_playback_id, recruteur_id')
+      .select('id, titre, categorie, ville, video_playback_id, recruteur_id')
       .eq('statut', 'actif')
+      .not('video_playback_id', 'is', null)
       .order('created_at', { ascending: false })
       .limit(30);
-
     tousCastings = data || [];
 
-    // Enrichir avec noms recruteurs
     for (const c of tousCastings) {
       try {
-        const { data: rec } = await sb.from('profils_recruteurs').select('nom_societe, utilisateur_id').eq('id', c.recruteur_id).single();
-        c.recruteur_nom = rec?.nom_societe || 'Recruteur ShowOne';
-      } catch(e) { c.recruteur_nom = 'Recruteur ShowOne'; }
+        const { data: rec } = await sb.from('profils_recruteurs').select('nom_societe').eq('id', c.recruteur_id).single();
+        c.recruteur_nom = rec?.nom_societe || 'Recruteur';
+      } catch(e) { c.recruteur_nom = 'Recruteur'; }
     }
-
     afficherCastings(tousCastings);
   }
 
-  function filtrerCatCasting(el, cat) {
-    document.querySelectorAll('#catsCastings .chip').forEach(c => c.classList.remove('active'));
-    el.classList.add('active');
-    catCastingActive = cat;
-    const filtres = cat ? tousCastings.filter(c => (c.categorie || '').toLowerCase().includes(cat.toLowerCase())) : tousCastings;
-    afficherCastings(filtres);
-  }
-
   function afficherCastings(liste) {
-    const feed = document.getElementById('feedCastings');
-    if (!liste.length) {
-      feed.innerHTML = '<div class="empty"><div class="empty-ico">🎬</div><div class="empty-title">Aucun casting pour le moment.</div></div>';
-      return;
-    }
-    feed.innerHTML = liste.map(c => {
-      const thumb = c.video_playback_id ? `https://image.mux.com/${c.video_playback_id}/thumbnail.jpg?width=240&height=360&fit_mode=crop` : '';
-      return `
-        <div class="video-card" onclick="ouvrirCasting('${c.video_playback_id}','${(c.recruteur_nom||'').replace(/'/g,"\\'")}','${c.categorie||''}','${c.id}')">
-          <div class="video-thumb">
-            ${thumb ? `<img src="${thumb}" alt="${c.titre}" loading="lazy">` : '🎬'}
-            ${c.video_playback_id ? '<div class="play-btn">▶</div>' : ''}
-          </div>
-          <div class="video-info">
-            <div class="video-top">
-              <div class="video-cat">${c.categorie || 'Casting'}</div>
-              <div class="video-name">${c.titre || 'Casting'}</div>
-              <div class="video-ville">${c.ville ? '📍 ' + c.ville : ''}</div>
-              <div class="video-desc">${c.description || ''}</div>
-            </div>
-            <div class="video-bottom">
-              <div class="video-views">Par <strong>${c.recruteur_nom}</strong></div>
-              <button class="btn-contact red" onclick="event.stopPropagation();postuler('${c.id}','${(c.titre||'').replace(/'/g,"\\'")}')">Postuler →</button>
-            </div>
-          </div>
-        </div>`;
+    const grid = document.getElementById('gridCastings');
+    document.getElementById('castingsCount').textContent = liste.length + ' casting' + (liste.length > 1 ? 's' : '');
+    if (!liste.length) { grid.innerHTML = '<div class="loading" style="grid-column:1/-1">Aucun casting vidéo pour le moment.</div>'; return; }
+    grid.innerHTML = liste.map(c => {
+      const thumb = c.video_playback_id ? `https://image.mux.com/${c.video_playback_id}/thumbnail.jpg?width=300&height=534&fit_mode=crop` : '';
+      return `<div class="thumb-card" onclick="ouvrirCasting('${c.video_playback_id}','${(c.recruteur_nom||'').replace(/'/g,"\\'")}','${c.categorie||''}','${c.id}','${(c.titre||'').replace(/'/g,"\\'")}')">
+        ${thumb ? `<img src="${thumb}" alt="${c.titre}" loading="lazy">` : `<div class="thumb-bg">🎬</div>`}
+        <div class="thumb-overlay"></div>
+        <div class="thumb-play">▶</div>
+        <div class="thumb-info">
+          <div class="thumb-name">${c.titre || 'Casting'}</div>
+          <div class="thumb-cat">${c.recruteur_nom}${c.ville ? ' · ' + c.ville : ''}</div>
+        </div>
+      </div>`;
     }).join('');
   }
 
-  // PLAYER VIDEO
+  // PLAYER
   function ouvrirVideo(playbackId, nom, cat, talentId) {
     if (!playbackId) return;
-    const src = `https://stream.mux.com/${playbackId}.m3u8`;
-    const video = document.getElementById('modalVideo');
-    if (_hls) { _hls.destroy(); _hls = null; }
-    if (Hls.isSupported()) { _hls = new Hls(); _hls.loadSource(src); _hls.attachMedia(video); _hls.on(Hls.Events.MANIFEST_PARSED, () => video.play()); }
-    else if (video.canPlayType('application/vnd.apple.mpegurl')) { video.src = src; video.play(); }
+    jouerVideo(playbackId);
     document.getElementById('modalName').textContent = nom;
     document.getElementById('modalCat').textContent = cat;
+    document.getElementById('modalBtn').textContent = '✉ Contacter ce talent';
     document.getElementById('modalBtn').onclick = () => { fermerModal(); contacter(talentId); };
     document.getElementById('modal').classList.add('open');
-    document.body.style.overflow = 'hidden';
   }
 
-  function ouvrirCasting(playbackId, nom, cat, castingId) {
-    if (!playbackId) { postuler(castingId, nom); return; }
+  function ouvrirCasting(playbackId, recruteur, cat, castingId, titre) {
+    if (!playbackId) return;
+    jouerVideo(playbackId);
+    document.getElementById('modalName').textContent = titre;
+    document.getElementById('modalCat').textContent = 'Par ' + recruteur + (cat ? ' · ' + cat : '');
+    document.getElementById('modalBtn').textContent = '→ Postuler à ce casting';
+    document.getElementById('modalBtn').onclick = () => { fermerModal(); window.location.href = '/castings'; };
+    document.getElementById('modal').classList.add('open');
+  }
+
+  function jouerVideo(playbackId) {
     const src = `https://stream.mux.com/${playbackId}.m3u8`;
     const video = document.getElementById('modalVideo');
     if (_hls) { _hls.destroy(); _hls = null; }
-    if (Hls.isSupported()) { _hls = new Hls(); _hls.loadSource(src); _hls.attachMedia(video); _hls.on(Hls.Events.MANIFEST_PARSED, () => video.play()); }
-    else if (video.canPlayType('application/vnd.apple.mpegurl')) { video.src = src; video.play(); }
-    document.getElementById('modalName').textContent = nom;
-    document.getElementById('modalCat').textContent = cat;
-    document.getElementById('modalBtn').textContent = '→ Postuler à ce casting';
-    document.getElementById('modalBtn').onclick = () => { fermerModal(); postuler(castingId, nom); };
-    document.getElementById('modal').classList.add('open');
-    document.body.style.overflow = 'hidden';
+    if (Hls.isSupported()) {
+      _hls = new Hls(); _hls.loadSource(src); _hls.attachMedia(video);
+      _hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = src; video.play();
+    }
   }
 
   function fermerModal(e) {
@@ -402,8 +373,6 @@
     const video = document.getElementById('modalVideo');
     video.pause(); video.src = '';
     if (_hls) { _hls.destroy(); _hls = null; }
-    document.body.style.overflow = '';
-    document.getElementById('modalBtn').textContent = '✉ Contacter ce talent';
   }
 
   function contacter(talentId) {
@@ -411,12 +380,6 @@
     if (!user.id) { window.location.href = '/connexion'; return; }
     if (user.type_compte !== 'recruteur') { alert('Seuls les recruteurs peuvent contacter les talents.'); return; }
     window.location.href = `/messagerie?talent_id=${talentId}`;
-  }
-
-  function postuler(castingId, titre) {
-    const user = JSON.parse(localStorage.getItem('showone_user') || '{}');
-    if (!user.id) { if (confirm('Connectez-vous pour postuler. Se connecter ?')) window.location.href = '/connexion'; return; }
-    window.location.href = `/castings`;
   }
 
   function seDeconnecter() {
