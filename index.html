@@ -15,7 +15,7 @@
 
     /* SIDEBAR */
     .sidebar {
-      width: 200px; border-right: 1px solid #f0f0f0;
+      width: 160px; border-right: 1px solid #f0f0f0;
       display: flex; flex-direction: column;
       padding: 14px 10px; flex-shrink: 0; height: 100vh;
       position: fixed; left: 0; top: 0; z-index: 50; background: #fff;
@@ -28,6 +28,8 @@
     .nav-item { display: flex; align-items: center; gap: 9px; padding: 9px 8px; border-radius: 8px; font-size: 13px; font-weight: 500; color: #888; cursor: pointer; text-decoration: none; transition: all 0.1s; margin-bottom: 2px; }
     .nav-item:hover { background: #f5f5f5; color: #111; }
     .nav-item.active { color: #111; font-weight: 700; background: #f5f5f5; }
+    .logo-sub { font-size: 11px; color: #bbb; padding: 0 8px 10px; line-height: 1.4; }
+    .side-footer { font-size: 10px; color: #ddd; padding: 8px 8px 0; }
     #side-deconnecte { display: flex; flex-direction: column; }
     #side-connecte { display: none; flex-direction: column; }
     .side-user { display: flex; align-items: center; gap: 8px; padding: 8px; margin-bottom: 8px; }
@@ -36,7 +38,7 @@
     .side-role { font-size: 10px; color: #bbb; }
 
     /* MAIN */
-    .main { margin-left: 200px; flex: 1; overflow-y: auto; height: 100vh; }
+    .main { margin-left: 160px; flex: 1; overflow-y: auto; height: 100vh; }
 
     /* FILTRES */
     .cats {
@@ -60,9 +62,9 @@
     /* GRILLE 3 COLONNES */
     .grid-3 {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, 1fr); width: 100%;
       gap: 3px;
-      padding: 0 3px 3px;
+      padding: 0; gap: 2px;
     }
 
     /* CARD THUMBNAIL */
@@ -142,7 +144,7 @@
       .logo, #side-deconnecte, #side-connecte, .side-divider { display: none !important; }
       .nav-item { flex-direction: column; gap: 1px; padding: 4px 2px; font-size: 9px; flex: 1; justify-content: center; border-radius: 6px; background: transparent !important; }
       .main { margin-left: 0; padding-bottom: 60px; }
-      .grid-3 { grid-template-columns: repeat(4, 1fr); }
+      .grid-3 { grid-template-columns: repeat(4, 1fr); width: 100%; }
     }
   </style>
 </head>
@@ -151,8 +153,20 @@
 <!-- SIDEBAR -->
 <div class="sidebar">
   <a href="/" class="logo">Show<span>One</span></a>
+  <p class="logo-sub">Montre ton talent en 1 minute.</p>
+
+  <div class="side-divider"></div>
+
+  <a href="/" class="nav-item active">🏠 Accueil</a>
+  <a href="/castings" class="nav-item">🎬 Castings</a>
+  <a href="/messagerie" class="nav-item">💬 Messages</a>
+  <a href="#" class="nav-item" id="navDashboard" style="display:none">👤 Mon espace</a>
+  <a href="#" class="nav-item" onclick="seDeconnecter()" id="navDeco" style="display:none; color:#E8383A;">🚪 Déconnexion</a>
+
+  <div class="side-divider" style="margin-top:auto;"></div>
+
   <div id="side-deconnecte">
-    <button class="btn-join" onclick="window.location.href='/inscription'">Rejoindre gratuitement</button>
+    <button class="btn-join" onclick="window.location.href='/inscription'">S'inscrire gratuitement</button>
     <button class="btn-login" onclick="window.location.href='/connexion'">Connexion</button>
   </div>
   <div id="side-connecte">
@@ -164,18 +178,8 @@
       </div>
     </div>
   </div>
-  <div class="side-divider"></div>
-  <a href="/" class="nav-item active">🏠 Accueil</a>
-  <a href="/castings" class="nav-item">🎬 Castings</a>
-  <a href="/messagerie" class="nav-item">💬 Messages</a>
-  <a href="#" class="nav-item" id="navDashboard" style="display:none">👤 Mon espace</a>
-  <a href="#" class="nav-item" onclick="seDeconnecter()" id="navDeco" style="display:none; color:#E8383A;">🚪 Déconnexion</a>
 
-  <!-- MOBILE NAV -->
-  <a href="/" class="nav-item active" style="display:none" id="mobileHome">🏠<span>Accueil</span></a>
-  <a href="/castings" class="nav-item" style="display:none" id="mobileCastings">🎬<span>Castings</span></a>
-  <a href="/messagerie" class="nav-item" style="display:none" id="mobileMsg">💬<span>Messages</span></a>
-  <a href="/inscription" class="nav-item" style="display:none" id="mobileJoin">➕<span>Rejoindre</span></a>
+  <p class="side-footer">© 2025 ShowOne</p>
 </div>
 
 <!-- MAIN -->
