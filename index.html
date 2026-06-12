@@ -18,37 +18,28 @@
       position: fixed; left: 0; top: 0;
       background: #fff; border-right: 1px solid #f0f0f0;
       display: flex; flex-direction: column;
-      padding: 18px 12px; z-index: 50; gap: 0;
+      padding: 18px 14px 16px; z-index: 50;
     }
-    .logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; margin-bottom: 12px; display: block; }
+    .logo { font-size: 22px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; margin-bottom: 20px; display: block; }
     .logo span { color: #E8383A; }
 
-    .cta-bloc {
-      display: block; padding: 11px 12px; border-radius: 9px;
-      border: 1px solid #e8e8e8; text-decoration: none; margin-bottom: 10px;
-    }
-    .cta-bloc:hover { border-color: #bbb; background: #fafafa; }
-    .cta-red { border-color: #ffd5d5; margin-bottom: 0; }
-    .cta-red:hover { border-color: #E8383A; background: #fff8f8; }
-    .cta-titre { font-size: 13px; font-weight: 800; color: #111; margin-bottom: 2px; }
-    .cta-desc { font-size: 11px; color: #888; }
-
-    .side-nav { display: flex; flex-direction: column; gap: 2px; flex: 1; padding: 8px 0; justify-content: center; }
-    .nav-item { display: flex; align-items: center; gap: 9px; padding: 9px 10px; border-radius: 8px; font-size: 13px; font-weight: 500; color: #777; text-decoration: none; }
+    .side-nav { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+    .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 10px; border-radius: 8px; font-size: 14px; font-weight: 500; color: #444; text-decoration: none; }
     .nav-item:hover { background: #f5f5f5; color: #111; }
-    .nav-item.active { background: #f5f5f5; color: #111; font-weight: 700; }
+    .nav-item.active { color: #111; font-weight: 700; }
 
-    .btn-join { display: block; width: 100%; padding: 10px; border-radius: 8px; background: #E8383A; color: #fff; border: none; font-size: 12px; font-weight: 700; cursor: pointer; text-align: center; }
-    .btn-conn { display: block; width: 100%; padding: 9px; border-radius: 8px; background: transparent; color: #111; border: 1px solid #e8e8e8; font-size: 12px; font-weight: 600; cursor: pointer; text-align: center; }
+    .side-bottom { display: flex; flex-direction: column; gap: 8px; }
+    .btn-join { display: block; width: 100%; padding: 11px; border-radius: 8px; background: #E8383A; color: #fff; border: none; font-size: 13px; font-weight: 700; cursor: pointer; text-align: center; }
+    .btn-conn { display: block; width: 100%; padding: 10px; border-radius: 8px; background: transparent; color: #111; border: 1.5px solid #e0e0e0; font-size: 13px; font-weight: 600; cursor: pointer; text-align: center; }
     .side-user { display: flex; align-items: center; gap: 8px; }
-    .side-av { width: 30px; height: 30px; border-radius: 50%; background: #111; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
-    .side-nom { font-size: 12px; font-weight: 700; color: #111; }
-    .side-role { font-size: 10px; color: #bbb; }
+    .side-av { width: 32px; height: 32px; border-radius: 50%; background: #111; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .side-nom { font-size: 13px; font-weight: 700; color: #111; }
+    .side-role { font-size: 11px; color: #bbb; }
 
-    .side-footer { margin-top: 10px; padding-top: 10px; border-top: 1px solid #f0f0f0; display: flex; flex-direction: column; gap: 5px; }
-    .side-fl { font-size: 12px; color: #777; text-decoration: none; font-weight: 500; }
+    .side-footer { display: flex; flex-direction: column; gap: 4px; padding-top: 12px; border-top: 1px solid #f0f0f0; }
+    .side-fl { font-size: 12px; color: #888; text-decoration: none; font-weight: 400; }
     .side-fl:hover { color: #111; }
-    .side-copy { font-size: 10px; color: #ccc; margin-top: 2px; }
+    .side-copy { font-size: 11px; color: #ccc; margin-top: 4px; }
 
     /* ── MAIN ── */
     .main { margin-left: 220px; flex: 1; overflow-y: auto; height: 100vh; }
@@ -113,13 +104,6 @@
 
   <a href="/" class="logo">Show<span>One</span></a>
 
-  <!-- BLOC TALENTS -->
-  <a href="/inscription" class="cta-bloc">
-    <div class="cta-titre">🎤 Talents</div>
-    <div class="cta-desc">Déposez votre vidéo gratuitement</div>
-  </a>
-
-  <!-- NAV -->
   <nav class="side-nav">
     <a href="/" class="nav-item active">🏠 Accueil</a>
     <a href="/castings" class="nav-item">🎬 Castings</a>
@@ -128,33 +112,28 @@
     <a href="#" class="nav-item" onclick="seDeconnecter()" id="navDeco" style="display:none;color:#E8383A;">🚪 Déconnexion</a>
   </nav>
 
-  <!-- BLOC RECRUTEURS -->
-  <a href="/inscription?type=recruteur" class="cta-bloc cta-red">
-    <div class="cta-titre" style="color:#E8383A;">🎬 Recruteurs</div>
-    <div class="cta-desc">Présentez votre agence aux talents</div>
-  </a>
-
-  <!-- AUTH -->
-  <div id="side-auth" style="margin-top:10px;">
-    <button class="btn-join" onclick="location.href='/inscription'">S'inscrire gratuitement</button>
-    <button class="btn-conn" onclick="location.href='/connexion'" style="margin-top:6px;">Connexion</button>
-  </div>
-  <div id="side-user-box" style="display:none;margin-top:10px;">
-    <div class="side-user">
-      <div class="side-av" id="sideAv">?</div>
-      <div>
-        <div class="side-nom" id="sideNom">—</div>
-        <div class="side-role" id="sideRole">—</div>
+  <div class="side-bottom">
+    <div id="side-auth">
+      <button class="btn-join" onclick="location.href='/inscription'">S'inscrire gratuitement</button>
+      <button class="btn-conn" onclick="location.href='/connexion'">Connexion</button>
+    </div>
+    <div id="side-user-box" style="display:none">
+      <div class="side-user">
+        <div class="side-av" id="sideAv">?</div>
+        <div>
+          <div class="side-nom" id="sideNom">—</div>
+          <div class="side-role" id="sideRole">—</div>
+        </div>
       </div>
     </div>
-  </div>
-
-  <!-- FOOTER -->
-  <div class="side-footer">
-    <a href="/contact" class="side-fl">📩 Nous contacter</a>
-    <a href="/qui-sommes-nous" class="side-fl">ℹ️ Qui sommes-nous</a>
-    <a href="/legal" class="side-fl">📄 CGU</a>
-    <span class="side-copy">© 2025 ShowOne</span>
+    <div class="side-footer">
+      <a href="/inscription" class="side-fl">🎤 Talents</a>
+      <a href="/inscription?type=recruteur" class="side-fl">🎬 Recruteurs</a>
+      <a href="/contact" class="side-fl">Nous contacter</a>
+      <a href="/qui-sommes-nous" class="side-fl">Qui sommes-nous</a>
+      <a href="/legal" class="side-fl">CGU</a>
+      <span class="side-copy">© 2025 ShowOne</span>
+    </div>
   </div>
 
 </div>
