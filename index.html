@@ -49,11 +49,10 @@
     .cta-bloc:hover { border-color: #bbb; background: #fafafa; }
     .cta-bloc-red { border-color: #ffd0d0; }
     .cta-bloc-red:hover { border-color: #E8383A; background: #fff8f8; }
-    .cta-emoji { font-size: 15px; flex-shrink: 0; }
-    .cta-text { overflow: hidden; }
-    .cta-text strong { display: block; font-size: 12px; font-weight: 700; color: #111; white-space: nowrap; }
+    .cta-text { width: 100%; }
+    .cta-text strong { display: block; font-size: 12px; font-weight: 700; color: #111; margin-bottom: 2px; }
     .cta-bloc-red .cta-text strong { color: #E8383A; }
-    .cta-text span { display: block; font-size: 10px; color: #999; white-space: nowrap; }
+    .cta-text span { display: block; font-size: 11px; color: #888; line-height: 1.4; }
 
     /* Auth bas de sidebar */
     .side-bottom { margin-top: auto; }
@@ -129,18 +128,10 @@
   <a href="/" class="logo">Show<span>One</span></a>
 
   <a href="/inscription" class="cta-bloc">
-    <span class="cta-emoji">🎤</span>
-    <span class="cta-text">
-      <strong>Talents</strong>
+    <div class="cta-text">
+      <strong>🎤 Talents</strong>
       <span>Déposez votre vidéo gratuitement</span>
-    </span>
-  </a>
-  <a href="/inscription?type=recruteur" class="cta-bloc cta-bloc-red">
-    <span class="cta-emoji">🎬</span>
-    <span class="cta-text">
-      <strong>Recruteurs</strong>
-      <span>Présentez votre agence aux talents</span>
-    </span>
+    </div>
   </a>
 
   <div class="divider"></div>
@@ -148,6 +139,14 @@
   <a href="/" class="nav-item active">🏠 Accueil</a>
   <a href="/castings" class="nav-item">🎬 Castings</a>
   <a href="/messagerie" class="nav-item">💬 Messages</a>
+
+  <a href="/inscription?type=recruteur" class="cta-bloc cta-bloc-red">
+    <div class="cta-text">
+      <strong>🎬 Recruteurs</strong>
+      <span>Présentez votre agence aux talents</span>
+    </div>
+  </a>
+
   <a href="#" class="nav-item" id="navDashboard" style="display:none">👤 Mon espace</a>
   <a href="#" class="nav-item" onclick="seDeconnecter()" id="navDeco" style="display:none;color:#E8383A;">🚪 Déconnexion</a>
 
