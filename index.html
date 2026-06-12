@@ -28,6 +28,19 @@
     .nav-item { display: flex; align-items: center; gap: 9px; padding: 9px 8px; border-radius: 8px; font-size: 13px; font-weight: 500; color: #888; cursor: pointer; text-decoration: none; transition: all 0.1s; margin-bottom: 2px; }
     .nav-item:hover { background: #f5f5f5; color: #111; }
     .nav-item.active { color: #111; font-weight: 700; background: #f5f5f5; }
+    .cta-block {
+      display: block; margin: 6px 8px; padding: 10px 12px;
+      border-radius: 8px; border: 1px solid #e8e8e8;
+      text-decoration: none; cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .cta-block:hover { border-color: #bbb; background: #f8f8f8; }
+    .cta-block-icon { font-size: 16px; margin-bottom: 4px; }
+    .cta-block-title { font-size: 12px; font-weight: 700; color: #111; margin-bottom: 2px; }
+    .cta-block-sub { font-size: 11px; color: #999; line-height: 1.4; }
+    .cta-block.red { border-color: rgba(232,56,58,0.25); }
+    .cta-block.red:hover { border-color: #E8383A; background: #fff8f8; }
+    .cta-block.red .cta-block-title { color: #E8383A; }
     .logo-sub { font-size: 14px; font-weight: 700; color: #111; padding: 0 8px 4px; line-height: 1.5; }
     .logo-sub2 { font-size: 13px; font-weight: 600; color: #E8383A; padding: 0 8px 12px; line-height: 1.5; display: block; }
     .side-footer { font-size: 10px; color: #ddd; padding: 8px 8px 0; }
@@ -154,14 +167,23 @@
 <!-- SIDEBAR -->
 <div class="sidebar">
   <a href="/" class="logo">Show<span>One</span></a>
-  <p class="logo-sub">🎤 Talents — Montre-toi gratuitement.</p>
-  <span class="logo-sub2">🎬 Recruteurs — Trouvez vos talents.</span>
+  
 
   <div class="side-divider"></div>
 
   <a href="/" class="nav-item active">🏠 Accueil</a>
   <a href="/castings" class="nav-item">🎬 Castings</a>
   <a href="/messagerie" class="nav-item">💬 Messages</a>
+  <a href="/inscription" class="cta-block" id="ctaTalent">
+    <div class="cta-block-icon">🎤</div>
+    <div class="cta-block-title">Talents</div>
+    <div class="cta-block-sub">Montre-toi gratuitement en 1 minute</div>
+  </a>
+  <a href="/inscription?type=recruteur" class="cta-block red" id="ctaRecruteur">
+    <div class="cta-block-icon">🎬</div>
+    <div class="cta-block-title">Recruteurs</div>
+    <div class="cta-block-sub">Postez vos vidéos gratuitement</div>
+  </a>
   <a href="#" class="nav-item" id="navDashboard" style="display:none">👤 Mon espace</a>
   <a href="#" class="nav-item" onclick="seDeconnecter()" id="navDeco" style="display:none; color:#E8383A;">🚪 Déconnexion</a>
 
