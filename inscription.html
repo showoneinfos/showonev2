@@ -4,52 +4,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inscription — ShowOne</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Inter', sans-serif; background: #fff; color: #111; min-height: 100vh; display: flex; flex-direction: column; }
 
-    /* NAV */
-    nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 40px;
-      border-bottom: 1px solid #f0f0f0;
-    }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; border-bottom: 1px solid #f0f0f0; }
     .logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; }
     .logo span { color: #E8383A; }
-    .nav-login { font-size: 13px; color: #999; }
-    .nav-login a { color: #111; font-weight: 600; text-decoration: none; }
-    .nav-login a:hover { color: #E8383A; }
+    .nav-right { font-size: 13px; color: #999; }
+    .nav-right a { color: #111; font-weight: 600; text-decoration: none; }
 
-    /* MAIN */
-    .main {
-      flex: 1; display: flex; align-items: center; justify-content: center;
-      padding: 48px 20px;
-    }
-    .card {
-      width: 100%; max-width: 460px;
-    }
-    .card-title {
-      font-size: 30px; font-weight: 900; letter-spacing: -1px; color: #111;
-      margin-bottom: 6px;
-    }
-    .card-sub {
-      font-size: 14px; color: #999; margin-bottom: 36px; line-height: 1.5;
-    }
+    .main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 48px 20px; }
+    .card { width: 100%; max-width: 460px; }
+
+    /* STEPS */
+    .steps { display: flex; align-items: center; gap: 0; margin-bottom: 36px; }
+    .step { display: flex; align-items: center; gap: 8px; }
+    .step-circle { width: 28px; height: 28px; border-radius: 50%; border: 2px solid #e8e8e8; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #bbb; flex-shrink: 0; }
+    .step.active .step-circle { border-color: #111; background: #111; color: #fff; }
+    .step.done .step-circle { border-color: #10b981; background: #10b981; color: #fff; }
+    .step-label { font-size: 12px; font-weight: 600; color: #bbb; }
+    .step.active .step-label { color: #111; }
+    .step.done .step-label { color: #10b981; }
+    .step-line { flex: 1; height: 1px; background: #e8e8e8; margin: 0 10px; }
+    .step-line.done { background: #10b981; }
+
+    .card-title { font-size: 26px; font-weight: 900; letter-spacing: -0.8px; color: #111; margin-bottom: 6px; }
+    .card-sub { font-size: 14px; color: #999; margin-bottom: 28px; }
 
     /* TYPE SELECTOR */
-    .type-selector {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-      margin-bottom: 28px;
-    }
-    .type-btn {
-      padding: 16px 12px; border-radius: 10px;
-      border: 1.5px solid #e8e8e8; background: #fff;
-      cursor: pointer; text-align: center; transition: all 0.15s;
-    }
-    .type-btn:hover { border-color: #ccc; }
+    .type-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 28px; }
+    .type-btn { padding: 16px 12px; border-radius: 10px; border: 1.5px solid #e8e8e8; background: #fff; cursor: pointer; text-align: center; transition: all 0.15s; }
     .type-btn.active { border-color: #111; background: #111; }
     .type-icon { font-size: 24px; margin-bottom: 6px; }
     .type-label { font-size: 13px; font-weight: 700; color: #111; }
@@ -58,95 +44,45 @@
     .type-btn.active .type-desc { color: rgba(255,255,255,0.6); }
 
     /* FORM */
-    .form-group { margin-bottom: 16px; }
-    .form-label { font-size: 12px; font-weight: 600; color: #555; margin-bottom: 6px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
-    .form-input {
-      width: 100%; padding: 13px 16px; font-size: 14px;
-      border: 1.5px solid #e8e8e8; border-radius: 10px;
-      background: #fff; color: #111; outline: none;
-      font-family: 'Inter', sans-serif;
-      transition: border-color 0.15s;
-    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-group { margin-bottom: 14px; }
+    .form-label { font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
+    .form-input { width: 100%; padding: 12px 14px; font-size: 14px; border: 1.5px solid #e8e8e8; border-radius: 9px; background: #fff; color: #111; outline: none; font-family: 'Inter', sans-serif; transition: border-color 0.15s; }
     .form-input:focus { border-color: #111; }
     .form-input::placeholder { color: #ccc; }
+    .form-select { width: 100%; padding: 12px 14px; font-size: 14px; border: 1.5px solid #e8e8e8; border-radius: 9px; background: #fff; color: #111; outline: none; font-family: 'Inter', sans-serif; cursor: pointer; }
 
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-error { background: #fff0f0; border: 1px solid #ffd0d0; border-radius: 8px; padding: 11px 13px; font-size: 13px; color: #cc2e30; margin-bottom: 14px; display: none; line-height: 1.5; }
 
-    .btn-submit {
-      width: 100%; padding: 15px; font-size: 15px; font-weight: 700;
-      border-radius: 10px; background: #111; color: #fff; border: none;
-      cursor: pointer; margin-top: 8px; transition: background 0.15s;
-    }
+    .btn-submit { width: 100%; padding: 14px; font-size: 15px; font-weight: 700; border-radius: 10px; background: #111; color: #fff; border: none; cursor: pointer; transition: background 0.15s; margin-top: 6px; }
     .btn-submit:hover { background: #333; }
     .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
 
-    .form-error {
-      background: #fff0f0; border: 1px solid #ffd0d0;
-      border-radius: 8px; padding: 12px 14px;
-      font-size: 13px; color: #cc2e30; margin-bottom: 16px;
-      display: none;
-    }
-
-    .form-divider {
-      display: flex; align-items: center; gap: 12px;
-      margin: 20px 0; color: #ddd; font-size: 12px;
-    }
-    .form-divider::before, .form-divider::after {
-      content: ''; flex: 1; height: 1px; background: #f0f0f0;
-    }
-
-    .terms {
-      font-size: 11px; color: #bbb; text-align: center; margin-top: 16px; line-height: 1.5;
-    }
+    .terms { font-size: 11px; color: #bbb; text-align: center; margin-top: 14px; line-height: 1.5; }
     .terms a { color: #999; }
 
-    /* STEP 2 */
-    #step2 { display: none; }
-    .step-indicator {
-      display: flex; align-items: center; gap: 8px; margin-bottom: 28px;
-    }
-    .step-dot {
-      width: 8px; height: 8px; border-radius: 50%; background: #e8e8e8;
-    }
-    .step-dot.active { background: #111; }
-    .step-dot.done { background: #E8383A; }
-    .step-label { font-size: 12px; color: #bbb; margin-left: 4px; }
-
-    /* UPLOAD VIDEO */
-    .upload-zone {
-      border: 2px dashed #e8e8e8; border-radius: 12px;
-      padding: 32px 20px; text-align: center; cursor: pointer;
-      transition: border-color 0.15s; margin-bottom: 16px;
-    }
-    .upload-zone:hover { border-color: #bbb; }
-    .upload-zone.has-file { border-color: #111; border-style: solid; }
-    .upload-icon { font-size: 32px; margin-bottom: 10px; }
-    .upload-text { font-size: 14px; font-weight: 600; color: #111; margin-bottom: 4px; }
-    .upload-sub { font-size: 12px; color: #bbb; }
-    .upload-filename { font-size: 13px; font-weight: 600; color: #E8383A; margin-top: 8px; }
-    #file-input { display: none; }
-
-    .progress-bar {
-      width: 100%; height: 4px; background: #f0f0f0; border-radius: 2px;
-      margin-bottom: 16px; display: none;
-    }
-    .progress-fill { height: 100%; background: #E8383A; border-radius: 2px; width: 0%; transition: width 0.3s; }
-
-    .cat-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px;
-    }
-    .cat-option {
-      padding: 10px 8px; border-radius: 8px; border: 1.5px solid #e8e8e8;
-      text-align: center; font-size: 12px; font-weight: 600; cursor: pointer;
-      transition: all 0.15s; color: #555;
-    }
-    .cat-option:hover { border-color: #ccc; }
+    /* CAT GRID */
+    .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+    .cat-option { padding: 10px 8px; border-radius: 8px; border: 1.5px solid #e8e8e8; text-align: center; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; color: #555; }
+    .cat-option:hover { border-color: #bbb; }
     .cat-option.active { border-color: #111; background: #111; color: #fff; }
+
+    /* SUCCESS */
+    .success-box { text-align: center; padding: 20px 0; }
+    .success-icon { font-size: 56px; margin-bottom: 16px; }
+    .success-title { font-size: 24px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 8px; }
+    .success-sub { font-size: 14px; color: #999; line-height: 1.6; margin-bottom: 28px; }
+    .btn-dashboard { display: block; width: 100%; padding: 14px; font-size: 15px; font-weight: 700; border-radius: 10px; background: #111; color: #fff; border: none; cursor: pointer; text-decoration: none; text-align: center; }
+
+    /* STEP PAGES */
+    .step-page { display: none; }
+    .step-page.active { display: block; }
 
     @media (max-width: 600px) {
       nav { padding: 14px 20px; }
       .form-row { grid-template-columns: 1fr; }
       .cat-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps { display: none; }
     }
   </style>
 </head>
@@ -154,14 +90,21 @@
 
 <nav>
   <a href="/" class="logo">Show<span>One</span></a>
-  <div class="nav-login">Déjà inscrit ? <a href="connexion.html">Connexion</a></div>
+  <div class="nav-right">Déjà inscrit ? <a href="/connexion">Connexion</a></div>
 </nav>
 
 <div class="main">
   <div class="card">
 
-    <!-- STEP 1 -->
-    <div id="step1">
+    <!-- STEPS INDICATOR -->
+    <div class="steps" id="stepsBar">
+      <div class="step active" id="s1"><div class="step-circle">1</div><div class="step-label">Compte</div></div>
+      <div class="step-line" id="l1"></div>
+      <div class="step" id="s2"><div class="step-circle">2</div><div class="step-label">Profil</div></div>
+    </div>
+
+    <!-- STEP 1 : COMPTE -->
+    <div class="step-page active" id="p1">
       <div class="card-title">Créer mon compte</div>
       <div class="card-sub">Gratuit, sans carte bancaire.</div>
 
@@ -178,59 +121,60 @@
         </div>
       </div>
 
-      <div class="form-error" id="error-step1"></div>
+      <div class="form-error" id="inscriptionError"></div>
 
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Prénom</label>
+          <label class="form-label">Prénom *</label>
           <input class="form-input" type="text" id="prenom" placeholder="Sophie" autocomplete="given-name">
         </div>
         <div class="form-group">
-          <label class="form-label">Nom</label>
+          <label class="form-label">Nom *</label>
           <input class="form-input" type="text" id="nom" placeholder="Martin" autocomplete="family-name">
         </div>
       </div>
-
       <div class="form-group">
-        <label class="form-label">Email</label>
+        <label class="form-label">Email *</label>
         <input class="form-input" type="email" id="email" placeholder="sophie@email.com" autocomplete="email">
       </div>
-
       <div class="form-group">
-        <label class="form-label">Mot de passe</label>
+        <label class="form-label">Mot de passe *</label>
         <input class="form-input" type="password" id="password" placeholder="8 caractères minimum" autocomplete="new-password">
       </div>
 
-      <button class="btn-submit" id="btn-step1" onclick="etape1()">Continuer →</button>
-
-      <p class="terms">En créant un compte, tu acceptes nos <a href="#">Conditions d'utilisation</a> et notre <a href="#">Politique de confidentialité</a>.</p>
+      <button class="btn-submit" id="btnStep1" onclick="validerEtape1()">Continuer →</button>
+      <p class="terms">En créant un compte, tu acceptes nos <a href="#">CGU</a> et notre <a href="#">Politique de confidentialité</a>.</p>
     </div>
 
-    <!-- STEP 2 -->
-    <div id="step2">
-      <div class="step-indicator">
-        <div class="step-dot done"></div>
-        <div class="step-dot active"></div>
-        <span class="step-label">Étape 2 sur 2 — Ton profil</span>
-      </div>
+    <!-- STEP 2 : PROFIL -->
+    <div class="step-page" id="p2">
+      <div class="card-title" id="step2Title">Ton profil talent</div>
+      <div class="card-sub">Quelques infos pour te présenter.</div>
 
-      <div class="card-title" id="step2-title">Ton profil talent</div>
-      <div class="card-sub">Quelques infos pour te présenter aux recruteurs.</div>
-
-      <div class="form-error" id="error-step2"></div>
+      <div class="form-error" id="profilError"></div>
 
       <!-- CATEGORIE (talent seulement) -->
-      <div id="section-categorie">
+      <div id="sectionCategorie">
         <div class="form-group">
-          <label class="form-label">Ta catégorie</label>
-          <div class="cat-grid">
-            <div class="cat-option" onclick="setCategorie(this, 'Chant')">🎤 Chant</div>
-            <div class="cat-option" onclick="setCategorie(this, 'Danse')">💃 Danse</div>
-            <div class="cat-option" onclick="setCategorie(this, 'Humour')">😄 Humour</div>
-            <div class="cat-option" onclick="setCategorie(this, 'Sport')">⚽ Sport</div>
-            <div class="cat-option" onclick="setCategorie(this, 'Musique')">🎸 Musique</div>
-            <div class="cat-option" onclick="setCategorie(this, 'Autre')">✨ Autre</div>
-          </div>
+          <label class="form-label">Ta catégorie *</label>
+          <select class="form-select" id="catSelect" onchange="updateSousCat()">
+            <option value="">-- Choisir une catégorie --</option>
+            <option value="acting">🎬 Acting / Cinéma & TV</option>
+            <option value="musique">🎤 Musique / Chant</option>
+            <option value="danse">💃 Danse</option>
+            <option value="sport">⚽ Sport</option>
+            <option value="createurs">📱 Créateurs de contenu</option>
+            <option value="mode">👗 Mode / Mannequinat</option>
+            <option value="art">🎨 Art & Création</option>
+            <option value="talents">✨ Talents variés</option>
+            <option value="animaux">🐾 Animaux</option>
+          </select>
+        </div>
+        <div class="form-group" id="sousCatGroup" style="display:none;">
+          <label class="form-label">Sous-catégorie</label>
+          <select class="form-select" id="sousCatSelect">
+            <option value="">-- Choisir --</option>
+          </select>
         </div>
       </div>
 
@@ -239,44 +183,54 @@
         <input class="form-input" type="text" id="ville" placeholder="Paris, Lyon, Marseille…">
       </div>
 
-      <!-- VIDEO (talent seulement) -->
-      <div id="section-video">
-        <div class="form-group">
-          <label class="form-label">Ta vidéo de présentation</label>
-          <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()">
-            <div class="upload-icon">🎬</div>
-            <div class="upload-text">Clique pour ajouter ta vidéo</div>
-            <div class="upload-sub">MP4, MOV · Max 100MB</div>
-            <div class="upload-filename" id="upload-filename"></div>
-          </div>
-          <input type="file" id="file-input" accept="video/mp4,video/quicktime,video/mov,video/*" onchange="fichierChoisi(this)">
-          <div class="progress-bar" id="progress-bar">
-            <div class="progress-fill" id="progress-fill"></div>
-          </div>
-        </div>
+      <div class="form-group" id="nomSceneGroup">
+        <label class="form-label">Nom de scène (optionnel)</label>
+        <input class="form-input" type="text" id="nomscene" placeholder="Laisse vide pour utiliser ton prénom">
       </div>
 
-      <button class="btn-submit" id="btn-step2" onclick="etape2()">Créer mon profil ✓</button>
+      <button class="btn-submit" id="btnStep2" onclick="creerCompte()">Créer mon profil ✓</button>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="step-page" id="success">
+      <div class="success-box">
+        <div class="success-icon">🎉</div>
+        <div class="success-title">Bienvenue sur ShowOne !</div>
+        <p class="success-sub">Ton profil est créé. Tu peux maintenant uploader ta vidéo de présentation et te faire découvrir par les recruteurs.</p>
+        <a href="/dashboard-talent" class="btn-dashboard" id="btnDashboard">Accéder à mon espace →</a>
+      </div>
     </div>
 
   </div>
 </div>
 
 <script>
+  // Rediriger si déjà connecté
+  (function() {
+    try {
+      const u = JSON.parse(localStorage.getItem('showone_user') || '{}');
+      if (u.type_compte === 'recruteur') window.location.href = '/dashboard-recruteur';
+      else if (u.type_compte === 'talent') window.location.href = '/dashboard-talent';
+    } catch(e) {}
+  })();
+
   const SUPABASE_URL = 'https://emiuzigtlomlrsofxqyf.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtaXV6aWd0bG9tbHJzb2Z4cXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MDI4NTcsImV4cCI6MjA5MzQ3ODg1N30.Cwe-Z1vNGc-puz8jEnHdMMCwllNbl9fRAdwLe5zWyIY';
-  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   let typeCompte = 'talent';
-  let categorieChoisie = '';
-  let fichierVideo = null;
-  let userSession = null;
+  let _authData = null;
 
-  // Pré-remplir type depuis URL
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('type') === 'recruteur') {
-    setType('recruteur');
-  }
+  const sousCats = {
+    acting: ['Acteur cinéma','Acteur série TV','Acteur publicité','Figuration','Voix off / doublage','Acteur théâtre'],
+    musique: ['Chanteur solo','Groupe / Band','Rap / Hip-hop','Pop','Rock','DJ','Compositeur / Beatmaker','Musicien'],
+    danse: ['Danse urbaine (hip-hop)','Danse contemporaine','Danse classique','Danse latino','Chorégraphe'],
+    sport: ['Football','Basketball','Tennis','Sports de combat','Fitness / Coaching','Freestyle','Sports extrêmes'],
+    createurs: ['YouTuber','TikToker','Streamer','Créateur lifestyle','Créateur humour','Gaming'],
+    mode: ['Mannequin photo','Mannequin défilé','Modèle fitness','Modèle pub'],
+    art: ['Dessin / Illustration','Peinture','Sculpture','Photographie','Vidéaste / Monteur'],
+    talents: ['Magicien','Humoriste / Stand-up','Imitateur','Acrobate','Cascadeur'],
+    animaux: ['Chat','Chien','Dresseur','Autre']
+  };
 
   function setType(type) {
     typeCompte = type;
@@ -284,134 +238,157 @@
     document.getElementById('btn-recruteur').classList.toggle('active', type === 'recruteur');
   }
 
-  function setCategorie(el, cat) {
-    document.querySelectorAll('.cat-option').forEach(c => c.classList.remove('active'));
-    el.classList.add('active');
-    categorieChoisie = cat;
+  function updateSousCat() {
+    const cat = document.getElementById('catSelect').value;
+    const sel = document.getElementById('sousCatSelect');
+    const group = document.getElementById('sousCatGroup');
+    sel.innerHTML = '<option value="">-- Choisir --</option>';
+    if (cat && sousCats[cat]) {
+      sousCats[cat].forEach(s => { const o = document.createElement('option'); o.value = s; o.textContent = s; sel.appendChild(o); });
+      group.style.display = 'block';
+    } else { group.style.display = 'none'; }
   }
 
-  function fichierChoisi(input) {
-    if (input.files && input.files[0]) {
-      fichierVideo = input.files[0];
-      document.getElementById('upload-zone').classList.add('has-file');
-      document.getElementById('upload-filename').textContent = fichierVideo.name;
-    }
-  }
-
-  function showError(id, msg) {
-    const el = document.getElementById(id);
-    el.textContent = msg;
-    el.style.display = 'block';
-  }
-  function hideError(id) {
-    document.getElementById(id).style.display = 'none';
-  }
-
-  async function etape1() {
-    hideError('error-step1');
+  async function validerEtape1() {
     const prenom = document.getElementById('prenom').value.trim();
     const nom = document.getElementById('nom').value.trim();
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
+    const errDiv = document.getElementById('inscriptionError');
+    errDiv.style.display = 'none';
 
-    if (!prenom || !nom) return showError('error-step1', 'Merci de renseigner ton prénom et ton nom.');
-    if (!email) return showError('error-step1', 'Merci de renseigner ton email.');
-    if (password.length < 8) return showError('error-step1', 'Le mot de passe doit faire au moins 8 caractères.');
+    if (!prenom || !nom) { errDiv.innerHTML = '⚠️ Merci de renseigner ton prénom et ton nom.'; errDiv.style.display = 'block'; return; }
+    if (!email) { errDiv.innerHTML = '⚠️ Merci de renseigner ton email.'; errDiv.style.display = 'block'; return; }
+    if (password.length < 8) { errDiv.innerHTML = '⚠️ Le mot de passe doit faire au moins 8 caractères.'; errDiv.style.display = 'block'; return; }
 
-    const btn = document.getElementById('btn-step1');
-    btn.disabled = true;
-    btn.textContent = 'Création du compte…';
+    const btn = document.getElementById('btnStep1');
+    btn.disabled = true; btn.textContent = 'Création du compte…';
 
-    const { data, error } = await sb.auth.signUp({ email, password });
+    try {
+      // Utiliser fetch direct comme la V1 — récupère le access_token immédiatement
+      const authRes = await fetch(`${SUPABASE_URL}/auth/v1/signup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
+        body: JSON.stringify({ email, password })
+      });
+      const authData = await authRes.json();
 
-    if (error) {
-      btn.disabled = false;
-      btn.textContent = 'Continuer →';
-      if (error.message.includes('already registered')) return showError('error-step1', 'Cet email est déjà utilisé. <a href="connexion.html">Connecte-toi</a>');
-      return showError('error-step1', error.message);
-    }
+      if (authData.error) {
+        const errMsg = authData.error.message || authData.msg || '';
+        const emailExiste = errMsg.toLowerCase().includes('already') || errMsg.toLowerCase().includes('registered') || errMsg.toLowerCase().includes('exist');
+        if (emailExiste) {
+          try {
+            const chk = await fetch(`${SUPABASE_URL}/rest/v1/utilisateurs?email=eq.${email}&select=type_compte&limit=1`, { headers: { 'apikey': SUPABASE_KEY } });
+            const chkData = await chk.json();
+            if (chkData?.[0]?.type_compte === 'recruteur') {
+              errDiv.innerHTML = "⚠️ Cette adresse est associée à un compte recruteur. <a href='/connexion' style='color:#E8383A;font-weight:700;'>Connexion →</a>";
+            } else {
+              errDiv.innerHTML = "⚠️ Cette adresse email est déjà utilisée. <a href='/connexion' style='color:#E8383A;font-weight:700;'>Connexion →</a>";
+            }
+          } catch(e) { errDiv.innerHTML = "⚠️ Email déjà utilisé. <a href='/connexion' style='color:#E8383A;font-weight:700;'>Connexion →</a>"; }
+        } else {
+          errDiv.innerHTML = '⚠️ ' + (errMsg || 'Une erreur est survenue.');
+        }
+        errDiv.style.display = 'block';
+        btn.disabled = false; btn.textContent = 'Continuer →';
+        return;
+      }
 
-    userSession = data.user;
+      // Stocker authData pour étape 2
+      _authData = authData;
+      const userId = authData.user?.id;
+      const token = authData.access_token;
 
-    // Sauvegarder en localStorage
-    window.localStorage.setItem('so_user', JSON.stringify({ id: userSession.id, email, type_compte: typeCompte }));
-    window.localStorage.setItem('so_prenom', prenom);
-    window.localStorage.setItem('so_nom', nom);
-    window.localStorage.setItem('so_type', typeCompte);
+      // Insérer dans utilisateurs avec le token valide
+      await fetch(`${SUPABASE_URL}/rest/v1/utilisateurs`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}`, 'Prefer': 'return=minimal' },
+        body: JSON.stringify({ id: userId, email, prenom, nom, type_compte: typeCompte, plan: 'gratuit' })
+      });
 
-    // Créer ligne dans utilisateurs
-    await sb.from('utilisateurs').insert({ id: userSession.id, email, prenom, nom, type_compte: typeCompte });
+      // Stocker en localStorage
+      localStorage.setItem('showone_token', token);
+      localStorage.setItem('showone_user', JSON.stringify({ id: userId, email, prenom, nom, photo_url: '', type_compte: typeCompte }));
 
-    // Passer step 2
-    document.getElementById('step1').style.display = 'none';
-    document.getElementById('step2').style.display = 'block';
+      // Passer étape 2
+      if (typeCompte === 'recruteur') {
+        // Recruteur : créer profil et rediriger directement
+        await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}`, 'Prefer': 'return=minimal' },
+          body: JSON.stringify({ utilisateur_id: userId, nom_societe: prenom + ' ' + nom })
+        });
+        document.getElementById('stepsBar').style.display = 'none';
+        document.getElementById('p1').classList.remove('active');
+        document.getElementById('success').classList.add('active');
+        document.getElementById('btnDashboard').href = '/dashboard-recruteur';
+        document.querySelector('.success-sub').textContent = 'Ton compte recruteur est créé. Accède à ton espace pour déposer des castings et contacter des talents.';
+      } else {
+        // Talent : passer à étape 2
+        document.getElementById('p1').classList.remove('active');
+        document.getElementById('s1').classList.remove('active'); document.getElementById('s1').classList.add('done');
+        document.getElementById('l1').classList.add('done');
+        document.getElementById('s2').classList.add('active');
+        document.getElementById('p2').classList.add('active');
+      }
 
-    if (typeCompte === 'recruteur') {
-      document.getElementById('step2-title').textContent = 'Ton profil recruteur';
-      document.getElementById('section-categorie').style.display = 'none';
-      document.getElementById('section-video').style.display = 'none';
+    } catch(err) {
+      console.error(err);
+      errDiv.innerHTML = '⚠️ Une erreur est survenue. Veuillez réessayer.';
+      errDiv.style.display = 'block';
+      btn.disabled = false; btn.textContent = 'Continuer →';
     }
   }
 
-  async function etape2() {
-    hideError('error-step2');
+  async function creerCompte() {
+    if (!_authData) { window.location.href = '/inscription'; return; }
+    const userId = _authData.user?.id;
+    const token = _authData.access_token;
     const ville = document.getElementById('ville').value.trim();
+    const categorie = document.getElementById('catSelect').value;
+    const souscategorie = document.getElementById('sousCatSelect').value;
+    const nomscene = document.getElementById('nomscene').value.trim();
+    const prenom = localStorage.getItem('showone_user') ? JSON.parse(localStorage.getItem('showone_user')).prenom : '';
+    const errDiv = document.getElementById('profilError');
+    errDiv.style.display = 'none';
 
-    if (!ville) return showError('error-step2', 'Merci de renseigner ta ville.');
-    if (typeCompte === 'talent' && !categorieChoisie) return showError('error-step2', 'Merci de choisir ta catégorie.');
+    if (!categorie) { errDiv.innerHTML = '⚠️ Merci de choisir ta catégorie.'; errDiv.style.display = 'block'; return; }
 
-    const btn = document.getElementById('btn-step2');
-    btn.disabled = true;
-    btn.textContent = 'Enregistrement…';
+    const btn = document.getElementById('btnStep2');
+    btn.disabled = true; btn.textContent = 'Création du profil…';
 
-    if (typeCompte === 'talent') {
+    try {
+      // Mettre à jour ville dans utilisateurs
+      if (ville) {
+        await fetch(`${SUPABASE_URL}/rest/v1/utilisateurs?id=eq.${userId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}`, 'Prefer': 'return=minimal' },
+          body: JSON.stringify({ ville })
+        });
+      }
+
       // Créer profil talent
-      const { data: profil, error: errProfil } = await sb.from('profils_talents').insert({
-        utilisateur_id: userSession.id,
-        prenom: window.localStorage.getItem('so_prenom'),
-        nom: window.localStorage.getItem('so_nom'),
-        categorie: categorieChoisie,
-        ville
-      }).select().single();
-
-      if (errProfil) {
-        btn.disabled = false;
-        btn.textContent = 'Créer mon profil ✓';
-        return showError('error-step2', 'Erreur lors de la création du profil.');
-      }
-
-      // Upload vidéo si présente
-      if (fichierVideo && profil) {
-        btn.textContent = 'Upload de la vidéo…';
-        document.getElementById('progress-bar').style.display = 'block';
-
-        const ext = fichierVideo.name.split('.').pop();
-        const path = `${userSession.id}/${Date.now()}.${ext}`;
-
-        const { data: upload, error: errUpload } = await sb.storage
-          .from('videos')
-          .upload(path, fichierVideo, { contentType: fichierVideo.type });
-
-        if (!errUpload) {
-          document.getElementById('progress-fill').style.width = '100%';
-          const { data: urlData } = sb.storage.from('videos').getPublicUrl(path);
-          await sb.from('videos').insert({
-            talent_id: profil.id,
-            url_video: urlData.publicUrl
-          });
-        }
-      }
-
-      window.location.href = 'dashboard.html';
-
-    } else {
-      // Recruteur
-      await sb.from('profils_recruteurs').insert({
-        utilisateur_id: userSession.id,
-        nom_structure: window.localStorage.getItem('so_nom'),
-        ville
+      await fetch(`${SUPABASE_URL}/rest/v1/profils_talents`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}`, 'Prefer': 'return=minimal' },
+        body: JSON.stringify({
+          utilisateur_id: userId,
+          nom_scene: nomscene || prenom,
+          categorie: categorie || 'autre',
+          sous_categorie: souscategorie || null
+        })
       });
-      window.location.href = 'dashboard-recruteur.html';
+
+      // Succès
+      document.getElementById('p2').classList.remove('active');
+      document.getElementById('stepsBar').style.display = 'none';
+      document.getElementById('success').classList.add('active');
+
+    } catch(err) {
+      console.error(err);
+      errDiv.innerHTML = '⚠️ Une erreur est survenue. Veuillez réessayer.';
+      errDiv.style.display = 'block';
+      btn.disabled = false; btn.textContent = 'Créer mon profil ✓';
     }
   }
 </script>
