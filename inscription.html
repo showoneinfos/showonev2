@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inscription — ShowOne</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: #111; min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* NAV */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 40px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; }
+    .logo span { color: #E8383A; }
+    .nav-login { font-size: 13px; color: #999; }
+    .nav-login a { color: #111; font-weight: 600; text-decoration: none; }
+    .nav-login a:hover { color: #E8383A; }
+
+    /* MAIN */
+    .main {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      padding: 48px 20px;
+    }
+    .card {
+      width: 100%; max-width: 460px;
+    }
+    .card-title {
+      font-size: 30px; font-weight: 900; letter-spacing: -1px; color: #111;
+      margin-bottom: 6px;
+    }
+    .card-sub {
+      font-size: 14px; color: #999; margin-bottom: 36px; line-height: 1.5;
+    }
+
+    /* TYPE SELECTOR */
+    .type-selector {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+      margin-bottom: 28px;
+    }
+    .type-btn {
+      padding: 16px 12px; border-radius: 10px;
+      border: 1.5px solid #e8e8e8; background: #fff;
+      cursor: pointer; text-align: center; transition: all 0.15s;
+    }
+    .type-btn:hover { border-color: #ccc; }
+    .type-btn.active { border-color: #111; background: #111; }
+    .type-icon { font-size: 24px; margin-bottom: 6px; }
+    .type-label { font-size: 13px; font-weight: 700; color: #111; }
+    .type-btn.active .type-label { color: #fff; }
+    .type-desc { font-size: 11px; color: #999; margin-top: 2px; }
+    .type-btn.active .type-desc { color: rgba(255,255,255,0.6); }
+
+    /* FORM */
+    .form-group { margin-bottom: 16px; }
+    .form-label { font-size: 12px; font-weight: 600; color: #555; margin-bottom: 6px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
+    .form-input {
+      width: 100%; padding: 13px 16px; font-size: 14px;
+      border: 1.5px solid #e8e8e8; border-radius: 10px;
+      background: #fff; color: #111; outline: none;
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.15s;
+    }
+    .form-input:focus { border-color: #111; }
+    .form-input::placeholder { color: #ccc; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .btn-submit {
+      width: 100%; padding: 15px; font-size: 15px; font-weight: 700;
+      border-radius: 10px; background: #111; color: #fff; border: none;
+      cursor: pointer; margin-top: 8px; transition: background 0.15s;
+    }
+    .btn-submit:hover { background: #333; }
+    .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
+
+    .form-error {
+      background: #fff0f0; border: 1px solid #ffd0d0;
+      border-radius: 8px; padding: 12px 14px;
+      font-size: 13px; color: #cc2e30; margin-bottom: 16px;
+      display: none;
+    }
+
+    .form-divider {
+      display: flex; align-items: center; gap: 12px;
+      margin: 20px 0; color: #ddd; font-size: 12px;
+    }
+    .form-divider::before, .form-divider::after {
+      content: ''; flex: 1; height: 1px; background: #f0f0f0;
+    }
+
+    .terms {
+      font-size: 11px; color: #bbb; text-align: center; margin-top: 16px; line-height: 1.5;
+    }
+    .terms a { color: #999; }
+
+    /* STEP 2 */
+    #step2 { display: none; }
+    .step-indicator {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 28px;
+    }
+    .step-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: #e8e8e8;
+    }
+    .step-dot.active { background: #111; }
+    .step-dot.done { background: #E8383A; }
+    .step-label { font-size: 12px; color: #bbb; margin-left: 4px; }
+
+    /* UPLOAD VIDEO */
+    .upload-zone {
+      border: 2px dashed #e8e8e8; border-radius: 12px;
+      padding: 32px 20px; text-align: center; cursor: pointer;
+      transition: border-color 0.15s; margin-bottom: 16px;
+    }
+    .upload-zone:hover { border-color: #bbb; }
+    .upload-zone.has-file { border-color: #111; border-style: solid; }
+    .upload-icon { font-size: 32px; margin-bottom: 10px; }
+    .upload-text { font-size: 14px; font-weight: 600; color: #111; margin-bottom: 4px; }
+    .upload-sub { font-size: 12px; color: #bbb; }
+    .upload-filename { font-size: 13px; font-weight: 600; color: #E8383A; margin-top: 8px; }
+    #file-input { display: none; }
+
+    .progress-bar {
+      width: 100%; height: 4px; background: #f0f0f0; border-radius: 2px;
+      margin-bottom: 16px; display: none;
+    }
+    .progress-fill { height: 100%; background: #E8383A; border-radius: 2px; width: 0%; transition: width 0.3s; }
+
+    .cat-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px;
+    }
+    .cat-option {
+      padding: 10px 8px; border-radius: 8px; border: 1.5px solid #e8e8e8;
+      text-align: center; font-size: 12px; font-weight: 600; cursor: pointer;
+      transition: all 0.15s; color: #555;
+    }
+    .cat-option:hover { border-color: #ccc; }
+    .cat-option.active { border-color: #111; background: #111; color: #fff; }
+
+    @media (max-width: 600px) {
+      nav { padding: 14px 20px; }
+      .form-row { grid-template-columns: 1fr; }
+      .cat-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Show<span>One</span></a>
+  <div class="nav-login">Déjà inscrit ? <a href="connexion.html">Connexion</a></div>
+</nav>
+
+<div class="main">
+  <div class="card">
+
+    <!-- STEP 1 -->
+    <div id="step1">
+      <div class="card-title">Créer mon compte</div>
+      <div class="card-sub">Gratuit, sans carte bancaire.</div>
+
+      <div class="type-selector">
+        <div class="type-btn active" id="btn-talent" onclick="setType('talent')">
+          <div class="type-icon">🎤</div>
+          <div class="type-label">Je suis un talent</div>
+          <div class="type-desc">Chanteur, danseur, acteur…</div>
+        </div>
+        <div class="type-btn" id="btn-recruteur" onclick="setType('recruteur')">
+          <div class="type-icon">🎬</div>
+          <div class="type-label">Je recrute</div>
+          <div class="type-desc">Agence, producteur…</div>
+        </div>
+      </div>
+
+      <div class="form-error" id="error-step1"></div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Prénom</label>
+          <input class="form-input" type="text" id="prenom" placeholder="Sophie" autocomplete="given-name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nom</label>
+          <input class="form-input" type="text" id="nom" placeholder="Martin" autocomplete="family-name">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" id="email" placeholder="sophie@email.com" autocomplete="email">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Mot de passe</label>
+        <input class="form-input" type="password" id="password" placeholder="8 caractères minimum" autocomplete="new-password">
+      </div>
+
+      <button class="btn-submit" id="btn-step1" onclick="etape1()">Continuer →</button>
+
+      <p class="terms">En créant un compte, tu acceptes nos <a href="#">Conditions d'utilisation</a> et notre <a href="#">Politique de confidentialité</a>.</p>
+    </div>
+
+    <!-- STEP 2 -->
+    <div id="step2">
+      <div class="step-indicator">
+        <div class="step-dot done"></div>
+        <div class="step-dot active"></div>
+        <span class="step-label">Étape 2 sur 2 — Ton profil</span>
+      </div>
+
+      <div class="card-title" id="step2-title">Ton profil talent</div>
+      <div class="card-sub">Quelques infos pour te présenter aux recruteurs.</div>
+
+      <div class="form-error" id="error-step2"></div>
+
+      <!-- CATEGORIE (talent seulement) -->
+      <div id="section-categorie">
+        <div class="form-group">
+          <label class="form-label">Ta catégorie</label>
+          <div class="cat-grid">
+            <div class="cat-option" onclick="setCategorie(this, 'Chant')">🎤 Chant</div>
+            <div class="cat-option" onclick="setCategorie(this, 'Danse')">💃 Danse</div>
+            <div class="cat-option" onclick="setCategorie(this, 'Humour')">😄 Humour</div>
+            <div class="cat-option" onclick="setCategorie(this, 'Sport')">⚽ Sport</div>
+            <div class="cat-option" onclick="setCategorie(this, 'Musique')">🎸 Musique</div>
+            <div class="cat-option" onclick="setCategorie(this, 'Autre')">✨ Autre</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Ville</label>
+        <input class="form-input" type="text" id="ville" placeholder="Paris, Lyon, Marseille…">
+      </div>
+
+      <!-- VIDEO (talent seulement) -->
+      <div id="section-video">
+        <div class="form-group">
+          <label class="form-label">Ta vidéo de présentation</label>
+          <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()">
+            <div class="upload-icon">🎬</div>
+            <div class="upload-text">Clique pour ajouter ta vidéo</div>
+            <div class="upload-sub">MP4, MOV · Max 100MB</div>
+            <div class="upload-filename" id="upload-filename"></div>
+          </div>
+          <input type="file" id="file-input" accept="video/mp4,video/quicktime,video/mov,video/*" onchange="fichierChoisi(this)">
+          <div class="progress-bar" id="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-submit" id="btn-step2" onclick="etape2()">Créer mon profil ✓</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const SUPABASE_URL = 'https://emiuzigtlomlrsofxqyf.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtaXV6aWd0bG9tbHJzb2Z4cXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYzNjE3MzcsImV4cCI6MjA2MTkzNzczN30.8DBZX_lKXaKlKQLqMKVRYrMNASMY5_4mHpZVMBBjPOc';
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  let typeCompte = 'talent';
+  let categorieChoisie = '';
+  let fichierVideo = null;
+  let userSession = null;
+
+  // Pré-remplir type depuis URL
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('type') === 'recruteur') {
+    setType('recruteur');
+  }
+
+  function setType(type) {
+    typeCompte = type;
+    document.getElementById('btn-talent').classList.toggle('active', type === 'talent');
+    document.getElementById('btn-recruteur').classList.toggle('active', type === 'recruteur');
+  }
+
+  function setCategorie(el, cat) {
+    document.querySelectorAll('.cat-option').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    categorieChoisie = cat;
+  }
+
+  function fichierChoisi(input) {
+    if (input.files && input.files[0]) {
+      fichierVideo = input.files[0];
+      document.getElementById('upload-zone').classList.add('has-file');
+      document.getElementById('upload-filename').textContent = fichierVideo.name;
+    }
+  }
+
+  function showError(id, msg) {
+    const el = document.getElementById(id);
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+  function hideError(id) {
+    document.getElementById(id).style.display = 'none';
+  }
+
+  async function etape1() {
+    hideError('error-step1');
+    const prenom = document.getElementById('prenom').value.trim();
+    const nom = document.getElementById('nom').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    if (!prenom || !nom) return showError('error-step1', 'Merci de renseigner ton prénom et ton nom.');
+    if (!email) return showError('error-step1', 'Merci de renseigner ton email.');
+    if (password.length < 8) return showError('error-step1', 'Le mot de passe doit faire au moins 8 caractères.');
+
+    const btn = document.getElementById('btn-step1');
+    btn.disabled = true;
+    btn.textContent = 'Création du compte…';
+
+    const { data, error } = await sb.auth.signUp({ email, password });
+
+    if (error) {
+      btn.disabled = false;
+      btn.textContent = 'Continuer →';
+      if (error.message.includes('already registered')) return showError('error-step1', 'Cet email est déjà utilisé. <a href="connexion.html">Connecte-toi</a>');
+      return showError('error-step1', error.message);
+    }
+
+    userSession = data.user;
+
+    // Sauvegarder en localStorage
+    window.localStorage.setItem('so_user', JSON.stringify({ id: userSession.id, email, type_compte: typeCompte }));
+    window.localStorage.setItem('so_prenom', prenom);
+    window.localStorage.setItem('so_nom', nom);
+    window.localStorage.setItem('so_type', typeCompte);
+
+    // Créer ligne dans utilisateurs
+    await sb.from('utilisateurs').insert({ id: userSession.id, email, prenom, nom, type_compte: typeCompte });
+
+    // Passer step 2
+    document.getElementById('step1').style.display = 'none';
+    document.getElementById('step2').style.display = 'block';
+
+    if (typeCompte === 'recruteur') {
+      document.getElementById('step2-title').textContent = 'Ton profil recruteur';
+      document.getElementById('section-categorie').style.display = 'none';
+      document.getElementById('section-video').style.display = 'none';
+    }
+  }
+
+  async function etape2() {
+    hideError('error-step2');
+    const ville = document.getElementById('ville').value.trim();
+
+    if (!ville) return showError('error-step2', 'Merci de renseigner ta ville.');
+    if (typeCompte === 'talent' && !categorieChoisie) return showError('error-step2', 'Merci de choisir ta catégorie.');
+
+    const btn = document.getElementById('btn-step2');
+    btn.disabled = true;
+    btn.textContent = 'Enregistrement…';
+
+    if (typeCompte === 'talent') {
+      // Créer profil talent
+      const { data: profil, error: errProfil } = await sb.from('profils_talents').insert({
+        utilisateur_id: userSession.id,
+        prenom: window.localStorage.getItem('so_prenom'),
+        nom: window.localStorage.getItem('so_nom'),
+        categorie: categorieChoisie,
+        ville
+      }).select().single();
+
+      if (errProfil) {
+        btn.disabled = false;
+        btn.textContent = 'Créer mon profil ✓';
+        return showError('error-step2', 'Erreur lors de la création du profil.');
+      }
+
+      // Upload vidéo si présente
+      if (fichierVideo && profil) {
+        btn.textContent = 'Upload de la vidéo…';
+        document.getElementById('progress-bar').style.display = 'block';
+
+        const ext = fichierVideo.name.split('.').pop();
+        const path = `${userSession.id}/${Date.now()}.${ext}`;
+
+        const { data: upload, error: errUpload } = await sb.storage
+          .from('videos')
+          .upload(path, fichierVideo, { contentType: fichierVideo.type });
+
+        if (!errUpload) {
+          document.getElementById('progress-fill').style.width = '100%';
+          const { data: urlData } = sb.storage.from('videos').getPublicUrl(path);
+          await sb.from('videos').insert({
+            talent_id: profil.id,
+            url_video: urlData.publicUrl
+          });
+        }
+      }
+
+      window.location.href = 'dashboard.html';
+
+    } else {
+      // Recruteur
+      await sb.from('profils_recruteurs').insert({
+        utilisateur_id: userSession.id,
+        nom_structure: window.localStorage.getItem('so_nom'),
+        ville
+      });
+      window.location.href = 'dashboard-recruteur.html';
+    }
+  }
+</script>
+</body>
+</html>

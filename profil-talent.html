@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil Talent — ShowOne</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: #111; }
+
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; background: #fff; z-index: 100; }
+    .logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; }
+    .logo span { color: #E8383A; }
+    .nav-right { display: flex; gap: 10px; align-items: center; }
+    .btn-back { font-size: 13px; color: #999; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+    .btn-back:hover { color: #111; }
+
+    /* HERO */
+    .hero { padding: 48px 40px 40px; display: flex; gap: 40px; align-items: flex-start; border-bottom: 1px solid #f0f0f0; max-width: 1100px; }
+    .hero-avatar-wrap { flex-shrink: 0; }
+    .hero-avatar { width: 120px; height: 120px; border-radius: 16px; object-fit: cover; background: #f0f0f0; }
+    .hero-bg { width: 120px; height: 120px; border-radius: 16px; background: #111; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 900; color: #fff; }
+    .hero-info { flex: 1; }
+    .hero-cat-pill { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 4px 10px; border-radius: 100px; background: #f0f0f0; color: #555; margin-bottom: 12px; }
+    .hero-nom { font-size: 36px; font-weight: 900; letter-spacing: -1px; margin-bottom: 8px; }
+    .hero-meta { display: flex; gap: 14px; font-size: 13px; color: #999; margin-bottom: 20px; flex-wrap: wrap; }
+    .hero-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn-primary { padding: 11px 24px; border-radius: 9px; background: #111; color: #fff; border: none; font-size: 13px; font-weight: 700; cursor: pointer; }
+    .btn-secondary { padding: 11px 20px; border-radius: 9px; background: transparent; color: #111; border: 1px solid #e8e8e8; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .btn-secondary:hover { border-color: #bbb; }
+
+    /* STATS */
+    .stats-bar { display: flex; gap: 0; padding: 0 40px; border-bottom: 1px solid #f0f0f0; max-width: 1100px; }
+    .stat-item { flex: 1; text-align: center; padding: 20px 0; border-right: 1px solid #f0f0f0; }
+    .stat-item:last-child { border-right: none; }
+    .stat-num { font-size: 20px; font-weight: 900; color: #111; letter-spacing: -0.5px; }
+    .stat-label { font-size: 11px; color: #bbb; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* CONTENT */
+    .content { display: grid; grid-template-columns: 1fr 280px; gap: 32px; padding: 40px; max-width: 1100px; }
+    .card { background: #fff; border: 1px solid #f0f0f0; border-radius: 12px; padding: 20px 22px; margin-bottom: 16px; }
+    .card:last-child { margin-bottom: 0; }
+    .card-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 14px; }
+
+    /* VIDEOS */
+    .videos-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .video-card { border-radius: 10px; overflow: hidden; position: relative; aspect-ratio: 16/9; cursor: pointer; background: #f0f0f0; }
+    .video-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .video-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.3); opacity: 0; transition: opacity 0.15s; }
+    .video-card:hover .video-overlay { opacity: 1; }
+    .video-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 40px; height: 40px; border-radius: 50%; background: #E8383A; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; }
+    .video-views { position: absolute; bottom: 8px; left: 8px; font-size: 10px; color: rgba(255,255,255,0.9); background: rgba(0,0,0,0.5); padding: 2px 7px; border-radius: 100px; }
+    .video-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 8px 10px; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); }
+    .video-title { font-size: 11px; font-weight: 600; color: #fff; }
+
+    /* INFOS */
+    .info-row { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid #f8f8f8; font-size: 13px; }
+    .info-row:last-child { border-bottom: none; }
+    .info-key { color: #999; }
+    .info-val { font-weight: 600; color: #111; }
+
+    /* CONTACT CARD */
+    .contact-card { background: #111; border-radius: 12px; padding: 20px; text-align: center; }
+    .contact-avatar { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; margin: 0 auto 10px; display: block; background: #333; }
+    .contact-nom { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .contact-desc { font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 14px; line-height: 1.5; }
+    .btn-contact-card { width: 100%; padding: 11px; border-radius: 8px; background: #E8383A; color: #fff; border: none; font-size: 13px; font-weight: 700; cursor: pointer; margin-bottom: 8px; }
+    .btn-fav-card { width: 100%; padding: 10px; border-radius: 8px; background: transparent; color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.15); font-size: 13px; font-weight: 600; cursor: pointer; }
+
+    /* EDIT BIO */
+    .edit-bio-zone { display: none; margin-top: 10px; }
+    .bio-textarea { width: 100%; padding: 10px 12px; border: 1px solid #e8e8e8; border-radius: 8px; font-size: 13px; font-family: 'Inter', sans-serif; outline: none; resize: vertical; min-height: 80px; color: #111; margin-bottom: 8px; }
+    .bio-textarea:focus { border-color: #111; }
+    .btn-save-bio { padding: 9px 18px; border-radius: 8px; border: none; background: #111; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; }
+    .btn-edit-bio { background: none; border: none; font-size: 12px; color: #E8383A; cursor: pointer; font-weight: 600; }
+
+    /* SIMILAIRES */
+    .similar-item { display: flex; gap: 10px; align-items: center; padding: 8px; border-radius: 9px; cursor: pointer; transition: background 0.15s; }
+    .similar-item:hover { background: #f8f8f8; }
+    .similar-thumb { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; flex-shrink: 0; background: #111; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; overflow: hidden; }
+    .similar-name { font-size: 13px; font-weight: 700; color: #111; }
+    .similar-cat { font-size: 11px; color: #bbb; }
+
+    /* MODAL CONTACT */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: #fff; border-radius: 16px; padding: 28px; width: 100%; max-width: 440px; }
+    .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .modal-title { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; }
+    .modal-close { width: 30px; height: 30px; border-radius: 7px; border: 1px solid #e8e8e8; background: transparent; cursor: pointer; font-size: 14px; }
+    .modal-talent-info { display: flex; gap: 10px; align-items: center; padding: 10px; background: #f8f8f8; border-radius: 8px; margin-bottom: 16px; }
+    .modal-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: #e0e0e0; }
+    .modal-nom { font-size: 13px; font-weight: 700; color: #111; }
+    .modal-cat { font-size: 12px; color: #999; }
+    .modal-label { font-size: 12px; font-weight: 600; color: #555; display: block; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .modal-input { width: 100%; padding: 11px 13px; border: 1px solid #e8e8e8; border-radius: 8px; font-size: 13px; font-family: 'Inter', sans-serif; outline: none; color: #111; margin-bottom: 10px; }
+    .modal-input:focus { border-color: #111; }
+    .modal-textarea { width: 100%; padding: 11px 13px; border: 1px solid #e8e8e8; border-radius: 8px; font-size: 13px; font-family: 'Inter', sans-serif; outline: none; resize: vertical; min-height: 90px; color: #111; margin-bottom: 14px; }
+    .modal-textarea:focus { border-color: #111; }
+    .modal-btns { display: flex; gap: 10px; }
+    .btn-cancel { padding: 11px 18px; border-radius: 8px; border: 1px solid #e8e8e8; background: transparent; font-size: 13px; font-weight: 600; cursor: pointer; color: #999; }
+    .btn-send { flex: 1; padding: 11px; border-radius: 8px; border: none; background: #111; color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; }
+
+    .toast { display: none; position: fixed; bottom: 24px; right: 24px; padding: 12px 18px; border-radius: 10px; font-weight: 700; font-size: 13px; z-index: 9999; color: #fff; }
+
+    /* Blocs actions */
+    #cardActionsRecruteur, #cardActionsVisiteur, #cardActionsTalent { display: none; }
+
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .hero { flex-direction: column; padding: 28px 20px; gap: 20px; }
+      .stats-bar { padding: 0 20px; }
+      .content { grid-template-columns: 1fr; padding: 20px; gap: 16px; }
+      .hero-nom { font-size: 26px; }
+      .videos-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Show<span>One</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="btn-back">← Retour aux talents</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-avatar-wrap">
+    <img class="hero-avatar" id="heroAvatar" src="" alt="" style="display:none;">
+    <div class="hero-bg" id="heroBg">?</div>
+  </div>
+  <div class="hero-info">
+    <div class="hero-cat-pill" id="heroCat">Talent</div>
+    <div class="hero-nom" id="heroNom">Chargement…</div>
+    <div class="hero-meta">
+      <span id="heroVille"></span>
+      <span id="heroAge"></span>
+    </div>
+    <div class="hero-btns">
+      <button class="btn-primary" id="btnContactHero">▶ Voir les vidéos</button>
+      <button class="btn-secondary" onclick="shareProfile()">🔗 Partager</button>
+    </div>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-num" id="statVues">—</div><div class="stat-label">Vues</div></div>
+  <div class="stat-item"><div class="stat-num" id="statVideos">—</div><div class="stat-label">Vidéos</div></div>
+  <div class="stat-item"><div class="stat-num" id="statFavoris">—</div><div class="stat-label">Favoris</div></div>
+  <div class="stat-item"><div class="stat-num" id="statMessages">—</div><div class="stat-label">Messages</div></div>
+</div>
+
+<div class="content">
+  <div>
+    <div class="card">
+      <div class="card-title">🎬 Vidéos</div>
+      <div class="videos-grid" id="videosGrid"></div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <div class="card-title" style="margin:0;">À propos</div>
+        <button class="btn-edit-bio" id="btnEditBio" style="display:none;" onclick="toggleEditBio()">✏️ Modifier</button>
+      </div>
+      <p id="aboutText" style="font-size:14px;color:#555;line-height:1.7;"></p>
+      <div class="edit-bio-zone" id="editBioZone">
+        <textarea class="bio-textarea" id="bioInput" placeholder="Décrivez votre parcours, vos spécialités…"></textarea>
+        <button class="btn-save-bio" id="btnSauvBio" onclick="sauvegarderBio()">✓ Sauvegarder</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 Informations</div>
+      <div id="infoList"></div>
+    </div>
+  </div>
+
+  <div>
+    <div class="contact-card">
+      <img class="contact-avatar" id="contactAvatar" src="" alt="">
+      <div class="contact-nom" id="contactNom">—</div>
+      <div class="contact-desc" id="contactDesc">Connectez-vous pour contacter ce talent.</div>
+      <div id="cardActionsRecruteur">
+        <button class="btn-contact-card" onclick="openModal()">💬 Contacter ce talent</button>
+        <button class="btn-fav-card" id="favCardBtn" onclick="toggleFav()">🤍 Ajouter aux favoris</button>
+      </div>
+      <div id="cardActionsVisiteur">
+        <button class="btn-contact-card" onclick="window.location.href='inscription.html?type=recruteur'">Devenir recruteur →</button>
+      </div>
+      <div id="cardActionsTalent">
+        <button class="btn-contact-card" onclick="partagerProfil()">📤 Partager mon profil</button>
+        <button class="btn-fav-card" onclick="copierLien()">🔗 Copier le lien</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px;">
+      <div class="card-title">✨ Talents similaires</div>
+      <div id="similarList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CONTACT -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title" id="modalTitle">Contacter</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-talent-info">
+      <img class="modal-avatar" id="modalAvatar" src="" alt="">
+      <div>
+        <div class="modal-nom" id="modalNom">—</div>
+        <div class="modal-cat" id="modalCat"></div>
+      </div>
+    </div>
+    <label class="modal-label">Objet</label>
+    <input id="msgObjet" class="modal-input" type="text" placeholder="Ex : Audition comédie musicale — Juin 2025">
+    <label class="modal-label">Message</label>
+    <textarea id="msgContenu" class="modal-textarea" placeholder="Bonjour, nous avons découvert votre profil ShowOne et…"></textarea>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal()">Annuler</button>
+      <button class="btn-send" onclick="envoyerMessage()">Envoyer ✓</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SUPABASE_URL = 'https://emiuzigtlomlrsofxqyf.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_U8P52zBkzF6Nqno_mmbcVQ_bKQLNmTP';
+let talentData = null, liked = false, faved = false;
+const params = new URLSearchParams(window.location.search);
+const talentId = params.get('id');
+
+async function chargerProfil() {
+  if (!talentId) { document.getElementById('heroNom').textContent='Talent introuvable'; return; }
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/profils_talents?id=eq.${talentId}&select=*,utilisateurs(id,prenom,nom,ville,date_naissance,email)`, { headers: { 'apikey': SUPABASE_KEY } });
+    const data = await res.json();
+    if (!data || data.length === 0) { document.getElementById('heroNom').textContent='Profil introuvable'; return; }
+    talentData = data[0];
+    const u = talentData.utilisateurs;
+    const nom = talentData.nom_scene || ((u?.prenom||'')+' '+(u?.nom||'')).trim();
+    const ville = u?.ville||''; const cat = talentData.sous_categorie||talentData.categorie||'Talent'; const photo = talentData.photo_url||'';
+    let age = ''; if(u?.date_naissance) age = Math.floor((Date.now()-new Date(u.date_naissance).getTime())/(365.25*24*3600*1000))+' ans';
+    document.title = nom+' — ShowOne';
+    document.getElementById('heroNom').textContent = nom;
+    document.getElementById('heroCat').textContent = cat;
+    if (photo) {
+      const av = document.getElementById('heroAvatar'); av.src=photo; av.style.display='block';
+      document.getElementById('heroBg').style.display='none';
+      ['contactAvatar','modalAvatar'].forEach(id=>{ const el=document.getElementById(id); if(el) el.src=photo; });
+    }
+    if (ville) document.getElementById('heroVille').textContent = '📍 '+ville;
+    if (age) document.getElementById('heroAge').textContent = '🎂 '+age;
+    document.getElementById('modalTitle').textContent = 'Contacter '+nom;
+    document.getElementById('modalNom').textContent = nom;
+    document.getElementById('modalCat').textContent = cat+(ville?' · '+ville:'');
+    document.getElementById('contactNom').textContent = nom;
+    document.getElementById('infoList').innerHTML = [
+      ville?`<div class="info-row"><span class="info-key">📍 Ville</span><span class="info-val">${ville}</span></div>`:'',
+      age?`<div class="info-row"><span class="info-key">🎂 Âge</span><span class="info-val">${age}</span></div>`:'',
+      cat?`<div class="info-row"><span class="info-key">🎭 Catégorie</span><span class="info-val">${cat}</span></div>`:'',
+      `<div class="info-row"><span class="info-key">✅ Disponible</span><span class="info-val" style="color:#10b981;">Oui</span></div>`
+    ].filter(Boolean).join('');
+    document.getElementById('aboutText').textContent = talentData.bio||"Ce talent n'a pas encore renseigné sa biographie.";
+    await chargerVideos();
+    await chargerStats();
+    await chargerSimilaires(cat);
+    verifierRole(u?.id);
+  } catch(e) { console.error(e); }
+}
+
+function verifierRole(utilisateurId) {
+  const userStr = localStorage.getItem('showone_user'); const token = localStorage.getItem('showone_token');
+  const btnHero = document.getElementById('btnContactHero');
+  if (!userStr || !token) {
+    btnHero.textContent='▶ Voir les vidéos'; btnHero.onclick=()=>document.getElementById('videosGrid').scrollIntoView({behavior:'smooth'});
+    document.getElementById('cardActionsVisiteur').style.display='block';
+    document.getElementById('contactDesc').textContent='Inscrivez-vous pour contacter ce talent !'; return;
+  }
+  const user = JSON.parse(userStr);
+  if (user.type_compte === 'recruteur') {
+    btnHero.textContent='💬 Contacter'; btnHero.onclick=openModal;
+    document.getElementById('cardActionsRecruteur').style.display='block'; return;
+  }
+  if (utilisateurId && utilisateurId === user.id) {
+    btnHero.textContent='📤 Partager'; btnHero.onclick=partagerProfil;
+    document.getElementById('cardActionsTalent').style.display='block';
+    document.getElementById('contactDesc').textContent='Partagez votre profil et faites-vous découvrir !';
+    document.getElementById('btnEditBio').style.display='block';
+  } else {
+    btnHero.textContent='▶ Voir les vidéos'; btnHero.onclick=()=>document.getElementById('videosGrid').scrollIntoView({behavior:'smooth'});
+    document.getElementById('cardActionsVisiteur').style.display='block';
+    document.getElementById('contactDesc').textContent='Devenez recruteur pour contacter ce talent !';
+  }
+}
+
+async function chargerVideos() {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/videos?talent_id=eq.${talentId}&statut=eq.en_ligne&order=vues.desc`, { headers: { 'apikey': SUPABASE_KEY } });
+  const videos = await res.json();
+  const grid = document.getElementById('videosGrid');
+  if (!videos || videos.length === 0) { grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:24px;color:#bbb;">Aucune vidéo publiée.</div>'; return; }
+  grid.innerHTML = videos.map(v => {
+    const thumb = v.playback_id ? `https://image.mux.com/${v.playback_id}/thumbnail.jpg?width=600&height=340&fit_mode=crop` : '';
+    return `<div class="video-card" onclick="lireVideo('${v.playback_id}')">
+      ${thumb?`<img src="${thumb}" alt="${v.titre||''}">`:'<div style="width:100%;height:100%;background:#111;display:flex;align-items:center;justify-content:center;font-size:28px;">🎬</div>'}
+      <div class="video-overlay"></div><div class="video-play">▶</div>
+      <div class="video-views">👁 ${(v.vues||0).toLocaleString('fr-FR')}</div>
+      <div class="video-info"><div class="video-title">${v.titre||'Vidéo'}</div></div>
+    </div>`;
+  }).join('');
+}
+
+async function chargerStats() {
+  const [vR,fR,mR] = await Promise.all([
+    fetch(`${SUPABASE_URL}/rest/v1/videos?talent_id=eq.${talentId}&statut=eq.en_ligne&select=vues`,{headers:{apikey:SUPABASE_KEY}}),
+    fetch(`${SUPABASE_URL}/rest/v1/favoris?talent_id=eq.${talentId}&select=id`,{headers:{apikey:SUPABASE_KEY}}),
+    fetch(`${SUPABASE_URL}/rest/v1/messages?talent_id=eq.${talentId}&select=id`,{headers:{apikey:SUPABASE_KEY}})
+  ]);
+  const vids=await vR.json(); const favs=await fR.json(); const msgs=await mR.json();
+  document.getElementById('statVues').textContent = (Array.isArray(vids)?vids.reduce((s,v)=>s+(v.vues||0),0):0).toLocaleString('fr-FR');
+  document.getElementById('statVideos').textContent = Array.isArray(vids)?vids.length:0;
+  document.getElementById('statFavoris').textContent = Array.isArray(favs)?favs.length:0;
+  document.getElementById('statMessages').textContent = Array.isArray(msgs)?msgs.length:0;
+}
+
+async function chargerSimilaires(cat) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/profils_talents?categorie=eq.${encodeURIComponent(cat)}&id=neq.${talentId}&select=id,nom_scene,photo_url,categorie,sous_categorie,utilisateurs(prenom,nom,ville)&limit=3`,{headers:{apikey:SUPABASE_KEY}});
+  const sim = await res.json();
+  const list = document.getElementById('similarList');
+  if (!sim || sim.length === 0) { list.innerHTML='<div style="text-align:center;padding:14px;color:#bbb;font-size:13px;">Aucun talent similaire.</div>'; return; }
+  list.innerHTML = sim.map(s => {
+    const u=s.utilisateurs; const nom=s.nom_scene||((u?.prenom||'')+' '+(u?.nom||'')).trim(); const photo=s.photo_url||''; const cat2=s.sous_categorie||s.categorie||'';
+    return `<div class="similar-item" onclick="window.location='profil-talent.html?id=${s.id}'">
+      ${photo?`<img class="similar-thumb" src="${photo}" alt="${nom}">`:`<div class="similar-thumb">${nom[0]||'?'}</div>`}
+      <div><div class="similar-name">${nom}</div><div class="similar-cat">${cat2}${u?.ville?' · '+u.ville:''}</div></div>
+    </div>`;
+  }).join('');
+}
+
+function lireVideo(playbackId) {
+  if (!playbackId) return;
+  const src='https://stream.mux.com/'+playbackId+'.m3u8';
+  const overlay=document.createElement('div'); overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;';
+  overlay.innerHTML=`<div style="position:relative;width:100%;max-width:800px;"><video id="popPlayer" controls autoplay playsinline style="width:100%;border-radius:12px;background:#000;max-height:80vh;"></video><button onclick="this.closest('div').parentElement.remove()" style="position:absolute;top:-36px;right:0;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;">✕</button></div>`;
+  document.body.appendChild(overlay);
+  const video=document.getElementById('popPlayer');
+  if(video.canPlayType('application/vnd.apple.mpegurl')){video.src=src;video.play();}
+  else{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/hls.js@latest';s.onload=()=>{if(window.Hls?.isSupported()){const hls=new Hls();hls.loadSource(src);hls.attachMedia(video);hls.on(Hls.Events.MANIFEST_PARSED,()=>video.play());}};document.head.appendChild(s);}
+}
+
+function openModal() {
+  const token=localStorage.getItem('showone_token'); const userStr=localStorage.getItem('showone_user');
+  if(!token||!userStr){if(confirm('Connectez-vous en tant que recruteur pour contacter ce talent.'))window.location.href='connexion.html';return;}
+  const user=JSON.parse(userStr); if(user.type_compte!=='recruteur'){alert('Seuls les recruteurs peuvent envoyer des messages.');return;}
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+
+async function envoyerMessage() {
+  const token=localStorage.getItem('showone_token'); const userStr=localStorage.getItem('showone_user');
+  if(!token||!userStr){alert('Connectez-vous en tant que recruteur.');return;}
+  const user=JSON.parse(userStr); if(user.type_compte!=='recruteur'){alert('Seuls les recruteurs peuvent envoyer des messages.');return;}
+  const objet=document.getElementById('msgObjet').value||'Proposition'; const contenu=document.getElementById('msgContenu').value;
+  if(!contenu.trim()){alert('Veuillez écrire un message !');return;}
+  await fetch(`${SUPABASE_URL}/rest/v1/messages`,{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`,'Prefer':'return=minimal'},body:JSON.stringify({talent_id:talentId,objet,contenu,lu:false})});
+  closeModal(); showToast('✓ Message envoyé !','#10b981');
+}
+
+function toggleFav() { faved=!faved; const btn=document.getElementById('favCardBtn'); btn.textContent=faved?'❤️ Retiré des favoris':'🤍 Ajouter aux favoris'; showToast(faved?'❤️ Ajouté !':'Retiré des favoris',faved?'#E8383A':'#111'); }
+function shareProfile() { navigator.clipboard.writeText(window.location.href).then(()=>showToast('🔗 Lien copié !','#111')); }
+function partagerProfil() { const url=window.location.href; if(navigator.share)navigator.share({title:'Mon profil ShowOne',text:'Viens découvrir mon profil sur ShowOne ! '+url,url}); else navigator.clipboard.writeText(url).then(()=>showToast('📤 Lien copié !','#111')); }
+function copierLien() { navigator.clipboard.writeText(window.location.href).then(()=>showToast('🔗 Lien copié !','#111')); }
+function toggleEditBio() { const zone=document.getElementById('editBioZone'); const txt=document.getElementById('aboutText'); const isOpen=zone.style.display==='block'; zone.style.display=isOpen?'none':'block'; txt.style.display=isOpen?'block':'none'; if(!isOpen){const cur=txt.textContent;document.getElementById('bioInput').value=cur.includes("pas encore renseigné")?'':cur;} }
+
+async function sauvegarderBio() {
+  const bio=document.getElementById('bioInput').value.trim(); const token=localStorage.getItem('showone_token'); const userStr=localStorage.getItem('showone_user');
+  if(!bio){alert('La biographie ne peut pas être vide.');return;} if(!token||!userStr){alert('Vous devez être connecté.');return;}
+  const user=JSON.parse(userStr); const btn=document.getElementById('btnSauvBio'); btn.textContent='⏳…'; btn.disabled=true;
+  try {
+    const res=await fetch(`${SUPABASE_URL}/rest/v1/profils_talents?utilisateur_id=eq.${user.id}`,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`,'Prefer':'return=representation'},body:JSON.stringify({bio})});
+    if(res.ok){document.getElementById('aboutText').textContent=bio;toggleEditBio();showToast('✓ Biographie sauvegardée !','#10b981');}
+    else{alert('Erreur lors de la sauvegarde.');}
+  } catch(e){alert('Erreur : '+e.message);}
+  finally{btn.textContent='✓ Sauvegarder';btn.disabled=false;}
+}
+
+function showToast(msg, color) { const t=document.getElementById('toast'); t.textContent=msg; t.style.background=color; t.style.display='block'; setTimeout(()=>t.style.display='none',2500); }
+
+document.getElementById('modalOverlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
+chargerProfil();
+</script>
+</body>
+</html>

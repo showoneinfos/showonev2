@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShowOne — Espace Recruteur</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f8f8f8; color: #111; display: flex; min-height: 100vh; }
+
+    /* SIDEBAR */
+    .sidebar { width: 220px; min-height: 100vh; background: #fff; border-right: 1px solid #f0f0f0; display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 50; }
+    .sidebar-logo { padding: 24px 20px 18px; border-bottom: 1px solid #f0f0f0; }
+    .sidebar-logo a { font-size: 18px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; }
+    .sidebar-logo a span { color: #E8383A; }
+    .sidebar-logo p { font-size: 11px; color: #bbb; margin-top: 2px; }
+    .sidebar-avatar { padding: 16px 20px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #f0f0f0; }
+    .avatar-circle { width: 38px; height: 38px; border-radius: 50%; background: #111; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+    .avatar-name { font-size: 13px; font-weight: 700; color: #111; }
+    .avatar-plan { font-size: 10px; color: #bbb; margin-top: 1px; }
+    .sidebar-nav { padding: 12px 10px; flex: 1; display: flex; flex-direction: column; gap: 2px; }
+    .nav-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #ddd; padding: 10px 10px 4px; }
+    .nav-item { display: flex; align-items: center; gap: 9px; padding: 9px 10px; border-radius: 8px; cursor: pointer; color: #888; font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.15s; }
+    .nav-item:hover { background: #f8f8f8; color: #111; }
+    .nav-item.active { background: #f0f0f0; color: #111; font-weight: 700; }
+    .nav-item-danger { color: #E8383A; }
+    .nav-item-danger:hover { background: #fff0f0; }
+    .nav-badge { margin-left: auto; background: #E8383A; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 100px; }
+    .sidebar-bottom { padding: 12px 10px; border-top: 1px solid #f0f0f0; }
+
+    /* MAIN */
+    .main { margin-left: 220px; flex: 1; padding: 32px 36px; max-width: calc(100% - 220px); }
+    .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; }
+    .topbar h1 { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; }
+    .topbar p { font-size: 13px; color: #999; margin-top: 2px; }
+    .btn-casting { padding: 9px 18px; border-radius: 8px; border: none; background: #111; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+
+    /* BANNER CANDIDATURES */
+    .cand-banner { background: #111; border-radius: 12px; padding: 20px 24px; margin-bottom: 24px; display: none; align-items: center; gap: 20px; }
+    .cand-banner-info { flex: 1; }
+    .cand-banner-info h3 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .cand-banner-info p { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.5; }
+    .cand-count { background: rgba(232,56,58,0.15); border: 1px solid rgba(232,56,58,0.3); border-radius: 10px; padding: 12px 18px; text-align: center; flex-shrink: 0; }
+    .cand-count-num { font-size: 28px; font-weight: 900; color: #E8383A; line-height: 1; }
+    .cand-count-label { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 3px; }
+    .btn-pro-banner { padding: 11px 20px; border-radius: 8px; border: none; background: #E8383A; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+
+    /* STATS */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+    .stat-card { background: #fff; border: 1px solid #f0f0f0; border-radius: 12px; padding: 18px 20px; }
+    .stat-ico { font-size: 20px; margin-bottom: 10px; }
+    .stat-num { font-size: 26px; font-weight: 900; color: #111; letter-spacing: -0.5px; }
+    .stat-label { font-size: 11px; color: #bbb; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* ACTIONS */
+    .actions-row { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .action-btn { display: inline-flex; align-items: center; gap: 7px; padding: 10px 18px; border-radius: 9px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; border: 1px solid #e8e8e8; background: #fff; color: #111; transition: border-color 0.15s; }
+    .action-btn:hover { border-color: #bbb; }
+    .action-btn.primary { background: #111; color: #fff; border-color: #111; }
+    .action-btn .badge { background: #E8383A; color: #fff; border-radius: 100px; padding: 1px 7px; font-size: 10px; font-weight: 700; }
+    .action-btn.primary .badge { background: #fff; color: #111; }
+
+    /* CONTENT */
+    .content-grid { display: grid; grid-template-columns: 1fr 280px; gap: 16px; }
+    .card { background: #fff; border: 1px solid #f0f0f0; border-radius: 12px; padding: 20px 22px; }
+    .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .card-title { font-size: 14px; font-weight: 700; color: #111; }
+
+    /* SEARCH & FILTRES */
+    .search-wrap { position: relative; margin-bottom: 14px; }
+    .search-wrap input { width: 100%; padding: 11px 16px 11px 38px; border: 1px solid #e8e8e8; border-radius: 9px; font-size: 13px; font-family: 'Inter', sans-serif; outline: none; color: #111; }
+    .search-wrap input:focus { border-color: #111; }
+    .search-ico { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 14px; }
+    .filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+    .chip { padding: 5px 13px; border-radius: 100px; font-size: 12px; font-weight: 500; border: 1px solid #e8e8e8; color: #888; cursor: pointer; background: #fff; transition: all 0.15s; }
+    .chip:hover { border-color: #bbb; color: #333; }
+    .chip.active { background: #111; border-color: #111; color: #fff; }
+
+    /* TALENTS GRID */
+    .talents-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .talent-card { background: #fff; border: 1px solid #f0f0f0; border-radius: 12px; overflow: hidden; cursor: pointer; transition: box-shadow 0.15s; }
+    .talent-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    .talent-thumb { position: relative; aspect-ratio: 3/4; overflow: hidden; background: #f5f5f5; display: flex; align-items: center; justify-content: center; font-size: 36px; }
+    .talent-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .talent-cat-pill { position: absolute; top: 8px; left: 8px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 3px 8px; border-radius: 100px; background: #111; color: #fff; }
+    .talent-play { position: absolute; bottom: 8px; right: 8px; width: 30px; height: 30px; border-radius: 50%; background: #E8383A; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #fff; }
+    .talent-info { padding: 10px 12px 12px; display: flex; justify-content: space-between; align-items: center; }
+    .talent-name { font-size: 13px; font-weight: 700; color: #111; }
+    .talent-loc { font-size: 11px; color: #bbb; margin-top: 2px; }
+    .btn-contact { padding: 6px 14px; border-radius: 7px; border: none; background: #111; color: #fff; font-size: 11px; font-weight: 700; cursor: pointer; }
+
+    /* RIGHT COL */
+    .right-col { display: flex; flex-direction: column; gap: 14px; }
+    .sub-card { background: #111; border-radius: 10px; padding: 16px 18px; }
+    .sub-card h3 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .sub-card p { font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 14px; line-height: 1.5; }
+    .sub-card ul { list-style: none; display: flex; flex-direction: column; gap: 5px; font-size: 12px; color: rgba(255,255,255,0.65); margin-bottom: 14px; }
+    .btn-sub { width: 100%; padding: 11px; border-radius: 8px; border: none; background: #E8383A; color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; }
+    .msg-list { display: flex; flex-direction: column; gap: 8px; }
+    .msg-item { display: flex; gap: 9px; align-items: flex-start; padding: 10px; border: 1px solid #f0f0f0; border-radius: 9px; cursor: pointer; }
+    .msg-item:hover { border-color: #ddd; }
+    .msg-item.unread { background: #fafafa; }
+    .msg-avatar { width: 32px; height: 32px; border-radius: 50%; background: #111; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; flex-shrink: 0; object-fit: cover; }
+    .msg-name { font-size: 12px; font-weight: 700; color: #111; }
+    .msg-time { font-size: 11px; color: #bbb; }
+    .msg-text { font-size: 11px; color: #999; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .fav-item { display: flex; gap: 9px; align-items: center; padding: 8px; border: 1px solid #f0f0f0; border-radius: 9px; cursor: pointer; }
+    .fav-thumb { width: 38px; height: 38px; border-radius: 8px; object-fit: cover; background: #f0f0f0; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: #bbb; overflow: hidden; }
+    .fav-name { font-size: 12px; font-weight: 700; color: #111; }
+    .fav-cat { font-size: 11px; color: #bbb; }
+    .btn-fav-contact { padding: 5px 10px; border-radius: 6px; border: none; background: #111; color: #fff; font-size: 10px; font-weight: 700; cursor: pointer; margin-left: auto; flex-shrink: 0; }
+
+    /* MODAL CONTACT */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: #fff; border-radius: 16px; padding: 28px; width: 100%; max-width: 460px; }
+    .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .modal-head h2 { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; }
+    .modal-close-btn { width: 30px; height: 30px; border-radius: 7px; border: 1px solid #e8e8e8; background: transparent; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; }
+    .modal-talent-info { display: flex; gap: 11px; align-items: center; padding: 11px; background: #f8f8f8; border-radius: 9px; margin-bottom: 18px; }
+    .modal-talent-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; background: #e0e0e0; }
+    .modal-talent-name { font-size: 14px; font-weight: 700; color: #111; }
+    .modal-talent-cat { font-size: 12px; color: #999; }
+    .modal-label { font-size: 12px; font-weight: 600; color: #555; display: block; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .modal-input { width: 100%; padding: 11px 13px; border: 1px solid #e8e8e8; border-radius: 8px; font-size: 13px; font-family: 'Inter', sans-serif; outline: none; color: #111; margin-bottom: 12px; }
+    .modal-input:focus { border-color: #111; }
+    .modal-textarea { width: 100%; padding: 11px 13px; border: 1px solid #e8e8e8; border-radius: 8px; font-size: 13px; font-family: 'Inter', sans-serif; outline: none; resize: vertical; min-height: 90px; color: #111; margin-bottom: 14px; }
+    .modal-textarea:focus { border-color: #111; }
+    .modal-btns { display: flex; gap: 10px; }
+    .btn-cancel { padding: 11px 18px; border-radius: 8px; border: 1px solid #e8e8e8; background: transparent; font-size: 13px; font-weight: 600; cursor: pointer; color: #999; }
+    .btn-send { flex: 1; padding: 11px; border-radius: 8px; border: none; background: #111; color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; }
+
+    /* POPUP UPGRADE */
+    .upgrade-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 500; display: none; align-items: center; justify-content: center; padding: 20px; }
+    .upgrade-overlay.open { display: flex; }
+    .upgrade-box { background: #fff; border-radius: 16px; padding: 36px; max-width: 440px; width: 100%; text-align: center; }
+    .upgrade-box h2 { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 8px; }
+    .upgrade-box p { font-size: 13px; color: #999; line-height: 1.6; margin-bottom: 20px; }
+    .upgrade-features { list-style: none; text-align: left; background: #f8f8f8; border-radius: 10px; padding: 14px 16px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: #555; }
+    .btn-upgrade-big { width: 100%; padding: 14px; border-radius: 10px; border: none; background: #E8383A; color: #fff; font-size: 14px; font-weight: 700; cursor: pointer; margin-bottom: 8px; }
+    .btn-close-upgrade { background: none; border: none; color: #bbb; font-size: 13px; cursor: pointer; }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; padding: 16px; max-width: 100%; padding-bottom: 80px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .content-grid { grid-template-columns: 1fr; }
+      .talents-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .topbar h1 { font-size: 18px; }
+      .bottom-nav { display: flex !important; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #f0f0f0; z-index: 100; padding: 8px 0 14px; }
+      .bottom-nav a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; color: #bbb; font-size: 10px; font-weight: 600; }
+      .bottom-nav a.active { color: #111; }
+      .bottom-nav a .nav-ico { font-size: 20px; }
+    }
+    @media (min-width: 769px) { .bottom-nav { display: none !important; } }
+  </style>
+</head>
+<body>
+
+<!-- MODAL CONTACT -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>Contacter ce talent</h2>
+      <button class="modal-close-btn" onclick="closeModal()">✕</button>
+    </div>
+    <div id="modalVideoWrap" style="margin-bottom:14px;"></div>
+    <div class="modal-talent-info">
+      <img class="modal-talent-avatar" id="modalImg" src="" alt="">
+      <div>
+        <div class="modal-talent-name" id="modalName">Talent</div>
+        <div class="modal-talent-cat" id="modalCat"></div>
+      </div>
+    </div>
+    <label class="modal-label">Objet</label>
+    <input id="msgObjet" class="modal-input" type="text" placeholder="Ex : Audition comédie musicale — Juin 2025">
+    <label class="modal-label">Message</label>
+    <textarea id="msgContenu" class="modal-textarea" placeholder="Bonjour, nous avons découvert votre profil ShowOne et…"></textarea>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal()">Annuler</button>
+      <button class="btn-send" onclick="sendMsg()">Envoyer ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- POPUP UPGRADE -->
+<div class="upgrade-overlay" id="upgradeOverlay">
+  <div class="upgrade-box">
+    <div style="font-size:40px;margin-bottom:12px;">🔒</div>
+    <h2>Passez Recruteur Pro</h2>
+    <p>Vous avez <strong id="upgradeNbCands" style="color:#E8383A;">X</strong> candidature(s) en attente.<br>Passez Pro pour lire les messages et contacter les talents.</p>
+    <ul class="upgrade-features">
+      <li>✅ Lire toutes les candidatures</li>
+      <li>✅ Contacter tous les talents</li>
+      <li>✅ Messagerie illimitée</li>
+      <li>✅ Castings illimités</li>
+    </ul>
+    <button class="btn-upgrade-big" onclick="lancerPaiementRecruteur()">🔍 Devenir Recruteur Pro — 19,99€/mois</button>
+    <button class="btn-close-upgrade" onclick="document.getElementById('upgradeOverlay').classList.remove('open')">Fermer</button>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <a href="index.html">Show<span>One</span></a>
+    <p>Espace Recruteur</p>
+  </div>
+  <div class="sidebar-avatar">
+    <div class="avatar-circle" id="avatarInitiales">?</div>
+    <div>
+      <div class="avatar-name" id="avatarNom">Chargement…</div>
+      <div class="avatar-plan" id="avatarPlanBadge">Recruteur</div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-label">Mon espace</div>
+    <a href="dashboard-recruteur.html" class="nav-item active">🏠 Tableau de bord</a>
+    <a href="#" class="nav-item">🔍 Rechercher des talents</a>
+    <a href="messagerie.html" class="nav-item">💬 Messages <span class="nav-badge" id="msgBadgeR" style="display:none">0</span></a>
+    <a href="#" class="nav-item" onclick="voirCandidatures()">👥 Candidatures <span class="nav-badge" id="badgeCandidatures" style="display:none">0</span></a>
+    <a href="#" class="nav-item">❤️ Mes favoris</a>
+    <div class="nav-label">Gestion</div>
+    <a href="deposer-casting.html" class="nav-item">🎬 Déposer un casting</a>
+  </nav>
+  <div class="sidebar-bottom">
+    <a href="#" onclick="seDeconnecter()" class="nav-item nav-item-danger">🚪 Déconnexion</a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div>
+      <h1 id="topbarNom">Bonjour 👋</h1>
+      <p>Explorez les talents disponibles sur ShowOne.</p>
+    </div>
+    <a href="deposer-casting.html" class="btn-casting">🎬 Déposer un casting</a>
+  </div>
+
+  <div class="cand-banner" id="candidaturesBanner">
+    <div class="cand-banner-info">
+      <h3>Vous avez des candidatures en attente !</h3>
+      <p>Passez au plan Recruteur Pro pour lire les messages et contacter les talents.</p>
+    </div>
+    <div class="cand-count">
+      <div class="cand-count-num" id="bannerNbCands">0</div>
+      <div class="cand-count-label">candidature(s)</div>
+    </div>
+    <button class="btn-pro-banner" onclick="document.getElementById('upgradeOverlay').classList.add('open');document.getElementById('upgradeNbCands').textContent=document.getElementById('bannerNbCands').textContent;">Voir les candidatures →</button>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-ico">🔍</div><div class="stat-num" id="statTalents">—</div><div class="stat-label">Talents</div></div>
+    <div class="stat-card"><div class="stat-ico">💬</div><div class="stat-num" id="statMessages">—</div><div class="stat-label">Messages</div></div>
+    <div class="stat-card"><div class="stat-ico">🎬</div><div class="stat-num" id="statCastings">—</div><div class="stat-label">Castings</div></div>
+    <div class="stat-card"><div class="stat-ico">👥</div><div class="stat-num" id="statCandidatures">—</div><div class="stat-label">Candidatures</div></div>
+  </div>
+
+  <div class="actions-row">
+    <a href="deposer-casting.html" class="action-btn primary">🎬 Déposer un casting</a>
+    <a href="castings.html" class="action-btn">📋 Mes castings <span class="badge" id="nbCastings">0</span></a>
+    <button class="action-btn" onclick="voirCandidatures()">👥 Candidatures <span class="badge" id="nbCandidatures">0</span></button>
+  </div>
+
+  <div class="content-grid">
+    <div>
+      <div class="card">
+        <div class="card-head"><div class="card-title">Talents disponibles</div></div>
+        <div class="search-wrap">
+          <span class="search-ico">🔍</span>
+          <input type="text" id="searchInput" placeholder="Rechercher par nom, ville, catégorie…" oninput="filtrerTalents()">
+        </div>
+        <div class="filters">
+          <div class="chip active" onclick="filtrerCat('Tous', this)">Tous</div>
+          <div class="chip" onclick="filtrerCat('Acting', this)">🎬 Acting</div>
+          <div class="chip" onclick="filtrerCat('Musique', this)">🎤 Musique</div>
+          <div class="chip" onclick="filtrerCat('Danse', this)">💃 Danse</div>
+          <div class="chip" onclick="filtrerCat('Sport', this)">⚽ Sport</div>
+          <div class="chip" onclick="filtrerCat('Mode', this)">👗 Mode</div>
+          <div class="chip" onclick="filtrerCat('Art', this)">🎨 Art</div>
+          <div class="chip" onclick="filtrerCat('Animaux', this)">🐾 Animaux</div>
+        </div>
+        <div class="talents-grid" id="talentsGrid">
+          <div style="grid-column:1/-1;text-align:center;padding:40px;color:#bbb;">Chargement des talents…</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-col">
+      <div class="card">
+        <div class="card-head"><div class="card-title">🧾 Abonnement</div></div>
+        <div id="subCardPro" style="display:none;" class="sub-card">
+          <h3>✅ Recruteur Pro</h3>
+          <p>Accès illimité à tous les talents ShowOne</p>
+          <div style="display:flex;justify-content:space-between;font-size:12px;background:rgba(255,255,255,0.06);border-radius:8px;padding:9px 12px;">
+            <span style="color:rgba(255,255,255,0.4);">Montant</span>
+            <span style="color:#fff;font-weight:700;">19,99€ / mois</span>
+          </div>
+        </div>
+        <div id="subCardGratuit" class="sub-card">
+          <h3>🔓 Passez Recruteur Pro</h3>
+          <p>Contactez tous les talents et lisez vos candidatures.</p>
+          <ul>
+            <li>✓ Lire les candidatures reçues</li>
+            <li>✓ Contacter tous les talents</li>
+            <li>✓ Messagerie illimitée</li>
+            <li>✓ Castings illimités</li>
+          </ul>
+          <button class="btn-sub" id="btnPaiementRecruteur" onclick="lancerPaiementRecruteur()">🔍 Devenir Recruteur Pro — 19,99€/mois</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">💬 Conversations</div>
+          <a href="messagerie.html" style="font-size:12px;color:#E8383A;font-weight:600;text-decoration:none;">Tout voir →</a>
+        </div>
+        <div class="msg-list" id="msgList">
+          <div style="text-align:center;padding:16px;color:#bbb;font-size:13px;">Chargement…</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div class="card-title">❤️ Mes favoris</div></div>
+        <div id="favsList">
+          <div style="text-align:center;padding:16px;color:#bbb;font-size:13px;">Chargement…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bottom-nav" style="display:none;">
+  <a href="dashboard-recruteur.html" class="active"><span class="nav-ico">🏠</span><span>Accueil</span></a>
+  <a href="castings.html"><span class="nav-ico">🎬</span><span>Castings</span></a>
+  <a href="messagerie.html"><span class="nav-ico">💬</span><span>Messages</span></a>
+  <a href="categories.html"><span class="nav-ico">🔍</span><span>Talents</span></a>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://emiuzigtlomlrsofxqyf.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_U8P52zBkzF6Nqno_mmbcVQ_bKQLNmTP';
+let tousVideos = [];
+let catActiveRec = 'Tous';
+window.token = localStorage.getItem('showone_token');
+window.planRecruteur = 'gratuit';
+
+async function chargerDonnees() {
+  const token = localStorage.getItem('showone_token');
+  const userStr = localStorage.getItem('showone_user');
+  if (!token || !userStr) { window.location.href = 'connexion.html'; return; }
+  const userObj = JSON.parse(userStr);
+  const userEmail = userObj.email || userObj.user?.email;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/utilisateurs?email=eq.${encodeURIComponent(userEmail)}&select=*`, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` } });
+    const data = await res.json();
+    if (!data || data.length === 0) { window.location.href = 'connexion.html'; return; }
+    const u = data[0];
+    const prenom = u.prenom||''; const nom = u.nom||''; const plan = u.plan||'gratuit';
+    window.planRecruteur = plan;
+    document.getElementById('avatarInitiales').textContent = ((prenom[0]||'')+(nom[0]||'')).toUpperCase();
+    document.getElementById('avatarNom').textContent = prenom+' '+nom;
+    document.getElementById('topbarNom').textContent = 'Bonjour, '+prenom+' 👋';
+    document.getElementById('avatarPlanBadge').textContent = plan==='pro' ? '⭐ Recruteur Pro' : 'Recruteur Gratuit';
+    document.getElementById('subCardPro').style.display = plan==='pro' ? 'block' : 'none';
+    document.getElementById('subCardGratuit').style.display = plan==='pro' ? 'none' : 'block';
+    const profRes = await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs?utilisateur_id=eq.${u.id}&select=*`, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` } });
+    const profData = await profRes.json();
+    if (!profData || profData.length === 0) return;
+    const recruteurId = profData[0].id;
+    window.recruteurId = recruteurId;
+    const talentsRes = await fetch(`${SUPABASE_URL}/rest/v1/profils_talents?select=id`, { headers: { 'apikey': SUPABASE_KEY } });
+    const talentsData = await talentsRes.json();
+    document.getElementById('statTalents').textContent = Array.isArray(talentsData) ? talentsData.length : 0;
+    const msgRes = await fetch(`${SUPABASE_URL}/rest/v1/messages?recruteur_id=eq.${recruteurId}&select=id,lu,objet`, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` } });
+    const msgData = await msgRes.json();
+    document.getElementById('statMessages').textContent = Array.isArray(msgData) ? msgData.length : 0;
+    const castingsRes = await fetch(`${SUPABASE_URL}/rest/v1/castings?recruteur_id=eq.${recruteurId}&statut=eq.actif&select=id`, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` } });
+    const castingsData = await castingsRes.json();
+    const nbCastings = Array.isArray(castingsData) ? castingsData.length : 0;
+    document.getElementById('statCastings').textContent = nbCastings;
+    document.getElementById('nbCastings').textContent = nbCastings;
+    if (nbCastings > 0) {
+      const castingIds = castingsData.map(c => c.id).join(',');
+      const candRes = await fetch(`${SUPABASE_URL}/rest/v1/candidatures?casting_id=in.(${castingIds})&select=id,statut`, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` } });
+      const candData = await candRes.json();
+      const nbCands = Array.isArray(candData) ? candData.length : 0;
+      document.getElementById('statCandidatures').textContent = nbCands;
+      document.getElementById('nbCandidatures').textContent = nbCands;
+      const badge = document.getElementById('badgeCandidatures');
+      if (badge && nbCands > 0) { badge.textContent = nbCands; badge.style.display = 'inline-flex'; }
+      if (plan === 'gratuit' && nbCands > 0) {
+        document.getElementById('bannerNbCands').textContent = nbCands;
+        document.getElementById('candidaturesBanner').style.display = 'flex';
+        document.getElementById('upgradeNbCands').textContent = nbCands;
+      }
+    } else { document.getElementById('statCandidatures').textContent = 0; }
+    await chargerMessages(recruteurId, token);
+    await chargerFavoris(recruteurId, token);
+  } catch(err) { console.error(err); }
+  await chargerTalents(token);
+}
+
+function filtrerCat(cat, btn) {
+  catActiveRec = cat;
+  document.querySelectorAll('.chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filtrerTalents();
+}
+
+function filtrerTalents() {
+  const search = document.getElementById('searchInput')?.value?.toLowerCase() || '';
+  let filtres = tousVideos;
+  if (catActiveRec !== 'Tous') filtres = filtres.filter(v => { const c=(v.profils_talents?.categorie||'').toLowerCase(); const sc=(v.profils_talents?.sous_categorie||'').toLowerCase(); return c.includes(catActiveRec.toLowerCase())||sc.includes(catActiveRec.toLowerCase()); });
+  if (search) filtres = filtres.filter(v => { const p=v.profils_talents; const u=p?.utilisateurs; const nom=((p?.nom_scene||'')+' '+(u?.prenom||'')+' '+(u?.nom||'')).toLowerCase(); const ville=(u?.ville||'').toLowerCase(); const cat=(p?.categorie||'').toLowerCase(); return nom.includes(search)||ville.includes(search)||cat.includes(search); });
+  afficherTalents(filtres);
+}
+
+function afficherTalents(videos) {
+  const grid = document.getElementById('talentsGrid');
+  if (!videos || videos.length === 0) { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#bbb;">Aucun talent trouvé.</div>'; return; }
+  grid.innerHTML = videos.map(v => {
+    const p = v.profils_talents; const u = p?.utilisateurs;
+    const nom = p?.nom_scene || ((u?.prenom||'')+' '+(u?.nom||''));
+    const cat = p?.sous_categorie || p?.categorie || 'Talent';
+    const ville = u?.ville || '';
+    const thumb = v.playback_id ? `<img src="https://image.mux.com/${v.playback_id}/thumbnail.jpg?width=300&height=400&fit_mode=crop" style="width:100%;height:100%;object-fit:cover;" alt="${nom}">` : '🎭';
+    return `<div class="talent-card" onclick="ouvrirTalent('${v.playback_id}','${nom.replace(/'/g,"\\'")}','${cat}','${p?.photo_url||''}','${p?.id}','${ville}',${v.vues||0})">
+      <div class="talent-thumb">${thumb}<div class="talent-cat-pill">${cat}</div><div class="talent-play">▶</div></div>
+      <div class="talent-info">
+        <div><div class="talent-name">${nom}</div>${ville?`<div class="talent-loc">📍 ${ville}</div>`:''}</div>
+        <button class="btn-contact" onclick="event.stopPropagation();ouvrirContact('${v.playback_id}','${nom.replace(/'/g,"\\'")}','${cat}','${p?.photo_url||''}','${p?.id}','${ville}',${v.vues||0})">Contacter</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function chargerTalents(token) {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/videos?statut=eq.en_ligne&playback_id=not.is.null&select=*,profils_talents!inner(id,nom_scene,categorie,sous_categorie,photo_url,utilisateur_id,utilisateurs!utilisateur_id(prenom,nom,ville))&order=vues.desc&limit=50`, { headers: { 'apikey': SUPABASE_KEY } });
+    tousVideos = await res.json();
+    afficherTalents(tousVideos);
+  } catch(err) { console.error(err); }
+}
+
+async function chargerMessages(recruteurId, token) {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/messages?recruteur_id=eq.${recruteurId}&select=*,profils_talents(nom_scene,photo_url,utilisateurs(prenom,nom))&order=created_at.desc&limit=5`, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` } });
+    const msgs = await res.json();
+    const list = document.getElementById('msgList');
+    if (!msgs || msgs.length === 0) { list.innerHTML = '<div style="text-align:center;padding:16px;color:#bbb;font-size:13px;">Aucun message.</div>'; return; }
+    list.innerHTML = msgs.map(m => {
+      const p=m.profils_talents; const u=p?.utilisateurs;
+      const nom=p?.nom_scene||((u?.prenom||'')+' '+(u?.nom||'')).trim()||'Talent';
+      const photo=p?.photo_url||'';
+      const avatar=photo?`<img class="msg-avatar" src="${photo}" alt="">`:`<div class="msg-avatar">${nom[0]||'?'}</div>`;
+      const diffH=Math.round((Date.now()-new Date(m.created_at))/36e5);
+      const temps=diffH<1?'À l\'instant':diffH<24?`Il y a ${diffH}h`:diffH<48?'Hier':`Il y a ${Math.round(diffH/24)}j`;
+      return `<div class="msg-item ${!m.lu?'unread':''}">${avatar}<div style="flex:1;min-width:0;"><div style="display:flex;justify-content:space-between;"><span class="msg-name">${nom}</span><span class="msg-time">${temps}</span></div><div class="msg-text">${m.contenu||m.objet||''}</div></div></div>`;
+    }).join('');
+  } catch(e) { console.error(e); }
+}
+
+async function chargerFavoris(recruteurId, token) {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/favoris?recruteur_id=eq.${recruteurId}&select=*,profils_talents(id,nom_scene,photo_url,categorie,sous_categorie,utilisateurs(prenom,nom,ville))&limit=5`, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` } });
+    const favs = await res.json();
+    const list = document.getElementById('favsList');
+    if (!favs || favs.length === 0) { list.innerHTML = '<div style="text-align:center;padding:16px;color:#bbb;font-size:13px;">Aucun favori.</div>'; return; }
+    list.innerHTML = favs.map(f => {
+      const p=f.profils_talents; const u=p?.utilisateurs;
+      const nom=p?.nom_scene||((u?.prenom||'')+' '+(u?.nom||'')).trim()||'Talent';
+      const cat=p?.sous_categorie||p?.categorie||''; const ville=u?.ville||''; const photo=p?.photo_url||'';
+      const avatar=photo?`<img class="fav-thumb" src="${photo}" alt="" style="width:38px;height:38px;border-radius:8px;object-fit:cover;">`:`<div class="fav-thumb">${nom[0]||'?'}</div>`;
+      return `<div class="fav-item">${avatar}<div style="flex:1;min-width:0;"><div class="fav-name">${nom}</div><div class="fav-cat">${cat}${ville?' · '+ville:''}</div></div><button class="btn-fav-contact" onclick="ouvrirContact('','${nom.replace(/'/g,"\\'")}','${cat}','${photo}','${p?.id}','${ville}',0)">Contacter</button></div>`;
+    }).join('');
+  } catch(e) { console.error(e); }
+}
+
+function ouvrirContact(playbackId, nom, cat, photo, talentId, ville, vues) {
+  if (window.planRecruteur !== 'pro') {
+    const nb = document.getElementById('bannerNbCands')?.textContent||'0';
+    document.getElementById('upgradeNbCands').textContent = nb;
+    document.getElementById('upgradeOverlay').classList.add('open');
+    return;
+  }
+  ouvrirTalent(playbackId, nom, cat, photo, talentId, ville, vues);
+}
+
+function ouvrirTalent(playbackId, nom, cat, photo, talentId, ville, vues) {
+  document.getElementById('modalName').textContent = nom;
+  document.getElementById('modalCat').textContent = cat+(ville?' · '+ville:'');
+  if (photo) document.getElementById('modalImg').src = photo;
+  const playerWrap = document.getElementById('modalVideoWrap');
+  if (playbackId && playerWrap) {
+    playerWrap.innerHTML = `<video id="modalPlayer" controls autoplay playsinline style="width:100%;border-radius:8px;background:#000;max-height:280px;"></video>`;
+    const video = document.getElementById('modalPlayer');
+    const src = 'https://stream.mux.com/'+playbackId+'.m3u8';
+    if (video.canPlayType('application/vnd.apple.mpegurl')) { video.src=src; video.play(); }
+    else { const s=document.createElement('script'); s.src='https://cdn.jsdelivr.net/npm/hls.js@latest'; s.onload=()=>{ if(window.Hls?.isSupported()){const hls=new Hls();hls.loadSource(src);hls.attachMedia(video);hls.on(Hls.Events.MANIFEST_PARSED,()=>video.play());} }; document.head.appendChild(s); }
+  }
+  document.getElementById('modalOverlay').dataset.talentId = talentId;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function voirCandidatures() {
+  if (window.planRecruteur !== 'pro') {
+    const nb=document.getElementById('bannerNbCands')?.textContent||'0';
+    document.getElementById('upgradeNbCands').textContent=nb;
+    document.getElementById('upgradeOverlay').classList.add('open');
+    return;
+  }
+  window.location.href='castings.html';
+}
+
+async function sendMsg() {
+  const token=localStorage.getItem('showone_token');
+  const talentId=document.getElementById('modalOverlay').dataset.talentId;
+  const objet=document.getElementById('msgObjet')?.value||'Proposition';
+  const contenu=document.getElementById('msgContenu')?.value||'';
+  if (!contenu.trim()) { alert('Veuillez écrire un message !'); return; }
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/messages`, { method:'POST', headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`,'Prefer':'return=minimal'}, body:JSON.stringify({recruteur_id:window.recruteurId,talent_id:talentId,objet,contenu,lu:false}) });
+    closeModal();
+    const notif=document.createElement('div'); notif.style.cssText='position:fixed;bottom:24px;right:24px;background:#10b981;color:#fff;padding:12px 18px;border-radius:10px;font-weight:700;font-size:13px;z-index:999;'; notif.textContent='✓ Message envoyé !'; document.body.appendChild(notif); setTimeout(()=>notif.remove(),3000);
+  } catch(err) { alert('Erreur lors de l\'envoi.'); }
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  const video=document.getElementById('modalPlayer'); if(video) video.pause();
+}
+
+async function lancerPaiementRecruteur() {
+  const btn=document.getElementById('btnPaiementRecruteur');
+  if(btn){btn.textContent='Redirection…';btn.disabled=true;}
+  try {
+    const user=JSON.parse(localStorage.getItem('showone_user')||'{}');
+    const res=await fetch('/api/create-checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({plan:'recruteur_pro',userId:user.id,userEmail:user.email,successUrl:'https://www.showone.fr/paiement-succes?type=recruteur',cancelUrl:'https://www.showone.fr/dashboard-recruteur'})});
+    const data=await res.json();
+    if(data.url) window.location.href=data.url;
+    else { alert('Erreur.'); if(btn){btn.textContent='Devenir Recruteur Pro — 19,99€/mois';btn.disabled=false;} }
+  } catch(e) { alert('Erreur.'); if(btn){btn.textContent='Devenir Recruteur Pro — 19,99€/mois';btn.disabled=false;} }
+}
+
+function seDeconnecter() {
+  localStorage.removeItem('showone_token'); localStorage.removeItem('showone_user'); window.location.href='connexion.html';
+}
+
+document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.getElementById('upgradeOverlay').addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
+
+chargerDonnees();
+</script>
+</body>
+</html>

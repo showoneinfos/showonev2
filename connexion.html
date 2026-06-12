@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShowOne — Connexion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,700;0,900;1,900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: #111; min-height: 100vh; display: flex; flex-direction: column; }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; border-bottom: 1px solid #f0f0f0; }
+    .logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; }
+    .logo span { color: #E8383A; }
+    .nav-right { font-size: 13px; color: #999; }
+    .nav-right a { color: #111; font-weight: 600; text-decoration: none; }
+    .main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 48px 20px; }
+    .card { width: 100%; max-width: 420px; }
+    .card-title { font-size: 30px; font-weight: 900; letter-spacing: -1px; color: #111; margin-bottom: 6px; }
+    .card-sub { font-size: 14px; color: #999; margin-bottom: 36px; }
+    .type-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 28px; }
+    .type-btn { padding: 14px 12px; border-radius: 10px; border: 1.5px solid #e8e8e8; background: #fff; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .type-btn.active { border-color: #111; background: #111; }
+    .type-label { font-size: 13px; font-weight: 700; color: #111; }
+    .type-btn.active .type-label { color: #fff; }
+    .form-group { margin-bottom: 16px; }
+    .form-label { font-size: 12px; font-weight: 600; color: #555; margin-bottom: 6px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
+    .form-input { width: 100%; padding: 13px 16px; font-size: 14px; border: 1.5px solid #e8e8e8; border-radius: 10px; background: #fff; color: #111; outline: none; font-family: 'Inter', sans-serif; transition: border-color 0.15s; }
+    .form-input:focus { border-color: #111; }
+    .form-input::placeholder { color: #ccc; }
+    .form-options { display: flex; justify-content: flex-end; margin-bottom: 20px; }
+    .forgot { font-size: 13px; color: #999; text-decoration: none; }
+    .forgot:hover { color: #111; }
+    .form-error { background: #fff0f0; border: 1px solid #ffd0d0; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #cc2e30; margin-bottom: 16px; display: none; }
+    .btn-submit { width: 100%; padding: 15px; font-size: 15px; font-weight: 700; border-radius: 10px; background: #111; color: #fff; border: none; cursor: pointer; transition: background 0.15s; }
+    .btn-submit:hover { background: #333; }
+    .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
+    .signup-link { text-align: center; margin-top: 20px; font-size: 13px; color: #999; }
+    .signup-link a { color: #111; font-weight: 600; text-decoration: none; }
+    @media (max-width: 600px) { nav { padding: 14px 20px; } }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">Show<span>One</span></a>
+  <div class="nav-right">Pas de compte ? <a href="inscription.html">S'inscrire gratuitement</a></div>
+</nav>
+<div class="main">
+  <div class="card">
+    <div class="card-title">Connexion</div>
+    <div class="card-sub">Accédez à votre espace ShowOne.</div>
+    <div class="type-selector">
+      <div class="type-btn active" onclick="setType('talent', this)">
+        <div class="type-label">🌟 Talent</div>
+      </div>
+      <div class="type-btn" onclick="setType('recruteur', this)">
+        <div class="type-label">🔍 Recruteur</div>
+      </div>
+    </div>
+    <div class="form-error" id="login-error"></div>
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input class="form-input" type="email" id="emailInput" placeholder="votre@email.com" autocomplete="email">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Mot de passe</label>
+      <input class="form-input" type="password" id="pwdInput" placeholder="Votre mot de passe" autocomplete="current-password">
+    </div>
+    <div class="form-options">
+      <a href="mot-de-passe-oublie.html" class="forgot">Mot de passe oublié ?</a>
+    </div>
+    <button class="btn-submit" id="btn-login" onclick="seConnecter()">Se connecter</button>
+    <div class="signup-link">Pas encore de compte ? <a href="inscription.html">S'inscrire gratuitement</a></div>
+  </div>
+</div>
+<script>
+  const SUPABASE_URL = 'https://emiuzigtlomlrsofxqyf.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_U8P52zBkzF6Nqno_mmbcVQ_bKQLNmTP';
+  let currentType = 'talent';
+
+  function setType(type, btn) {
+    document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentType = type;
+  }
+
+  async function seConnecter() {
+    const email = document.getElementById('emailInput').value.trim();
+    const password = document.getElementById('pwdInput').value;
+    const errDiv = document.getElementById('login-error');
+    const btn = document.getElementById('btn-login');
+
+    if (!email || !password) { errDiv.textContent = 'Merci de remplir votre email et mot de passe.'; errDiv.style.display = 'block'; return; }
+
+    btn.disabled = true; btn.textContent = 'Connexion en cours…'; errDiv.style.display = 'none';
+
+    try {
+      const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+
+      if (data.error || !data.access_token) {
+        errDiv.textContent = 'Email ou mot de passe incorrect.';
+        errDiv.style.display = 'block';
+        btn.disabled = false; btn.textContent = 'Se connecter'; return;
+      }
+
+      const userId = data.user.id;
+      const token = data.access_token;
+      window.localStorage.setItem('showone_token', token);
+
+      let prenom = '', nom = '', photo_url = '', vraiType = currentType;
+      try {
+        const userRes = await fetch(`${SUPABASE_URL}/rest/v1/utilisateurs?id=eq.${userId}&select=prenom,nom,photo_url,type_compte`, {
+          headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` }
+        });
+        const userData = await userRes.json();
+        if (userData && userData.length > 0) {
+          prenom = userData[0].prenom || '';
+          nom = userData[0].nom || '';
+          photo_url = userData[0].photo_url || '';
+          vraiType = userData[0].type_compte || currentType;
+        }
+      } catch(e) {}
+
+      window.localStorage.setItem('showone_user', JSON.stringify({ id: userId, email: data.user.email, prenom, nom, photo_url, type_compte: vraiType }));
+
+      window.location.href = vraiType === 'recruteur' ? 'dashboard-recruteur.html' : 'dashboard-talent.html';
+
+    } catch(err) {
+      errDiv.textContent = 'Une erreur est survenue. Veuillez réessayer.';
+      errDiv.style.display = 'block';
+      btn.disabled = false; btn.textContent = 'Se connecter';
+    }
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShowOne — Mon espace talent</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f8f8f8; color: #111; display: flex; min-height: 100vh; }
+
+    /* SIDEBAR */
+    .sidebar { width: 220px; min-height: 100vh; background: #fff; border-right: 1px solid #f0f0f0; display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 50; }
+    .sidebar-logo { padding: 24px 20px 18px; border-bottom: 1px solid #f0f0f0; }
+    .sidebar-logo a { font-size: 18px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; }
+    .sidebar-logo a span { color: #E8383A; }
+    .sidebar-logo p { font-size: 11px; color: #bbb; margin-top: 2px; }
+    .sidebar-avatar { padding: 16px 20px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #f0f0f0; }
+    .avatar-circle { width: 38px; height: 38px; border-radius: 50%; background: #111; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: 700; flex-shrink: 0; overflow: hidden; }
+    .avatar-name { font-size: 13px; font-weight: 700; color: #111; }
+    .avatar-plan { font-size: 10px; color: #bbb; margin-top: 1px; }
+    .sidebar-nav { padding: 12px 10px; flex: 1; display: flex; flex-direction: column; gap: 2px; }
+    .nav-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #ddd; padding: 10px 10px 4px; }
+    .nav-item { display: flex; align-items: center; gap: 9px; padding: 9px 10px; border-radius: 8px; cursor: pointer; color: #888; font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.15s; }
+    .nav-item:hover { background: #f8f8f8; color: #111; }
+    .nav-item.active { background: #f0f0f0; color: #111; font-weight: 700; }
+    .nav-item-danger { color: #E8383A; }
+    .nav-item-danger:hover { background: #fff0f0; }
+    .nav-badge { margin-left: auto; background: #E8383A; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 100px; }
+    .sidebar-bottom { padding: 12px 10px; border-top: 1px solid #f0f0f0; }
+
+    /* MAIN */
+    .main { margin-left: 220px; flex: 1; padding: 32px 36px; max-width: calc(100% - 220px); }
+    .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; }
+    .topbar h1 { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; }
+    .topbar p { font-size: 13px; color: #999; margin-top: 2px; }
+    .btn-pro { padding: 9px 18px; border-radius: 8px; border: none; background: #E8383A; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; }
+
+    /* STATS */
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+    .stat-card { background: #fff; border: 1px solid #f0f0f0; border-radius: 12px; padding: 18px 20px; }
+    .stat-ico { font-size: 20px; margin-bottom: 10px; }
+    .stat-num { font-size: 26px; font-weight: 900; color: #111; letter-spacing: -0.5px; }
+    .stat-label { font-size: 11px; color: #bbb; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* PLAN BANNER */
+    .plan-banner { background: #111; border-radius: 12px; padding: 18px 22px; margin-bottom: 24px; display: flex; align-items: center; gap: 16px; }
+    .plan-banner-info h3 { font-size: 14px; font-weight: 700; color: #fff; }
+    .plan-banner-info p { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+    .btn-upgrade-banner { padding: 9px 18px; border-radius: 8px; border: none; background: #E8383A; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; margin-left: auto; }
+
+    /* GRID */
+    .content-grid { display: grid; grid-template-columns: 1fr 300px; gap: 16px; }
+    .card { background: #fff; border: 1px solid #f0f0f0; border-radius: 12px; padding: 20px 22px; }
+    .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .card-title { font-size: 14px; font-weight: 700; color: #111; }
+    .btn-add { padding: 7px 14px; border-radius: 7px; border: none; background: #111; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; }
+
+    /* VIDEOS */
+    .video-list { display: flex; flex-direction: column; gap: 10px; }
+    .video-item { display: flex; gap: 12px; align-items: center; padding: 10px; border: 1px solid #f0f0f0; border-radius: 10px; cursor: pointer; transition: border-color 0.15s; }
+    .video-item:hover { border-color: #ddd; }
+    .video-thumb-bg { width: 60px; height: 60px; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 20px; background: #f0f0f0; overflow: hidden; }
+    .video-info { flex: 1; }
+    .video-title { font-size: 13px; font-weight: 600; color: #111; }
+    .video-meta { display: flex; gap: 10px; margin-top: 3px; }
+    .video-meta span { font-size: 11px; color: #bbb; }
+    .video-status { padding: 3px 8px; border-radius: 100px; font-size: 10px; font-weight: 700; background: #e8f8f0; color: #0a7a56; }
+    .video-action-btn { width: 28px; height: 28px; border-radius: 6px; border: 1px solid #f0f0f0; background: transparent; cursor: pointer; font-size: 12px; display: flex; align-items: center; justify-content: center; }
+
+    /* UPLOAD */
+    .upload-zone { border: 2px dashed #e8e8e8; border-radius: 10px; padding: 20px; text-align: center; cursor: pointer; margin-top: 10px; display: block; transition: border-color 0.15s; }
+    .upload-zone:hover { border-color: #bbb; }
+    .upload-txt { font-size: 13px; font-weight: 600; color: #999; margin-top: 6px; }
+    .upload-sub { font-size: 11px; color: #bbb; margin-top: 2px; }
+
+    /* MESSAGES */
+    .msg-list { display: flex; flex-direction: column; gap: 8px; }
+    .msg-item { display: flex; gap: 10px; align-items: flex-start; padding: 10px; border: 1px solid #f0f0f0; border-radius: 9px; cursor: pointer; transition: border-color 0.15s; }
+    .msg-item:hover { border-color: #ddd; }
+    .msg-item.unread { background: #fafafa; border-color: #e8e8e8; }
+    .msg-avatar { width: 34px; height: 34px; border-radius: 50%; background: #111; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .msg-name { font-size: 12px; font-weight: 700; color: #111; }
+    .msg-time { font-size: 11px; color: #bbb; }
+    .msg-text { font-size: 12px; color: #999; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+
+    /* PROFIL CARD */
+    .profile-card { text-align: center; padding: 6px 0; }
+    .profile-avatar-wrap { position: relative; display: inline-block; margin-bottom: 10px; }
+    .profile-avatar { width: 64px; height: 64px; border-radius: 50%; border: 2px solid #f0f0f0; object-fit: cover; display: none; }
+    .profile-initiales { width: 64px; height: 64px; border-radius: 50%; background: #111; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px; font-weight: 700; }
+    .profile-edit { position: absolute; bottom: 0; right: 0; width: 22px; height: 22px; border-radius: 50%; background: #E8383A; border: 2px solid #fff; display: flex; align-items: center; justify-content: center; font-size: 10px; cursor: pointer; }
+    .profile-nom { font-size: 15px; font-weight: 700; color: #111; margin-bottom: 2px; }
+    .profile-cat { font-size: 12px; color: #bbb; margin-bottom: 12px; }
+    .completion-head { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px; color: #999; }
+    .completion-bar { height: 4px; background: #f0f0f0; border-radius: 2px; overflow: hidden; margin-bottom: 12px; }
+    .completion-fill { height: 100%; background: #111; border-radius: 2px; width: 0%; }
+    .btn-profil { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #e8e8e8; background: transparent; color: #111; font-size: 12px; font-weight: 700; cursor: pointer; }
+    .btn-profil:hover { background: #f8f8f8; }
+
+    /* MODAL UPLOAD */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+    .modal-overlay.open { display: flex; }
+    .modal-box { background: #fff; border-radius: 14px; padding: 28px; width: 100%; max-width: 420px; }
+    .modal-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
+    .modal-input { width: 100%; padding: 11px 14px; font-size: 13px; border: 1px solid #e8e8e8; border-radius: 8px; outline: none; font-family: 'Inter', sans-serif; margin-bottom: 10px; }
+    .modal-input:focus { border-color: #111; }
+    .modal-file { font-size: 11px; color: #999; margin-bottom: 16px; }
+    .modal-btns { display: flex; gap: 10px; }
+    .modal-btn-cancel { flex: 1; padding: 11px; border-radius: 8px; border: 1px solid #e8e8e8; background: transparent; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .modal-btn-confirm { flex: 2; padding: 11px; border-radius: 8px; border: none; background: #111; color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; }
+
+    /* PLAYER */
+    .player-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; }
+    .player-modal.open { display: flex; }
+    .player-inner { background: #000; border-radius: 12px; overflow: hidden; width: 100%; max-width: 780px; margin: 16px; }
+    .player-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #111; }
+    .player-title { color: #fff; font-size: 14px; font-weight: 600; }
+    .player-close { background: none; border: none; color: rgba(255,255,255,0.6); font-size: 20px; cursor: pointer; }
+    .player-video { width: 100%; aspect-ratio: 16/9; background: #000; display: block; }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; padding: 16px; max-width: 100%; padding-bottom: 80px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .content-grid { grid-template-columns: 1fr; }
+      .topbar h1 { font-size: 18px; }
+      .bottom-nav { display: flex !important; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #f0f0f0; z-index: 100; padding: 8px 0 14px; }
+      .bottom-nav a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; color: #bbb; font-size: 10px; font-weight: 600; }
+      .bottom-nav a.active { color: #111; }
+      .bottom-nav a .nav-ico { font-size: 20px; }
+    }
+    @media (min-width: 769px) { .bottom-nav { display: none !important; } }
+  </style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <a href="index.html">Show<span>One</span></a>
+    <p>Espace Talent</p>
+  </div>
+  <div class="sidebar-avatar">
+    <div class="avatar-circle" id="avatarImg">?</div>
+    <div>
+      <div class="avatar-name" id="avatarName">Chargement…</div>
+      <div class="avatar-plan" id="avatarPlan">Plan Gratuit</div>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-label">Mon espace</div>
+    <a href="dashboard-talent.html" class="nav-item active">🏠 Tableau de bord</a>
+    <a href="#" class="nav-item">👤 Mon profil</a>
+    <a href="#" class="nav-item">🎬 Mes vidéos</a>
+    <a href="messagerie.html" class="nav-item" onclick="cacherBadge()">💬 Messages <span class="nav-badge" id="msgBadge" style="display:none">0</span></a>
+    <div class="nav-label">Découverte</div>
+    <a href="castings.html" class="nav-item">📋 Castings</a>
+    <a href="paiement-talent.html" class="nav-item" style="color:#E8383A;">⭐ Passer Pro</a>
+  </nav>
+  <div class="sidebar-bottom">
+    <a href="#" onclick="seDeconnecter()" class="nav-item nav-item-danger">🚪 Déconnexion</a>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div>
+      <h1 id="topbarNom">Bonjour 👋</h1>
+      <p>Voici un résumé de votre activité ShowOne.</p>
+    </div>
+    <button class="btn-pro" onclick="window.location.href='paiement-talent.html'">⚡ Passer Pro — 4,99€/mois</button>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-ico">👁</div><div class="stat-num" id="statVues">—</div><div class="stat-label">Vues</div></div>
+    <div class="stat-card"><div class="stat-ico">🎬</div><div class="stat-num" id="statVideos">—</div><div class="stat-label">Vidéos</div></div>
+    <div class="stat-card"><div class="stat-ico">💬</div><div class="stat-num" id="statMessages">—</div><div class="stat-label">Messages</div></div>
+    <div class="stat-card"><div class="stat-ico">❤️</div><div class="stat-num" id="statFavoris">—</div><div class="stat-label">Favoris</div></div>
+  </div>
+
+  <div class="plan-banner">
+    <div class="plan-banner-info">
+      <h3>Plan Gratuit</h3>
+      <p>Passez en Pro pour débloquer jusqu'à 10 vidéos</p>
+    </div>
+    <button class="btn-upgrade-banner" onclick="window.location.href='paiement-talent.html'">⚡ Upgrader</button>
+  </div>
+
+  <div class="content-grid">
+    <div>
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">🎬 Mes vidéos</div>
+          <button class="btn-add" id="btnAddVideo" onclick="declencherUpload()">+ Ajouter</button>
+        </div>
+        <div class="video-list" id="videoList"></div>
+        <label class="upload-zone" id="uploadZone" for="videoFileInput">
+          <div style="font-size:26px;" id="uploadIco">📤</div>
+          <div class="upload-txt" id="uploadTxt">Clique pour uploader une vidéo</div>
+          <div class="upload-sub" id="uploadSub">MP4, MOV — max 1 min · 1 vidéo sur plan Gratuit</div>
+          <input type="file" accept="video/*" id="videoFileInput" onchange="lancerUpload(this)" style="display:none;">
+        </label>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <div class="card-head">
+          <div class="card-title">📋 Activité récente</div>
+        </div>
+        <div id="activityList"></div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="card">
+        <div class="card-head"><div class="card-title">👤 Mon profil</div></div>
+        <div class="profile-card">
+          <div class="profile-avatar-wrap">
+            <div class="profile-initiales" id="profileAvatarInitiales">?</div>
+            <img class="profile-avatar" id="profileAvatar" src="" alt="">
+            <div class="profile-edit" onclick="ouvrirUploadPhoto()">✏️</div>
+          </div>
+          <div class="profile-nom" id="profileNom">—</div>
+          <div class="profile-cat" id="profileCat"></div>
+          <div class="completion-head"><span>Profil complété</span><span id="completionPct">0%</span></div>
+          <div class="completion-bar"><div class="completion-fill" id="completionFill"></div></div>
+          <button class="btn-profil">Voir mon profil public</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">💬 Messages</div>
+          <a href="messagerie.html" style="font-size:12px;color:#E8383A;font-weight:600;text-decoration:none;">Tout voir →</a>
+        </div>
+        <div class="msg-list" id="msgList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL UPLOAD -->
+<div class="modal-overlay" id="uploadModal">
+  <div class="modal-box">
+    <div class="modal-title">Ajouter une vidéo</div>
+    <div class="modal-file" id="modalFileName"></div>
+    <input class="modal-input" type="text" id="videoTitre" placeholder="Titre de la vidéo (ex: Ma prestation danse)">
+    <textarea class="modal-input" id="videoDesc" placeholder="Description (optionnel)" style="resize:vertical;min-height:70px;"></textarea>
+    <div class="modal-btns">
+      <button class="modal-btn-cancel" onclick="annulerUpload()">Annuler</button>
+      <button class="modal-btn-confirm" onclick="confirmerUpload()">Publier →</button>
+    </div>
+  </div>
+</div>
+
+<!-- PLAYER -->
+<div class="player-modal" id="playerModal" onclick="fermerPlayer(event)">
+  <div class="player-inner">
+    <div class="player-header">
+      <div class="player-title" id="playerTitre">Vidéo</div>
+      <button class="player-close" onclick="fermerPlayer()">✕</button>
+    </div>
+    <video class="player-video" id="playerVideo" controls playsinline></video>
+  </div>
+</div>
+
+<!-- BOTTOM NAV MOBILE -->
+<div class="bottom-nav" style="display:none;">
+  <a href="dashboard-talent.html" class="active"><span class="nav-ico">🏠</span><span>Accueil</span></a>
+  <a href="castings.html"><span class="nav-ico">🎬</span><span>Castings</span></a>
+  <a href="messagerie.html" onclick="cacherBadge()"><span class="nav-ico">💬</span><span>Messages</span></a>
+  <a href="categories.html"><span class="nav-ico">🔍</span><span>Explorer</span></a>
+  <a href="#" onclick="seDeconnecter()"><span class="nav-ico">🚪</span><span>Déco</span></a>
+</div>
+
+<script>
+  const SUPABASE_URL = 'https://emiuzigtlomlrsofxqyf.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_U8P52zBkzF6Nqno_mmbcVQ_bKQLNmTP';
+  window.profilId = null;
+
+  function declencherUpload() {
+    const input = document.getElementById('videoFileInput');
+    if (!input.disabled) input.click();
+    else afficherPopupUpgrade();
+  }
+
+  async function chargerDonnees() {
+    const token = localStorage.getItem('showone_token');
+    const userStr = localStorage.getItem('showone_user');
+    if (!token || !userStr) { window.location.href = 'connexion.html'; return; }
+    let user;
+    try { user = JSON.parse(userStr); } catch(e) { window.location.href = 'connexion.html'; return; }
+    const userId = user.id;
+    if (!userId) { window.location.href = 'connexion.html'; return; }
+    window.userId = userId; window.token = token;
+
+    const prenomLocal = user.prenom || user.email?.split('@')[0] || '';
+    const nomLocal = user.nom || '';
+    if (prenomLocal || nomLocal) {
+      const initiales = ((prenomLocal[0]||'')+(nomLocal[0]||'')).toUpperCase();
+      document.getElementById('avatarImg').textContent = initiales || '?';
+      document.getElementById('avatarName').textContent = (prenomLocal+' '+nomLocal).trim();
+      document.getElementById('topbarNom').textContent = 'Bonjour, '+prenomLocal+' 👋';
+    }
+
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/utilisateurs?id=eq.${userId}&select=*`, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` } });
+      const data = await res.json();
+      if (data && data.length > 0) {
+        const u = data[0];
+        const prenom = u.prenom||''; const nom = u.nom||'';
+        const initiales = ((prenom[0]||'')+(nom[0]||'')).toUpperCase();
+        const plan = u.plan||'gratuit';
+        window._userPlan = plan; window.planUtilisateur = plan;
+        document.getElementById('avatarImg').textContent = initiales||'?';
+        document.getElementById('avatarName').textContent = prenom+' '+nom;
+        document.getElementById('avatarPlan').textContent = plan==='pro' ? '⭐ Plan Pro' : 'Plan Gratuit';
+        document.getElementById('topbarNom').textContent = 'Bonjour, '+prenom+' 👋';
+        if (plan==='pro') { const btn=document.querySelector('.btn-pro'); if(btn) btn.style.display='none'; }
+      }
+
+      let profData = [];
+      try {
+        const profRes = await fetch(`${SUPABASE_URL}/rest/v1/profils_talents?utilisateur_id=eq.${userId}&select=*`, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` } });
+        const profRaw = await profRes.json();
+        profData = Array.isArray(profRaw) ? profRaw : [];
+        if (profData.length===0 && data && data.length>0) {
+          const u=data[0];
+          const createRes = await fetch(`${SUPABASE_URL}/rest/v1/profils_talents`, { method:'POST', headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`,'Prefer':'return=representation'}, body:JSON.stringify({utilisateur_id:userId,nom_scene:(u.prenom||'')+' '+(u.nom||''),categorie:'autre'}) });
+          profData = await createRes.json();
+        }
+      } catch(e) {}
+
+      if (profData && profData.length>0) {
+        const p=profData[0]; window.profilId=p.id; window.utilisateurId=userId;
+        const u=data&&data[0]?data[0]:{};
+        const nom=p.nom_scene||((u?.prenom||'')+' '+(u?.nom||'')).trim();
+        const cat=p.sous_categorie||p.categorie||''; const ville=u?.ville||'';
+        if (p.photo_url) {
+          const img=document.getElementById('profileAvatar'); if(img){img.src=p.photo_url;img.style.display='block';}
+          document.getElementById('profileAvatarInitiales').style.display='none';
+          const sideAvatar=document.getElementById('avatarImg'); sideAvatar.style.cssText='background:none;padding:0;';
+          sideAvatar.innerHTML=`<img src="${p.photo_url}" style="width:38px;height:38px;border-radius:50%;object-fit:cover;">`;
+        }
+        document.getElementById('profileNom').textContent=nom||'—';
+        document.getElementById('profileCat').textContent=(cat||'')+(ville?' · '+ville:'');
+        let score=0; if(p.photo_url)score+=30; if(p.bio)score+=20; if(p.categorie)score+=20; if(nom)score+=15; if(ville)score+=15;
+        document.getElementById('completionPct').textContent=score+'%';
+        document.getElementById('completionFill').style.width=score+'%';
+      }
+
+      await chargerVideos(window.profilId, token);
+
+      let videos=[], messages=[], favoris=[];
+      if (window.profilId) {
+        const [vidRes,msgRes,favRes] = await Promise.all([
+          fetch(`${SUPABASE_URL}/rest/v1/videos?talent_id=eq.${window.profilId}&statut=eq.en_ligne&select=vues`, {headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`}}),
+          fetch(`${SUPABASE_URL}/rest/v1/messages?talent_id=eq.${window.profilId}&select=id,lu,contenu,objet,created_at,recruteur_id`, {headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`}}),
+          fetch(`${SUPABASE_URL}/rest/v1/favoris?talent_id=eq.${window.profilId}&select=id`, {headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`}})
+        ]);
+        const vRaw=await vidRes.json(); videos=Array.isArray(vRaw)?vRaw:[];
+        const mRaw=await msgRes.json(); messages=Array.isArray(mRaw)?mRaw:[];
+        const fRaw=await favRes.json(); favoris=Array.isArray(fRaw)?fRaw:[];
+      }
+
+      const totalVues=Array.isArray(videos)?videos.reduce((s,v)=>s+(v.vues||0),0):0;
+      document.getElementById('statVues').textContent=totalVues.toLocaleString('fr-FR');
+      document.getElementById('statVideos').textContent=Array.isArray(videos)?videos.length:0;
+      document.getElementById('statMessages').textContent=Array.isArray(messages)?messages.length:0;
+      document.getElementById('statFavoris').textContent=Array.isArray(favoris)?favoris.length:0;
+      window._nbVideos=Array.isArray(videos)?videos.length:0;
+      mettreAJourBoutonsUpload();
+
+      const nonLus=Array.isArray(messages)?messages.filter(m=>!m.lu).length:0;
+      const badge=document.getElementById('msgBadge');
+      badge.textContent=nonLus; badge.style.display=nonLus>0?'inline-flex':'none';
+
+      afficherMessages(messages);
+      afficherActivite(videos,messages,favoris);
+    } catch(err) { console.error(err); }
+  }
+
+  function afficherMessages(messages) {
+    const list=document.getElementById('msgList');
+    if (!messages||messages.length===0) { list.innerHTML='<div style="text-align:center;padding:16px;color:#bbb;font-size:13px;">Aucun message pour l\'instant.</div>'; return; }
+    list.innerHTML=messages.slice(0,5).map(m=>{
+      const diffH=Math.round((Date.now()-new Date(m.created_at))/36e5);
+      const temps=diffH<1?'À l\'instant':diffH<24?`Il y a ${diffH}h`:diffH<48?'Hier':`Il y a ${Math.round(diffH/24)}j`;
+      const initiale=(m.objet||'R')[0].toUpperCase();
+      return `<div class="msg-item ${!m.lu?'unread':''}" onclick="cacherBadge();window.location.href='messagerie.html'">
+        <div class="msg-avatar">${initiale}</div>
+        <div style="flex:1;min-width:0;">
+          <div style="display:flex;justify-content:space-between;"><div class="msg-name">${m.objet||'Message'}</div><div class="msg-time">${temps}</div></div>
+          <div class="msg-text">${m.contenu||''}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function afficherActivite(videos,messages,favoris) {
+    const list=document.getElementById('activityList');
+    const items=[];
+    if (Array.isArray(videos)&&videos.length>0) { const tv=videos.reduce((s,v)=>s+(v.vues||0),0); if(tv>0) items.push(`👁 Vos vidéos totalisent <strong>${tv.toLocaleString('fr-FR')} vues</strong>`); }
+    if (Array.isArray(messages)&&messages.length>0) { const nl=messages.filter(m=>!m.lu).length; items.push(nl>0?`💬 Vous avez <strong>${nl} message${nl>1?'s':''} non lu${nl>1?'s':''}</strong>`:`💬 Vous avez reçu <strong>${messages.length} message${messages.length>1?'s':''}</strong>`); }
+    if (Array.isArray(favoris)&&favoris.length>0) items.push(`❤️ <strong>${favoris.length} recruteur${favoris.length>1?'s':''}</strong> vous a ajouté en favori`);
+    if (items.length===0) { list.innerHTML='<div style="text-align:center;padding:16px;color:#bbb;font-size:13px;">Uploadez votre première vidéo pour commencer !</div>'; return; }
+    list.innerHTML=items.map(t=>`<div style="padding:10px 0;border-bottom:1px solid #f8f8f8;font-size:13px;color:#555;">${t}</div>`).join('');
+  }
+
+  async function chargerVideos(profilId,token) {
+    const list=document.getElementById('videoList');
+    if (!profilId) { list.innerHTML='<div style="text-align:center;padding:16px;color:#bbb;font-size:13px;">Profil non trouvé.</div>'; return; }
+    try {
+      const res=await fetch(`${SUPABASE_URL}/rest/v1/videos?talent_id=eq.${profilId}&order=created_at.desc`, {headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`}});
+      const videos=await res.json();
+      if (!videos||videos.length===0) { list.innerHTML='<div style="text-align:center;padding:16px;color:#bbb;font-size:13px;">Aucune vidéo — uploadez votre première !</div>'; return; }
+      list.innerHTML=videos.map(v=>{
+        const diffJ=Math.round((Date.now()-new Date(v.created_at))/86400000);
+        const temps=diffJ<1?'Aujourd\'hui':diffJ===1?'Hier':`Il y a ${diffJ}j`;
+        const thumb=v.playback_id?`<img src="https://image.mux.com/${v.playback_id}/thumbnail.jpg?width=80&height=60&fit_mode=crop" style="width:60px;height:60px;object-fit:cover;border-radius:8px;">`:`<div style="font-size:20px;">🎬</div>`;
+        const statut=v.statut==='en_ligne'?'<span class="video-status">En ligne</span>':'<span class="video-status" style="background:#f8f8f8;color:#bbb;">Traitement</span>';
+        return `<div class="video-item" data-video-id="${v.id}" onclick="ouvrirPlayer('${v.playback_id}','${v.titre||'Vidéo'}',event)">
+          <div class="video-thumb-bg">${thumb}</div>
+          <div class="video-info"><div class="video-title">${v.titre||'Vidéo sans titre'}</div><div class="video-meta"><span>👁 ${(v.vues||0).toLocaleString('fr-FR')}</span><span>📅 ${temps}</span></div></div>
+          ${statut}
+          <button class="video-action-btn" onclick="supprimerVideo('${v.id}','${v.asset_id||''}',this)">🗑</button>
+        </div>`;
+      }).join('');
+    } catch(e) { console.error(e); }
+  }
+
+  async function supprimerVideo(videoId,assetId,btn) {
+    if (!confirm('Supprimer cette vidéo définitivement ?')) return;
+    btn.textContent='⏳'; btn.disabled=true;
+    try {
+      const token=window.token||localStorage.getItem('showone_token');
+      const res=await fetch(`/api/upload?action=delete-video&video_id=${videoId}&asset_id=${assetId||''}`, {method:'DELETE',headers:{'x-supabase-token':token}});
+      const data=await res.json();
+      if (data.success) { alert('Vidéo supprimée ✅'); location.reload(); }
+      else throw new Error(data.error||'Erreur');
+    } catch(e) { alert('Erreur : '+e.message); btn.textContent='🗑'; btn.disabled=false; }
+  }
+
+  function mettreAJourBoutonsUpload() {
+    const plan=window.planUtilisateur||'gratuit';
+    const max=plan==='pro'?10:1;
+    const nb=window._nbVideos||0;
+    const quota=nb>=max;
+    const btnAdd=document.getElementById('btnAddVideo');
+    const uploadZone=document.getElementById('uploadZone');
+    const input=document.getElementById('videoFileInput');
+    if (quota) {
+      if(btnAdd){btnAdd.style.background='#ccc';btnAdd.title='Quota atteint';}
+      if(uploadZone){uploadZone.removeAttribute('for');uploadZone.style.opacity='0.5';uploadZone.style.cursor='not-allowed';uploadZone.onclick=function(e){e.preventDefault();afficherPopupUpgrade();};}
+      if(input)input.disabled=true;
+    } else {
+      if(btnAdd){btnAdd.style.background='';btnAdd.title='';}
+      if(uploadZone){uploadZone.setAttribute('for','videoFileInput');uploadZone.style.opacity='1';uploadZone.style.cursor='pointer';uploadZone.onclick=null;}
+      if(input)input.disabled=false;
+    }
+  }
+
+  function afficherPopupUpgrade() {
+    const overlay=document.createElement('div');
+    overlay.id='popupUpgrade';
+    overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+    overlay.innerHTML=`<div style="background:#fff;border-radius:16px;padding:32px;max-width:380px;width:100%;text-align:center;">
+      <div style="font-size:40px;margin-bottom:12px;">🔒</div>
+      <h2 style="font-size:20px;font-weight:900;color:#111;margin-bottom:8px;letter-spacing:-0.5px;">Limite atteinte</h2>
+      <p style="color:#999;font-size:14px;line-height:1.6;margin-bottom:24px;">Le plan Gratuit permet 1 vidéo.<br>Passez Pro pour uploader jusqu'à <strong>10 vidéos</strong>.</p>
+      <a href="paiement-talent.html" style="display:block;padding:13px;border-radius:9px;background:#E8383A;color:#fff;font-size:14px;font-weight:700;text-decoration:none;margin-bottom:10px;">⭐ Passer Pro — 4,99€/mois</a>
+      <button onclick="document.getElementById('popupUpgrade').remove()" style="background:none;border:none;color:#bbb;font-size:13px;cursor:pointer;">Fermer</button>
+    </div>`;
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click',e=>{if(e.target===overlay)overlay.remove();});
+  }
+
+  let _fichierVideo=null;
+
+  async function lancerUpload(input) {
+    const file=input.files[0]; if(!file) return;
+    const token=window.token||localStorage.getItem('showone_token');
+    const profilId=window.profilId;
+    let nbVideos=window._nbVideos||0;
+    let planActuel=window.planUtilisateur||'gratuit';
+    try {
+      if(profilId&&token){const vidRes=await fetch(`${SUPABASE_URL}/rest/v1/videos?talent_id=eq.${profilId}&select=id`,{headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`}});const vidData=await vidRes.json();nbVideos=Array.isArray(vidData)?vidData.length:nbVideos;}
+    } catch(e) {}
+    const max=planActuel==='pro'?10:1;
+    if(nbVideos>=max){input.value='';afficherPopupUpgrade();return;}
+    if(!(file.type||'video/mp4').startsWith('video/')){alert('Format non supporté. Utilisez MP4 ou MOV.');input.value='';return;}
+    _fichierVideo=file;
+    document.getElementById('modalFileName').textContent=file.name+' — '+(file.size/1024/1024).toFixed(1)+' Mo';
+    document.getElementById('videoTitre').value='';
+    document.getElementById('videoDesc').value='';
+    document.getElementById('uploadModal').classList.add('open');
+  }
+
+  function annulerUpload() {
+    document.getElementById('uploadModal').classList.remove('open');
+    document.getElementById('videoFileInput').value='';
+    _fichierVideo=null;
+  }
+
+  async function confirmerUpload() {
+    const titre=document.getElementById('videoTitre').value.trim();
+    if(!titre){alert('Merci de donner un titre à ta vidéo.');return;}
+    if(!_fichierVideo){annulerUpload();return;}
+    document.getElementById('uploadModal').classList.remove('open');
+    const zone=document.getElementById('uploadZone');
+    zone.removeAttribute('for');zone.onclick=null;zone.style.cursor='default';
+    document.getElementById('uploadIco').textContent='⏳';
+    document.getElementById('uploadTxt').textContent='Upload en cours…';
+    document.getElementById('uploadSub').textContent='Ne fermez pas cette page';
+    try {
+      const token=window.token||localStorage.getItem('showone_token');
+      const urlRes=await fetch('/api/upload?action=upload-url',{headers:{'Authorization':`Bearer ${token}`}});
+      const urlData=await urlRes.json();
+      if(urlData.error==='LIMITE_ATTEINTE'){resetUploadZone();afficherPopupUpgrade();return;}
+      if(!urlData.upload_url) throw new Error('URL Mux indisponible');
+      const {upload_url,upload_id}=urlData;
+      document.getElementById('uploadTxt').textContent='Envoi de la vidéo…';
+      const putRes=await fetch(upload_url,{method:'PUT',headers:{'Content-Type':_fichierVideo.type||'video/mp4'},body:_fichierVideo});
+      if(!putRes.ok) throw new Error('Erreur envoi Mux');
+      document.getElementById('uploadTxt').textContent='Traitement…';
+      const videoRes=await fetch(`${SUPABASE_URL}/rest/v1/videos`,{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`,'Prefer':'return=representation'},body:JSON.stringify({talent_id:window.profilId,titre,url:upload_url,statut:'en_attente',vues:0})});
+      const videoData=await videoRes.json();
+      const videoId=videoData[0]?.id;
+      let playback_id=null,asset_id=null;
+      for(let i=0;i<24;i++){
+        await new Promise(r=>setTimeout(r,5000));
+        const pbRes=await fetch(`/api/upload?action=get-playback&upload_id=${upload_id}`);
+        const pbData=await pbRes.json();
+        if(pbData.playback_id){playback_id=pbData.playback_id;asset_id=pbData.asset_id;break;}
+      }
+      if(videoId&&playback_id){await fetch(`${SUPABASE_URL}/rest/v1/videos?id=eq.${videoId}`,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`,'Prefer':'return=minimal'},body:JSON.stringify({playback_id,statut:'en_ligne'})});}
+      document.getElementById('uploadIco').textContent='✅';
+      document.getElementById('uploadTxt').textContent='Vidéo uploadée !';
+      document.getElementById('videoFileInput').value='';
+      _fichierVideo=null;
+      setTimeout(()=>chargerVideos(window.profilId,token),1500);
+      setTimeout(()=>resetUploadZone(),3000);
+    } catch(err) {
+      document.getElementById('uploadIco').textContent='❌';
+      document.getElementById('uploadTxt').textContent='Erreur upload';
+      document.getElementById('uploadSub').textContent='Vérifiez votre connexion et réessayez.';
+      console.error(err);
+      setTimeout(()=>resetUploadZone(),4000);
+      document.getElementById('videoFileInput').value='';
+      _fichierVideo=null;
+    }
+  }
+
+  function resetUploadZone() {
+    document.getElementById('uploadIco').textContent='📤';
+    document.getElementById('uploadTxt').textContent='Clique pour uploader une vidéo';
+    document.getElementById('uploadSub').textContent='MP4, MOV — max 1 min · 1 vidéo sur plan Gratuit';
+    mettreAJourBoutonsUpload();
+  }
+
+  let _hls=null;
+  function ouvrirPlayer(playbackId,titre,event) {
+    if(event&&event.target.closest('.video-action-btn')) return;
+    if(!playbackId){alert('Vidéo en traitement, réessayez dans quelques instants.');return;}
+    document.getElementById('playerTitre').textContent=titre;
+    const video=document.getElementById('playerVideo');
+    const src=`https://stream.mux.com/${playbackId}.m3u8`;
+    if(_hls){_hls.destroy();_hls=null;}
+    if(Hls.isSupported()){_hls=new Hls();_hls.loadSource(src);_hls.attachMedia(video);_hls.on(Hls.Events.MANIFEST_PARSED,()=>video.play());}
+    else if(video.canPlayType('application/vnd.apple.mpegurl')){video.src=src;video.play();}
+    document.getElementById('playerModal').classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+
+  function fermerPlayer(event) {
+    if(event&&event.target!==document.getElementById('playerModal')) return;
+    document.getElementById('playerModal').classList.remove('open');
+    const video=document.getElementById('playerVideo');
+    video.pause();video.src='';
+    if(_hls){_hls.destroy();_hls=null;}
+    document.body.style.overflow='';
+  }
+
+  async function cacherBadge() {
+    const b=document.getElementById('msgBadge'); if(b) b.style.display='none';
+    if(window.profilId&&window.token){try{await fetch(`${SUPABASE_URL}/rest/v1/messages?talent_id=eq.${window.profilId}&lu=eq.false`,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${window.token}`,'Prefer':'return=minimal'},body:JSON.stringify({lu:true})});}catch(e){}}
+  }
+
+  async function ouvrirUploadPhoto() {
+    const input=document.createElement('input'); input.type='file'; input.accept='image/*';
+    input.onchange=async(e)=>{
+      const file=e.target.files[0]; if(!file) return;
+      if(file.size>5*1024*1024){alert('Photo trop lourde — max 5 Mo');return;}
+      try {
+        const ext=file.name.split('.').pop();
+        const fileName=`avatar_${window.utilisateurId}_${Date.now()}.${ext}`;
+        const token=window.token||localStorage.getItem('showone_token');
+        const uploadRes=await fetch(`${SUPABASE_URL}/storage/v1/object/avatars/${fileName}`,{method:'POST',headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`,'Content-Type':file.type,'x-upsert':'true'},body:file});
+        if(!uploadRes.ok) throw new Error('Erreur upload');
+        const photoUrl=`${SUPABASE_URL}/storage/v1/object/public/avatars/${fileName}`;
+        await fetch(`${SUPABASE_URL}/rest/v1/profils_talents?utilisateur_id=eq.${window.utilisateurId}`,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`,'Prefer':'return=minimal'},body:JSON.stringify({photo_url:photoUrl})});
+        const img=document.getElementById('profileAvatar'); if(img){img.src=photoUrl;img.style.display='block';}
+        document.getElementById('profileAvatarInitiales').style.display='none';
+        alert('Photo mise à jour ✅');
+      } catch(err){alert('Erreur : '+err.message);}
+    };
+    input.click();
+  }
+
+  function seDeconnecter() {
+    localStorage.removeItem('showone_token');
+    localStorage.removeItem('showone_user');
+    window.location.href='connexion.html';
+  }
+
+  chargerDonnees();
+</script>
+</body>
+</html>
