@@ -18,28 +18,34 @@
       position: fixed; left: 0; top: 0;
       background: #fff; border-right: 1px solid #f0f0f0;
       display: flex; flex-direction: column;
-      padding: 18px 14px 14px; z-index: 50;
+      padding: 18px 12px 14px; z-index: 50;
     }
-    .logo { font-size: 21px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; margin-bottom: 16px; display: block; }
+    .logo { font-size: 21px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; margin-bottom: 14px; display: block; }
     .logo span { color: #E8383A; }
 
-    .side-nav { display: flex; flex-direction: column; gap: 2px; flex: 1; }
-    .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 8px; border-radius: 8px; font-size: 15px; font-weight: 600; color: #111; text-decoration: none; }
+    .side-nav { display: flex; flex-direction: column; flex: 1; }
+    .nav-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 8px; border-radius: 7px;
+      font-size: 14px; font-weight: 600; color: #111;
+      text-decoration: none; white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis;
+    }
     .nav-item:hover { background: #f5f5f5; }
     .nav-item.active { font-weight: 800; }
+    .nav-item.nav-red { color: #E8383A; }
+    .nav-item.nav-small { font-size: 13px; font-weight: 400; color: #888; }
+    .nav-item.nav-small:hover { color: #111; }
+    .nav-divider { height: 1px; background: #f0f0f0; margin: 6px 4px; }
 
-    .side-bottom { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
-    .btn-join { display: block; width: 100%; padding: 11px; border-radius: 8px; background: #E8383A; color: #fff; border: none; font-size: 13px; font-weight: 700; cursor: pointer; text-align: center; }
-    .btn-conn { display: block; width: 100%; padding: 10px; border-radius: 8px; background: transparent; color: #111; border: 1.5px solid #ddd; font-size: 13px; font-weight: 600; cursor: pointer; text-align: center; }
+    .side-bottom { margin-top: 8px; display: flex; flex-direction: column; gap: 6px; }
+    .btn-join { display: block; width: 100%; padding: 10px; border-radius: 8px; background: #E8383A; color: #fff; border: none; font-size: 13px; font-weight: 700; cursor: pointer; text-align: center; }
+    .btn-conn { display: block; width: 100%; padding: 9px; border-radius: 8px; background: transparent; color: #111; border: 1.5px solid #ddd; font-size: 13px; font-weight: 600; cursor: pointer; text-align: center; }
     .side-user { display: flex; align-items: center; gap: 8px; }
-    .side-av { width: 32px; height: 32px; border-radius: 50%; background: #111; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .side-av { width: 30px; height: 30px; border-radius: 50%; background: #111; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
     .side-nom { font-size: 13px; font-weight: 700; color: #111; }
     .side-role { font-size: 11px; color: #bbb; }
-
-    .side-footer { padding-top: 10px; border-top: 1px solid #f0f0f0; display: flex; flex-direction: column; gap: 5px; }
-    .side-fl { font-size: 13px; color: #888; text-decoration: none; }
-    .side-fl:hover { color: #111; }
-    .side-copy { font-size: 11px; color: #ccc; margin-top: 2px; }
+    .side-copy { font-size: 11px; color: #ccc; padding: 2px 8px; }
 
     /* ── MAIN ── */
     .main { margin-left: 220px; flex: 1; overflow-y: auto; height: 100vh; }
@@ -108,13 +114,15 @@
     <a href="/" class="nav-item active">🏠 Accueil</a>
     <a href="/castings" class="nav-item">🎬 Castings</a>
     <a href="/messagerie" class="nav-item">💬 Messages</a>
-    <a href="/inscription" class="nav-item">🎤 Inscrivez-vous gratuitement</a>
-    <a href="/inscription?type=recruteur" class="nav-item" style="color:#E8383A;">🎬 Montrez votre agence en vidéo</a>
-    <a href="/qui-sommes-nous" class="nav-item">ℹ️ Qui sommes-nous</a>
-    <a href="/contact" class="nav-item">📩 Nous contacter</a>
-    <a href="/legal" class="nav-item">📄 CGU</a>
+    <div class="nav-divider"></div>
+    <a href="/inscription" class="nav-item">🎤 Talents — Inscrivez-vous</a>
+    <a href="/inscription?type=recruteur" class="nav-item nav-red">🎬 Recruteurs — Votre agence</a>
+    <div class="nav-divider"></div>
+    <a href="/qui-sommes-nous" class="nav-item nav-small">Qui sommes-nous</a>
+    <a href="/contact" class="nav-item nav-small">Nous contacter</a>
+    <a href="/legal" class="nav-item nav-small">CGU</a>
     <a href="#" class="nav-item" id="navDashboard" style="display:none">👤 Mon espace</a>
-    <a href="#" class="nav-item" onclick="seDeconnecter()" id="navDeco" style="display:none;color:#E8383A;">🚪 Déconnexion</a>
+    <a href="#" class="nav-item nav-red" onclick="seDeconnecter()" id="navDeco" style="display:none">🚪 Déconnexion</a>
   </nav>
 
   <div class="side-bottom">
