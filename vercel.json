@@ -1,0 +1,14 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "routes": [
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/inscription", "dest": "/inscription.html" },
+    { "src": "/connexion", "dest": "/connexion.html" },
+    { "src": "/dashboard-talent", "dest": "/dashboard-talent.html" },
+    { "src": "/dashboard-recruteur", "dest": "/dashboard-recruteur.html" },
+    { "src": "/castings", "dest": "/castings.html" },
+    { "src": "/profil-talent", "dest": "/profil-talent.html" },
+    { "src": "/messagerie", "dest": "/messagerie.html" }
+  ]
+}
