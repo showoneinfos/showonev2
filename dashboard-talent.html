@@ -120,6 +120,11 @@
     .player-close { background: none; border: none; color: rgba(255,255,255,0.6); font-size: 20px; cursor: pointer; }
     .player-video { width: 100%; aspect-ratio: 16/9; background: #000; display: block; }
 
+    .mobile-topbar { display: none; }
+    @media (max-width: 768px) {
+      .mobile-topbar { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #f0f0f0; background: #fff; }
+      .topbar { display: none; }
+    }
     /* MOBILE */
     @media (max-width: 768px) {
       .sidebar { display: none; }
@@ -239,6 +244,10 @@
 </div>
 
 <div class="main">
+  <div class="mobile-topbar">
+    <div style="font-size:15px;font-weight:700;" id="mobileTopNom">Mon espace</div>
+    <button onclick="seDeconnecter()" style="padding:8px 14px;border-radius:8px;border:1px solid #e8e8e8;background:#fff;color:#E8383A;font-size:12px;font-weight:700;cursor:pointer;">🚪 Déconnexion</button>
+  </div>
   <div class="topbar">
     <div>
       <h1 id="topbarNom">Bonjour 👋</h1>
