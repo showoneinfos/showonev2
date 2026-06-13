@@ -434,13 +434,13 @@ window.planRecruteur = 'gratuit';
 async function chargerDonnees() {
   const token = localStorage.getItem('showone_token');
   const userStr = localStorage.getItem('showone_user');
-  if (!token || !userStr) { window.location.href = 'connexion.html'; return; }
+  if (!token || !userStr) { window.location.href = '/connexion'; return; }
   const userObj = JSON.parse(userStr);
   const userEmail = userObj.email || userObj.user?.email;
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/utilisateurs?email=eq.${encodeURIComponent(userEmail)}&select=*`, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` } });
     const data = await res.json();
-    if (!data || data.length === 0) { window.location.href = 'connexion.html'; return; }
+    if (!data || data.length === 0) { window.location.href = '/connexion'; return; }
     const u = data[0];
     const prenom = u.prenom||''; const nom = u.nom||''; const plan = u.plan||'gratuit';
     window.planRecruteur = plan;

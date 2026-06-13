@@ -371,11 +371,11 @@
   async function chargerDonnees() {
     const token = localStorage.getItem('showone_token');
     const userStr = localStorage.getItem('showone_user');
-    if (!token || !userStr) { window.location.href = 'connexion.html'; return; }
+    if (!token || !userStr) { window.location.href = '/connexion'; return; }
     let user;
-    try { user = JSON.parse(userStr); } catch(e) { window.location.href = 'connexion.html'; return; }
+    try { user = JSON.parse(userStr); } catch(e) { window.location.href = '/connexion'; return; }
     const userId = user.id;
-    if (!userId) { window.location.href = 'connexion.html'; return; }
+    if (!userId) { window.location.href = '/connexion'; return; }
     window.userId = userId; window.token = token;
 
     const prenomLocal = user.prenom || user.email?.split('@')[0] || '';
