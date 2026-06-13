@@ -84,6 +84,58 @@
       .cat-grid { grid-template-columns: repeat(2, 1fr); }
       .steps { display: none; }
     }
+
+    /* ── MOBILE RESPONSIVE ── */
+    @media (max-width: 768px) {
+      /* Index sidebar → bottom nav */
+      .sidebar {
+        width: 100% !important; height: 56px !important;
+        top: auto !important; bottom: 0 !important; left: 0 !important;
+        border-right: none !important; border-top: 1px solid #f0f0f0 !important;
+        flex-direction: row !important; padding: 6px 8px 10px !important;
+        align-items: center !important;
+      }
+      .logo, .side-divider, .sep, .side-bottom, #side-auth, #side-user-box,
+      .side-nav .nav-item:not(.active):nth-child(n+4) { display: none !important; }
+      .side-nav { flex-direction: row !important; gap: 0 !important; padding: 0 !important; }
+      .nav-item { flex-direction: column !important; gap: 1px !important; padding: 4px 8px !important;
+        font-size: 10px !important; flex: 1 !important; justify-content: center !important;
+        align-items: center !important; background: transparent !important; font-weight: 500 !important; }
+      .ico { font-size: 20px !important; width: auto !important; }
+      .main { margin-left: 0 !important; padding-bottom: 65px !important; }
+
+      /* Grilles */
+      .grid { grid-template-columns: repeat(2, 1fr) !important; gap: 2px !important; }
+      .grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
+
+      /* Dashboard */
+      .sidebar-nav, .sidebar { display: none; }
+      body.dashboard { display: block; }
+      .main.dashboard-main { margin-left: 0 !important; padding: 16px !important; padding-bottom: 70px !important; max-width: 100% !important; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+      .content-grid { grid-template-columns: 1fr !important; }
+
+      /* Nav */
+      nav { padding: 12px 16px !important; }
+
+      /* Forms */
+      .form-row { grid-template-columns: 1fr !important; }
+      .cat-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .type-selector { grid-template-columns: 1fr 1fr !important; }
+
+      /* Legal layout */
+      .layout { flex-direction: column !important; padding: 20px 16px !important; gap: 24px !important; }
+      .sidebar.legal-sidebar { width: 100% !important; height: auto !important; position: relative !important; flex-direction: column !important; border: none !important; border-bottom: 1px solid #f0f0f0 !important; padding: 0 0 16px !important; }
+
+      /* Contact */
+      .main { padding: 30px 16px !important; }
+      .contact-info { flex-wrap: wrap !important; }
+
+      /* Sections */
+      .sec-head { padding: 14px 10px 8px !important; }
+      .cats { padding: 8px 10px !important; }
+    }
+
   </style>
 </head>
 <body>
