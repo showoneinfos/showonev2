@@ -40,7 +40,7 @@ export default async function handler(req, res) {
             <p style="font-size:14px;color:#555;margin:0 0 8px;line-height:1.6;">📸 <strong>Ajoute ta photo</strong> de profil</p>
             <p style="font-size:14px;color:#555;margin:0;line-height:1.6;">✍️ <strong>Complète ta bio</strong> pour convaincre les recruteurs</p>
           </div>
-          <a href="https://showonev2.vercel.app/dashboard-talent" style="display:inline-block;background:#E8383A;color:#fff;text-decoration:none;padding:14px 32px;border-radius:9px;font-size:14px;font-weight:700;">Accéder à mon espace →</a>
+          <a href="https://showonev2.vercel.app/connexion" style="display:inline-block;background:#E8383A;color:#fff;text-decoration:none;padding:14px 32px;border-radius:9px;font-size:14px;font-weight:700;">Accéder à mon espace →</a>
         </div>
         <div style="padding:20px 32px;border-top:1px solid #f0f0f0;font-size:12px;color:#bbb;">
           © 2025 ShowOne · <a href="https://showonev2.vercel.app/contact" style="color:#bbb;">Contact</a> · <a href="https://showonev2.vercel.app/legal" style="color:#bbb;">CGU</a>
@@ -72,7 +72,7 @@ export default async function handler(req, res) {
             <p style="font-size:14px;color:#555;margin:0 0 8px;line-height:1.6;">💬 <strong>Contacter directement</strong> les talents</p>
             <p style="font-size:14px;color:#555;margin:0;line-height:1.6;">📋 <strong>Déposer des castings</strong> et recevoir des candidatures</p>
           </div>
-          <a href="https://showonev2.vercel.app/dashboard-recruteur" style="display:inline-block;background:#111;color:#fff;text-decoration:none;padding:14px 32px;border-radius:9px;font-size:14px;font-weight:700;">Découvrir les talents →</a>
+          <a href="https://showonev2.vercel.app/connexion" style="display:inline-block;background:#111;color:#fff;text-decoration:none;padding:14px 32px;border-radius:9px;font-size:14px;font-weight:700;">Découvrir les talents →</a>
         </div>
         <div style="padding:20px 32px;border-top:1px solid #f0f0f0;font-size:12px;color:#bbb;">
           © 2025 ShowOne · <a href="https://showonev2.vercel.app/contact" style="color:#bbb;">Contact</a> · <a href="https://showonev2.vercel.app/legal" style="color:#bbb;">CGU</a>
