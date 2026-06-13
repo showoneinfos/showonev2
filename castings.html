@@ -499,27 +499,28 @@ chargerCastings();
 <div class="mobile-bar" id="mobileBar">
   <a href="/" class="mobile-btn" id="mb-home">🏠<span>Accueil</span></a>
   <a href="/castings" class="mobile-btn" id="mb-castings">🎬<span>Castings</span></a>
-  <a href="/messagerie" class="mobile-btn" id="mb-msg">💬<span>Messages</span></a>
+  <a href="/connexion" class="mobile-btn" id="mb-conn" style="display:none">🔑<span>Connexion</span></a>
   <a href="/inscription" class="mobile-btn mobile-join" id="mb-auth">S'inscrire</a>
 </div>
 <script>
 (function() {
   try {
     const u = JSON.parse(localStorage.getItem('showone_user') || '{}');
-    const btn = document.getElementById('mb-auth');
+    const btnAuth = document.getElementById('mb-auth');
+    const btnConn = document.getElementById('mb-conn');
     if (u && u.id) {
       const dashboard = u.type_compte === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
-      btn.href = dashboard;
-      btn.textContent = '👤';
-      btn.innerHTML = '👤<span>Mon espace</span>';
-      btn.style.background = '#111';
+      btnAuth.href = dashboard;
+      btnAuth.innerHTML = '👤<span>Mon espace</span>';
+      btnAuth.style.background = '#111';
+      btnConn.style.display = 'none';
+    } else {
+      btnConn.style.display = 'flex';
     }
   } catch(e) {}
-  // Marquer page active
   const path = window.location.pathname;
   if (path === '/' || path === '/index') document.getElementById('mb-home').classList.add('active');
   else if (path.includes('castings')) document.getElementById('mb-castings').classList.add('active');
-  else if (path.includes('messagerie')) document.getElementById('mb-msg').classList.add('active');
 })();
 </script>
 </body>
