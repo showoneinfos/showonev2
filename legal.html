@@ -3,358 +3,167 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mentions légales & CGU — ShowOne</title>
-  <meta name="description" content="Mentions légales, conditions générales d'utilisation et politique de confidentialité de ShowOne.">
-  <meta name="keywords" content="mentions légales, CGU, confidentialité, showone">
-  <meta name="robots" content="index, follow">
-  <meta name="author" content="ShowOne">
-  <link rel="canonical" href="https://www.showone.fr/legal">
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="ShowOne">
-  <meta property="og:title" content="Mentions légales — ShowOne">
-  <meta property="og:description" content="Mentions légales et CGU de la plateforme ShowOne.">
-  <meta property="og:image" content="https://www.showone.fr/og-image.jpg">
-  <meta property="og:url" content="https://www.showone.fr/legal">
-  <meta property="og:locale" content="fr_FR">
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Mentions légales — ShowOne">
-  <meta name="twitter:description" content="Mentions légales et CGU de la plateforme ShowOne.">
-  <meta name="twitter:image" content="https://www.showone.fr/og-image.jpg">
-  <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<title>ShowOne — Mentions légales & CGU</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root { --purple:#5B4FE8; --purple-dark:#3D32C4; --purple-deep:#1a1535; --red:#E8394F; --cream:#f5f3ff; --muted:#a09dc0; --border:rgba(91,79,232,0.13); }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
-  body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--purple-deep); }
-
-  nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:16px 48px; background:rgba(26,21,53,0.92); backdrop-filter:blur(16px); border-bottom:1px solid rgba(255,255,255,0.06); }
-  .nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:22px; color:#fff; text-decoration:none; }
-  .nav-logo span { color:var(--red); }
-  .btn-back-nav { padding:8px 18px; border-radius:999px; border:1px solid rgba(255,255,255,0.25); color:#fff; background:transparent; font-size:13px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; text-decoration:none; transition:all .2s; }
-  .btn-back-nav:hover { background:rgba(255,255,255,0.08); }
-
-  .layout { display:flex; max-width:1100px; margin:0 auto; padding:100px 40px 80px; gap:40px; }
-
-  /* SIDEBAR NAV */
-  .sidebar { width:220px; flex-shrink:0; }
-  .sidebar-sticky { position:sticky; top:90px; }
-  .sidebar h3 { font-family:'Syne',sans-serif; font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--muted); margin-bottom:14px; }
-  .sidebar-nav { display:flex; flex-direction:column; gap:4px; }
-  .sidebar-link { padding:8px 12px; border-radius:8px; font-size:13px; font-weight:500; color:var(--muted); text-decoration:none; transition:all .2s; cursor:pointer; border:none; background:transparent; text-align:left; font-family:'DM Sans',sans-serif; }
-  .sidebar-link:hover { background:rgba(91,79,232,0.08); color:var(--purple); }
-  .sidebar-link.active { background:rgba(91,79,232,0.1); color:var(--purple); font-weight:700; }
-  .sidebar-divider { height:1px; background:var(--border); margin:10px 0; }
-
-  /* CONTENU */
-  .content { flex:1; }
-  .page { display:none; }
-  .page.active { display:block; animation:fadeIn .3s ease; }
-  @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-
-  .page-header { margin-bottom:36px; }
-  .page-tag { display:inline-block; padding:4px 12px; border-radius:999px; background:rgba(91,79,232,0.1); border:1px solid rgba(91,79,232,0.2); color:var(--purple); font-size:11px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; margin-bottom:12px; }
-  .page-header h1 { font-family:'Syne',sans-serif; font-size:32px; font-weight:800; letter-spacing:-.5px; margin-bottom:8px; }
-  .page-header p { font-size:14px; color:var(--muted); }
-  .update-date { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; background:#fff; border:1.5px solid var(--border); border-radius:8px; font-size:12px; color:var(--muted); margin-top:12px; }
-
-  .legal-section { background:#fff; border:1.5px solid var(--border); border-radius:14px; padding:28px 30px; margin-bottom:16px; }
-  .legal-section h2 { font-family:'Syne',sans-serif; font-size:18px; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px; padding-bottom:12px; border-bottom:1px solid var(--border); }
-  .legal-section h3 { font-size:15px; font-weight:700; margin:18px 0 8px; color:var(--purple-deep); }
-  .legal-section p { font-size:14px; line-height:1.8; color:#3d3760; margin-bottom:10px; }
-  .legal-section ul { padding-left:20px; margin-bottom:10px; }
-  .legal-section ul li { font-size:14px; line-height:1.8; color:#3d3760; margin-bottom:4px; }
-  .legal-section table { width:100%; border-collapse:collapse; margin-top:10px; font-size:13px; }
-  .legal-section th { background:var(--cream); padding:10px 14px; text-align:left; font-weight:700; border:1px solid var(--border); }
-  .legal-section td { padding:10px 14px; border:1px solid var(--border); color:#3d3760; line-height:1.6; }
-  .highlight { background:rgba(91,79,232,0.05); border:1px solid rgba(91,79,232,0.12); border-radius:10px; padding:14px 16px; margin-bottom:12px; }
-  .highlight p { margin-bottom:0; }
-  .contact-box { background:var(--purple-deep); border-radius:12px; padding:20px 22px; margin-top:16px; }
-  .contact-box h3 { color:#fff; font-family:'Syne',sans-serif; font-size:16px; margin-bottom:6px; }
-  .contact-box p { color:rgba(255,255,255,0.55); font-size:13px; margin-bottom:0; }
-  .contact-box a { color:#fff; font-weight:600; }
-</style>
+  <title>CGU — ShowOne</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: #111; }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; border-bottom: 1px solid #f0f0f0; }
+    .logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; }
+    .logo span { color: #E8383A; }
+    .btn-back { font-size: 13px; color: #999; text-decoration: none; }
+    .btn-back:hover { color: #111; }
+    .layout { display: flex; max-width: 960px; margin: 0 auto; padding: 40px 20px; gap: 48px; }
+    .sidebar { width: 180px; flex-shrink: 0; }
+    .sidebar-title { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #bbb; margin-bottom: 12px; }
+    .sidebar a { display: block; padding: 8px 10px; border-radius: 7px; font-size: 13px; font-weight: 500; color: #777; text-decoration: none; margin-bottom: 2px; }
+    .sidebar a:hover { background: #f5f5f5; color: #111; }
+    .sidebar a.active { background: #f5f5f5; color: #111; font-weight: 700; }
+    .content { flex: 1; }
+    .page { display: none; }
+    .page.active { display: block; }
+    .page-title { font-size: 28px; font-weight: 900; letter-spacing: -0.8px; margin-bottom: 6px; }
+    .page-sub { font-size: 14px; color: #999; margin-bottom: 6px; }
+    .page-date { font-size: 12px; color: #ccc; margin-bottom: 32px; }
+    h2 { font-size: 16px; font-weight: 800; color: #111; margin-top: 28px; margin-bottom: 10px; }
+    h3 { font-size: 14px; font-weight: 700; margin-top: 16px; margin-bottom: 6px; }
+    p { font-size: 14px; color: #555; line-height: 1.75; margin-bottom: 12px; }
+    ul { padding-left: 20px; margin-bottom: 12px; }
+    li { font-size: 14px; color: #555; line-height: 1.75; margin-bottom: 4px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 13px; }
+    th { background: #f5f5f5; padding: 8px 12px; text-align: left; font-weight: 700; border: 1px solid #e8e8e8; }
+    td { padding: 8px 12px; border: 1px solid #e8e8e8; color: #555; }
+    .alert { background: #fff8f0; border: 1px solid #ffe0b0; border-radius: 8px; padding: 12px 14px; margin: 14px 0; font-size: 13px; color: #885500; }
+    strong { font-weight: 700; color: #111; }
+    a { color: #E8383A; }
+    @media (max-width: 700px) { .layout { flex-direction: column; } .sidebar { width: 100%; } nav { padding: 14px 20px; } }
+  </style>
 </head>
 <body>
-
 <nav>
-  <a href="showone.html" class="nav-logo">Show<span>One</span></a>
-  <a href="showone.html" class="btn-back-nav">← Retour à l'accueil</a>
+  <a href="/" class="logo">Show<span>One</span></a>
+  <a href="/" class="btn-back">← Retour</a>
 </nav>
-
 <div class="layout">
-
-  <!-- SIDEBAR -->
   <div class="sidebar">
-    <div class="sidebar-sticky">
-      <h3>Documents</h3>
-      <div class="sidebar-nav">
-        <button class="sidebar-link active" onclick="showPage('cgu', this)">📄 CGU</button>
-        <button class="sidebar-link" onclick="showPage('confidentialite', this)">🔒 Confidentialité</button>
-        <button class="sidebar-link" onclick="showPage('mentions', this)">🏢 Mentions légales</button>
-        <div class="sidebar-divider"></div>
-        <button class="sidebar-link" onclick="showPage('cookies', this)">🍪 Cookies</button>
-        <button class="sidebar-link" onclick="showPage('charte', this)">🤝 Charte recruteurs</button>
-      </div>
-    </div>
+    <div class="sidebar-title">Documents</div>
+    <a href="#" class="active" onclick="showPage('cgu',this);return false;">📄 CGU</a>
+    <a href="#" onclick="showPage('confidentialite',this);return false;">🔒 Confidentialité</a>
+    <a href="#" onclick="showPage('mentions',this);return false;">🏢 Mentions légales</a>
+    <a href="#" onclick="showPage('cookies',this);return false;">🍪 Cookies</a>
+    <a href="#" onclick="showPage('charte',this);return false;">🤝 Charte recruteurs</a>
   </div>
 
-  <!-- CONTENU -->
   <div class="content">
 
     <!-- CGU -->
     <div class="page active" id="page-cgu">
-      <div class="page-header">
-        <span class="page-tag">Légal</span>
-        <h1>Conditions Générales d'Utilisation</h1>
-        <p>Veuillez lire attentivement ces conditions avant d'utiliser ShowOne.</p>
-        <div class="update-date">📅 Dernière mise à jour : 4 mai 2025</div>
-      </div>
-
-      <div class="legal-section">
-        <h2>1. 📋 Objet</h2>
-        <p>Les présentes Conditions Générales d'Utilisation (CGU) régissent l'accès et l'utilisation de la plateforme ShowOne, accessible à l'adresse <strong>showone.fr</strong>, éditée par ShowOne SAS.</p>
-        <p>En créant un compte ou en utilisant la plateforme, vous acceptez sans réserve les présentes CGU. Si vous n'acceptez pas ces conditions, vous ne pouvez pas utiliser ShowOne.</p>
-      </div>
-
-      <div class="legal-section">
-        <h2>2. 👤 Inscription et comptes</h2>
-        <h3>Conditions d'accès</h3>
-        <p>L'inscription sur ShowOne est ouverte à toute personne physique âgée d'au moins 15 ans. Pour les mineurs entre 15 et 18 ans, l'accord d'un représentant légal est requis.</p>
-        <h3>Obligations lors de l'inscription</h3>
-        <ul>
-          <li>Fournir des informations exactes, complètes et à jour</li>
-          <li>Ne créer qu'un seul compte par personne</li>
-          <li>Maintenir la confidentialité de ses identifiants de connexion</li>
-          <li>Notifier ShowOne de toute utilisation non autorisée de son compte</li>
-        </ul>
-        <h3>Comptes recruteurs</h3>
-        <p>Les recruteurs doivent fournir un numéro SIRET valide correspondant à une société immatriculée en France. ShowOne se réserve le droit de suspendre tout compte recruteur dont les informations s'avèrent inexactes.</p>
-      </div>
-
-      <div class="legal-section">
-        <h2>3. 🎬 Contenu et vidéos</h2>
-        <h3>Règles de publication</h3>
-        <ul>
-          <li>Les vidéos doivent vous représenter personnellement (pas de contenu tiers)</li>
-          <li>Durée maximale : 1 minute (Gratuit) · 2 minutes 30 (Boost et Pro)</li>
-          <li>Nombre : 1 vidéo (Gratuit) · 2 vidéos (Boost) · 5 vidéos/jour non cumulables (Pro)</li>
-          <li>Formats acceptés : MP4, MOV, AVI</li>
-        </ul>
-        <h3>Contenu interdit</h3>
-        <ul>
-          <li>Contenu à caractère pornographique, violent ou haineux</li>
-          <li>Usurpation d'identité</li>
-          <li>Contenu portant atteinte aux droits d'auteur</li>
-          <li>Publicité ou contenu commercial non autorisé</li>
-        </ul>
-        <div class="highlight">
-          <p>💡 ShowOne se réserve le droit de supprimer tout contenu ne respectant pas ces règles, sans préavis et sans remboursement.</p>
-        </div>
-      </div>
-
-      <div class="legal-section">
-        <h2>4. 💳 Abonnements et paiements</h2>
-        <table>
-          <tr><th>Plan</th><th>Prix</th><th>Type</th><th>Résiliation</th></tr>
-          <tr><td>Gratuit</td><td>0€</td><td>—</td><td>—</td></tr>
-          <tr><td>Boost</td><td>1€</td><td>Paiement unique</td><td>Non remboursable</td></tr>
-          <tr><td>Pro Talent</td><td>4,99€/mois</td><td>Abonnement mensuel</td><td>À tout moment</td></tr>
-          <tr><td>Recruteur</td><td>49,99€/mois</td><td>Abonnement mensuel</td><td>À tout moment</td></tr>
-        </table>
-        <p style="margin-top:14px;">Les paiements sont traités de manière sécurisée par <strong>Stripe</strong>. ShowOne ne stocke aucune donnée bancaire.</p>
-        <p>La résiliation d'un abonnement mensuel prend effet à la fin de la période en cours. Aucun remboursement partiel n'est accordé.</p>
-      </div>
-
-      <div class="legal-section">
-        <h2>5. 🚫 Responsabilités</h2>
-        <p>ShowOne agit en tant qu'intermédiaire entre les talents et les recruteurs. ShowOne ne garantit pas la conclusion d'un contrat entre les utilisateurs et ne peut être tenu responsable des relations établies en dehors de la plateforme.</p>
-        <p>L'utilisateur est seul responsable du contenu qu'il publie et des informations qu'il communique.</p>
-      </div>
-
-      <div class="legal-section">
-        <h2>6. ⚖️ Droit applicable</h2>
-        <p>Les présentes CGU sont soumises au droit français. En cas de litige, les parties s'engagent à rechercher une solution amiable avant tout recours judiciaire. À défaut, les tribunaux compétents de Paris seront saisis.</p>
-        <div class="contact-box">
-          <h3>Une question sur nos CGU ?</h3>
-          <p>Contactez-nous à <a href="mailto:legal@showone.fr">legal@showone.fr</a></p>
-        </div>
-      </div>
+      <div class="page-title">Conditions Générales d'Utilisation</div>
+      <div class="page-sub">Les règles d'utilisation de la plateforme ShowOne.</div>
+      <div class="page-date">Dernière mise à jour : mai 2025</div>
+      <h2>1. Objet</h2>
+      <p>Les présentes CGU régissent l'accès et l'utilisation de la plateforme ShowOne (showone.fr). En utilisant la plateforme, vous acceptez sans réserve les présentes CGU.</p>
+      <h2>2. Inscription et comptes</h2>
+      <h3>Conditions d'accès</h3>
+      <p>L'inscription est ouverte à toute personne âgée d'au moins 15 ans. Pour les mineurs entre 15 et 18 ans, l'accord d'un représentant légal est requis.</p>
+      <h3>Obligations</h3>
+      <ul>
+        <li>Fournir des informations exactes et à jour</li>
+        <li>Ne créer qu'un seul compte par personne</li>
+        <li>Maintenir la confidentialité de ses identifiants</li>
+        <li>Notifier ShowOne de toute utilisation non autorisée</li>
+      </ul>
+      <h2>3. Contenus publiés</h2>
+      <p>Vous êtes seul responsable des contenus que vous publiez. Tout contenu illicite ou offensant sera supprimé. ShowOne se réserve le droit de modérer les contenus.</p>
+      <h2>4. Propriété intellectuelle</h2>
+      <p>Vous conservez tous les droits sur vos vidéos. En les publiant, vous accordez à ShowOne une licence non exclusive d'affichage. ShowOne n'utilise pas vos contenus à des fins commerciales sans accord.</p>
+      <h2>5. Responsabilité</h2>
+      <p>ShowOne est une plateforme de mise en relation. Nous ne sommes pas responsables des contacts établis entre talents et recruteurs, ni des suites données.</p>
+      <h2>6. Contact</h2>
+      <p>Toute question : <a href="/contact">notre formulaire de contact</a> ou showone.infos@gmail.com</p>
     </div>
 
-    <!-- CONFIDENTIALITÉ -->
+    <!-- CONFIDENTIALITE -->
     <div class="page" id="page-confidentialite">
-      <div class="page-header">
-        <span class="page-tag">Légal</span>
-        <h1>Politique de confidentialité</h1>
-        <p>Comment ShowOne collecte, utilise et protège vos données personnelles.</p>
-        <div class="update-date">📅 Dernière mise à jour : 4 mai 2025</div>
-      </div>
-
-      <div class="legal-section">
-        <h2>1. 🏢 Responsable du traitement</h2>
-        <p><strong>ShowOne SAS</strong><br>Responsable de la protection des données : contact@showone.fr<br>Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés.</p>
-      </div>
-
-      <div class="legal-section">
-        <h2>2. 📦 Données collectées</h2>
-        <h3>Données d'inscription</h3>
-        <ul>
-          <li>Nom, prénom, date de naissance</li>
-          <li>Adresse e-mail et numéro de téléphone</li>
-          <li>Adresse postale</li>
-          <li>Comptes de réseaux sociaux (TikTok, Instagram, Facebook)</li>
-          <li>Pour les recruteurs : numéro SIRET et informations de société</li>
-        </ul>
-        <h3>Données de profil</h3>
-        <ul>
-          <li>Photo de profil, vidéos publiées</li>
-          <li>Description, catégorie de talent</li>
-          <li>Nom de scène</li>
-        </ul>
-        <h3>Données techniques</h3>
-        <ul>
-          <li>Adresse IP, type de navigateur</li>
-          <li>Pages visitées, durée de visite</li>
-          <li>Cookies de session</li>
-        </ul>
-      </div>
-
-      <div class="legal-section">
-        <h2>3. 🎯 Finalités du traitement</h2>
-        <table>
-          <tr><th>Finalité</th><th>Base légale</th></tr>
-          <tr><td>Gestion du compte utilisateur</td><td>Exécution du contrat</td></tr>
-          <tr><td>Affichage du profil public</td><td>Exécution du contrat</td></tr>
-          <tr><td>Traitement des paiements</td><td>Exécution du contrat</td></tr>
-          <tr><td>Envoi d'e-mails transactionnels</td><td>Intérêt légitime</td></tr>
-          <tr><td>Newsletter (si consentement)</td><td>Consentement</td></tr>
-          <tr><td>Amélioration de la plateforme</td><td>Intérêt légitime</td></tr>
-        </table>
-      </div>
-
-      <div class="legal-section">
-        <h2>4. 🔒 Conservation et sécurité</h2>
-        <p>Vos données sont conservées pendant toute la durée de votre compte, puis <strong>3 ans</strong> après la clôture pour des raisons légales. Les données de paiement sont gérées exclusivement par Stripe et ne sont pas stockées sur nos serveurs.</p>
-        <p>ShowOne met en œuvre des mesures techniques appropriées pour protéger vos données : chiffrement SSL, accès restreint, sauvegardes régulières.</p>
-      </div>
-
-      <div class="legal-section">
-        <h2>5. ✅ Vos droits</h2>
-        <p>Conformément au RGPD, vous disposez des droits suivants :</p>
-        <ul>
-          <li><strong>Droit d'accès</strong> — consulter vos données personnelles</li>
-          <li><strong>Droit de rectification</strong> — corriger des données inexactes</li>
-          <li><strong>Droit à l'effacement</strong> — supprimer votre compte et vos données</li>
-          <li><strong>Droit à la portabilité</strong> — recevoir vos données dans un format lisible</li>
-          <li><strong>Droit d'opposition</strong> — vous opposer à certains traitements</li>
-        </ul>
-        <div class="highlight">
-          <p>Pour exercer vos droits : <strong>rgpd@showone.fr</strong> — Réponse sous 30 jours.</p>
-        </div>
-        <p>Vous pouvez également adresser une réclamation à la <strong>CNIL</strong> (www.cnil.fr).</p>
-      </div>
+      <div class="page-title">Politique de confidentialité</div>
+      <div class="page-sub">Comment ShowOne collecte et protège vos données.</div>
+      <div class="page-date">Dernière mise à jour : mai 2025</div>
+      <h2>Données collectées</h2>
+      <p>ShowOne collecte uniquement les données nécessaires : nom, email, ville, vidéos et informations de profil. Aucune donnée sensible n'est collectée sans votre consentement explicite.</p>
+      <h2>Utilisation des données</h2>
+      <ul>
+        <li>Fonctionnement de la plateforme et gestion de votre compte</li>
+        <li>Mise en relation entre talents et recruteurs</li>
+        <li>Amélioration de nos services</li>
+        <li>Communications relatives à votre compte</li>
+      </ul>
+      <h2>Partage des données</h2>
+      <p>Vos données ne sont <strong>jamais vendues</strong> à des tiers. Elles peuvent être partagées avec nos prestataires techniques (Supabase, Mux, Stripe) dans le cadre strict du service.</p>
+      <h2>Vos droits (RGPD)</h2>
+      <p>Conformément au RGPD, vous pouvez à tout moment : accéder à vos données, les corriger, les supprimer, ou demander leur portabilité. Contactez-nous à showone.infos@gmail.com.</p>
+      <h2>Durée de conservation</h2>
+      <p>Vos données sont conservées tant que votre compte est actif. Après suppression, elles sont effacées dans un délai de 30 jours.</p>
     </div>
 
-    <!-- MENTIONS LÉGALES -->
+    <!-- MENTIONS LEGALES -->
     <div class="page" id="page-mentions">
-      <div class="page-header">
-        <span class="page-tag">Légal</span>
-        <h1>Mentions légales</h1>
-        <p>Informations légales relatives à la plateforme ShowOne.</p>
-        <div class="update-date">📅 Dernière mise à jour : 4 mai 2025</div>
-      </div>
-      <div class="legal-section">
-        <h2>🏢 Éditeur du site</h2>
-        <p><strong>ShowOne SAS</strong><br>Capital social : 1 000 €<br>RCS Paris — SIRET : XXX XXX XXX XXXXX<br>Siège social : Paris, France<br>Directeur de la publication : [Votre nom]<br>Contact : contact@showone.fr</p>
-      </div>
-      <div class="legal-section">
-        <h2>🖥️ Hébergement</h2>
-        <p><strong>Vercel Inc.</strong><br>340 Pine Street, Suite 701, San Francisco, CA 94104, États-Unis<br>vercel.com</p>
-      </div>
-      <div class="legal-section">
-        <h2>📸 Crédits photos</h2>
-        <p>Les photos d'illustration utilisées sur ShowOne proviennent de <strong>Unsplash</strong> (unsplash.com) et sont libres de droits. Les photos de profil des utilisateurs leur appartiennent.</p>
-      </div>
-      <div class="legal-section">
-        <h2>©️ Propriété intellectuelle</h2>
-        <p>L'ensemble des éléments constituant le site ShowOne (logo, design, textes, code) sont la propriété exclusive de ShowOne SAS. Toute reproduction sans autorisation est interdite.</p>
-      </div>
+      <div class="page-title">Mentions légales</div>
+      <div class="page-sub">Informations légales relatives à ShowOne.</div>
+      <div class="page-date">Dernière mise à jour : mai 2025</div>
+      <h2>Éditeur</h2>
+      <p><strong>ShowOne</strong><br>Plateforme de mise en relation talents-recruteurs<br>Email : showone.infos@gmail.com</p>
+      <h2>Hébergement</h2>
+      <p><strong>Vercel Inc.</strong><br>340 Pine Street, Suite 700, San Francisco, CA 94104, USA</p>
+      <h2>Directeur de la publication</h2>
+      <p>ShowOne — showone.infos@gmail.com</p>
+      <h2>Propriété intellectuelle</h2>
+      <p>Le nom ShowOne, son logo et l'ensemble des contenus éditoriaux sont la propriété exclusive de ShowOne. Toute reproduction sans autorisation est interdite.</p>
     </div>
 
     <!-- COOKIES -->
     <div class="page" id="page-cookies">
-      <div class="page-header">
-        <span class="page-tag">Légal</span>
-        <h1>Politique de cookies</h1>
-        <p>Comment ShowOne utilise les cookies sur sa plateforme.</p>
-        <div class="update-date">📅 Dernière mise à jour : 4 mai 2025</div>
-      </div>
-      <div class="legal-section">
-        <h2>🍪 Qu'est-ce qu'un cookie ?</h2>
-        <p>Un cookie est un petit fichier texte déposé sur votre appareil lors de votre visite sur ShowOne. Il permet de vous reconnaître et d'améliorer votre expérience.</p>
-      </div>
-      <div class="legal-section">
-        <h2>📋 Types de cookies utilisés</h2>
-        <table>
-          <tr><th>Type</th><th>Finalité</th><th>Durée</th></tr>
-          <tr><td>Essentiels</td><td>Connexion, session utilisateur</td><td>Session</td></tr>
-          <tr><td>Fonctionnels</td><td>Préférences, langue</td><td>1 an</td></tr>
-          <tr><td>Analytiques</td><td>Statistiques de visite (anonymisés)</td><td>13 mois</td></tr>
-          <tr><td>Paiement</td><td>Stripe (sécurisation des paiements)</td><td>Session</td></tr>
-        </table>
-        <p style="margin-top:14px;">ShowOne <strong>n'utilise pas</strong> de cookies publicitaires ou de tracking tiers.</p>
-      </div>
-      <div class="legal-section">
-        <h2>⚙️ Gérer vos cookies</h2>
-        <p>Vous pouvez refuser les cookies non essentiels à tout moment depuis les paramètres de votre navigateur. Le refus des cookies essentiels peut empêcher la connexion à votre compte.</p>
-      </div>
+      <div class="page-title">Politique de cookies</div>
+      <div class="page-sub">Comment ShowOne utilise les cookies.</div>
+      <div class="page-date">Dernière mise à jour : mai 2025</div>
+      <h2>Qu'est-ce qu'un cookie ?</h2>
+      <p>Un cookie est un petit fichier texte déposé sur votre appareil lors de votre visite. Il permet de vous reconnaître et d'améliorer votre expérience.</p>
+      <h2>Types de cookies utilisés</h2>
+      <table>
+        <tr><th>Type</th><th>Finalité</th><th>Durée</th></tr>
+        <tr><td>Essentiels</td><td>Connexion, session utilisateur</td><td>Session</td></tr>
+        <tr><td>Fonctionnels</td><td>Préférences, langue</td><td>1 an</td></tr>
+        <tr><td>Analytiques</td><td>Statistiques de visite (anonymisés)</td><td>13 mois</td></tr>
+        <tr><td>Paiement</td><td>Stripe (sécurisation des paiements)</td><td>Session</td></tr>
+      </table>
+      <p>ShowOne <strong>n'utilise pas</strong> de cookies publicitaires ou de tracking tiers.</p>
+      <h2>Gérer vos cookies</h2>
+      <p>Vous pouvez refuser les cookies non essentiels depuis les paramètres de votre navigateur. Le refus des cookies essentiels peut empêcher la connexion à votre compte.</p>
     </div>
 
     <!-- CHARTE RECRUTEURS -->
     <div class="page" id="page-charte">
-      <div class="page-header">
-        <span class="page-tag">Recruteurs</span>
-        <h1>Charte des recruteurs</h1>
-        <p>Les engagements que tout recruteur ShowOne doit respecter.</p>
-        <div class="update-date">📅 Dernière mise à jour : 4 mai 2025</div>
-      </div>
-      <div class="legal-section">
-        <h2>🤝 Nos valeurs</h2>
-        <p>ShowOne est une plateforme bienveillante. En tant que recruteur, vous vous engagez à traiter chaque talent avec respect et professionnalisme.</p>
-      </div>
-      <div class="legal-section">
-        <h2>✅ Engagements obligatoires</h2>
-        <ul>
-          <li>Ne contacter les talents que dans un cadre professionnel légitime</li>
-          <li>Être honnête sur votre identité et votre société</li>
-          <li>Respecter les délais de réponse et ne pas laisser les talents sans réponse</li>
-          <li>Ne pas collecter les données des talents en dehors de ShowOne</li>
-          <li>Ne pas proposer de rémunération en dessous des minima légaux</li>
-          <li>Respecter la confidentialité des échanges</li>
-        </ul>
-      </div>
-      <div class="legal-section">
-        <h2>🚫 Comportements interdits</h2>
-        <ul>
-          <li>Harcèlement ou sollicitations répétées non désirées</li>
-          <li>Demandes de contenu inapproprié ou illégal</li>
-          <li>Usurpation d'identité professionnelle</li>
-          <li>Utilisation des données des talents à des fins commerciales non autorisées</li>
-        </ul>
-        <div class="highlight">
-          <p>🚨 Tout manquement à cette charte peut entraîner la suspension immédiate du compte recruteur sans remboursement.</p>
-        </div>
-        <div class="contact-box">
-          <h3>Signaler un abus</h3>
-          <p>Talents : signalez tout comportement inapproprié à <a href="mailto:securite@showone.fr">securite@showone.fr</a></p>
-        </div>
-      </div>
+      <div class="page-title">Charte des recruteurs</div>
+      <div class="page-sub">Les engagements que tout recruteur ShowOne doit respecter.</div>
+      <div class="page-date">Dernière mise à jour : mai 2025</div>
+      <h2>Nos valeurs</h2>
+      <p>ShowOne est une plateforme bienveillante. En tant que recruteur, vous vous engagez à traiter chaque talent avec respect et professionnalisme.</p>
+      <h2>Engagements obligatoires</h2>
+      <ul>
+        <li>Ne contacter les talents que dans un cadre professionnel légitime</li>
+        <li>Être honnête sur votre identité et votre société</li>
+        <li>Respecter les délais de réponse</li>
+        <li>Ne pas collecter les données des talents en dehors de ShowOne</li>
+        <li>Respecter la confidentialité des échanges</li>
+      </ul>
+      <h2>Comportements interdits</h2>
+      <ul>
+        <li>Harcèlement ou sollicitations répétées non désirées</li>
+        <li>Demandes de contenu inapproprié ou illégal</li>
+        <li>Usurpation d'identité professionnelle</li>
+      </ul>
+      <div class="alert">🚨 Tout manquement peut entraîner la suspension immédiate du compte recruteur.</div>
+      <h2>Signaler un abus</h2>
+      <p>Signalez tout comportement inapproprié à <a href="mailto:showone.infos@gmail.com">showone.infos@gmail.com</a></p>
     </div>
 
   </div>
@@ -363,7 +172,7 @@
 <script>
   function showPage(id, btn) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.sidebar-link').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
     document.getElementById('page-' + id).classList.add('active');
     btn.classList.add('active');
     window.scrollTo(0, 0);
