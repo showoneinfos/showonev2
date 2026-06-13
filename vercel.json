@@ -2,20 +2,69 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "routes": [
-    { "src": "/", "dest": "/index.html" },
-    { "src": "/inscription", "dest": "/inscription.html" },
-    { "src": "/connexion", "dest": "/connexion.html" },
-    { "src": "/dashboard-talent", "dest": "/dashboard-talent.html" },
-    { "src": "/dashboard-recruteur", "dest": "/dashboard-recruteur.html" },
-    { "src": "/castings", "dest": "/castings.html" },
-    { "src": "/profil-talent", "dest": "/profil-talent.html" },
-    { "src": "/messagerie", "dest": "/messagerie.html" },
-    { "src": "/contact", "dest": "/contact.html" },
-    { "src": "/legal", "dest": "/legal.html" },
-    { "src": "/qui-sommes-nous", "dest": "/qui-sommes-nous.html" },
-    { "src": "/deposer-casting", "dest": "/deposer-casting.html" },
-    { "src": "/paiement-talent", "dest": "/paiement-talent.html" },
-    { "src": "/paiement-succes", "dest": "/paiement-succes.html" },
-    { "src": "/mot-de-passe-oublie", "dest": "/mot-de-passe-oublie.html" }
+    {
+      "src": "/",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/inscription",
+      "dest": "/inscription.html"
+    },
+    {
+      "src": "/connexion",
+      "dest": "/connexion.html"
+    },
+    {
+      "src": "/dashboard-talent",
+      "dest": "/dashboard-talent.html"
+    },
+    {
+      "src": "/dashboard-recruteur",
+      "dest": "/dashboard-recruteur.html"
+    },
+    {
+      "src": "/castings",
+      "dest": "/castings.html"
+    },
+    {
+      "src": "/profil-talent",
+      "dest": "/profil-talent.html"
+    },
+    {
+      "src": "/messagerie",
+      "dest": "/messagerie.html"
+    },
+    {
+      "src": "/contact",
+      "dest": "/contact.html"
+    },
+    {
+      "src": "/legal",
+      "dest": "/legal.html"
+    },
+    {
+      "src": "/qui-sommes-nous",
+      "dest": "/qui-sommes-nous.html"
+    },
+    {
+      "src": "/deposer-casting",
+      "dest": "/deposer-casting.html"
+    },
+    {
+      "src": "/paiement-talent",
+      "dest": "/paiement-talent.html"
+    },
+    {
+      "src": "/paiement-succes",
+      "dest": "/paiement-succes.html"
+    },
+    {
+      "src": "/mot-de-passe-oublie",
+      "dest": "/mot-de-passe-oublie.html"
+    },
+    {
+      "src": "/mon-profil",
+      "dest": "/mon-profil.html"
+    }
   ]
 }
