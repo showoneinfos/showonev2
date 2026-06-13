@@ -402,11 +402,16 @@
             body: JSON.stringify({ utilisateur_id: userId })
           });
         }
-        document.getElementById('stepsBar').style.display = 'none';
-        document.getElementById('p1').classList.remove('active');
-        document.getElementById('success').classList.add('active');
-        document.getElementById('btnDashboard').href = '/dashboard-recruteur';
-        document.querySelector('.success-sub').textContent = 'Ton compte recruteur est créé. Accède à ton espace pour déposer des castings et contacter des talents.';
+        // Envoyer email bienvenue recruteur
+        try {
+          await fetch('/api/send-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type: 'confirmation_recruteur', to: email, prenom })
+          });
+        } catch(e) { console.log('email:', e); }
+        // Redirection directe vers dashboard recruteur
+        setTimeout(() => { window.location.href = '/dashboard-recruteur'; }, 500);
       } else {
         // Talent : passer à étape 2
         document.getElementById('p1').classList.remove('active');
@@ -463,6 +468,15 @@
         })
       });
 
+      // Envoyer email bienvenue talent
+      try {
+        const emailTalent = document.getElementById('email').value.trim();
+        await fetch('/api/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'confirmation_talent', to: emailTalent, prenom: JSON.parse(localStorage.getItem('showone_user')||'{}').prenom || '' })
+        });
+      } catch(e) { console.log('email:', e); }
       // Succès
       document.getElementById('p2').classList.remove('active');
       document.getElementById('stepsBar').style.display = 'none';
