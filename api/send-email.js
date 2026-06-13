@@ -22,117 +22,64 @@ export default async function handler(req, res) {
   // EMAIL 1 — CONFIRMATION INSCRIPTION TALENT
   // ============================================================
   if (type === 'confirmation_talent') {
-    subject = '🎉 Bienvenue sur ShowOne !';
-    html = `
-    <!DOCTYPE html>
+        subject = '🎉 Bienvenue sur ShowOne !';
+    html = `<!DOCTYPE html>
     <html lang="fr">
     <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
-    <body style="margin:0;padding:0;background:#f5f3ff;font-family:'DM Sans',Arial,sans-serif;">
-      <div style="max-width:580px;margin:40px auto;background:#ffffff;border-radius:20px;overflow:hidden;box-shadow:0 4px 30px rgba(91,79,232,0.1);">
-        
-        <!-- HEADER -->
-        <div style="background:#1a1535;padding:36px 40px;text-align:center;">
-          <div style="font-size:28px;font-weight:800;color:#ffffff;letter-spacing:-0.5px;">Show<span style="color:#E8394F;">One</span></div>
-          <div style="color:rgba(255,255,255,0.5);font-size:13px;margin-top:4px;">La plateforme des talents</div>
+    <body style="margin:0;padding:0;background:#f5f5f5;font-family:Arial,sans-serif;">
+      <div style="max-width:560px;margin:32px auto;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e8e8e8;">
+        <div style="padding:24px 32px;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;">
+          <span style="font-size:22px;font-weight:900;color:#111;letter-spacing:-0.5px;">Show<span style="color:#E8383A;">One</span></span>
         </div>
-
-        <!-- HERO -->
-        <div style="background:linear-gradient(135deg,#5B4FE8,#3D32C4);padding:40px;text-align:center;">
-          <div style="font-size:52px;margin-bottom:12px;">🎉</div>
-          <h1 style="color:#ffffff;font-size:26px;font-weight:800;margin:0 0 10px;">Bienvenue ${prenom || 'sur ShowOne'} !</h1>
-          <p style="color:rgba(255,255,255,0.8);font-size:15px;margin:0;line-height:1.6;">Ton profil talent est maintenant actif.<br>Les recruteurs peuvent déjà te découvrir !</p>
-        </div>
-
-        <!-- CONTENU -->
-        <div style="padding:40px;">
-          <p style="color:#3d3760;font-size:15px;line-height:1.7;margin:0 0 24px;">Bonjour <strong>${prenom || ''}</strong>,</p>
-          <p style="color:#3d3760;font-size:15px;line-height:1.7;margin:0 0 24px;">Ton inscription sur ShowOne est confirmée ! Tu fais maintenant partie de la communauté de talents la plus dynamique de France. 🚀</p>
-          
-          <!-- ÉTAPES -->
-          <div style="background:#f5f3ff;border-radius:14px;padding:24px;margin-bottom:28px;">
-            <p style="color:#1a1535;font-size:14px;font-weight:700;margin:0 0 16px;">📋 Prochaines étapes pour être visible :</p>
-            <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;">
-              <div style="background:#5B4FE8;color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;line-height:24px;text-align:center;">1</div>
-              <p style="color:#3d3760;font-size:14px;margin:0;line-height:1.6;padding-top:2px;">📸 <strong>Ajoute ta photo de profil</strong> pour être reconnaissable</p>
-            </div>
-            <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;">
-              <div style="background:#5B4FE8;color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;line-height:24px;text-align:center;">2</div>
-              <p style="color:#3d3760;font-size:14px;margin:0;line-height:1.6;padding-top:2px;">🎬 <strong>Upload ta première vidéo</strong> pour montrer ton talent</p>
-            </div>
-            <div style="display:flex;align-items:flex-start;gap:12px;">
-              <div style="background:#5B4FE8;color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;line-height:24px;text-align:center;">3</div>
-              <p style="color:#3d3760;font-size:14px;margin:0;line-height:1.6;padding-top:2px;">✍️ <strong>Complète ta bio</strong> pour convaincre les recruteurs</p>
-            </div>
+        <div style="padding:36px 32px;">
+          <h1 style="font-size:26px;font-weight:900;color:#111;letter-spacing:-0.8px;margin:0 0 12px;">Bienvenue \${prenom || ''} ! 🎉</h1>
+          <p style="font-size:15px;color:#555;line-height:1.7;margin:0 0 24px;">Ton profil talent est maintenant actif sur ShowOne. Les recruteurs peuvent déjà te découvrir !</p>
+          <div style="background:#f8f8f8;border-radius:10px;padding:20px;margin-bottom:24px;">
+            <p style="font-size:13px;font-weight:700;color:#111;margin:0 0 12px;">📋 Prochaines étapes :</p>
+            <p style="font-size:14px;color:#555;margin:0 0 8px;line-height:1.6;">🎬 <strong>Upload ta vidéo</strong> de présentation</p>
+            <p style="font-size:14px;color:#555;margin:0 0 8px;line-height:1.6;">📸 <strong>Ajoute ta photo</strong> de profil</p>
+            <p style="font-size:14px;color:#555;margin:0;line-height:1.6;">✍️ <strong>Complète ta bio</strong> pour convaincre les recruteurs</p>
           </div>
-
-          <!-- BOUTON -->
-          <div style="text-align:center;margin-bottom:28px;">
-            <a href="https://www.showone.fr/dashboard-talent" style="display:inline-block;background:#E8394F;color:#ffffff;text-decoration:none;padding:16px 40px;border-radius:12px;font-size:15px;font-weight:700;">🚀 Accéder à mon espace →</a>
-          </div>
-
-          <p style="color:#a09dc0;font-size:13px;line-height:1.6;margin:0;">Des questions ? Contacte-nous à <a href="mailto:showone.infos@gmail.com" style="color:#5B4FE8;">showone.infos@gmail.com</a></p>
+          <a href="https://showonev2.vercel.app/dashboard-talent" style="display:inline-block;background:#E8383A;color:#fff;text-decoration:none;padding:14px 32px;border-radius:9px;font-size:14px;font-weight:700;">Accéder à mon espace →</a>
         </div>
-
-        <!-- FOOTER -->
-        <div style="background:#f5f3ff;padding:24px 40px;text-align:center;border-top:1px solid rgba(91,79,232,0.1);">
-          <p style="color:#a09dc0;font-size:12px;margin:0;">© 2025 ShowOne — Curintina Suprana, 20167 Cuttoli Corticchiato</p>
-          <p style="color:#a09dc0;font-size:12px;margin:6px 0 0;"><a href="https://www.showone.fr/legal" style="color:#5B4FE8;text-decoration:none;">CGU</a> · <a href="https://www.showone.fr/contact" style="color:#5B4FE8;text-decoration:none;">Contact</a></p>
+        <div style="padding:20px 32px;border-top:1px solid #f0f0f0;font-size:12px;color:#bbb;">
+          © 2025 ShowOne · <a href="https://showonev2.vercel.app/contact" style="color:#bbb;">Contact</a> · <a href="https://showonev2.vercel.app/legal" style="color:#bbb;">CGU</a>
         </div>
-
       </div>
     </body>
-    </html>`;
+    </html>\`;
   }
 
   // ============================================================
   // EMAIL 2 — CONFIRMATION INSCRIPTION RECRUTEUR
   // ============================================================
   else if (type === 'confirmation_recruteur') {
-    subject = '🔍 Votre compte recruteur ShowOne est actif !';
-    html = `
-    <!DOCTYPE html>
+        subject = '🎬 Votre compte recruteur ShowOne est actif !';
+    html = `<!DOCTYPE html>
     <html lang="fr">
     <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
-    <body style="margin:0;padding:0;background:#f5f3ff;font-family:'DM Sans',Arial,sans-serif;">
-      <div style="max-width:580px;margin:40px auto;background:#ffffff;border-radius:20px;overflow:hidden;box-shadow:0 4px 30px rgba(91,79,232,0.1);">
-        
-        <div style="background:#1a1535;padding:36px 40px;text-align:center;">
-          <div style="font-size:28px;font-weight:800;color:#ffffff;">Show<span style="color:#E8394F;">One</span></div>
-          <div style="color:rgba(255,255,255,0.5);font-size:13px;margin-top:4px;">La plateforme des talents</div>
+    <body style="margin:0;padding:0;background:#f5f5f5;font-family:Arial,sans-serif;">
+      <div style="max-width:560px;margin:32px auto;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e8e8e8;">
+        <div style="padding:24px 32px;border-bottom:1px solid #f0f0f0;">
+          <span style="font-size:22px;font-weight:900;color:#111;letter-spacing:-0.5px;">Show<span style="color:#E8383A;">One</span></span>
         </div>
-
-        <div style="background:linear-gradient(135deg,#1a1535,#2d2560);padding:40px;text-align:center;">
-          <div style="font-size:52px;margin-bottom:12px;">🔍</div>
-          <h1 style="color:#ffffff;font-size:26px;font-weight:800;margin:0 0 10px;">Compte recruteur activé !</h1>
-          <p style="color:rgba(255,255,255,0.8);font-size:15px;margin:0;line-height:1.6;">Bienvenue ${prenom || ''} — accédez dès maintenant<br>à tous les talents disponibles sur ShowOne.</p>
-        </div>
-
-        <div style="padding:40px;">
-          <p style="color:#3d3760;font-size:15px;line-height:1.7;margin:0 0 24px;">Bonjour <strong>${prenom || ''}</strong>,</p>
-          <p style="color:#3d3760;font-size:15px;line-height:1.7;margin:0 0 24px;">Votre compte recruteur est maintenant actif. Vous pouvez parcourir les profils de nos talents, envoyer des messages et gérer vos castings.</p>
-
-          <div style="background:#f5f3ff;border-radius:14px;padding:24px;margin-bottom:28px;">
-            <p style="color:#1a1535;font-size:14px;font-weight:700;margin:0 0 16px;">✨ Ce que vous pouvez faire :</p>
-            <p style="color:#3d3760;font-size:14px;margin:0 0 10px;line-height:1.6;">🎬 <strong>Parcourir les vidéos</strong> des talents par catégorie</p>
-            <p style="color:#3d3760;font-size:14px;margin:0 0 10px;line-height:1.6;">💬 <strong>Contacter directement</strong> les talents qui vous intéressent</p>
-            <p style="color:#3d3760;font-size:14px;margin:0;line-height:1.6;">📋 <strong>Déposer des castings</strong> et recevoir des candidatures</p>
+        <div style="padding:36px 32px;">
+          <h1 style="font-size:26px;font-weight:900;color:#111;letter-spacing:-0.8px;margin:0 0 12px;">Compte recruteur activé ! 🎬</h1>
+          <p style="font-size:15px;color:#555;line-height:1.7;margin:0 0 24px;">Bienvenue \${prenom || ''} — votre compte recruteur ShowOne est actif. Accédez dès maintenant à tous les talents.</p>
+          <div style="background:#f8f8f8;border-radius:10px;padding:20px;margin-bottom:24px;">
+            <p style="font-size:13px;font-weight:700;color:#111;margin:0 0 12px;">✨ Ce que vous pouvez faire :</p>
+            <p style="font-size:14px;color:#555;margin:0 0 8px;line-height:1.6;">🎬 <strong>Parcourir les vidéos</strong> des talents par catégorie</p>
+            <p style="font-size:14px;color:#555;margin:0 0 8px;line-height:1.6;">💬 <strong>Contacter directement</strong> les talents</p>
+            <p style="font-size:14px;color:#555;margin:0;line-height:1.6;">📋 <strong>Déposer des castings</strong> et recevoir des candidatures</p>
           </div>
-
-          <div style="text-align:center;margin-bottom:28px;">
-            <a href="https://www.showone.fr/dashboard-recruteur" style="display:inline-block;background:#5B4FE8;color:#ffffff;text-decoration:none;padding:16px 40px;border-radius:12px;font-size:15px;font-weight:700;">🔍 Découvrir les talents →</a>
-          </div>
-
-          <p style="color:#a09dc0;font-size:13px;line-height:1.6;margin:0;">Des questions ? <a href="mailto:showone.infos@gmail.com" style="color:#5B4FE8;">showone.infos@gmail.com</a></p>
+          <a href="https://showonev2.vercel.app/dashboard-recruteur" style="display:inline-block;background:#111;color:#fff;text-decoration:none;padding:14px 32px;border-radius:9px;font-size:14px;font-weight:700;">Découvrir les talents →</a>
         </div>
-
-        <div style="background:#f5f3ff;padding:24px 40px;text-align:center;border-top:1px solid rgba(91,79,232,0.1);">
-          <p style="color:#a09dc0;font-size:12px;margin:0;">© 2025 ShowOne — Curintina Suprana, 20167 Cuttoli Corticchiato</p>
-          <p style="color:#a09dc0;font-size:12px;margin:6px 0 0;"><a href="https://www.showone.fr/legal" style="color:#5B4FE8;text-decoration:none;">CGU</a> · <a href="https://www.showone.fr/contact" style="color:#5B4FE8;text-decoration:none;">Contact</a></p>
+        <div style="padding:20px 32px;border-top:1px solid #f0f0f0;font-size:12px;color:#bbb;">
+          © 2025 ShowOne · <a href="https://showonev2.vercel.app/contact" style="color:#bbb;">Contact</a> · <a href="https://showonev2.vercel.app/legal" style="color:#bbb;">CGU</a>
         </div>
-
       </div>
     </body>
-    </html>`;
+    </html>\`;
   }
 
   // ============================================================
