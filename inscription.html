@@ -7,7 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; background: #fff; color: #111; min-height: 100vh; display: flex; flex-direction: column; }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: #111; min-height: 100vh; display: flex; flex-direction: column; } @media (max-width: 768px) { body { padding-bottom: 70px; } }
 
     nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; border-bottom: 1px solid #f0f0f0; }
     .logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; }
@@ -136,6 +136,28 @@
       .cats { padding: 8px 10px !important; }
     }
 
+
+    /* ── BARRE MOBILE ── */
+    .mobile-bar { display: none; }
+    @media (max-width: 768px) {
+      .mobile-bar {
+        display: flex; position: fixed; bottom: 0; left: 0; right: 0;
+        background: #fff; border-top: 1px solid #f0f0f0;
+        padding: 8px 4px 14px; z-index: 1000; align-items: center;
+      }
+      .mobile-btn {
+        flex: 1; display: flex; flex-direction: column; align-items: center;
+        gap: 2px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600;
+      }
+      .mobile-btn:first-child { font-size: 22px; }
+      .mobile-btn span { font-size: 10px; display: block; }
+      .mobile-btn.active { color: #111; }
+      .mobile-btn.mobile-join {
+        flex: none; margin: 0 8px; background: #E8383A; color: #fff !important;
+        padding: 8px 14px; border-radius: 8px; font-size: 12px !important; font-weight: 700;
+        display: flex; flex-direction: column; align-items: center; gap: 1px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -443,6 +465,35 @@
       btn.disabled = false; btn.textContent = 'Créer mon profil ✓';
     }
   }
+</script>
+
+<!-- BARRE MOBILE -->
+<div class="mobile-bar" id="mobileBar">
+  <a href="/" class="mobile-btn" id="mb-home">🏠<span>Accueil</span></a>
+  <a href="/castings" class="mobile-btn" id="mb-castings">🎬<span>Castings</span></a>
+  <a href="/messagerie" class="mobile-btn" id="mb-msg">💬<span>Messages</span></a>
+  <a href="/connexion" class="mobile-btn mobile-join" id="mb-auth" style="background:#111;">Connexion</a>
+</div>
+<script>
+(function() {
+  try {
+    const u = JSON.parse(localStorage.getItem('showone_user') || '{}');
+    const btn = document.getElementById('mb-auth');
+    if (u && u.id) {
+      const dashboard = u.type_compte === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
+      btn.href = dashboard;
+      btn.textContent = '👤';
+      btn.innerHTML = '👤<span>Mon espace</span>';
+      btn.style.background = '#111';
+    }
+  } catch(e) {}
+  // Marquer page active
+  const path = window.location.pathname;
+  if (path === '/' || path === '/index') document.getElementById('mb-home').classList.add('active');
+  else if (path.includes('inscription')) { /* déjà sur la page */ }
+  else if (path.includes('castings')) document.getElementById('mb-castings').classList.add('active');
+  else if (path.includes('messagerie')) document.getElementById('mb-msg').classList.add('active');
+})();
 </script>
 </body>
 </html>
