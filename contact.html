@@ -3,293 +3,98 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact — ShowOne | Nous contacter</title>
-  <meta name="description" content="Une question, un problème ou une suggestion ? Contactez l'équipe ShowOne. Nous répondons sous 24h.">
-  <meta name="keywords" content="contact showone, support, aide, question">
-  <meta name="robots" content="index, follow">
-  <meta name="author" content="ShowOne">
-  <link rel="canonical" href="https://www.showone.fr/contact">
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="ShowOne">
-  <meta property="og:title" content="Contacter ShowOne">
-  <meta property="og:description" content="Contactez l'équipe ShowOne pour toute question ou demande d'information.">
-  <meta property="og:image" content="https://www.showone.fr/og-image.jpg">
-  <meta property="og:url" content="https://www.showone.fr/contact">
-  <meta property="og:locale" content="fr_FR">
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Contacter ShowOne">
-  <meta name="twitter:description" content="Contactez l'équipe ShowOne pour toute question ou demande d'information.">
-  <meta name="twitter:image" content="https://www.showone.fr/og-image.jpg">
-  <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<title>ShowOne — Nous contacter</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root { --purple:#5B4FE8; --purple-dark:#3D32C4; --purple-deep:#1a1535; --red:#E8394F; --cream:#f5f3ff; --muted:#a09dc0; --border:rgba(91,79,232,0.13); --white:#fff; }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
-  body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--purple-deep); }
-
-  /* NAV */
-  nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:16px 48px; background:rgba(26,21,53,0.92); backdrop-filter:blur(16px); border-bottom:1px solid rgba(255,255,255,0.06); }
-  .nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:22px; color:#fff; text-decoration:none; }
-  .nav-logo span { color:var(--red); }
-  .nav-right { display:flex; gap:12px; align-items:center; }
-  .btn-nav { padding:8px 18px; border-radius:999px; font-size:13px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; text-decoration:none; transition:all .2s; }
-  .btn-outline { border:1px solid rgba(255,255,255,0.25); color:#fff; background:transparent; }
-  .btn-outline:hover { background:rgba(255,255,255,0.08); }
-  .btn-fill { border:none; background:var(--red); color:#fff; }
-  .btn-fill:hover { background:#c92d41; }
-
-  /* HERO */
-  .hero { padding:120px 48px 60px; text-align:center; background:var(--purple-deep); position:relative; overflow:hidden; }
-  .hero-bg { position:absolute; inset:0; background:radial-gradient(ellipse at 50% 0%, rgba(91,79,232,0.3) 0%, transparent 70%); pointer-events:none; }
-  .hero-tag { display:inline-block; padding:5px 14px; border-radius:999px; background:rgba(91,79,232,0.2); border:1px solid rgba(91,79,232,0.35); color:rgba(255,255,255,0.8); font-size:12px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; margin-bottom:18px; }
-  .hero h1 { font-family:'Syne',sans-serif; font-size:clamp(32px,5vw,52px); font-weight:800; color:#fff; letter-spacing:-1px; margin-bottom:14px; }
-  .hero h1 em { color:var(--red); font-style:normal; }
-  .hero p { font-size:16px; color:rgba(255,255,255,0.55); max-width:500px; margin:0 auto; line-height:1.7; }
-
-  /* LAYOUT */
-  .layout { max-width:1100px; margin:0 auto; padding:60px 40px 80px; display:grid; grid-template-columns:1fr 1fr; gap:40px; }
-  @media(max-width:768px) { .layout { grid-template-columns:1fr; padding:40px 20px; } nav { padding:16px 20px; } .hero { padding:100px 20px 50px; } }
-
-  /* CARTES CONTACT */
-  .contact-cards { display:flex; flex-direction:column; gap:16px; }
-  .contact-card { background:var(--white); border:1.5px solid var(--border); border-radius:16px; padding:24px; display:flex; align-items:flex-start; gap:16px; transition:all .2s; }
-  .contact-card:hover { border-color:rgba(91,79,232,0.3); box-shadow:0 4px 20px rgba(91,79,232,0.08); transform:translateY(-2px); }
-  .contact-ico { width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
-  .ico-purple { background:rgba(91,79,232,0.1); }
-  .ico-red { background:rgba(232,57,79,0.1); }
-  .ico-green { background:rgba(16,185,129,0.1); }
-  .ico-amber { background:rgba(245,158,11,0.1); }
-  .contact-info h3 { font-family:'Syne',sans-serif; font-size:16px; font-weight:700; margin-bottom:4px; }
-  .contact-info p { font-size:13px; color:var(--muted); margin-bottom:8px; line-height:1.5; }
-  .contact-link { font-size:15px; font-weight:700; color:var(--purple); text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
-  .contact-link:hover { text-decoration:underline; }
-  .contact-badge { display:inline-block; padding:3px 10px; border-radius:999px; background:rgba(91,79,232,0.08); border:1px solid rgba(91,79,232,0.15); color:var(--purple); font-size:11px; font-weight:700; margin-top:6px; }
-  .contact-badge-red { background:rgba(232,57,79,0.08); border-color:rgba(232,57,79,0.2); color:var(--red); }
-  .soon { color:var(--muted); font-style:italic; font-size:14px; }
-
-  /* HORAIRES */
-  .hours-card { background:var(--purple-deep); border-radius:16px; padding:24px; color:#fff; margin-top:16px; }
-  .hours-card h3 { font-family:'Syne',sans-serif; font-size:16px; font-weight:700; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
-  .hours-row { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.07); font-size:14px; }
-  .hours-row:last-child { border-bottom:none; }
-  .hours-day { color:rgba(255,255,255,0.6); }
-  .hours-time { font-weight:700; color:#fff; }
-  .hours-closed { color:var(--muted); font-style:italic; }
-  .online-dot { width:8px; height:8px; border-radius:50%; background:#10b981; display:inline-block; margin-right:6px; animation:pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-
-  /* FORMULAIRE */
-  .form-card { background:var(--white); border:1.5px solid var(--border); border-radius:20px; padding:36px; }
-  .form-card h2 { font-family:'Syne',sans-serif; font-size:22px; font-weight:800; margin-bottom:6px; }
-  .form-card > p { font-size:14px; color:var(--muted); margin-bottom:28px; line-height:1.6; }
-  .fg { margin-bottom:18px; }
-  .flabel { display:block; font-size:13px; font-weight:700; margin-bottom:6px; color:var(--purple-deep); }
-  .finput, .fselect, .ftextarea { width:100%; padding:12px 15px; border:1.5px solid var(--border); border-radius:10px; background:#fff; font-size:14px; color:var(--purple-deep); font-family:'DM Sans',sans-serif; outline:none; transition:border-color .2s, box-shadow .2s; }
-  .finput:focus, .fselect:focus, .ftextarea:focus { border-color:var(--purple); box-shadow:0 0 0 3px rgba(91,79,232,.08); }
-  .finput::placeholder, .ftextarea::placeholder { color:var(--muted); }
-  .ftextarea { resize:vertical; min-height:130px; }
-  .row2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-  @media(max-width:500px) { .row2 { grid-template-columns:1fr; } }
-  .btn-submit { width:100%; padding:15px; border-radius:12px; border:none; background:var(--purple); color:#fff; font-size:15px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .2s; margin-top:8px; }
-  .btn-submit:hover { background:var(--purple-dark); transform:translateY(-1px); }
-  .btn-submit:disabled { background:var(--muted); cursor:not-allowed; transform:none; }
-  .success-msg { display:none; text-align:center; padding:24px; }
-  .success-msg .ico { font-size:48px; margin-bottom:12px; }
-  .success-msg h3 { font-family:'Syne',sans-serif; font-size:20px; font-weight:800; margin-bottom:8px; }
-  .success-msg p { font-size:14px; color:var(--muted); }
-
-  /* FAQ RAPIDE */
-  .faq-section { grid-column:1/-1; }
-  .faq-section h2 { font-family:'Syne',sans-serif; font-size:24px; font-weight:800; margin-bottom:24px; text-align:center; }
-  .faq-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
-  .faq-item { background:var(--white); border:1.5px solid var(--border); border-radius:14px; padding:22px; }
-  .faq-item h4 { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; margin-bottom:8px; display:flex; align-items:center; gap:8px; }
-  .faq-item p { font-size:13px; color:var(--muted); line-height:1.65; }
-  .faq-item a { color:var(--purple); font-weight:600; text-decoration:none; }
-  .faq-item a:hover { text-decoration:underline; }
-
-  .lang-selector { display:flex; align-items:center; gap:4px; margin-left:8px; }
-  .lang-btn { padding:4px 8px; border-radius:6px; border:1.5px solid rgba(255,255,255,0.2); background:transparent; color:rgba(255,255,255,0.6); font-size:11px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .2s; letter-spacing:.3px; }
-  .lang-btn:hover { background:rgba(255,255,255,0.1); color:#fff; }
-  .lang-btn.active { background:rgba(255,255,255,0.15); color:#fff; border-color:rgba(255,255,255,0.4); }
-  .lang-selector.light .lang-btn { border-color:var(--border); color:var(--muted); }
-  .lang-selector.light .lang-btn:hover { border-color:var(--purple); color:var(--purple); }
-  .lang-selector.light .lang-btn.active { background:var(--purple); color:#fff; border-color:var(--purple); }
-
-</style>
-
-<script src="/translations.js"></script>
+  <title>Nous contacter — ShowOne</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: #111; min-height: 100vh; }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; border-bottom: 1px solid #f0f0f0; }
+    .logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; }
+    .logo span { color: #E8383A; }
+    .btn-back { font-size: 13px; color: #999; text-decoration: none; }
+    .btn-back:hover { color: #111; }
+    .main { max-width: 560px; margin: 0 auto; padding: 60px 20px; }
+    h1 { font-size: 36px; font-weight: 900; letter-spacing: -1px; margin-bottom: 8px; }
+    .sub { font-size: 15px; color: #999; margin-bottom: 36px; line-height: 1.6; }
+    .contact-info { display: flex; gap: 10px; align-items: center; padding: 14px 16px; border: 1px solid #f0f0f0; border-radius: 10px; margin-bottom: 28px; }
+    .contact-info a { color: #E8383A; font-size: 14px; font-weight: 600; text-decoration: none; }
+    .contact-info span { font-size: 12px; color: #bbb; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-group { margin-bottom: 14px; }
+    label { display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+    input, select, textarea { width: 100%; padding: 12px 14px; border: 1.5px solid #e8e8e8; border-radius: 9px; font-size: 14px; font-family: 'Inter', sans-serif; outline: none; color: #111; background: #fff; }
+    input:focus, select:focus, textarea:focus { border-color: #111; }
+    input::placeholder, textarea::placeholder { color: #ccc; }
+    textarea { resize: vertical; min-height: 110px; }
+    .section-extra { display: none; background: #f8f8f8; border-radius: 9px; padding: 14px; margin-bottom: 14px; }
+    .section-extra .form-group { margin-bottom: 10px; }
+    .btn-submit { width: 100%; padding: 14px; border-radius: 10px; background: #111; color: #fff; border: none; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 6px; }
+    .btn-submit:hover { background: #333; }
+    .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
+    .success-box { display: none; text-align: center; padding: 40px 20px; }
+    .success-icon { font-size: 48px; margin-bottom: 16px; }
+    .success-title { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 8px; }
+    .success-sub { font-size: 14px; color: #999; line-height: 1.6; }
+    @media (max-width: 600px) { nav { padding: 14px 20px; } .form-row { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
-
 <nav>
-  <a href="/" class="nav-logo">Show<span>One</span></a>
-  <div class="nav-right">
-    <a href="/connexion" class="btn-nav btn-outline">Connexion</a>
-    <a href="/inscription-talent" class="btn-nav btn-fill">Rejoindre</a>
-  </div>
+  <a href="/" class="logo">Show<span>One</span></a>
+  <a href="/" class="btn-back">← Retour</a>
 </nav>
+<div class="main">
+  <h1>Nous contacter</h1>
+  <p class="sub">Une question, un problème ou une idée ? Notre équipe vous répond rapidement.</p>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-tag">Support & Contact</div>
-  <h1>On est là pour <em>vous</em></h1>
-  <p>Une question, un problème ou une idée ? Notre équipe vous répond rapidement.</p>
-</div>
-
-<!-- LAYOUT -->
-<div class="layout">
-
-  <!-- COLONNE GAUCHE — Infos contact -->
-  <div>
-    <div class="contact-cards">
-
-      <!-- Email général -->
-      <div class="contact-card">
-        <div class="contact-ico ico-purple">📧</div>
-        <div class="contact-info">
-          <h3>Email général</h3>
-          <p>Pour toute question sur la plateforme, votre compte ou nos services.</p>
-          <a href="mailto:showone.infos@gmail.com" class="contact-link">✉️ showone.infos@gmail.com</a>
-          <br><span class="contact-badge">Réponse sous 24-48h</span>
-        </div>
-      </div>
-
-      <!-- Téléphone -->
-      <div class="contact-card">
-        <div class="contact-ico ico-green">📞</div>
-        <div class="contact-info">
-          <h3>Téléphone</h3>
-          <p>Notre équipe est disponible aux horaires indiqués ci-dessous.</p>
-          <a href="tel:0672380265" class="contact-link">📲 06.72.38.02.65</a>
-        </div>
-      </div>
-
-      <!-- Adresse -->
-      <div class="contact-card">
-        <div class="contact-ico ico-amber">📍</div>
-        <div class="contact-info">
-          <h3>Adresse</h3>
-          <p>Showone — Curintina Suprana<br>20167 Cuttoli Corticchiato</p>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Horaires -->
-    <div class="hours-card">
-      <h3><span class="online-dot"></span> Horaires de disponibilité</h3>
-      <div class="hours-row"><span class="hours-day">Lundi — Vendredi</span><span class="hours-time">9h00 — 18h00</span></div>
-      <div class="hours-row"><span class="hours-day">Samedi</span><span class="hours-time">10h00 — 14h00</span></div>
-      <div class="hours-row"><span class="hours-day">Dimanche</span><span class="hours-closed">Fermé</span></div>
+  <div class="contact-info">
+    <span style="font-size:20px;">📧</span>
+    <div>
+      <a href="mailto:showone.infos@gmail.com">showone.infos@gmail.com</a><br>
+      <span>Réponse sous 24-48h</span>
     </div>
   </div>
 
-  <!-- COLONNE DROITE — Formulaire -->
-  <div>
-    <div class="form-card">
-      <h2>Envoyer un message</h2>
-      <p>Remplissez ce formulaire et nous vous répondrons dans les plus brefs délais.</p>
-
-      <div id="contactForm">
-        <div class="row2">
-          <div class="fg"><label class="flabel">Prénom *</label><input class="finput" type="text" id="contactPrenom" placeholder="Marie"></div>
-          <div class="fg"><label class="flabel">Nom *</label><input class="finput" type="text" id="contactNom" placeholder="Dupont"></div>
-        </div>
-        <div class="fg"><label class="flabel">Email *</label><input class="finput" type="email" id="contactEmail" placeholder="marie@email.com"></div>
-
-        <!-- SUJET DÉFILANT -->
-        <div class="fg">
-          <label class="flabel">Quel est votre demande ? *</label>
-          <select class="fselect" id="contactSujet" onchange="changerSujet()">
-            <option value="">-- Choisissez votre demande --</option>
-            <option value="mineur">👶 Dossier mineur</option>
-            <option value="infos">ℹ️ Demande d'informations</option>
-            <option value="categorie">🎭 Ajout d'une nouvelle catégorie talent</option>
-            <option value="compte">🔑 Problème avec mon compte</option>
-            <option value="technique">🔧 Problème technique</option>
-            <option value="partenariat">🤝 Partenariat</option>
-            <option value="autre">💬 Autre</option>
-          </select>
-        </div>
-
-        <!-- SECTION DOSSIER MINEUR -->
-        <div id="sectionMineur" style="display:none;">
-          <div style="background:rgba(232,57,79,0.06);border:1.5px solid rgba(232,57,79,0.2);border-radius:12px;padding:16px;margin-bottom:16px;">
-            <p style="font-size:13px;font-weight:700;color:var(--red);margin-bottom:8px;">📋 Documents requis pour un dossier mineur</p>
-            <p style="font-size:13px;color:#3d3760;line-height:1.6;margin-bottom:10px;">Merci de joindre les documents suivants par email à <strong>showone.infos@gmail.com</strong> après avoir soumis ce formulaire :</p>
-            <ul style="font-size:13px;color:#3d3760;padding-left:18px;line-height:1.9;">
-              <li>🪪 Pièce d'identité du mineur (carte d'identité ou passeport)</li>
-              <li>🪪 Pièce d'identité du Parent / Tuteur 1</li>
-              <li>🪪 Pièce d'identité du Parent / Tuteur 2 (si applicable)</li>
-              <li>📄 Livret de famille ou acte de naissance</li>
-              <li>⚖️ Justificatif autorité parentale unique (si un seul parent)</li>
-            </ul>
-          </div>
-          <div class="fg"><label class="flabel">Prénom du mineur *</label><input class="finput" type="text" id="mineurPrenomContact" placeholder="Lucas"></div>
-          <div class="fg"><label class="flabel">Date de naissance du mineur *</label><input class="finput" type="date" id="mineurDobContact"></div>
-          <div class="fg"><label class="flabel">Catégorie talent souhaitée</label><input class="finput" type="text" id="mineurCatContact" placeholder="Ex : Danse, Chant, Acting…"></div>
-        </div>
-
-        <!-- SECTION NOUVELLE CATÉGORIE -->
-        <div id="sectionCategorie" style="display:none;">
-          <div class="fg"><label class="flabel">Nom de la catégorie souhaitée *</label><input class="finput" type="text" id="catNom" placeholder="Ex : Cirque, Magie, Cuisine…"></div>
-          <div class="fg"><label class="flabel">Pourquoi cette catégorie ?</label><input class="finput" type="text" id="catRaison" placeholder="Ex : Beaucoup de talents dans ce domaine"></div>
-        </div>
-
-        <!-- MESSAGE -->
-        <div class="fg"><label class="flabel">Message *</label><textarea class="ftextarea" id="contactMessage" placeholder="Décrivez votre demande en détail…"></textarea></div>
-        <button class="btn-submit" id="btnSubmit" onclick="envoyerContact()">Envoyer le message →</button>
-      </div>
-
-      <div class="success-msg" id="successMsg">
-        <div class="ico">✅</div>
-        <h3>Message envoyé !</h3>
-        <p>Merci pour votre message. Notre équipe vous répondra à <strong id="emailConfirm"></strong> dans les plus brefs délais.</p>
-        <p id="successExtra" style="margin-top:10px;font-size:13px;color:var(--red);font-weight:600;display:none;">N'oubliez pas d'envoyer les documents du mineur à showone.infos@gmail.com !</p>
-      </div>
-
+  <div id="contactForm">
+    <div class="form-row">
+      <div class="form-group"><label>Prénom *</label><input type="text" id="contactPrenom" placeholder="Marie"></div>
+      <div class="form-group"><label>Nom *</label><input type="text" id="contactNom" placeholder="Dupont"></div>
     </div>
+    <div class="form-group"><label>Email *</label><input type="email" id="contactEmail" placeholder="marie@email.com"></div>
+    <div class="form-group">
+      <label>Sujet *</label>
+      <select id="contactSujet" onchange="changerSujet()">
+        <option value="">-- Choisir un sujet --</option>
+        <option value="infos">ℹ️ Demande d'informations</option>
+        <option value="compte">👤 Problème de compte</option>
+        <option value="technique">🔧 Problème technique</option>
+        <option value="mineur">👶 Inscription mineur</option>
+        <option value="categorie">🎭 Suggérer une catégorie</option>
+        <option value="partenariat">🤝 Partenariat</option>
+        <option value="autre">💬 Autre</option>
+      </select>
+    </div>
+
+    <div class="section-extra" id="sectionMineur">
+      <div class="form-group"><label>Prénom du mineur *</label><input type="text" id="mineurPrenomContact" placeholder="Lucas"></div>
+      <div class="form-group"><label>Date de naissance *</label><input type="date" id="mineurDobContact"></div>
+      <div class="form-group"><label>Catégorie souhaitée</label><input type="text" id="mineurCatContact" placeholder="Ex : Danse, Chant…"></div>
+    </div>
+
+    <div class="section-extra" id="sectionCategorie">
+      <div class="form-group"><label>Nom de la catégorie *</label><input type="text" id="catNom" placeholder="Ex : Cirque, Magie…"></div>
+      <div class="form-group"><label>Pourquoi cette catégorie ?</label><input type="text" id="catRaison" placeholder="Ex : Beaucoup de talents dans ce domaine"></div>
+    </div>
+
+    <div class="form-group"><label>Message *</label><textarea id="contactMessage" placeholder="Décrivez votre demande en détail…"></textarea></div>
+    <button class="btn-submit" id="btnSubmit" onclick="envoyerContact()">Envoyer le message →</button>
   </div>
 
-  <!-- FAQ RAPIDE -->
-  <div class="faq-section">
-    <h2>Questions fréquentes</h2>
-    <div class="faq-grid">
-      <div class="faq-item">
-        <h4>🌟 Comment s'inscrire comme talent ?</h4>
-        <p>L'inscription est gratuite et rapide. <a href="/inscription-talent">Créez votre compte ici</a> et uploadez votre première vidéo pour être visible des recruteurs.</p>
-      </div>
-      <div class="faq-item">
-        <h4>🔍 Comment accéder aux profils des talents ?</h4>
-        <p>L'accès aux profils complets est réservé aux recruteurs abonnés. <a href="/inscription-recruteur">Créez votre compte recruteur</a> pour commencer.</p>
-      </div>
-      <div class="faq-item">
-        <h4>👶 Comment inscrire un mineur ?</h4>
-        <p>Les mineurs ont un processus d'inscription spécifique avec autorisation parentale. <a href="/inscription-mineur">Accédez au formulaire dédié</a> et contactez-nous à showone.infos@gmail.com.</p>
-      </div>
-      <div class="faq-item">
-        <h4>🔑 J'ai oublié mon mot de passe</h4>
-        <p>Rendez-vous sur la <a href="/mot-de-passe-oublie">page de réinitialisation</a> et entrez votre email. Vous recevrez un lien de réinitialisation.</p>
-      </div>
-      <div class="faq-item">
-        <h4>🎬 Comment uploader une vidéo ?</h4>
-        <p>Une fois connecté à votre dashboard talent, cliquez sur "Ajouter une vidéo". Formats acceptés : MP4, MOV, AVI — max 500 Mo.</p>
-      </div>
-      <div class="faq-item">
-        <h4>📋 Comment fonctionne ShowOne ?</h4>
-        <p>Découvrez tout sur notre fonctionnement sur la <a href="/comment-ca-marche">page dédiée</a>. Talents, recruteurs, castings — tout y est expliqué.</p>
-      </div>
-    </div>
+  <div class="success-box" id="successMsg">
+    <div class="success-icon">✅</div>
+    <div class="success-title">Message envoyé !</div>
+    <p class="success-sub">Votre client mail va s'ouvrir. Nous répondrons à <strong id="emailConfirm"></strong> dans les 24-48h.</p>
   </div>
-
 </div>
 
 <script>
@@ -297,14 +102,12 @@
     const sujet = document.getElementById('contactSujet').value;
     document.getElementById('sectionMineur').style.display = sujet === 'mineur' ? 'block' : 'none';
     document.getElementById('sectionCategorie').style.display = sujet === 'categorie' ? 'block' : 'none';
-
-    // Adapter le placeholder du message
     const placeholders = {
-      mineur: 'Décrivez votre situation (prénom du mineur, catégorie souhaitée, questions éventuelles)…',
-      infos: 'Quelle information recherchez-vous ? Comment pouvons-nous vous aider ?',
-      categorie: 'Décrivez la catégorie que vous souhaitez voir ajoutée et pourquoi…',
-      compte: 'Décrivez le problème avec votre compte (talent ou recruteur)…',
-      technique: 'Décrivez le problème technique rencontré (page, navigateur, message d\'erreur)…',
+      mineur: 'Décrivez votre situation (prénom du mineur, catégorie souhaitée, questions)…',
+      infos: "Quelle information recherchez-vous ?",
+      categorie: 'Décrivez la catégorie souhaitée et pourquoi…',
+      compte: 'Décrivez le problème avec votre compte…',
+      technique: 'Décrivez le problème technique rencontré…',
       partenariat: 'Décrivez votre projet de partenariat avec ShowOne…',
       autre: 'Décrivez votre demande en détail…'
     };
@@ -317,69 +120,36 @@
     const email = document.getElementById('contactEmail').value.trim();
     const sujet = document.getElementById('contactSujet').value;
     const message = document.getElementById('contactMessage').value.trim();
-
-    if (!prenom || !nom || !email || !sujet || !message) {
-      alert('Veuillez remplir tous les champs obligatoires.');
-      return;
-    }
-    if (!email.includes('@')) {
-      alert('Veuillez entrer une adresse email valide.');
-      return;
-    }
-
+    if (!prenom || !nom || !email || !sujet || !message) { alert('Veuillez remplir tous les champs obligatoires.'); return; }
+    if (!email.includes('@')) { alert('Veuillez entrer une adresse email valide.'); return; }
     const btn = document.getElementById('btnSubmit');
-    btn.textContent = 'Envoi en cours…';
-    btn.disabled = true;
-
-    // Construire le corps de l'email selon le sujet
-    const sujets = {
-      mineur: 'Dossier mineur',
-      infos: "Demande d'informations",
-      categorie: 'Ajout nouvelle catégorie talent',
-      compte: 'Problème de compte',
-      technique: 'Problème technique',
-      partenariat: 'Partenariat',
-      autre: 'Autre demande'
-    };
-
-    let corps = `Prénom : ${prenom}\nNom : ${nom}\nEmail : ${email}\nDemande : ${sujets[sujet] || sujet}\n\n`;
-
-    // Infos supplémentaires selon sujet
+    btn.textContent = 'Envoi en cours…'; btn.disabled = true;
+    const sujets = { mineur:'Dossier mineur', infos:"Demande d'informations", categorie:'Ajout nouvelle catégorie', compte:'Problème de compte', technique:'Problème technique', partenariat:'Partenariat', autre:'Autre demande' };
+    let corps = `Prénom : ${prenom}\nNom : ${nom}\nEmail : ${email}\nDemande : ${sujets[sujet]||sujet}\n\n`;
     if (sujet === 'mineur') {
-      const prenomMineur = document.getElementById('mineurPrenomContact').value.trim();
-      const dobMineur = document.getElementById('mineurDobContact').value;
-      const catMineur = document.getElementById('mineurCatContact').value.trim();
-      if (prenomMineur) corps += `Prénom du mineur : ${prenomMineur}\n`;
-      if (dobMineur) corps += `Date de naissance : ${dobMineur}\n`;
-      if (catMineur) corps += `Catégorie souhaitée : ${catMineur}\n`;
+      const pm = document.getElementById('mineurPrenomContact').value.trim();
+      const dm = document.getElementById('mineurDobContact').value;
+      const cm = document.getElementById('mineurCatContact').value.trim();
+      if (pm) corps += `Prénom mineur : ${pm}\n`;
+      if (dm) corps += `Date naissance : ${dm}\n`;
+      if (cm) corps += `Catégorie : ${cm}\n`;
       corps += '\n';
     }
-
     if (sujet === 'categorie') {
-      const catNom = document.getElementById('catNom').value.trim();
-      const catRaison = document.getElementById('catRaison').value.trim();
-      if (catNom) corps += `Catégorie souhaitée : ${catNom}\n`;
-      if (catRaison) corps += `Raison : ${catRaison}\n`;
+      const cn = document.getElementById('catNom').value.trim();
+      const cr = document.getElementById('catRaison').value.trim();
+      if (cn) corps += `Catégorie : ${cn}\n`;
+      if (cr) corps += `Raison : ${cr}\n`;
       corps += '\n';
     }
-
     corps += `Message :\n${message}`;
-
-    const mailtoLink = `mailto:showone.infos@gmail.com?subject=${encodeURIComponent('[ShowOne] ' + (sujets[sujet] || sujet))}&body=${encodeURIComponent(corps)}`;
-    window.location.href = mailtoLink;
-
-    // Afficher le succès
+    window.location.href = `mailto:showone.infos@gmail.com?subject=${encodeURIComponent('[ShowOne] '+(sujets[sujet]||sujet))}&body=${encodeURIComponent(corps)}`;
     setTimeout(() => {
       document.getElementById('contactForm').style.display = 'none';
-      const successMsg = document.getElementById('successMsg');
-      successMsg.style.display = 'block';
+      document.getElementById('successMsg').style.display = 'block';
       document.getElementById('emailConfirm').textContent = email;
-      if (sujet === 'mineur') {
-        document.getElementById('successExtra').style.display = 'block';
-      }
     }, 800);
   }
 </script>
-
 </body>
 </html>
