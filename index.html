@@ -38,9 +38,8 @@
     .side-copy { font-size: 11px; color: #ccc; padding: 2px 2px; }
 
     /* BANDEAU TOP */
-    .top-banner { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 8px 16px; background: #f8f8f8; border-bottom: 1px solid #f0f0f0; font-size: 13px; color: #999; }
-    .top-banner a { color: #111; font-weight: 700; text-decoration: none; }
-    .top-banner a:hover { color: #E8383A; }
+    .top-banner { display: flex; align-items: center; justify-content: center; padding: 8px 16px; border-bottom: 1px solid #f0f0f0; }
+    .top-site { font-size: 14px; font-weight: 700; color: #111; letter-spacing: -0.3px; }
 
     /* ── MAIN ── */
     .main { margin-left: 240px; flex: 1; overflow-y: auto; height: 100vh; }
@@ -238,10 +237,7 @@
 </div>
 
 <div class="main">
-  <div class="top-banner">
-    <a href="https://www.showone.fr" target="_blank">🌐 www.showone.fr</a>
-    <span>La plateforme des talents</span>
-  </div>
+  <div class="top-banner"><span class="top-site">www.showone.fr</span></div>
   <div class="cats" id="catsTalents">
     <div class="chip active" onclick="filtrerCat(this,'')">Tous</div>
     <div class="chip" onclick="filtrerCat(this,'acting')">🎬 Acting</div>
