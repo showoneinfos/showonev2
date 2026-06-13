@@ -387,11 +387,21 @@
       // Passer étape 2
       if (typeCompte === 'recruteur') {
         // Recruteur : créer profil et rediriger directement
-        await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs`, {
+        const recRes = await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}`, 'Prefer': 'return=minimal' },
           body: JSON.stringify({ utilisateur_id: userId, nom_societe: prenom + ' ' + nom })
         });
+        if (!recRes.ok) {
+          const errText = await recRes.text();
+          console.error('Erreur profil recruteur:', errText);
+          // Réessayer sans nom_societe
+          await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}`, 'Prefer': 'return=minimal' },
+            body: JSON.stringify({ utilisateur_id: userId })
+          });
+        }
         document.getElementById('stepsBar').style.display = 'none';
         document.getElementById('p1').classList.remove('active');
         document.getElementById('success').classList.add('active');
