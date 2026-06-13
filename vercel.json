@@ -12,6 +12,10 @@
     { "src": "/messagerie", "dest": "/messagerie.html" },
     { "src": "/contact", "dest": "/contact.html" },
     { "src": "/legal", "dest": "/legal.html" },
-    { "src": "/qui-sommes-nous", "dest": "/qui-sommes-nous.html" }
+    { "src": "/qui-sommes-nous", "dest": "/qui-sommes-nous.html" },
+    { "src": "/deposer-casting", "dest": "/deposer-casting.html" },
+    { "src": "/paiement-talent", "dest": "/paiement-talent.html" },
+    { "src": "/paiement-succes", "dest": "/paiement-succes.html" },
+    { "src": "/mot-de-passe-oublie", "dest": "/mot-de-passe-oublie.html" }
   ]
 }

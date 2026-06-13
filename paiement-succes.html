@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paiement réussi — ShowOne</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: #111; min-height: 100vh; display: flex; flex-direction: column; }
+    nav { display: flex; align-items: center; padding: 16px 40px; border-bottom: 1px solid #f0f0f0; }
+    .logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; }
+    .logo span { color: #E8383A; }
+    .main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
+    .box { text-align: center; max-width: 460px; }
+    .ico { font-size: 64px; margin-bottom: 20px; }
+    h1 { font-size: 32px; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; }
+    p { font-size: 15px; color: #999; line-height: 1.6; margin-bottom: 32px; }
+    .btn { display: inline-block; padding: 14px 32px; border-radius: 10px; background: #111; color: #fff; text-decoration: none; font-size: 14px; font-weight: 700; }
+  </style>
+</head>
+<body>
+<nav><a href="/" class="logo">Show<span>One</span></a></nav>
+<div class="main">
+  <div class="box">
+    <div class="ico">🎉</div>
+    <h1>Paiement réussi !</h1>
+    <p id="successMsg">Votre plan Pro est maintenant actif. Profitez de toutes les fonctionnalités ShowOne.</p>
+    <a href="/dashboard-talent" class="btn" id="dashBtn">Accéder à mon espace →</a>
+  </div>
+</div>
+<script>
+const params = new URLSearchParams(window.location.search);
+const type = params.get('type');
+if (type === 'recruteur') {
+  document.getElementById('successMsg').textContent = 'Votre compte Recruteur Pro est actif. Accédez à tous les talents et publiez vos castings.';
+  document.getElementById('dashBtn').href = '/dashboard-recruteur';
+  document.getElementById('dashBtn').textContent = 'Accéder à mon espace recruteur →';
+}
+</script>
+</body>
+</html>
