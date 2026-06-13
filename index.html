@@ -449,15 +449,10 @@ init();
     const btnConn = document.getElementById('mb-conn');
     if (u && u.id) {
       const dashboard = u.type_compte === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
-      btnAuth.href = '/mon-profil';
-      btnAuth.innerHTML = '⚙️<span>Mon profil</span>';
-      btnAuth.style.background = 'transparent';
-      btnAuth.style.color = '#111';
-      btnAuth.style.padding = '4px 8px';
-      btnAuth.style.borderRadius = '0';
-      btnConn.style.display = 'flex';
-      btnConn.href = dashboard;
-      btnConn.innerHTML = '👤<span>Mon espace</span>';
+      btnAuth.href = dashboard;
+      btnAuth.innerHTML = '👤<span>Mon espace</span>';
+      btnAuth.style.background = '#111';
+      btnConn.style.display = 'none';
     } else {
       btnConn.style.display = 'flex';
     }
