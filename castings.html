@@ -59,8 +59,18 @@
 
     /* CASTINGS */
     .castings-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .casting-card { background: #fff; border: 1px solid #f0f0f0; border-radius: 12px; padding: 20px 22px; transition: box-shadow 0.15s; }
+
+    .casting-card {
+      background: #fff;
+      border: 1px solid #f0f0f0;
+      border-radius: 12px;
+      padding: 20px 22px;
+      transition: box-shadow 0.15s;
+      display: flex;
+      flex-direction: column;
+    }
     .casting-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+
     .casting-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
     .casting-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; background: #f0f0f0; color: #555; }
     .casting-statut { font-size: 11px; color: #10b981; font-weight: 600; }
@@ -68,9 +78,80 @@
     .casting-desc { font-size: 13px; color: #888; line-height: 1.6; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
     .casting-infos { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
     .casting-info { font-size: 12px; color: #999; }
-    .casting-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid #f8f8f8; }
+
+    /* ── FOOTER CASTING FIXÉ ── */
+    .casting-footer {
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid #f8f8f8;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
     .casting-recruteur { font-size: 12px; color: #bbb; }
-    .btn-postuler { padding: 8px 18px; border-radius: 8px; border: none; background: #111; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; }
+    .casting-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .btn-descriptif {
+      flex: 1;
+      display: block;
+      text-align: center;
+      padding: 9px 10px;
+      border-radius: 8px;
+      border: 1.5px solid #e8e8e8;
+      color: #111;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      background: #fff;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      white-space: nowrap;
+    }
+    .btn-descriptif:hover { border-color: #bbb; background: #f8f8f8; }
+    .btn-postuler {
+      flex: 1;
+      padding: 9px 10px;
+      border-radius: 8px;
+      border: none;
+      background: #111;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn-postuler:hover { background: #222; }
+
+    .casting-owner-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .btn-cands {
+      flex: 1;
+      padding: 8px;
+      border-radius: 7px;
+      border: 1px solid #e8e8e8;
+      background: transparent;
+      color: #111;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-del {
+      padding: 8px 12px;
+      border-radius: 7px;
+      border: 1px solid #ffd0d0;
+      background: transparent;
+      color: #E8383A;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
     .empty-state { grid-column: 1/-1; text-align: center; padding: 60px; }
     .empty-ico { font-size: 40px; margin-bottom: 12px; }
     .empty-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
@@ -90,7 +171,7 @@
     /* MODAL POSTULER */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
     .modal-overlay.open { display: flex; }
-    .modal { background: #fff; border-radius: 16px; padding: 28px; width: 100%; max-width: 460px; }
+    .modal { background: #fff; border-radius: 16px; padding: 28px; width: 100%; max-width: 460px; max-height: 90vh; overflow-y: auto; }
     .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
     .modal-head h2 { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; }
     .modal-close { width: 30px; height: 30px; border-radius: 7px; border: 1px solid #e8e8e8; background: transparent; cursor: pointer; font-size: 14px; }
@@ -102,90 +183,50 @@
     .modal-btns { display: flex; gap: 10px; }
     .btn-cancel { padding: 11px 18px; border-radius: 8px; border: 1px solid #e8e8e8; background: transparent; font-size: 13px; font-weight: 600; cursor: pointer; color: #999; }
     .btn-send { flex: 1; padding: 11px; border-radius: 8px; border: none; background: #111; color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; }
-    #modalContent { width: 100%; }
 
+    /* MOBILE */
     @media (max-width: 768px) {
       nav { padding: 14px 20px; }
       .hero { padding: 36px 20px 28px; }
       .hero h1 { font-size: 32px; letter-spacing: -1px; }
-      .content { padding: 28px 20px; }
+      .content { padding: 28px 20px 90px; }
       .videos-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
       .castings-grid { grid-template-columns: 1fr; }
       .recruiter-banner { flex-direction: column; align-items: flex-start; }
+      .casting-actions { flex-direction: row; }
+      .btn-descriptif, .btn-postuler { font-size: 11px; padding: 9px 8px; }
     }
 
-    /* ── MOBILE RESPONSIVE ── */
-    @media (max-width: 768px) {
-      /* Index sidebar → bottom nav */
-      .sidebar {
-        width: 100% !important; height: 56px !important;
-        top: auto !important; bottom: 0 !important; left: 0 !important;
-        border-right: none !important; border-top: 1px solid #f0f0f0 !important;
-        flex-direction: row !important; padding: 6px 8px 10px !important;
-        align-items: center !important;
-      }
-      .logo, .side-divider, .sep, .side-bottom, #side-auth, #side-user-box,
-      .side-nav .nav-item:not(.active):nth-child(n+4) { display: none !important; }
-      .side-nav { flex-direction: row !important; gap: 0 !important; padding: 0 !important; }
-      .nav-item { flex-direction: column !important; gap: 1px !important; padding: 4px 8px !important;
-        font-size: 10px !important; flex: 1 !important; justify-content: center !important;
-        align-items: center !important; background: transparent !important; font-weight: 500 !important; }
-      .ico { font-size: 20px !important; width: auto !important; }
-      .main { margin-left: 0 !important; padding-bottom: 65px !important; }
-
-      /* Grilles */
-      .grid { grid-template-columns: repeat(2, 1fr) !important; gap: 2px !important; }
-      .grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
-
-      /* Dashboard */
-      .sidebar-nav, .sidebar { display: none; }
-      body.dashboard { display: block; }
-      .main.dashboard-main { margin-left: 0 !important; padding: 16px !important; padding-bottom: 70px !important; max-width: 100% !important; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
-      .content-grid { grid-template-columns: 1fr !important; }
-
-      /* Nav */
-      nav { padding: 12px 16px !important; }
-
-      /* Forms */
-      .form-row { grid-template-columns: 1fr !important; }
-      .cat-grid { grid-template-columns: repeat(2, 1fr) !important; }
-      .type-selector { grid-template-columns: 1fr 1fr !important; }
-
-      /* Legal layout */
-      .layout { flex-direction: column !important; padding: 20px 16px !important; gap: 24px !important; }
-      .sidebar.legal-sidebar { width: 100% !important; height: auto !important; position: relative !important; flex-direction: column !important; border: none !important; border-bottom: 1px solid #f0f0f0 !important; padding: 0 0 16px !important; }
-
-      /* Contact */
-      .main { padding: 30px 16px !important; }
-      .contact-info { flex-wrap: wrap !important; }
-
-      /* Sections */
-      .sec-head { padding: 14px 10px 8px !important; }
-      .cats { padding: 8px 10px !important; }
-    }
-
-
-    /* ── BARRE MOBILE ── */
+    /* BARRE MOBILE */
     .mobile-bar { display: none; }
     @media (max-width: 768px) {
       .mobile-bar {
-        display: flex; position: fixed; bottom: 0; left: 0; right: 0;
+        display: flex;
+        position: fixed; bottom: 0; left: 0; right: 0;
         background: #fff; border-top: 1px solid #f0f0f0;
-        padding: 8px 4px 14px; z-index: 1000; align-items: center;
+        padding: 8px 4px 14px; z-index: 999;
+        align-items: center; justify-content: space-around;
       }
       .mobile-btn {
-        flex: 1; display: flex; flex-direction: column; align-items: center;
-        gap: 2px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600;
+        flex: 1;
+        display: flex; flex-direction: column; align-items: center;
+        gap: 3px; text-decoration: none; color: #aaa;
+        font-size: 10px; font-weight: 600; padding: 4px 0;
+        background: none; border: none; cursor: pointer;
       }
-      .mobile-btn:first-child { font-size: 22px; }
-      .mobile-btn span { font-size: 10px; display: block; }
+      .mobile-btn-icon { font-size: 20px; line-height: 1; display: block; }
+      .mobile-btn-label { font-size: 10px; display: block; }
       .mobile-btn.active { color: #111; }
       .mobile-btn.mobile-join {
-        flex: none; margin: 0 8px; background: #E8383A; color: #fff !important;
-        padding: 8px 14px; border-radius: 8px; font-size: 12px !important; font-weight: 700;
-        display: flex; flex-direction: column; align-items: center; gap: 1px;
+        flex: none;
+        margin: 0 6px;
+        background: #E8383A; color: #fff !important;
+        padding: 8px 16px; border-radius: 8px;
+        font-size: 12px !important; font-weight: 700;
+        display: flex; flex-direction: column; align-items: center; gap: 2px;
+        text-decoration: none;
       }
+      .mobile-btn.mobile-join .mobile-btn-icon { font-size: 16px; }
     }
   </style>
 </head>
@@ -194,8 +235,8 @@
 <nav>
   <a href="/" class="logo">Show<span>One</span></a>
   <div id="navRight">
-    <a href="connexion.html" class="btn-outline">Connexion</a>
-    <a href="inscription.html" class="btn-fill">Rejoindre</a>
+    <a href="/connexion" class="btn-outline">Connexion</a>
+    <a href="/inscription" class="btn-fill">Rejoindre</a>
   </div>
 </nav>
 
@@ -209,7 +250,7 @@
   </div>
   <div class="recruiter-banner">
     <div class="recruiter-banner-text"><strong>🎬 Vous êtes recruteur ?</strong><br>Déposez votre annonce vidéo gratuitement.</div>
-    <a href="deposer-casting.html" class="btn-deposer">Déposer mon casting →</a>
+    <a href="/deposer-casting" class="btn-deposer">Déposer mon casting →</a>
   </div>
 </div>
 
@@ -251,23 +292,31 @@
   </div>
 </div>
 
-<!-- MODAL POSTULER -->
+<!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
-    <div id="modalContent">
-      <div class="modal-head">
-        <h2>Postuler à ce casting</h2>
-        <button class="modal-close" onclick="fermerModal()">✕</button>
-      </div>
-      <div class="modal-casting-info" id="modalCastingInfo"></div>
-      <label class="modal-label">Votre message</label>
-      <textarea id="msgCandidature" class="modal-textarea" placeholder="Présentez-vous et expliquez pourquoi vous correspondez à ce casting…"></textarea>
-      <div class="modal-btns">
-        <button class="btn-cancel" onclick="fermerModal()">Annuler</button>
-        <button class="btn-send" onclick="envoyerCandidature()">Envoyer ma candidature ✓</button>
-      </div>
-    </div>
+    <div id="modalContent"></div>
   </div>
+</div>
+
+<!-- BARRE MOBILE -->
+<div class="mobile-bar" id="mobileBar">
+  <a href="/" class="mobile-btn" id="mb-home">
+    <span class="mobile-btn-icon">🏠</span>
+    <span class="mobile-btn-label">Accueil</span>
+  </a>
+  <a href="/castings" class="mobile-btn active" id="mb-castings">
+    <span class="mobile-btn-icon">🎬</span>
+    <span class="mobile-btn-label">Castings</span>
+  </a>
+  <a href="/connexion" class="mobile-btn" id="mb-conn">
+    <span class="mobile-btn-icon">🔑</span>
+    <span class="mobile-btn-label">Connexion</span>
+  </a>
+  <a href="/inscription" class="mobile-btn mobile-join" id="mb-auth">
+    <span class="mobile-btn-icon">👤</span>
+    <span class="mobile-btn-label">S'inscrire</span>
+  </a>
 </div>
 
 <script>
@@ -279,47 +328,107 @@ let catActive = 'Tous';
 let castingSelectionne = null;
 let playerCastingId = null;
 let _hls = null;
+let _monRecruteurId = null; // FIX : était absent, causait un bug silencieux
 
-const _user = (() => { try { return JSON.parse(localStorage.getItem('showone_user')||'{}'); } catch(e) { return {}; } })();
+const _user = (() => { try { return JSON.parse(localStorage.getItem('showone_user') || '{}'); } catch(e) { return {}; } })();
 const _token = localStorage.getItem('showone_token');
 const _isRecruteur = _user.type_compte === 'recruteur';
 
+// ── NAV ──
 function mettreAJourNav() {
   const navRight = document.getElementById('navRight');
   if (_token && _user.prenom) {
+    const dest = _isRecruteur ? '/dashboard-recruteur' : '/dashboard-talent';
     navRight.innerHTML = `<span style="font-size:13px;color:#999;">${_user.prenom} 👋</span>
-      <button class="btn-fill" onclick="window.location.href='${_isRecruteur?'dashboard-recruteur.html':'dashboard-talent.html'}'">Mon espace →</button>`;
+      <button class="btn-fill" onclick="window.location.href='${dest}'">Mon espace →</button>`;
   }
 }
 
+// ── BARRE MOBILE ──
+(function() {
+  try {
+    const u = JSON.parse(localStorage.getItem('showone_user') || '{}');
+    const btnAuth = document.getElementById('mb-auth');
+    const btnConn = document.getElementById('mb-conn');
+    if (u && u.id) {
+      const dashboard = u.type_compte === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
+      btnAuth.href = dashboard;
+      btnAuth.querySelector('.mobile-btn-label').textContent = 'Mon espace';
+      btnAuth.querySelector('.mobile-btn-icon').textContent = '👤';
+      btnAuth.style.background = '#111';
+      btnConn.style.display = 'none';
+    }
+    // active state
+    const path = window.location.pathname;
+    document.querySelectorAll('.mobile-btn').forEach(b => b.classList.remove('active'));
+    if (path === '/' || path === '/index') document.getElementById('mb-home').classList.add('active');
+    else if (path.includes('castings')) document.getElementById('mb-castings').classList.add('active');
+  } catch(e) {}
+})();
+
+// ── RECRUTEUR ID ──
+async function chargerMonRecruteurId() {
+  if (!_isRecruteur || !_token || !_user.id) return;
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs?utilisateur_id=eq.${_user.id}&select=id&limit=1`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${_token}` }
+    });
+    const data = await res.json();
+    if (data[0]?.id) _monRecruteurId = data[0].id;
+  } catch(e) { console.error('recruteurId', e); }
+}
+
+// ── VIDEOS CASTINGS ──
 async function chargerVideosCastings() {
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/castings?statut=eq.actif&video_playback_id=not.is.null&select=id,titre,categorie,ville,video_playback_id,recruteur_id&order=created_at.desc&limit=8`, { headers: { 'apikey': SUPABASE_KEY } });
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/castings?statut=eq.actif&video_playback_id=not.is.null&select=id,titre,categorie,ville,video_playback_id,recruteur_id&order=created_at.desc&limit=8`, {
+      headers: { 'apikey': SUPABASE_KEY }
+    });
     const data = await res.json();
     if (!Array.isArray(data) || data.length === 0) return;
-    const section = document.getElementById('sectionVideos');
-    section.style.display = 'block';
+    document.getElementById('sectionVideos').style.display = 'block';
     const grid = document.getElementById('videosGrid');
     for (const c of data) {
-      try { const r=await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs?id=eq.${c.recruteur_id}&select=nom_societe&limit=1`,{headers:{'apikey':SUPABASE_KEY}}); const rd=await r.json(); c.recruteur_nom=rd[0]?.nom_societe||'Recruteur ShowOne'; } catch(e) { c.recruteur_nom='Recruteur ShowOne'; }
+      try {
+        const r = await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs?id=eq.${c.recruteur_id}&select=nom_societe&limit=1`, { headers: { 'apikey': SUPABASE_KEY } });
+        const rd = await r.json();
+        c.recruteur_nom = rd[0]?.nom_societe || 'Recruteur ShowOne';
+      } catch(e) { c.recruteur_nom = 'Recruteur ShowOne'; }
     }
     grid.innerHTML = data.map(c => {
       const thumb = `https://image.mux.com/${c.video_playback_id}/thumbnail.jpg?width=400&height=560&fit_mode=crop`;
-      return `<div class="video-casting-card" onclick="event.stopPropagation();lireVideoCasting('${c.video_playback_id}','${c.recruteur_nom.replace(/'/g,"\\'")}','${c.categorie||''}','${c.id}')">
-        <div class="video-thumb"><img src="${thumb}" alt="${c.titre}" onerror="this.parentElement.innerHTML='🎭'"><div class="video-thumb-overlay"></div><div class="video-badge">${c.categorie||'Casting'}</div><div class="video-play-btn">▶</div></div>
-        <div class="video-info"><div class="video-recruteur">${c.recruteur_nom}</div><div class="video-meta">${c.titre}${c.ville?' · '+c.ville:''}</div><button class="btn-postuler-video" onclick="event.stopPropagation();ouvrirModal('${c.id}','${c.titre.replace(/'/g,"\\'")}','${c.categorie||''}','${c.ville||''}')">Postuler →</button></div>
+      const nomEsc = c.recruteur_nom.replace(/'/g, "\\'");
+      const titreEsc = c.titre.replace(/'/g, "\\'");
+      const catEsc = (c.categorie || '').replace(/'/g, "\\'");
+      return `<div class="video-casting-card" onclick="lireVideoCasting('${c.video_playback_id}','${nomEsc}','${catEsc}','${c.id}')">
+        <div class="video-thumb">
+          <img src="${thumb}" alt="${c.titre}" onerror="this.parentElement.innerHTML='🎭'">
+          <div class="video-thumb-overlay"></div>
+          <div class="video-badge">${c.categorie || 'Casting'}</div>
+          <div class="video-play-btn">▶</div>
+        </div>
+        <div class="video-info">
+          <div class="video-recruteur">${c.recruteur_nom}</div>
+          <div class="video-meta">${c.titre}${c.ville ? ' · ' + c.ville : ''}</div>
+          <button class="btn-postuler-video" onclick="event.stopPropagation();ouvrirModal('${c.id}','${titreEsc}','${catEsc}','${c.ville || ''}')">Postuler →</button>
+        </div>
       </div>`;
     }).join('');
   } catch(e) { console.error(e); }
 }
 
+// ── PLAYER ──
 function lireVideoCasting(playbackId, nom, categorie, castingId) {
   playerCastingId = castingId;
   const video = document.getElementById('playerVideo');
   const src = `https://stream.mux.com/${playbackId}.m3u8`;
   if (_hls) { _hls.destroy(); _hls = null; }
-  if (video.canPlayType('application/vnd.apple.mpegurl')) { video.src=src; video.play(); }
-  else if (window.Hls && Hls.isSupported()) { _hls=new Hls(); _hls.loadSource(src); _hls.attachMedia(video); _hls.on(Hls.Events.MANIFEST_PARSED,()=>video.play()); }
+  if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    video.src = src; video.play();
+  } else if (window.Hls && Hls.isSupported()) {
+    _hls = new Hls(); _hls.loadSource(src); _hls.attachMedia(video);
+    _hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
+  }
   document.getElementById('playerNom').textContent = nom;
   document.getElementById('playerCat').textContent = categorie;
   document.getElementById('playerOverlay').classList.add('open');
@@ -336,22 +445,31 @@ function fermerPlayer() {
 
 function ouvrirModalDepuisPlayer() {
   fermerPlayer();
-  if (playerCastingId) { const c=tousCastings.find(c=>c.id===playerCastingId); if(c) ouvrirModal(c.id,c.titre,c.categorie||'',c.ville||''); }
+  if (playerCastingId) {
+    const c = tousCastings.find(c => c.id === playerCastingId);
+    if (c) ouvrirModal(c.id, c.titre, c.categorie || '', c.ville || '');
+  }
 }
 
+// ── CASTINGS ──
 async function chargerCastings() {
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/castings?statut=eq.actif&select=*&order=created_at.desc`, { headers: { 'apikey': SUPABASE_KEY } });
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/castings?statut=eq.actif&select=*&order=created_at.desc`, {
+      headers: { 'apikey': SUPABASE_KEY }
+    });
     const data = await res.json();
     if (Array.isArray(data)) {
       for (const c of data) {
         try {
-          const r=await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs?id=eq.${c.recruteur_id}&select=nom_societe,utilisateur_id&limit=1`,{headers:{'apikey':SUPABASE_KEY}});
-          const rd=await r.json();
-          if (rd[0]?.nom_societe) { c.recruteur_nom=rd[0].nom_societe; }
-          else if (rd[0]?.utilisateur_id) { const u=await fetch(`${SUPABASE_URL}/rest/v1/utilisateurs?id=eq.${rd[0].utilisateur_id}&select=prenom,nom&limit=1`,{headers:{'apikey':SUPABASE_KEY}}); const ud=await u.json(); c.recruteur_nom=ud[0]?((ud[0].prenom||'')+' '+(ud[0].nom||'')).trim():'Recruteur ShowOne'; }
-          else { c.recruteur_nom='Recruteur ShowOne'; }
-        } catch(e) { c.recruteur_nom='Recruteur ShowOne'; }
+          const r = await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs?id=eq.${c.recruteur_id}&select=nom_societe,utilisateur_id&limit=1`, { headers: { 'apikey': SUPABASE_KEY } });
+          const rd = await r.json();
+          if (rd[0]?.nom_societe) { c.recruteur_nom = rd[0].nom_societe; }
+          else if (rd[0]?.utilisateur_id) {
+            const u = await fetch(`${SUPABASE_URL}/rest/v1/utilisateurs?id=eq.${rd[0].utilisateur_id}&select=prenom,nom&limit=1`, { headers: { 'apikey': SUPABASE_KEY } });
+            const ud = await u.json();
+            c.recruteur_nom = ud[0] ? ((ud[0].prenom || '') + ' ' + (ud[0].nom || '')).trim() : 'Recruteur ShowOne';
+          } else { c.recruteur_nom = 'Recruteur ShowOne'; }
+        } catch(e) { c.recruteur_nom = 'Recruteur ShowOne'; }
       }
     }
     tousCastings = Array.isArray(data) ? data : [];
@@ -370,7 +488,12 @@ function filtrerCastings() {
   const search = document.getElementById('searchInput').value.toLowerCase();
   let filtres = tousCastings;
   if (catActive !== 'Tous') filtres = filtres.filter(c => c.categorie?.toLowerCase().includes(catActive.toLowerCase()));
-  if (search) filtres = filtres.filter(c => c.titre?.toLowerCase().includes(search)||c.description?.toLowerCase().includes(search)||c.ville?.toLowerCase().includes(search)||c.categorie?.toLowerCase().includes(search));
+  if (search) filtres = filtres.filter(c =>
+    c.titre?.toLowerCase().includes(search) ||
+    c.description?.toLowerCase().includes(search) ||
+    c.ville?.toLowerCase().includes(search) ||
+    c.categorie?.toLowerCase().includes(search)
+  );
   afficherCastings(filtres);
 }
 
@@ -379,30 +502,45 @@ function afficherCastings(castings) {
   if (!castings || castings.length === 0) { afficherVide(); return; }
   grid.innerHTML = castings.map(c => {
     const date = c.date_casting ? new Date(c.date_casting).toLocaleDateString('fr-FR') : null;
-    const cid = c.id; const titreEsc = (c.titre||'').replace(/'/g,"\\'");
+    const cid = c.id;
+    const titreEsc = (c.titre || '').replace(/'/g, "\\'");
+    const catEsc = (c.categorie || '').replace(/'/g, "\\'");
+    const villeEsc = (c.ville || '').replace(/'/g, "\\'");
+    const nomEsc = (c.recruteur_nom || '').replace(/'/g, "\\'");
     const hasVideo = !!c.video_playback_id;
+    const isMyCasting = _isRecruteur && _monRecruteurId && c.recruteur_id === _monRecruteurId;
+
     return `<div class="casting-card">
-      ${hasVideo?`<div style="margin-bottom:12px;border-radius:8px;overflow:hidden;cursor:pointer;" onclick="event.stopPropagation();lireVideoCasting('${c.video_playback_id}','${(c.recruteur_nom||'').replace(/'/g,"\\'")}','${c.categorie||''}','${cid}')"><img src="https://image.mux.com/${c.video_playback_id}/thumbnail.jpg?width=600&height=200&fit_mode=crop" style="width:100%;height:100px;object-fit:cover;display:block;" alt="Vidéo"><div style="background:#111;padding:5px 10px;display:flex;align-items:center;gap:5px;"><span style="background:#E8383A;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;">▶ Voir la vidéo</span></div></div>`:''}
-      <div class="casting-head"><span class="casting-badge">${c.categorie||'Général'}</span><span class="casting-statut">✅ Actif</span></div>
-      <div class="casting-titre">${c.titre}</div>
-      <div class="casting-desc">${c.description||''}</div>
-      <div class="casting-infos">
-        <div class="casting-info">📍 ${c.ville||'Non précisé'}</div>
-        ${date?`<div class="casting-info">📅 ${date}</div>`:''}
-        ${c.remuneration?`<div class="casting-info">💰 ${c.remuneration}</div>`:''}
+      ${hasVideo ? `
+        <div style="margin-bottom:12px;border-radius:8px;overflow:hidden;cursor:pointer;" onclick="lireVideoCasting('${c.video_playback_id}','${nomEsc}','${catEsc}','${cid}')">
+          <img src="https://image.mux.com/${c.video_playback_id}/thumbnail.jpg?width=600&height=200&fit_mode=crop" style="width:100%;height:100px;object-fit:cover;display:block;" alt="Vidéo">
+          <div style="background:#111;padding:5px 10px;display:flex;align-items:center;gap:5px;">
+            <span style="background:#E8383A;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;">▶ Voir la vidéo</span>
+          </div>
+        </div>` : ''}
+      <div class="casting-head">
+        <span class="casting-badge">${c.categorie || 'Général'}</span>
+        <span class="casting-statut">✅ Actif</span>
       </div>
-      <div class="casting-footer" style="flex-direction:column;gap:8px;">
-        <div class="casting-recruteur">Par <strong>${c.recruteur_nom||'Recruteur ShowOne'}</strong></div>
-        <div style="display:flex;gap:8px;">
-          <a href="/casting-detail?id=${cid}" onclick="event.stopPropagation();" style="flex:1;display:block;text-align:center;padding:9px;border-radius:8px;border:1px solid #e8e8e8;color:#111;font-size:12px;font-weight:700;text-decoration:none;">📄 Descriptif</a>
-          ${!_isRecruteur?`<button class="btn-postuler" onclick="event.stopPropagation();ouvrirModal('${cid}','${titreEsc}','${c.categorie||''}','${c.ville||''}')" style="flex:1;">Postuler →</button>`:''}
+      <div class="casting-titre">${c.titre || ''}</div>
+      <div class="casting-desc">${c.description || ''}</div>
+      <div class="casting-infos">
+        <div class="casting-info">📍 ${c.ville || 'Non précisé'}</div>
+        ${date ? `<div class="casting-info">📅 ${date}</div>` : ''}
+        ${c.remuneration ? `<div class="casting-info">💰 ${c.remuneration}</div>` : ''}
+      </div>
+      <div class="casting-footer">
+        <div class="casting-recruteur">Par <strong>${c.recruteur_nom || 'Recruteur ShowOne'}</strong></div>
+        <div class="casting-actions">
+          <a href="/casting-detail?id=${cid}" class="btn-descriptif">📄 Descriptif</a>
+          ${!_isRecruteur ? `<button class="btn-postuler" onclick="ouvrirModal('${cid}','${titreEsc}','${catEsc}','${villeEsc}')">Postuler →</button>` : ''}
         </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;">
-        ${(_isRecruteur && c.recruteur_id === _monRecruteurId)?`<div style="display:flex;gap:8px;">
-          <span style="font-size:12px;color:#bbb;align-self:center;">✏️ Votre casting</span>
-          <button onclick="event.stopPropagation();voirCandidatures('${cid}','${titreEsc}')" style="flex:1;padding:8px;border-radius:7px;border:1px solid #e8e8e8;background:transparent;color:#111;font-size:12px;font-weight:700;cursor:pointer;">👥 Candidatures</button>
-          <button onclick="event.stopPropagation();supprimerCasting('${cid}')" style="padding:8px 12px;border-radius:7px;border:1px solid #ffd0d0;background:transparent;color:#E8383A;font-size:12px;font-weight:700;cursor:pointer;">🗑️</button>
-        </div>`:''} 
+        ${isMyCasting ? `
+          <div class="casting-owner-actions">
+            <span style="font-size:11px;color:#bbb;">✏️ Votre casting</span>
+            <button class="btn-cands" onclick="voirCandidatures('${cid}','${titreEsc}')">👥 Candidatures</button>
+            <button class="btn-del" onclick="supprimerCasting('${cid}')">🗑️</button>
+          </div>` : ''}
       </div>
     </div>`;
   }).join('');
@@ -412,72 +550,115 @@ function afficherVide() {
   document.getElementById('castingsGrid').innerHTML = `<div class="empty-state"><div class="empty-ico">🎬</div><div class="empty-title">Aucun casting disponible</div><p class="empty-sub">Les castings apparaîtront ici dès que des recruteurs en publieront.</p></div>`;
 }
 
+// ── MODAL POSTULER ──
 function ouvrirModal(castingId, titre, categorie, ville) {
   const us = localStorage.getItem('showone_user');
-  if (!us) { if (confirm('Vous devez être connecté pour postuler. Se connecter ?')) window.location.href='/connexion'; return; }
+  if (!us) {
+    if (confirm('Vous devez être connecté pour postuler. Se connecter ?')) window.location.href = '/connexion';
+    return;
+  }
   const u = JSON.parse(us);
   if (u.type_compte === 'recruteur') { alert('Seuls les talents peuvent postuler.'); return; }
   castingSelectionne = castingId;
   document.getElementById('modalContent').innerHTML = `
-    <div class="modal-head"><h2>Postuler à ce casting</h2><button class="modal-close" onclick="fermerModal()">✕</button></div>
-    <div class="modal-casting-info"><strong>${titre}</strong><span>${categorie}${ville?' · '+ville:''}</span></div>
+    <div class="modal-head">
+      <h2>Postuler à ce casting</h2>
+      <button class="modal-close" onclick="fermerModal()">✕</button>
+    </div>
+    <div class="modal-casting-info">
+      <strong>${titre}</strong>
+      <span>${categorie}${ville ? ' · ' + ville : ''}</span>
+    </div>
     <label class="modal-label">Votre message</label>
     <textarea id="msgCandidature" class="modal-textarea" placeholder="Présentez-vous et expliquez pourquoi vous correspondez à ce casting…"></textarea>
-    <div class="modal-btns"><button class="btn-cancel" onclick="fermerModal()">Annuler</button><button class="btn-send" onclick="envoyerCandidature()">Envoyer ma candidature ✓</button></div>`;
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="fermerModal()">Annuler</button>
+      <button class="btn-send" onclick="envoyerCandidature()">Envoyer ma candidature ✓</button>
+    </div>`;
   document.getElementById('modalOverlay').classList.add('open');
 }
 
-function fermerModal() { document.getElementById('modalOverlay').classList.remove('open'); castingSelectionne = null; }
+function fermerModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  castingSelectionne = null;
+}
 
 async function envoyerCandidature() {
-  const token = localStorage.getItem('showone_token'); const userStr = localStorage.getItem('showone_user');
-  if (!token || !userStr) { window.location.href='/connexion'; return; }
+  const token = localStorage.getItem('showone_token');
+  const userStr = localStorage.getItem('showone_user');
+  if (!token || !userStr) { window.location.href = '/connexion'; return; }
   const message = document.getElementById('msgCandidature').value.trim();
   if (!message) { alert('Veuillez écrire un message !'); return; }
-  const btn = document.querySelector('.btn-send'); btn.textContent='Envoi…'; btn.disabled=true;
+  const btn = document.querySelector('.btn-send');
+  btn.textContent = 'Envoi…'; btn.disabled = true;
   try {
     const userObj = JSON.parse(userStr);
-    const profRes = await fetch(`${SUPABASE_URL}/rest/v1/profils_talents?utilisateur_id=eq.${userObj.id}&select=id`,{headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`}});
+    const profRes = await fetch(`${SUPABASE_URL}/rest/v1/profils_talents?utilisateur_id=eq.${userObj.id}&select=id`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` }
+    });
     const profData = await profRes.json();
     const talentId = profData[0]?.id;
-    if (!talentId) { alert('Vous devez être inscrit comme talent !'); window.location.href='/inscription'; return; }
-    await fetch(`${SUPABASE_URL}/rest/v1/candidatures`,{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`,'Prefer':'return=minimal'},body:JSON.stringify({casting_id:castingSelectionne,talent_id:talentId,message,statut:'en_attente'})});
+    if (!talentId) { alert('Vous devez être inscrit comme talent !'); window.location.href = '/inscription'; return; }
+    await fetch(`${SUPABASE_URL}/rest/v1/candidatures`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}`, 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ casting_id: castingSelectionne, talent_id: talentId, message, statut: 'en_attente' })
+    });
     fermerModal();
-    const notif=document.createElement('div'); notif.style.cssText='position:fixed;bottom:24px;right:24px;background:#10b981;color:#fff;padding:14px 20px;border-radius:10px;font-weight:700;font-size:13px;z-index:9999;'; notif.textContent='✅ Candidature envoyée !'; document.body.appendChild(notif); setTimeout(()=>notif.remove(),4000);
-  } catch(err) { console.error(err); alert('Erreur lors de l\'envoi.'); btn.textContent='Envoyer ma candidature ✓'; btn.disabled=false; }
+    const notif = document.createElement('div');
+    notif.style.cssText = 'position:fixed;bottom:80px;right:20px;background:#10b981;color:#fff;padding:14px 20px;border-radius:10px;font-weight:700;font-size:13px;z-index:9999;';
+    notif.textContent = '✅ Candidature envoyée !';
+    document.body.appendChild(notif);
+    setTimeout(() => notif.remove(), 4000);
+  } catch(err) {
+    console.error(err);
+    alert('Erreur lors de l\'envoi.');
+    btn.textContent = 'Envoyer ma candidature ✓'; btn.disabled = false;
+  }
 }
 
-async function supprimerCasting(castingId) {
-  if (!confirm('Supprimer ce casting ?')) return;
-  const token = localStorage.getItem('showone_token');
-  try {
-    await fetch(`${SUPABASE_URL}/rest/v1/castings?id=eq.${castingId}`,{method:'DELETE',headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`,'Prefer':'return=minimal'}});
-    tousCastings = tousCastings.filter(c=>c.id!==castingId); afficherCastings(tousCastings);
-  } catch(e) { alert('Erreur suppression.'); }
-}
-
+// ── CANDIDATURES (recruteur) ──
 async function voirCandidatures(castingId, titreCasting) {
   const token = localStorage.getItem('showone_token');
   try {
-    const res=await fetch(`${SUPABASE_URL}/rest/v1/candidatures?casting_id=eq.${castingId}&select=*&order=created_at.desc`,{headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`}});
-    const cands=await res.json();
-    for (const cand of cands) { if(cand.talent_id){try{const r=await fetch(`${SUPABASE_URL}/rest/v1/profils_talents?id=eq.${cand.talent_id}&select=nom_scene,photo_url&limit=1`,{headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`}});const rd=await r.json();cand.talent_nom=rd[0]?.nom_scene||'Talent';cand.talent_photo=rd[0]?.photo_url||null;}catch(e){}} }
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/candidatures?casting_id=eq.${castingId}&select=*&order=created_at.desc`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` }
+    });
+    const cands = await res.json();
+    for (const cand of cands) {
+      if (cand.talent_id) {
+        try {
+          const r = await fetch(`${SUPABASE_URL}/rest/v1/profils_talents?id=eq.${cand.talent_id}&select=nom_scene,photo_url&limit=1`, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` } });
+          const rd = await r.json();
+          cand.talent_nom = rd[0]?.nom_scene || 'Talent';
+          cand.talent_photo = rd[0]?.photo_url || null;
+        } catch(e) {}
+      }
+    }
     document.getElementById('modalContent').innerHTML = `
-      <div class="modal-head"><h2>👥 Candidatures — ${titreCasting}</h2><button class="modal-close" onclick="fermerModal()">✕</button></div>
-      ${cands.length===0?`<p style="text-align:center;color:#bbb;padding:30px 0;">Aucune candidature pour l'instant.</p>`
-        :cands.map(cand=>`<div style="border:1px solid #f0f0f0;border-radius:10px;padding:14px;margin-bottom:10px;">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-            <div style="width:36px;height:36px;border-radius:50%;background:#111;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;overflow:hidden;flex-shrink:0;">
-              ${cand.talent_photo?`<img src="${cand.talent_photo}" style="width:100%;height:100%;object-fit:cover;">`:(cand.talent_nom[0]||'?').toUpperCase()}
+      <div class="modal-head">
+        <h2>👥 Candidatures — ${titreCasting}</h2>
+        <button class="modal-close" onclick="fermerModal()">✕</button>
+      </div>
+      ${cands.length === 0
+        ? `<p style="text-align:center;color:#bbb;padding:30px 0;">Aucune candidature pour l'instant.</p>`
+        : cands.map(cand => `
+          <div style="border:1px solid #f0f0f0;border-radius:10px;padding:14px;margin-bottom:10px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+              <div style="width:36px;height:36px;border-radius:50%;background:#111;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;overflow:hidden;flex-shrink:0;">
+                ${cand.talent_photo ? `<img src="${cand.talent_photo}" style="width:100%;height:100%;object-fit:cover;">` : (cand.talent_nom[0] || '?').toUpperCase()}
+              </div>
+              <div>
+                <div style="font-weight:700;font-size:13px;">${cand.talent_nom}</div>
+                <div style="font-size:11px;color:#bbb;">${new Date(cand.created_at).toLocaleDateString('fr-FR')}</div>
+              </div>
             </div>
-            <div><div style="font-weight:700;font-size:13px;">${cand.talent_nom}</div><div style="font-size:11px;color:#bbb;">${new Date(cand.created_at).toLocaleDateString('fr-FR')}</div></div>
-          </div>
-          <p style="font-size:13px;line-height:1.6;background:#f8f8f8;border-radius:7px;padding:9px;">${cand.message||'—'}</p>
-          <div style="display:flex;gap:8px;margin-top:8px;">
-            <button onclick="changerStatut('${cand.id}','retenu')" style="flex:1;padding:7px;border-radius:7px;border:none;background:#10b981;color:#fff;font-size:11px;font-weight:700;cursor:pointer;">✅ Retenir</button>
-            <button onclick="changerStatut('${cand.id}','refuse')" style="flex:1;padding:7px;border-radius:7px;border:none;background:#fff0f0;color:#E8383A;font-size:11px;font-weight:700;cursor:pointer;">❌ Refuser</button>
-          </div>
-        </div>`).join('')}`;
+            <p style="font-size:13px;line-height:1.6;background:#f8f8f8;border-radius:7px;padding:9px;">${cand.message || '—'}</p>
+            <div style="display:flex;gap:8px;margin-top:8px;">
+              <button onclick="changerStatut('${cand.id}','retenu')" style="flex:1;padding:7px;border-radius:7px;border:none;background:#10b981;color:#fff;font-size:11px;font-weight:700;cursor:pointer;">✅ Retenir</button>
+              <button onclick="changerStatut('${cand.id}','refuse')" style="flex:1;padding:7px;border-radius:7px;border:none;background:#fff0f0;color:#E8383A;font-size:11px;font-weight:700;cursor:pointer;">❌ Refuser</button>
+            </div>
+          </div>`).join('')}`;
     document.getElementById('modalOverlay').classList.add('open');
   } catch(e) { alert('Erreur chargement candidatures.'); }
 }
@@ -485,46 +666,42 @@ async function voirCandidatures(castingId, titreCasting) {
 async function changerStatut(candidatureId, statut) {
   const token = localStorage.getItem('showone_token');
   try {
-    await fetch(`${SUPABASE_URL}/rest/v1/candidatures?id=eq.${candidatureId}`,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`,'Prefer':'return=minimal'},body:JSON.stringify({statut})});
-    const notif=document.createElement('div'); notif.style.cssText='position:fixed;bottom:24px;right:24px;background:#10b981;color:#fff;padding:12px 18px;border-radius:10px;font-weight:700;font-size:13px;z-index:9999;'; notif.textContent=statut==='retenu'?'✅ Retenu !':'❌ Refusé'; document.body.appendChild(notif); setTimeout(()=>notif.remove(),3000);
-  } catch(e) { alert('Erreur: '+e.message); }
+    await fetch(`${SUPABASE_URL}/rest/v1/candidatures?id=eq.${candidatureId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}`, 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ statut })
+    });
+    const notif = document.createElement('div');
+    notif.style.cssText = 'position:fixed;bottom:80px;right:20px;background:#10b981;color:#fff;padding:12px 18px;border-radius:10px;font-weight:700;font-size:13px;z-index:9999;';
+    notif.textContent = statut === 'retenu' ? '✅ Retenu !' : '❌ Refusé';
+    document.body.appendChild(notif);
+    setTimeout(() => notif.remove(), 3000);
+  } catch(e) { alert('Erreur: ' + e.message); }
 }
 
-document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)fermerModal();});
-document.getElementById('playerOverlay').addEventListener('click',function(e){if(e.target===this)fermerPlayer();});
-
-mettreAJourNav();
-chargerVideosCastings();
-chargerCastings();
-</script>
-
-<!-- BARRE MOBILE -->
-<div class="mobile-bar" id="mobileBar">
-  <a href="/" class="mobile-btn" id="mb-home">🏠<span>Accueil</span></a>
-  <a href="/castings" class="mobile-btn" id="mb-castings">🎬<span>Castings</span></a>
-  <a href="/connexion" class="mobile-btn" id="mb-conn" style="display:none">🔑<span>Connexion</span></a>
-  <a href="/inscription" class="mobile-btn mobile-join" id="mb-auth">S'inscrire</a>
-</div>
-<script>
-(function() {
+async function supprimerCasting(castingId) {
+  if (!confirm('Supprimer ce casting ?')) return;
+  const token = localStorage.getItem('showone_token');
   try {
-    const u = JSON.parse(localStorage.getItem('showone_user') || '{}');
-    const btnAuth = document.getElementById('mb-auth');
-    const btnConn = document.getElementById('mb-conn');
-    if (u && u.id) {
-      const dashboard = u.type_compte === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
-      btnAuth.href = dashboard;
-      btnAuth.innerHTML = '👤<span>Mon espace</span>';
-      btnAuth.style.background = '#111';
-      btnConn.style.display = 'none';
-    } else {
-      btnConn.style.display = 'flex';
-    }
-  } catch(e) {}
-  const path = window.location.pathname;
-  if (path === '/' || path === '/index') document.getElementById('mb-home').classList.add('active');
-  else if (path.includes('castings')) document.getElementById('mb-castings').classList.add('active');
-})();
+    await fetch(`${SUPABASE_URL}/rest/v1/castings?id=eq.${castingId}`, {
+      method: 'DELETE',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}`, 'Prefer': 'return=minimal' }
+    });
+    tousCastings = tousCastings.filter(c => c.id !== castingId);
+    afficherCastings(tousCastings);
+  } catch(e) { alert('Erreur suppression.'); }
+}
+
+// ── FERMETURE MODALS ──
+document.getElementById('modalOverlay').addEventListener('click', function(e) { if (e.target === this) fermerModal(); });
+document.getElementById('playerOverlay').addEventListener('click', function(e) { if (e.target === this) fermerPlayer(); });
+
+// ── INIT ──
+mettreAJourNav();
+chargerMonRecruteurId().then(() => {
+  chargerVideosCastings();
+  chargerCastings();
+});
 </script>
 </body>
 </html>
