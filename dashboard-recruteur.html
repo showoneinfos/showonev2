@@ -111,25 +111,39 @@
     .fav-cat { font-size: 11px; color: #bbb; }
     .btn-fav-contact { padding: 5px 10px; border-radius: 6px; border: none; background: #111; color: #fff; font-size: 10px; font-weight: 700; cursor: pointer; margin-left: auto; flex-shrink: 0; }
 
-    /* MODAL CONTACT */
+    /* ── MODAL CONTACT — CORRIGÉE ── */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px; }
     .modal-overlay.open { display: flex; }
-    .modal { background: #fff; border-radius: 16px; padding: 28px; width: 100%; max-width: 460px; }
-    .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
-    .modal-head h2 { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; }
-    .modal-close-btn { width: 30px; height: 30px; border-radius: 7px; border: 1px solid #e8e8e8; background: transparent; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; }
-    .modal-talent-info { display: flex; gap: 11px; align-items: center; padding: 11px; background: #f8f8f8; border-radius: 9px; margin-bottom: 18px; }
-    .modal-talent-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; background: #e0e0e0; }
+    .modal {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px 22px;
+      width: 100%;
+      max-width: 460px;
+      /* Hauteur max = 85% viewport, scroll si dépassement */
+      max-height: 85vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-shrink: 0; }
+    .modal-head h2 { font-size: 17px; font-weight: 900; letter-spacing: -0.5px; }
+    .modal-close-btn { width: 28px; height: 28px; border-radius: 7px; border: 1px solid #e8e8e8; background: transparent; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .modal-talent-info { display: flex; gap: 10px; align-items: center; padding: 10px; background: #f8f8f8; border-radius: 9px; margin-bottom: 12px; flex-shrink: 0; }
+    .modal-talent-avatar { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; background: #e0e0e0; flex-shrink: 0; }
     .modal-talent-name { font-size: 14px; font-weight: 700; color: #111; }
     .modal-talent-cat { font-size: 12px; color: #999; }
-    .modal-label { font-size: 12px; font-weight: 600; color: #555; display: block; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .modal-input { width: 100%; padding: 11px 13px; border: 1px solid #e8e8e8; border-radius: 8px; font-size: 13px; font-family: 'Inter', sans-serif; outline: none; color: #111; margin-bottom: 12px; }
+    .modal-label { font-size: 11px; font-weight: 600; color: #555; display: block; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .modal-input { width: 100%; padding: 10px 12px; border: 1px solid #e8e8e8; border-radius: 8px; font-size: 13px; font-family: 'Inter', sans-serif; outline: none; color: #111; margin-bottom: 10px; }
     .modal-input:focus { border-color: #111; }
-    .modal-textarea { width: 100%; padding: 11px 13px; border: 1px solid #e8e8e8; border-radius: 8px; font-size: 13px; font-family: 'Inter', sans-serif; outline: none; resize: vertical; min-height: 90px; color: #111; margin-bottom: 14px; }
+    .modal-textarea { width: 100%; padding: 10px 12px; border: 1px solid #e8e8e8; border-radius: 8px; font-size: 13px; font-family: 'Inter', sans-serif; outline: none; resize: vertical; min-height: 70px; color: #111; margin-bottom: 12px; }
     .modal-textarea:focus { border-color: #111; }
-    .modal-btns { display: flex; gap: 10px; }
+    /* Boutons toujours visibles en bas */
+    .modal-btns { display: flex; gap: 10px; flex-shrink: 0; margin-top: auto; padding-top: 4px; }
     .btn-cancel { padding: 11px 18px; border-radius: 8px; border: 1px solid #e8e8e8; background: transparent; font-size: 13px; font-weight: 600; cursor: pointer; color: #999; }
     .btn-send { flex: 1; padding: 11px; border-radius: 8px; border: none; background: #111; color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; }
+    /* Vidéo dans la modal — limitée pour laisser de la place */
+    #modalVideoWrap video { max-height: 180px; width: 100%; border-radius: 8px; background: #000; display: block; }
 
     /* POPUP UPGRADE */
     .upgrade-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 500; display: none; align-items: center; justify-content: center; padding: 20px; }
@@ -154,6 +168,8 @@
       .content-grid { grid-template-columns: 1fr; }
       .talents-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
       .topbar h1 { font-size: 18px; }
+      .modal { max-height: 92vh; padding: 16px 18px; }
+      #modalVideoWrap video { max-height: 150px; }
       .bottom-nav { display: flex !important; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #f0f0f0; z-index: 100; padding: 8px 0 14px; }
       .bottom-nav a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; color: #bbb; font-size: 10px; font-weight: 600; }
       .bottom-nav a.active { color: #111; }
@@ -161,77 +177,27 @@
     }
     @media (min-width: 769px) { .bottom-nav { display: none !important; } }
 
-    /* ── MOBILE RESPONSIVE ── */
-    @media (max-width: 768px) {
-      /* Index sidebar → bottom nav */
-      .sidebar {
-        width: 100% !important; height: 56px !important;
-        top: auto !important; bottom: 0 !important; left: 0 !important;
-        border-right: none !important; border-top: 1px solid #f0f0f0 !important;
-        flex-direction: row !important; padding: 6px 8px 10px !important;
-        align-items: center !important;
-      }
-      .logo, .side-divider, .sep, .side-bottom, #side-auth, #side-user-box,
-      .side-nav .nav-item:not(.active):nth-child(n+4) { display: none !important; }
-      .side-nav { flex-direction: row !important; gap: 0 !important; padding: 0 !important; }
-      .nav-item { flex-direction: column !important; gap: 1px !important; padding: 4px 8px !important;
-        font-size: 10px !important; flex: 1 !important; justify-content: center !important;
-        align-items: center !important; background: transparent !important; font-weight: 500 !important; }
-      .ico { font-size: 20px !important; width: auto !important; }
-      .main { margin-left: 0 !important; padding-bottom: 65px !important; }
-
-      /* Grilles */
-      .grid { grid-template-columns: repeat(2, 1fr) !important; gap: 2px !important; }
-      .grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
-
-      /* Dashboard */
-      .sidebar-nav, .sidebar { display: none; }
-      body.dashboard { display: block; }
-      .main.dashboard-main { margin-left: 0 !important; padding: 16px !important; padding-bottom: 70px !important; max-width: 100% !important; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
-      .content-grid { grid-template-columns: 1fr !important; }
-
-      /* Nav */
-      nav { padding: 12px 16px !important; }
-
-      /* Forms */
-      .form-row { grid-template-columns: 1fr !important; }
-      .cat-grid { grid-template-columns: repeat(2, 1fr) !important; }
-      .type-selector { grid-template-columns: 1fr 1fr !important; }
-
-      /* Legal layout */
-      .layout { flex-direction: column !important; padding: 20px 16px !important; gap: 24px !important; }
-      .sidebar.legal-sidebar { width: 100% !important; height: auto !important; position: relative !important; flex-direction: column !important; border: none !important; border-bottom: 1px solid #f0f0f0 !important; padding: 0 0 16px !important; }
-
-      /* Contact */
-      .main { padding: 30px 16px !important; }
-      .contact-info { flex-wrap: wrap !important; }
-
-      /* Sections */
-      .sec-head { padding: 14px 10px 8px !important; }
-      .cats { padding: 8px 10px !important; }
-    }
-
-
-    /* ── BARRE MOBILE ── */
+    /* BARRE MOBILE */
     .mobile-bar { display: none; }
     @media (max-width: 768px) {
       .mobile-bar {
         display: flex; position: fixed; bottom: 0; left: 0; right: 0;
         background: #fff; border-top: 1px solid #f0f0f0;
         padding: 8px 4px 14px; z-index: 1000; align-items: center;
+        justify-content: space-around;
       }
       .mobile-btn {
         flex: 1; display: flex; flex-direction: column; align-items: center;
-        gap: 2px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600;
+        gap: 3px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600;
       }
-      .mobile-btn:first-child { font-size: 22px; }
-      .mobile-btn span { font-size: 10px; display: block; }
+      .mobile-btn-icon { font-size: 20px; line-height: 1; display: block; }
+      .mobile-btn-label { font-size: 10px; display: block; }
       .mobile-btn.active { color: #111; }
       .mobile-btn.mobile-join {
-        flex: none; margin: 0 8px; background: #E8383A; color: #fff !important;
+        flex: none; margin: 0 6px; background: #E8383A; color: #fff !important;
         padding: 8px 14px; border-radius: 8px; font-size: 12px !important; font-weight: 700;
-        display: flex; flex-direction: column; align-items: center; gap: 1px;
+        display: flex; flex-direction: column; align-items: center; gap: 2px;
+        text-decoration: none;
       }
     }
   </style>
@@ -245,7 +211,7 @@
       <h2>Contacter ce talent</h2>
       <button class="modal-close-btn" onclick="closeModal()">✕</button>
     </div>
-    <div id="modalVideoWrap" style="margin-bottom:14px;"></div>
+    <div id="modalVideoWrap" style="margin-bottom:10px;"></div>
     <div class="modal-talent-info">
       <img class="modal-talent-avatar" id="modalImg" src="" alt="">
       <div>
@@ -296,13 +262,13 @@
   </div>
   <nav class="sidebar-nav">
     <div class="nav-label">Mon espace</div>
-    <a href="dashboard-recruteur.html" class="nav-item active">🏠 Tableau de bord</a>
+    <a href="/dashboard-recruteur" class="nav-item active">🏠 Tableau de bord</a>
     <a href="#" class="nav-item">🔍 Rechercher des talents</a>
-    <a href="messagerie.html" class="nav-item">💬 Messages <span class="nav-badge" id="msgBadgeR" style="display:none">0</span></a>
+    <a href="/messagerie" class="nav-item">💬 Messages <span class="nav-badge" id="msgBadgeR" style="display:none">0</span></a>
     <a href="#" class="nav-item" onclick="voirCandidatures()">👥 Candidatures <span class="nav-badge" id="badgeCandidatures" style="display:none">0</span></a>
     <a href="#" class="nav-item">❤️ Mes favoris</a>
     <div class="nav-label">Gestion</div>
-    <a href="deposer-casting.html" class="nav-item">🎬 Déposer un casting</a>
+    <a href="/deposer-casting" class="nav-item">🎬 Déposer un casting</a>
   </nav>
   <div class="sidebar-bottom">
     <a href="#" onclick="seDeconnecter()" class="nav-item nav-item-danger">🚪 Déconnexion</a>
@@ -320,7 +286,7 @@
       <h1 id="topbarNom">Bonjour 👋</h1>
       <p>Explorez les talents disponibles sur ShowOne.</p>
     </div>
-    <a href="deposer-casting.html" class="btn-casting">🎬 Déposer un casting</a>
+    <a href="/deposer-casting" class="btn-casting">🎬 Déposer un casting</a>
   </div>
 
   <div class="cand-banner" id="candidaturesBanner">
@@ -343,8 +309,8 @@
   </div>
 
   <div class="actions-row">
-    <a href="deposer-casting.html" class="action-btn primary">🎬 Déposer un casting</a>
-    <a href="castings.html" class="action-btn">📋 Mes castings <span class="badge" id="nbCastings">0</span></a>
+    <a href="/deposer-casting" class="action-btn primary">🎬 Déposer un casting</a>
+    <a href="/castings" class="action-btn">📋 Mes castings <span class="badge" id="nbCastings">0</span></a>
     <button class="action-btn" onclick="voirCandidatures()">👥 Candidatures <span class="badge" id="nbCandidatures">0</span></button>
   </div>
 
@@ -399,7 +365,7 @@
       <div class="card">
         <div class="card-head">
           <div class="card-title">💬 Conversations</div>
-          <a href="messagerie.html" style="font-size:12px;color:#E8383A;font-weight:600;text-decoration:none;">Tout voir →</a>
+          <a href="/messagerie" style="font-size:12px;color:#E8383A;font-weight:600;text-decoration:none;">Tout voir →</a>
         </div>
         <div class="msg-list" id="msgList">
           <div style="text-align:center;padding:16px;color:#bbb;font-size:13px;">Chargement…</div>
@@ -417,10 +383,10 @@
 </div>
 
 <div class="bottom-nav" style="display:none;">
-  <a href="dashboard-recruteur.html" class="active"><span class="nav-ico">🏠</span><span>Accueil</span></a>
-  <a href="castings.html"><span class="nav-ico">🎬</span><span>Castings</span></a>
-  <a href="messagerie.html"><span class="nav-ico">💬</span><span>Messages</span></a>
-  <a href="categories.html"><span class="nav-ico">🔍</span><span>Talents</span></a>
+  <a href="/dashboard-recruteur" class="active"><span class="nav-ico">🏠</span><span>Accueil</span></a>
+  <a href="/castings"><span class="nav-ico">🎬</span><span>Castings</span></a>
+  <a href="/messagerie"><span class="nav-ico">💬</span><span>Messages</span></a>
+  <a href="#"><span class="nav-ico">🔍</span><span>Talents</span></a>
 </div>
 
 <script>
@@ -579,11 +545,13 @@ function ouvrirTalent(playbackId, nom, cat, photo, talentId, ville, vues) {
   if (photo) document.getElementById('modalImg').src = photo;
   const playerWrap = document.getElementById('modalVideoWrap');
   if (playbackId && playerWrap) {
-    playerWrap.innerHTML = `<video id="modalPlayer" controls autoplay playsinline style="width:100%;border-radius:8px;background:#000;max-height:280px;"></video>`;
+    playerWrap.innerHTML = `<video id="modalPlayer" controls autoplay playsinline style="width:100%;border-radius:8px;background:#000;max-height:180px;display:block;"></video>`;
     const video = document.getElementById('modalPlayer');
     const src = 'https://stream.mux.com/'+playbackId+'.m3u8';
     if (video.canPlayType('application/vnd.apple.mpegurl')) { video.src=src; video.play(); }
     else { const s=document.createElement('script'); s.src='https://cdn.jsdelivr.net/npm/hls.js@latest'; s.onload=()=>{ if(window.Hls?.isSupported()){const hls=new Hls();hls.loadSource(src);hls.attachMedia(video);hls.on(Hls.Events.MANIFEST_PARSED,()=>video.play());} }; document.head.appendChild(s); }
+  } else if (playerWrap) {
+    playerWrap.innerHTML = '';
   }
   document.getElementById('modalOverlay').dataset.talentId = talentId;
   document.getElementById('modalOverlay').classList.add('open');
@@ -608,13 +576,16 @@ async function sendMsg() {
   try {
     await fetch(`${SUPABASE_URL}/rest/v1/messages`, { method:'POST', headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`,'Prefer':'return=minimal'}, body:JSON.stringify({recruteur_id:window.recruteurId,talent_id:talentId,objet,contenu,lu:false}) });
     closeModal();
-    const notif=document.createElement('div'); notif.style.cssText='position:fixed;bottom:24px;right:24px;background:#10b981;color:#fff;padding:12px 18px;border-radius:10px;font-weight:700;font-size:13px;z-index:999;'; notif.textContent='✓ Message envoyé !'; document.body.appendChild(notif); setTimeout(()=>notif.remove(),3000);
+    const notif=document.createElement('div'); notif.style.cssText='position:fixed;bottom:80px;right:20px;background:#10b981;color:#fff;padding:12px 18px;border-radius:10px;font-weight:700;font-size:13px;z-index:999;'; notif.textContent='✓ Message envoyé !'; document.body.appendChild(notif); setTimeout(()=>notif.remove(),3000);
   } catch(err) { alert('Erreur lors de l\'envoi.'); }
 }
 
 function closeModal() {
   document.getElementById('modalOverlay').classList.remove('open');
-  const video=document.getElementById('modalPlayer'); if(video) video.pause();
+  const video=document.getElementById('modalPlayer'); if(video) { video.pause(); video.src=''; }
+  document.getElementById('modalVideoWrap').innerHTML = '';
+  document.getElementById('msgObjet').value = '';
+  document.getElementById('msgContenu').value = '';
 }
 
 async function lancerPaiementRecruteur() {
@@ -641,30 +612,22 @@ chargerDonnees();
 
 <!-- BARRE MOBILE -->
 <div class="mobile-bar" id="mobileBar">
-  <a href="/" class="mobile-btn" id="mb-home">🏠<span>Accueil</span></a>
-  <a href="/castings" class="mobile-btn" id="mb-castings">🎬<span>Castings</span></a>
-  <a href="/messagerie" class="mobile-btn" id="mb-msg">💬<span>Messages</span></a>
-  <a href="/inscription" class="mobile-btn mobile-join" id="mb-auth">S'inscrire</a>
+  <a href="/" class="mobile-btn" id="mb-home">
+    <span class="mobile-btn-icon">🏠</span>
+    <span class="mobile-btn-label">Accueil</span>
+  </a>
+  <a href="/castings" class="mobile-btn" id="mb-castings">
+    <span class="mobile-btn-icon">🎬</span>
+    <span class="mobile-btn-label">Castings</span>
+  </a>
+  <a href="/messagerie" class="mobile-btn" id="mb-msg">
+    <span class="mobile-btn-icon">💬</span>
+    <span class="mobile-btn-label">Messages</span>
+  </a>
+  <a href="/dashboard-recruteur" class="mobile-btn mobile-join active" id="mb-auth">
+    <span class="mobile-btn-icon">👤</span>
+    <span class="mobile-btn-label">Mon espace</span>
+  </a>
 </div>
-<script>
-(function() {
-  try {
-    const u = JSON.parse(localStorage.getItem('showone_user') || '{}');
-    const btn = document.getElementById('mb-auth');
-    if (u && u.id) {
-      const dashboard = u.type_compte === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
-      btn.href = dashboard;
-      btn.textContent = '👤';
-      btn.innerHTML = '👤<span>Mon espace</span>';
-      btn.style.background = '#111';
-    }
-  } catch(e) {}
-  // Marquer page active
-  const path = window.location.pathname;
-  if (path === '/' || path === '/index') document.getElementById('mb-home').classList.add('active');
-  else if (path.includes('castings')) document.getElementById('mb-castings').classList.add('active');
-  else if (path.includes('messagerie')) document.getElementById('mb-msg').classList.add('active');
-})();
-</script>
 </body>
 </html>
