@@ -358,17 +358,24 @@ async function chargerCastings() {
   if (!castings.length) { g.innerHTML = '<div class="loading">Aucun casting vidéo.</div>'; return; }
   g.innerHTML = castings.map(c => {
     const thumb = `https://image.mux.com/${c.video_playback_id}/thumbnail.jpg?width=300&height=400&fit_mode=crop`;
-    return `<div class="tcard" onclick="location.href='/casting-detail?id=${c.id}'">
-      <img src="${thumb}" alt="${c.titre}" loading="lazy">
-      <div class="tcard-overlay"></div>
-      <div class="tcard-play">▶</div>
+    return `<div class="tcard">
+      <div style="position:relative;width:100%;height:100%;cursor:pointer;" onclick="jouerVideo(event,'${c.video_playback_id}')">
+        <img src="${thumb}" alt="${c.titre}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
+        <div class="tcard-overlay"></div>
+        <div class="tcard-play">▶</div>
+      </div>
       <div class="tcard-info">
         <div class="tcard-name">${c.titre||'Casting'}</div>
         <div class="tcard-cat">${c.rec_nom}${c.ville?' · '+c.ville:''}</div>
-        <button class="tcard-btn" style="background:#111;" onclick="event.stopPropagation();location.href='/casting-detail?id=${c.id}'">Voir le détail →</button>
+        <a href="/casting-detail?id=${c.id}" class="tcard-btn" style="background:#111;display:block;text-align:center;text-decoration:none;">Lire le descriptif →</a>
       </div>
     </div>`;
   }).join('');
+
+function jouerVideo(e, pid) {
+  e.stopPropagation();
+  ouvrirVideo(pid, '', '', '');
+}
 }
 
 function ouvrirVideo(pid, nom, cat, talentId) {
