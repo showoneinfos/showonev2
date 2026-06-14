@@ -2,501 +2,411 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>Profil Talent — ShowOne</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; background: #fff; color: #111; }
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body { font-family: 'Inter', sans-serif; background: #f8f8f8; color: #111; padding-bottom: 80px; }
 
-    nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; background: #fff; z-index: 100; }
-    .logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; }
-    .logo span { color: #E8383A; }
-    .nav-right { display: flex; gap: 10px; align-items: center; }
-    .btn-back { font-size: 13px; color: #999; text-decoration: none; display: flex; align-items: center; gap: 6px; }
-    .btn-back:hover { color: #111; }
+    /* NAV */
+    .top-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: #fff; border-bottom: 1px solid #f0f0f0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px;
+    }
+    .top-logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; }
+    .top-logo span { color: #E8383A; }
+    .btn-back { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #111; text-decoration: none; background: none; border: none; cursor: pointer; }
 
-    /* HERO */
-    .hero { padding: 48px 40px 40px; display: flex; gap: 40px; align-items: flex-start; border-bottom: 1px solid #f0f0f0; max-width: 1100px; }
-    .hero-avatar-wrap { flex-shrink: 0; }
-    .hero-avatar { width: 120px; height: 120px; border-radius: 16px; object-fit: cover; background: #f0f0f0; }
-    .hero-bg { width: 120px; height: 120px; border-radius: 16px; background: #111; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 900; color: #fff; }
-    .hero-info { flex: 1; }
-    .hero-cat-pill { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 4px 10px; border-radius: 100px; background: #f0f0f0; color: #555; margin-bottom: 12px; }
-    .hero-nom { font-size: 36px; font-weight: 900; letter-spacing: -1px; margin-bottom: 8px; }
-    .hero-meta { display: flex; gap: 14px; font-size: 13px; color: #999; margin-bottom: 20px; flex-wrap: wrap; }
-    .hero-btns { display: flex; gap: 10px; flex-wrap: wrap; }
-    .btn-primary { padding: 11px 24px; border-radius: 9px; background: #111; color: #fff; border: none; font-size: 13px; font-weight: 700; cursor: pointer; }
-    .btn-secondary { padding: 11px 20px; border-radius: 9px; background: transparent; color: #111; border: 1px solid #e8e8e8; font-size: 13px; font-weight: 600; cursor: pointer; }
-    .btn-secondary:hover { border-color: #bbb; }
+    /* HERO VIDÉO */
+    .hero-video {
+      position: relative; width: 100%;
+      background: #000; aspect-ratio: 9/16;
+      max-height: 70vh; overflow: hidden;
+      cursor: pointer;
+    }
+    .hero-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero-video-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
+    }
+    .hero-play {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px; height: 60px; border-radius: 50%;
+      background: rgba(232,56,58,0.9);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; color: #fff;
+      transition: opacity 0.2s;
+    }
+    .hero-play.hidden { opacity: 0; pointer-events: none; }
+    .hero-tap-hint {
+      position: absolute; top: 14px; left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff; font-size: 12px; font-weight: 700;
+      padding: 6px 16px; border-radius: 100px;
+      white-space: nowrap; pointer-events: none;
+      display: none;
+    }
+    .hero-tap-hint.visible { display: block; }
 
-    /* STATS */
-    .stats-bar { display: flex; gap: 0; padding: 0 40px; border-bottom: 1px solid #f0f0f0; max-width: 1100px; }
-    .stat-item { flex: 1; text-align: center; padding: 20px 0; border-right: 1px solid #f0f0f0; }
-    .stat-item:last-child { border-right: none; }
-    .stat-num { font-size: 20px; font-weight: 900; color: #111; letter-spacing: -0.5px; }
-    .stat-label { font-size: 11px; color: #bbb; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+    /* PROFIL CARD */
+    .profil-card {
+      background: #fff; margin: 0;
+      padding: 20px 16px 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .profil-top { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+    .profil-avatar {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: #111; display: flex; align-items: center;
+      justify-content: center; color: #fff; font-size: 22px;
+      font-weight: 900; flex-shrink: 0; overflow: hidden;
+    }
+    .profil-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .profil-nom { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 4px; }
+    .profil-cat {
+      display: inline-block; padding: 3px 10px;
+      border-radius: 100px; background: #f0f0f0;
+      font-size: 11px; font-weight: 700; color: #555;
+      margin-bottom: 4px;
+    }
+    .profil-ville { font-size: 13px; color: #999; }
 
-    /* CONTENT */
-    .content { display: grid; grid-template-columns: 1fr 280px; gap: 32px; padding: 40px; max-width: 1100px; }
-    .card { background: #fff; border: 1px solid #f0f0f0; border-radius: 12px; padding: 20px 22px; margin-bottom: 16px; }
-    .card:last-child { margin-bottom: 0; }
-    .card-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 14px; }
+    .profil-stats { display: flex; gap: 20px; margin-bottom: 14px; }
+    .stat { text-align: center; }
+    .stat-num { font-size: 18px; font-weight: 900; color: #111; }
+    .stat-lbl { font-size: 11px; color: #bbb; margin-top: 1px; }
 
-    /* VIDEOS */
-    .videos-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .video-card { border-radius: 10px; overflow: hidden; position: relative; aspect-ratio: 16/9; cursor: pointer; background: #f0f0f0; }
-    .video-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .video-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.3); opacity: 0; transition: opacity 0.15s; }
-    .video-card:hover .video-overlay { opacity: 1; }
-    .video-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 40px; height: 40px; border-radius: 50%; background: #E8383A; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; }
-    .video-views { position: absolute; bottom: 8px; left: 8px; font-size: 10px; color: rgba(255,255,255,0.9); background: rgba(0,0,0,0.5); padding: 2px 7px; border-radius: 100px; }
-    .video-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 8px 10px; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); }
-    .video-title { font-size: 11px; font-weight: 600; color: #fff; }
+    .profil-bio { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 16px; }
 
-    /* INFOS */
-    .info-row { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid #f8f8f8; font-size: 13px; }
-    .info-row:last-child { border-bottom: none; }
-    .info-key { color: #999; }
-    .info-val { font-weight: 600; color: #111; }
-
-    /* CONTACT CARD */
-    .contact-card { background: #111; border-radius: 12px; padding: 20px; text-align: center; }
-    .contact-avatar { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; margin: 0 auto 10px; display: block; background: #333; }
-    .contact-nom { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 4px; }
-    .contact-desc { font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 14px; line-height: 1.5; }
-    .btn-contact-card { width: 100%; padding: 11px; border-radius: 8px; background: #E8383A; color: #fff; border: none; font-size: 13px; font-weight: 700; cursor: pointer; margin-bottom: 8px; }
-    .btn-fav-card { width: 100%; padding: 10px; border-radius: 8px; background: transparent; color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.15); font-size: 13px; font-weight: 600; cursor: pointer; }
-
-    /* EDIT BIO */
-    .edit-bio-zone { display: none; margin-top: 10px; }
-    .bio-textarea { width: 100%; padding: 10px 12px; border: 1px solid #e8e8e8; border-radius: 8px; font-size: 13px; font-family: 'Inter', sans-serif; outline: none; resize: vertical; min-height: 80px; color: #111; margin-bottom: 8px; }
-    .bio-textarea:focus { border-color: #111; }
-    .btn-save-bio { padding: 9px 18px; border-radius: 8px; border: none; background: #111; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; }
-    .btn-edit-bio { background: none; border: none; font-size: 12px; color: #E8383A; cursor: pointer; font-weight: 600; }
-
-    /* SIMILAIRES */
-    .similar-item { display: flex; gap: 10px; align-items: center; padding: 8px; border-radius: 9px; cursor: pointer; transition: background 0.15s; }
-    .similar-item:hover { background: #f8f8f8; }
-    .similar-thumb { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; flex-shrink: 0; background: #111; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; overflow: hidden; }
-    .similar-name { font-size: 13px; font-weight: 700; color: #111; }
-    .similar-cat { font-size: 11px; color: #bbb; }
-
-    /* MODAL CONTACT */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
-    .modal-overlay.open { display: flex; }
-    .modal { background: #fff; border-radius: 16px; padding: 28px; width: 100%; max-width: 440px; }
-    .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
-    .modal-title { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; }
-    .modal-close { width: 30px; height: 30px; border-radius: 7px; border: 1px solid #e8e8e8; background: transparent; cursor: pointer; font-size: 14px; }
-    .modal-talent-info { display: flex; gap: 10px; align-items: center; padding: 10px; background: #f8f8f8; border-radius: 8px; margin-bottom: 16px; }
-    .modal-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: #e0e0e0; }
-    .modal-nom { font-size: 13px; font-weight: 700; color: #111; }
-    .modal-cat { font-size: 12px; color: #999; }
-    .modal-label { font-size: 12px; font-weight: 600; color: #555; display: block; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .modal-input { width: 100%; padding: 11px 13px; border: 1px solid #e8e8e8; border-radius: 8px; font-size: 13px; font-family: 'Inter', sans-serif; outline: none; color: #111; margin-bottom: 10px; }
-    .modal-input:focus { border-color: #111; }
-    .modal-textarea { width: 100%; padding: 11px 13px; border: 1px solid #e8e8e8; border-radius: 8px; font-size: 13px; font-family: 'Inter', sans-serif; outline: none; resize: vertical; min-height: 90px; color: #111; margin-bottom: 14px; }
-    .modal-textarea:focus { border-color: #111; }
-    .modal-btns { display: flex; gap: 10px; }
-    .btn-cancel { padding: 11px 18px; border-radius: 8px; border: 1px solid #e8e8e8; background: transparent; font-size: 13px; font-weight: 600; cursor: pointer; color: #999; }
-    .btn-send { flex: 1; padding: 11px; border-radius: 8px; border: none; background: #111; color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; }
-
-    .toast { display: none; position: fixed; bottom: 24px; right: 24px; padding: 12px 18px; border-radius: 10px; font-weight: 700; font-size: 13px; z-index: 9999; color: #fff; }
-
-    /* Blocs actions */
-    #cardActionsRecruteur, #cardActionsVisiteur, #cardActionsTalent { display: none; }
-
-    @media (max-width: 768px) {
-      nav { padding: 14px 20px; }
-      .hero { flex-direction: column; padding: 28px 20px; gap: 20px; }
-      .stats-bar { padding: 0 20px; }
-      .content { grid-template-columns: 1fr; padding: 20px; gap: 16px; }
-      .hero-nom { font-size: 26px; }
-      .videos-grid { grid-template-columns: 1fr; }
+    /* Bouton Contacter */
+    .btn-contacter {
+      display: block; width: 100%; padding: 14px;
+      border-radius: 10px; background: #E8383A; color: #fff;
+      border: none; font-size: 15px; font-weight: 700;
+      cursor: pointer; text-align: center; letter-spacing: 0.2px;
+    }
+    .btn-contacter-locked {
+      display: block; width: 100%; padding: 14px;
+      border-radius: 10px; background: #f0f0f0; color: #999;
+      border: none; font-size: 15px; font-weight: 700;
+      cursor: pointer; text-align: center;
+    }
+    .btn-partager {
+      display: block; width: 100%; padding: 12px;
+      border-radius: 10px; background: transparent;
+      border: 1.5px solid #e0e0e0; color: #111;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+      text-align: center; margin-top: 8px;
+      text-decoration: none;
     }
 
-    /* ── MOBILE RESPONSIVE ── */
-    @media (max-width: 768px) {
-      /* Index sidebar → bottom nav */
-      .sidebar {
-        width: 100% !important; height: 56px !important;
-        top: auto !important; bottom: 0 !important; left: 0 !important;
-        border-right: none !important; border-top: 1px solid #f0f0f0 !important;
-        flex-direction: row !important; padding: 6px 8px 10px !important;
-        align-items: center !important;
-      }
-      .logo, .side-divider, .sep, .side-bottom, #side-auth, #side-user-box,
-      .side-nav .nav-item:not(.active):nth-child(n+4) { display: none !important; }
-      .side-nav { flex-direction: row !important; gap: 0 !important; padding: 0 !important; }
-      .nav-item { flex-direction: column !important; gap: 1px !important; padding: 4px 8px !important;
-        font-size: 10px !important; flex: 1 !important; justify-content: center !important;
-        align-items: center !important; background: transparent !important; font-weight: 500 !important; }
-      .ico { font-size: 20px !important; width: auto !important; }
-      .main { margin-left: 0 !important; padding-bottom: 65px !important; }
+    /* Autres vidéos */
+    .section { padding: 16px; }
+    .section-title { font-size: 14px; font-weight: 900; color: #111; margin-bottom: 12px; letter-spacing: -0.3px; }
+    .videos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
+    .vcard { position: relative; aspect-ratio: 3/4; overflow: hidden; cursor: pointer; background: #f0f0f0; border-radius: 4px; }
+    .vcard img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .vcard-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.15); }
+    .vcard-views { position: absolute; bottom: 5px; left: 6px; font-size: 10px; font-weight: 700; color: #fff; background: rgba(0,0,0,0.4); padding: 2px 6px; border-radius: 100px; }
+    .vcard-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 20px; color: #fff; opacity: 0.8; }
 
-      /* Grilles */
-      .grid { grid-template-columns: repeat(2, 1fr) !important; gap: 2px !important; }
-      .grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
+    /* Modal vidéo */
+    .modal-vid-ov { display: none; position: fixed; inset: 0; background: #000; z-index: 1000; }
+    .modal-vid-ov.open { display: block; }
+    .modal-vid-close { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.2); border: none; color: #fff; font-size: 18px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; }
+    .modal-vid-el { width: 100%; height: 100%; object-fit: contain; display: block; }
 
-      /* Dashboard */
-      .sidebar-nav, .sidebar { display: none; }
-      body.dashboard { display: block; }
-      .main.dashboard-main { margin-left: 0 !important; padding: 16px !important; padding-bottom: 70px !important; max-width: 100% !important; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
-      .content-grid { grid-template-columns: 1fr !important; }
+    /* Popup upgrade */
+    .upgrade-ov { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 500; align-items: flex-end; justify-content: center; padding: 0; }
+    .upgrade-ov.open { display: flex; }
+    .upgrade-box { background: #fff; border-radius: 20px 20px 0 0; padding: 28px 20px 36px; width: 100%; max-width: 500px; }
+    .upgrade-ico { font-size: 36px; text-align: center; margin-bottom: 12px; }
+    .upgrade-title { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 8px; text-align: center; }
+    .upgrade-sub { font-size: 13px; color: #999; line-height: 1.6; margin-bottom: 18px; text-align: center; }
+    .upgrade-features { list-style: none; background: #f8f8f8; border-radius: 10px; padding: 14px 16px; margin-bottom: 18px; display: flex; flex-direction: column; gap: 7px; font-size: 13px; color: #555; }
+    .btn-upgrade { display: block; width: 100%; padding: 15px; border-radius: 10px; border: none; background: #E8383A; color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; text-align: center; margin-bottom: 10px; }
+    .btn-close-up { display: block; width: 100%; padding: 12px; border-radius: 10px; border: 1.5px solid #e0e0e0; background: transparent; font-size: 14px; font-weight: 600; color: #999; cursor: pointer; text-align: center; }
 
-      /* Nav */
-      nav { padding: 12px 16px !important; }
+    /* Barre mobile */
+    .mobile-bar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #fff; border-top: 1px solid #f0f0f0;
+      padding: 8px 4px env(safe-area-inset-bottom, 12px);
+      z-index: 200; display: flex; align-items: center;
+      justify-content: space-around;
+    }
+    .mb-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #bbb; font-size: 10px; font-weight: 600; }
+    .mb-ico { font-size: 22px; line-height: 1; }
+    .mb-lbl { font-size: 10px; }
+    .mb-join { flex: none; margin: 0 8px; background: #E8383A; color: #fff !important; padding: 9px 18px; border-radius: 9px; font-size: 13px; font-weight: 700; display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; }
 
-      /* Forms */
-      .form-row { grid-template-columns: 1fr !important; }
-      .cat-grid { grid-template-columns: repeat(2, 1fr) !important; }
-      .type-selector { grid-template-columns: 1fr 1fr !important; }
-
-      /* Legal layout */
-      .layout { flex-direction: column !important; padding: 20px 16px !important; gap: 24px !important; }
-      .sidebar.legal-sidebar { width: 100% !important; height: auto !important; position: relative !important; flex-direction: column !important; border: none !important; border-bottom: 1px solid #f0f0f0 !important; padding: 0 0 16px !important; }
-
-      /* Contact */
-      .main { padding: 30px 16px !important; }
-      .contact-info { flex-wrap: wrap !important; }
-
-      /* Sections */
-      .sec-head { padding: 14px 10px 8px !important; }
-      .cats { padding: 8px 10px !important; }
+    /* Desktop */
+    @media (min-width: 769px) {
+      body { max-width: 480px; margin: 0 auto; background: #fff; padding-bottom: 0; }
+      .top-nav { border-radius: 0; }
+      .hero-video { max-height: 60vh; aspect-ratio: 9/16; }
+      .mobile-bar { max-width: 480px; left: 50%; transform: translateX(-50%); }
     }
 
-
-    /* ── BARRE MOBILE ── */
-    .mobile-bar { display: none; }
-    @media (max-width: 768px) {
-      .mobile-bar {
-        display: flex; position: fixed; bottom: 0; left: 0; right: 0;
-        background: #fff; border-top: 1px solid #f0f0f0;
-        padding: 8px 4px 14px; z-index: 1000; align-items: center;
-      }
-      .mobile-btn {
-        flex: 1; display: flex; flex-direction: column; align-items: center;
-        gap: 2px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600;
-      }
-      .mobile-btn:first-child { font-size: 22px; }
-      .mobile-btn span { font-size: 10px; display: block; }
-      .mobile-btn.active { color: #111; }
-      .mobile-btn.mobile-join {
-        flex: none; margin: 0 8px; background: #E8383A; color: #fff !important;
-        padding: 8px 14px; border-radius: 8px; font-size: 12px !important; font-weight: 700;
-        display: flex; flex-direction: column; align-items: center; gap: 1px;
-      }
-    }
+    /* Loading */
+    .loading-screen { display: flex; align-items: center; justify-content: center; height: 60vh; color: #bbb; font-size: 14px; }
   </style>
 </head>
 <body>
 
-<nav>
-  <a href="/" class="logo">Show<span>One</span></a>
-  <div class="nav-right">
-    <a href="/" class="btn-back">← Retour aux talents</a>
-  </div>
-</nav>
-
-<div class="hero">
-  <div class="hero-avatar-wrap">
-    <img class="hero-avatar" id="heroAvatar" src="" alt="" style="display:none;">
-    <div class="hero-bg" id="heroBg">?</div>
-  </div>
-  <div class="hero-info">
-    <div class="hero-cat-pill" id="heroCat">Talent</div>
-    <div class="hero-nom" id="heroNom">Chargement…</div>
-    <div class="hero-meta">
-      <span id="heroVille"></span>
-      <span id="heroAge"></span>
-    </div>
-    <div class="hero-btns">
-      <button class="btn-primary" id="btnContactHero">▶ Voir les vidéos</button>
-      <button class="btn-secondary" onclick="shareProfile()">🔗 Partager</button>
-    </div>
-  </div>
+<!-- NAV -->
+<div class="top-nav">
+  <button class="btn-back" onclick="history.back()">← Retour</button>
+  <a href="/" class="top-logo">Show<span>One</span></a>
+  <div style="width:60px;"></div>
 </div>
 
-<div class="stats-bar">
-  <div class="stat-item"><div class="stat-num" id="statVues">—</div><div class="stat-label">Vues</div></div>
-  <div class="stat-item"><div class="stat-num" id="statVideos">—</div><div class="stat-label">Vidéos</div></div>
-  <div class="stat-item"><div class="stat-num" id="statFavoris">—</div><div class="stat-label">Favoris</div></div>
-  <div class="stat-item"><div class="stat-num" id="statMessages">—</div><div class="stat-label">Messages</div></div>
+<!-- CONTENU (chargé dynamiquement) -->
+<div id="pageContent">
+  <div class="loading-screen">Chargement du profil…</div>
 </div>
 
-<div class="content">
-  <div>
-    <div class="card">
-      <div class="card-title">🎬 Vidéos</div>
-      <div class="videos-grid" id="videosGrid"></div>
-    </div>
-
-    <div class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-        <div class="card-title" style="margin:0;">À propos</div>
-        <button class="btn-edit-bio" id="btnEditBio" style="display:none;" onclick="toggleEditBio()">✏️ Modifier</button>
-      </div>
-      <p id="aboutText" style="font-size:14px;color:#555;line-height:1.7;"></p>
-      <div class="edit-bio-zone" id="editBioZone">
-        <textarea class="bio-textarea" id="bioInput" placeholder="Décrivez votre parcours, vos spécialités…"></textarea>
-        <button class="btn-save-bio" id="btnSauvBio" onclick="sauvegarderBio()">✓ Sauvegarder</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">📋 Informations</div>
-      <div id="infoList"></div>
-    </div>
-  </div>
-
-  <div>
-    <div class="contact-card">
-      <img class="contact-avatar" id="contactAvatar" src="" alt="">
-      <div class="contact-nom" id="contactNom">—</div>
-      <div class="contact-desc" id="contactDesc">Connectez-vous pour contacter ce talent.</div>
-      <div id="cardActionsRecruteur">
-        <button class="btn-contact-card" onclick="openModal()">💬 Contacter ce talent</button>
-        <button class="btn-fav-card" id="favCardBtn" onclick="toggleFav()">🤍 Ajouter aux favoris</button>
-      </div>
-      <div id="cardActionsVisiteur">
-        <button class="btn-contact-card" onclick="window.location.href='/inscription?type=recruteur'">Devenir recruteur →</button>
-      </div>
-      <div id="cardActionsTalent">
-        <button class="btn-contact-card" onclick="partagerProfil()">📤 Partager mon profil</button>
-        <button class="btn-fav-card" onclick="copierLien()">🔗 Copier le lien</button>
-      </div>
-    </div>
-
-    <div class="card" style="margin-top:14px;">
-      <div class="card-title">✨ Talents similaires</div>
-      <div id="similarList"></div>
-    </div>
-  </div>
+<!-- MODAL VIDÉO -->
+<div class="modal-vid-ov" id="modalVid">
+  <button class="modal-vid-close" onclick="fermerVid()">✕</button>
+  <video id="vidEl" controls playsinline class="modal-vid-el"></video>
 </div>
 
-<!-- MODAL CONTACT -->
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal">
-    <div class="modal-head">
-      <div class="modal-title" id="modalTitle">Contacter</div>
-      <button class="modal-close" onclick="closeModal()">✕</button>
-    </div>
-    <div class="modal-talent-info">
-      <img class="modal-avatar" id="modalAvatar" src="" alt="">
-      <div>
-        <div class="modal-nom" id="modalNom">—</div>
-        <div class="modal-cat" id="modalCat"></div>
-      </div>
-    </div>
-    <label class="modal-label">Objet</label>
-    <input id="msgObjet" class="modal-input" type="text" placeholder="Ex : Audition comédie musicale — Juin 2025">
-    <label class="modal-label">Message</label>
-    <textarea id="msgContenu" class="modal-textarea" placeholder="Bonjour, nous avons découvert votre profil ShowOne et…"></textarea>
-    <div class="modal-btns">
-      <button class="btn-cancel" onclick="closeModal()">Annuler</button>
-      <button class="btn-send" onclick="envoyerMessage()">Envoyer ✓</button>
-    </div>
+<!-- POPUP UPGRADE -->
+<div class="upgrade-ov" id="upgradeOv" onclick="if(event.target===this)fermerUpgrade()">
+  <div class="upgrade-box">
+    <div class="upgrade-ico">🔒</div>
+    <div class="upgrade-title">Passez Recruteur Pro</div>
+    <div class="upgrade-sub">Pour contacter ce talent et accéder à tous les profils ShowOne, passez au plan Pro.</div>
+    <ul class="upgrade-features">
+      <li>✅ Contacter tous les talents</li>
+      <li>✅ Lire toutes les candidatures</li>
+      <li>✅ Messagerie illimitée</li>
+      <li>✅ Castings illimités</li>
+    </ul>
+    <button class="btn-upgrade" onclick="location.href='/dashboard-recruteur'">🔍 Devenir Recruteur Pro — 19,99€/mois</button>
+    <button class="btn-close-up" onclick="fermerUpgrade()">Plus tard</button>
   </div>
 </div>
-
-<div class="toast" id="toast"></div>
-
-<script>
-const SUPABASE_URL = 'https://emiuzigtlomlrsofxqyf.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtaXV6aWd0bG9tbHJzb2Z4cXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MDI4NTcsImV4cCI6MjA5MzQ3ODg1N30.Cwe-Z1vNGc-puz8jEnHdMMCwllNbl9fRAdwLe5zWyIY';
-let talentData = null, liked = false, faved = false;
-const params = new URLSearchParams(window.location.search);
-const talentId = params.get('id');
-
-async function chargerProfil() {
-  if (!talentId) { document.getElementById('heroNom').textContent='Talent introuvable'; return; }
-  try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/profils_talents?id=eq.${talentId}&select=*,utilisateurs(id,prenom,nom,ville,date_naissance,email)`, { headers: { 'apikey': SUPABASE_KEY } });
-    const data = await res.json();
-    if (!data || data.length === 0) { document.getElementById('heroNom').textContent='Profil introuvable'; return; }
-    talentData = data[0];
-    const u = talentData.utilisateurs;
-    const nom = talentData.nom_scene || ((u?.prenom||'')+' '+(u?.nom||'')).trim();
-    const ville = u?.ville||''; const cat = talentData.sous_categorie||talentData.categorie||'Talent'; const photo = talentData.photo_url||'';
-    let age = ''; if(u?.date_naissance) age = Math.floor((Date.now()-new Date(u.date_naissance).getTime())/(365.25*24*3600*1000))+' ans';
-    document.title = nom+' — ShowOne';
-    document.getElementById('heroNom').textContent = nom;
-    document.getElementById('heroCat').textContent = cat;
-    if (photo) {
-      const av = document.getElementById('heroAvatar'); av.src=photo; av.style.display='block';
-      document.getElementById('heroBg').style.display='none';
-      ['contactAvatar','modalAvatar'].forEach(id=>{ const el=document.getElementById(id); if(el) el.src=photo; });
-    }
-    if (ville) document.getElementById('heroVille').textContent = '📍 '+ville;
-    if (age) document.getElementById('heroAge').textContent = '🎂 '+age;
-    document.getElementById('modalTitle').textContent = 'Contacter '+nom;
-    document.getElementById('modalNom').textContent = nom;
-    document.getElementById('modalCat').textContent = cat+(ville?' · '+ville:'');
-    document.getElementById('contactNom').textContent = nom;
-    document.getElementById('infoList').innerHTML = [
-      ville?`<div class="info-row"><span class="info-key">📍 Ville</span><span class="info-val">${ville}</span></div>`:'',
-      age?`<div class="info-row"><span class="info-key">🎂 Âge</span><span class="info-val">${age}</span></div>`:'',
-      cat?`<div class="info-row"><span class="info-key">🎭 Catégorie</span><span class="info-val">${cat}</span></div>`:'',
-      `<div class="info-row"><span class="info-key">✅ Disponible</span><span class="info-val" style="color:#10b981;">Oui</span></div>`
-    ].filter(Boolean).join('');
-    document.getElementById('aboutText').textContent = talentData.bio||"Ce talent n'a pas encore renseigné sa biographie.";
-    await chargerVideos();
-    await chargerStats();
-    await chargerSimilaires(cat);
-    verifierRole(u?.id);
-  } catch(e) { console.error(e); }
-}
-
-function verifierRole(utilisateurId) {
-  const userStr = localStorage.getItem('showone_user'); const token = localStorage.getItem('showone_token');
-  const btnHero = document.getElementById('btnContactHero');
-  if (!userStr || !token) {
-    btnHero.textContent='▶ Voir les vidéos'; btnHero.onclick=()=>document.getElementById('videosGrid').scrollIntoView({behavior:'smooth'});
-    document.getElementById('cardActionsVisiteur').style.display='block';
-    document.getElementById('contactDesc').textContent='Inscrivez-vous pour contacter ce talent !'; return;
-  }
-  const user = JSON.parse(userStr);
-  if (user.type_compte === 'recruteur') {
-    btnHero.textContent='💬 Contacter'; btnHero.onclick=openModal;
-    document.getElementById('cardActionsRecruteur').style.display='block'; return;
-  }
-  if (utilisateurId && utilisateurId === user.id) {
-    btnHero.textContent='📤 Partager'; btnHero.onclick=partagerProfil;
-    document.getElementById('cardActionsTalent').style.display='block';
-    document.getElementById('contactDesc').textContent='Partagez votre profil et faites-vous découvrir !';
-    document.getElementById('btnEditBio').style.display='block';
-  } else {
-    btnHero.textContent='▶ Voir les vidéos'; btnHero.onclick=()=>document.getElementById('videosGrid').scrollIntoView({behavior:'smooth'});
-    document.getElementById('cardActionsVisiteur').style.display='block';
-    document.getElementById('contactDesc').textContent='Devenez recruteur pour contacter ce talent !';
-  }
-}
-
-async function chargerVideos() {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/videos?talent_id=eq.${talentId}&statut=eq.en_ligne&order=vues.desc`, { headers: { 'apikey': SUPABASE_KEY } });
-  const videos = await res.json();
-  const grid = document.getElementById('videosGrid');
-  if (!videos || videos.length === 0) { grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:24px;color:#bbb;">Aucune vidéo publiée.</div>'; return; }
-  grid.innerHTML = videos.map(v => {
-    const thumb = v.playback_id ? `https://image.mux.com/${v.playback_id}/thumbnail.jpg?width=600&height=340&fit_mode=crop` : '';
-    return `<div class="video-card" onclick="lireVideo('${v.playback_id}')">
-      ${thumb?`<img src="${thumb}" alt="${v.titre||''}">`:'<div style="width:100%;height:100%;background:#111;display:flex;align-items:center;justify-content:center;font-size:28px;">🎬</div>'}
-      <div class="video-overlay"></div><div class="video-play">▶</div>
-      <div class="video-views">👁 ${(v.vues||0).toLocaleString('fr-FR')}</div>
-      <div class="video-info"><div class="video-title">${v.titre||'Vidéo'}</div></div>
-    </div>`;
-  }).join('');
-}
-
-async function chargerStats() {
-  const [vR,fR,mR] = await Promise.all([
-    fetch(`${SUPABASE_URL}/rest/v1/videos?talent_id=eq.${talentId}&statut=eq.en_ligne&select=vues`,{headers:{apikey:SUPABASE_KEY}}),
-    fetch(`${SUPABASE_URL}/rest/v1/favoris?talent_id=eq.${talentId}&select=id`,{headers:{apikey:SUPABASE_KEY}}),
-    fetch(`${SUPABASE_URL}/rest/v1/messages?talent_id=eq.${talentId}&select=id`,{headers:{apikey:SUPABASE_KEY}})
-  ]);
-  const vids=await vR.json(); const favs=await fR.json(); const msgs=await mR.json();
-  document.getElementById('statVues').textContent = (Array.isArray(vids)?vids.reduce((s,v)=>s+(v.vues||0),0):0).toLocaleString('fr-FR');
-  document.getElementById('statVideos').textContent = Array.isArray(vids)?vids.length:0;
-  document.getElementById('statFavoris').textContent = Array.isArray(favs)?favs.length:0;
-  document.getElementById('statMessages').textContent = Array.isArray(msgs)?msgs.length:0;
-}
-
-async function chargerSimilaires(cat) {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/profils_talents?categorie=eq.${encodeURIComponent(cat)}&id=neq.${talentId}&select=id,nom_scene,photo_url,categorie,sous_categorie,utilisateurs(prenom,nom,ville)&limit=3`,{headers:{apikey:SUPABASE_KEY}});
-  const sim = await res.json();
-  const list = document.getElementById('similarList');
-  if (!sim || sim.length === 0) { list.innerHTML='<div style="text-align:center;padding:14px;color:#bbb;font-size:13px;">Aucun talent similaire.</div>'; return; }
-  list.innerHTML = sim.map(s => {
-    const u=s.utilisateurs; const nom=s.nom_scene||((u?.prenom||'')+' '+(u?.nom||'')).trim(); const photo=s.photo_url||''; const cat2=s.sous_categorie||s.categorie||'';
-    return `<div class="similar-item" onclick="window.location='profil-talent.html?id=${s.id}'">
-      ${photo?`<img class="similar-thumb" src="${photo}" alt="${nom}">`:`<div class="similar-thumb">${nom[0]||'?'}</div>`}
-      <div><div class="similar-name">${nom}</div><div class="similar-cat">${cat2}${u?.ville?' · '+u.ville:''}</div></div>
-    </div>`;
-  }).join('');
-}
-
-function lireVideo(playbackId) {
-  if (!playbackId) return;
-  const src='https://stream.mux.com/'+playbackId+'.m3u8';
-  const overlay=document.createElement('div'); overlay.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;';
-  overlay.innerHTML=`<div style="position:relative;width:100%;max-width:800px;"><video id="popPlayer" controls autoplay playsinline style="width:100%;border-radius:12px;background:#000;max-height:80vh;"></video><button onclick="this.closest('div').parentElement.remove()" style="position:absolute;top:-36px;right:0;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;">✕</button></div>`;
-  document.body.appendChild(overlay);
-  const video=document.getElementById('popPlayer');
-  if(video.canPlayType('application/vnd.apple.mpegurl')){video.src=src;video.play();}
-  else{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/hls.js@latest';s.onload=()=>{if(window.Hls?.isSupported()){const hls=new Hls();hls.loadSource(src);hls.attachMedia(video);hls.on(Hls.Events.MANIFEST_PARSED,()=>video.play());}};document.head.appendChild(s);}
-}
-
-function openModal() {
-  const token=localStorage.getItem('showone_token'); const userStr=localStorage.getItem('showone_user');
-  if(!token||!userStr){if(confirm('Connectez-vous en tant que recruteur pour contacter ce talent.'))window.location.href='/connexion';return;}
-  const user=JSON.parse(userStr); if(user.type_compte!=='recruteur'){alert('Seuls les recruteurs peuvent envoyer des messages.');return;}
-  document.getElementById('modalOverlay').classList.add('open');
-}
-
-function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
-
-async function envoyerMessage() {
-  const token=localStorage.getItem('showone_token'); const userStr=localStorage.getItem('showone_user');
-  if(!token||!userStr){alert('Connectez-vous en tant que recruteur.');return;}
-  const user=JSON.parse(userStr); if(user.type_compte!=='recruteur'){alert('Seuls les recruteurs peuvent envoyer des messages.');return;}
-  const objet=document.getElementById('msgObjet').value||'Proposition'; const contenu=document.getElementById('msgContenu').value;
-  if(!contenu.trim()){alert('Veuillez écrire un message !');return;}
-  await fetch(`${SUPABASE_URL}/rest/v1/messages`,{method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`,'Prefer':'return=minimal'},body:JSON.stringify({talent_id:talentId,objet,contenu,lu:false})});
-  closeModal(); showToast('✓ Message envoyé !','#10b981');
-}
-
-function toggleFav() { faved=!faved; const btn=document.getElementById('favCardBtn'); btn.textContent=faved?'❤️ Retiré des favoris':'🤍 Ajouter aux favoris'; showToast(faved?'❤️ Ajouté !':'Retiré des favoris',faved?'#E8383A':'#111'); }
-function shareProfile() { navigator.clipboard.writeText(window.location.href).then(()=>showToast('🔗 Lien copié !','#111')); }
-function partagerProfil() { const url=window.location.href; if(navigator.share)navigator.share({title:'Mon profil ShowOne',text:'Viens découvrir mon profil sur ShowOne ! '+url,url}); else navigator.clipboard.writeText(url).then(()=>showToast('📤 Lien copié !','#111')); }
-function copierLien() { navigator.clipboard.writeText(window.location.href).then(()=>showToast('🔗 Lien copié !','#111')); }
-function toggleEditBio() { const zone=document.getElementById('editBioZone'); const txt=document.getElementById('aboutText'); const isOpen=zone.style.display==='block'; zone.style.display=isOpen?'none':'block'; txt.style.display=isOpen?'block':'none'; if(!isOpen){const cur=txt.textContent;document.getElementById('bioInput').value=cur.includes("pas encore renseigné")?'':cur;} }
-
-async function sauvegarderBio() {
-  const bio=document.getElementById('bioInput').value.trim(); const token=localStorage.getItem('showone_token'); const userStr=localStorage.getItem('showone_user');
-  if(!bio){alert('La biographie ne peut pas être vide.');return;} if(!token||!userStr){alert('Vous devez être connecté.');return;}
-  const user=JSON.parse(userStr); const btn=document.getElementById('btnSauvBio'); btn.textContent='⏳…'; btn.disabled=true;
-  try {
-    const res=await fetch(`${SUPABASE_URL}/rest/v1/profils_talents?utilisateur_id=eq.${user.id}`,{method:'PATCH',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`,'Prefer':'return=representation'},body:JSON.stringify({bio})});
-    if(res.ok){document.getElementById('aboutText').textContent=bio;toggleEditBio();showToast('✓ Biographie sauvegardée !','#10b981');}
-    else{alert('Erreur lors de la sauvegarde.');}
-  } catch(e){alert('Erreur : '+e.message);}
-  finally{btn.textContent='✓ Sauvegarder';btn.disabled=false;}
-}
-
-function showToast(msg, color) { const t=document.getElementById('toast'); t.textContent=msg; t.style.background=color; t.style.display='block'; setTimeout(()=>t.style.display='none',2500); }
-
-document.getElementById('modalOverlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
-chargerProfil();
-</script>
 
 <!-- BARRE MOBILE -->
-<div class="mobile-bar" id="mobileBar">
-  <a href="/" class="mobile-btn" id="mb-home">🏠<span>Accueil</span></a>
-  <a href="/castings" class="mobile-btn" id="mb-castings">🎬<span>Castings</span></a>
-  <a href="/messagerie" class="mobile-btn" id="mb-msg">💬<span>Messages</span></a>
-  <a href="/inscription" class="mobile-btn mobile-join" id="mb-auth">S'inscrire</a>
+<div class="mobile-bar">
+  <a href="/" class="mb-btn"><span class="mb-ico">🏠</span><span class="mb-lbl">Accueil</span></a>
+  <a href="/castings" class="mb-btn"><span class="mb-ico">🎬</span><span class="mb-lbl">Castings</span></a>
+  <a href="/messagerie" class="mb-btn"><span class="mb-ico">💬</span><span class="mb-lbl">Messages</span></a>
+  <a href="/inscription" class="mb-join" id="mb-auth"><span class="mb-ico">✨</span><span class="mb-lbl">S'inscrire</span></a>
 </div>
+
 <script>
+const SB_URL = 'https://emiuzigtlomlrsofxqyf.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtaXV6aWd0bG9tbHJzb2Z4cXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MDI4NTcsImV4cCI6MjA5MzQ3ODg1N30.Cwe-Z1vNGc-puz8jEnHdMMCwllNbl9fRAdwLe5zWyIY';
+let _hls = null, _hlsModal = null;
+let talentId = null;
+
+const user = (() => { try { return JSON.parse(localStorage.getItem('showone_user')||'{}'); } catch(e) { return {}; } })();
+const isPro = user.plan === 'pro';
+const isRecruteur = user.type_compte === 'recruteur';
+
+// Barre mobile
 (function() {
-  try {
-    const u = JSON.parse(localStorage.getItem('showone_user') || '{}');
-    const btn = document.getElementById('mb-auth');
-    if (u && u.id) {
-      const dashboard = u.type_compte === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
-      btn.href = dashboard;
-      btn.textContent = '👤';
-      btn.innerHTML = '👤<span>Mon espace</span>';
-      btn.style.background = '#111';
-    }
-  } catch(e) {}
-  // Marquer page active
-  const path = window.location.pathname;
-  if (path === '/' || path === '/index') document.getElementById('mb-home').classList.add('active');
-  else if (path.includes('castings')) document.getElementById('mb-castings').classList.add('active');
-  else if (path.includes('messagerie')) document.getElementById('mb-msg').classList.add('active');
+  const btn = document.getElementById('mb-auth');
+  if (user && user.id) {
+    const dest = user.type_compte === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
+    btn.href = dest;
+    btn.querySelector('.mb-lbl').textContent = 'Mon espace';
+    btn.querySelector('.mb-ico').textContent = '👤';
+    btn.style.background = '#111';
+  }
 })();
+
+async function charger() {
+  const params = new URLSearchParams(location.search);
+  talentId = params.get('id');
+  if (!talentId) { document.getElementById('pageContent').innerHTML = '<div class="loading-screen">Profil introuvable.</div>'; return; }
+
+  try {
+    // Charger profil talent
+    const r1 = await fetch(`${SB_URL}/rest/v1/profils_talents?id=eq.${talentId}&select=*,utilisateurs(prenom,nom,ville,email)&limit=1`, { headers: { apikey: SB_KEY } });
+    const data = await r1.json();
+    if (!data || !data.length) { document.getElementById('pageContent').innerHTML = '<div class="loading-screen">Profil introuvable.</div>'; return; }
+    const p = data[0];
+    const u = p.utilisateurs;
+
+    // Charger vidéos
+    const r2 = await fetch(`${SB_URL}/rest/v1/videos?talent_id=eq.${talentId}&statut=eq.en_ligne&playback_id=not.is.null&order=vues.desc&select=*`, { headers: { apikey: SB_KEY } });
+    const videos = await r2.json() || [];
+
+    const nom = p.nom_scene || ((u?.prenom||'')+' '+(u?.nom||'')).trim() || 'Talent';
+    const cat = p.sous_categorie || p.categorie || '';
+    const ville = u?.ville || '';
+    const bio = p.bio || '';
+    const photo = p.photo_url || '';
+    const initiales = nom.substring(0,2).toUpperCase();
+    const totalVues = videos.reduce((s,v) => s + (v.vues||0), 0);
+    const videoMain = videos[0];
+    const autresVideos = videos.slice(1);
+
+    // SEO meta
+    document.title = `${nom} — Talent ShowOne`;
+
+    const catLabels = {
+      acting:'🎬 Acting / Cinéma', musique:'🎤 Musique / Chant', danse:'💃 Danse',
+      sport:'⚽ Sport', createurs:'📱 Créateurs', mode:'👗 Mode / Mannequinat',
+      art:'🎨 Art & Création', talents:'✨ Performances', animaux:'🐾 Animaux', pro:'🎙️ Animateur'
+    };
+    const catDisplay = cat ? (catLabels[cat] || cat) : '';
+
+    document.getElementById('pageContent').innerHTML = `
+      <!-- VIDÉO PRINCIPALE -->
+      ${videoMain ? `
+      <div class="hero-video" id="heroWrap" onclick="togglePlay()">
+        <video id="heroVid" playsinline loop style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+        <div class="hero-video-overlay"></div>
+        <div class="hero-play" id="heroPlay">▶</div>
+        <div class="hero-tap-hint" id="heroHint">👆 Tapotez pour pause</div>
+      </div>` : `
+      <div style="background:#f0f0f0;aspect-ratio:3/4;max-height:60vh;display:flex;align-items:center;justify-content:center;font-size:48px;">🎭</div>`}
+
+      <!-- PROFIL -->
+      <div class="profil-card">
+        <div class="profil-top">
+          <div class="profil-avatar">
+            ${photo ? `<img src="${photo}" alt="${nom}">` : initiales}
+          </div>
+          <div>
+            <div class="profil-nom">${nom}</div>
+            ${catDisplay ? `<div class="profil-cat">${catDisplay}</div>` : ''}
+            ${ville ? `<div class="profil-ville">📍 ${ville}</div>` : ''}
+          </div>
+        </div>
+
+        <div class="profil-stats">
+          <div class="stat"><div class="stat-num">${videos.length}</div><div class="stat-lbl">Vidéos</div></div>
+          <div class="stat"><div class="stat-num">${totalVues.toLocaleString('fr-FR')}</div><div class="stat-lbl">Vues</div></div>
+          ${p.experience ? `<div class="stat"><div class="stat-num">${p.experience}</div><div class="stat-lbl">Exp.</div></div>` : ''}
+        </div>
+
+        ${bio ? `<div class="profil-bio">${bio}</div>` : ''}
+
+        ${isRecruteur && isPro
+          ? `<button class="btn-contacter" onclick="contacter()">✉ Contacter ce talent</button>`
+          : isRecruteur
+            ? `<button class="btn-contacter-locked" onclick="ouvrirUpgrade()">🔒 Contacter (Pro requis)</button>`
+            : user.id
+              ? `<button class="btn-contacter" onclick="alert('Seuls les recruteurs peuvent contacter les talents.')">✉ Contacter</button>`
+              : `<a href="/inscription?type=recruteur" class="btn-contacter">✉ Contacter ce talent</a>`
+        }
+
+        <button class="btn-partager" onclick="partager('${nom}')">🔗 Partager ce profil</button>
+      </div>
+
+      <!-- AUTRES VIDÉOS -->
+      ${autresVideos.length ? `
+      <div class="section">
+        <div class="section-title">Autres vidéos</div>
+        <div class="videos-grid">
+          ${autresVideos.map(v => `
+            <div class="vcard" onclick="ouvrirVid('${v.playback_id}')">
+              <img src="https://image.mux.com/${v.playback_id}/thumbnail.jpg?width=200&height=267&fit_mode=crop" loading="lazy" alt="Vidéo">
+              <div class="vcard-overlay"></div>
+              <div class="vcard-play">▶</div>
+              <div class="vcard-views">👁 ${(v.vues||0).toLocaleString('fr-FR')}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>` : ''}
+    `;
+
+    // Lancer la vidéo principale en autoplay muet
+    if (videoMain) jouerHero(videoMain.playback_id);
+
+  } catch(e) {
+    console.error(e);
+    document.getElementById('pageContent').innerHTML = '<div class="loading-screen">Erreur de chargement.</div>';
+  }
+}
+
+function jouerHero(pid) {
+  const vid = document.getElementById('heroVid');
+  if (!vid) return;
+  const src = `https://stream.mux.com/${pid}.m3u8`;
+  vid.muted = true; // autoplay muet
+  if (_hls) { _hls.destroy(); _hls = null; }
+  if (Hls.isSupported()) {
+    _hls = new Hls(); _hls.loadSource(src); _hls.attachMedia(vid);
+    _hls.on(Hls.Events.MANIFEST_PARSED, () => vid.play());
+  } else if (vid.canPlayType('application/vnd.apple.mpegurl')) {
+    vid.src = src; vid.play();
+  }
+  vid.addEventListener('play', () => {
+    document.getElementById('heroPlay').classList.add('hidden');
+    document.getElementById('heroHint').classList.add('visible');
+  });
+  vid.addEventListener('pause', () => {
+    document.getElementById('heroPlay').classList.remove('hidden');
+    document.getElementById('heroHint').classList.remove('visible');
+  });
+}
+
+function togglePlay() {
+  const vid = document.getElementById('heroVid');
+  if (!vid) return;
+  if (vid.paused) { vid.muted = false; vid.play(); }
+  else vid.pause();
+}
+
+function ouvrirVid(pid) {
+  const vid = document.getElementById('vidEl');
+  const src = `https://stream.mux.com/${pid}.m3u8`;
+  if (_hlsModal) { _hlsModal.destroy(); _hlsModal = null; }
+  if (Hls.isSupported()) {
+    _hlsModal = new Hls(); _hlsModal.loadSource(src); _hlsModal.attachMedia(vid);
+    _hlsModal.on(Hls.Events.MANIFEST_PARSED, () => vid.play());
+  } else if (vid.canPlayType('application/vnd.apple.mpegurl')) {
+    vid.src = src; vid.play();
+  }
+  document.getElementById('modalVid').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function fermerVid() {
+  document.getElementById('modalVid').classList.remove('open');
+  const vid = document.getElementById('vidEl'); vid.pause(); vid.src = '';
+  if (_hlsModal) { _hlsModal.destroy(); _hlsModal = null; }
+  document.body.style.overflow = '';
+}
+
+function contacter() {
+  if (!user.id) { location.href = '/connexion'; return; }
+  location.href = `/messagerie?talent_id=${talentId}`;
+}
+
+function ouvrirUpgrade() {
+  document.getElementById('upgradeOv').classList.add('open');
+}
+function fermerUpgrade() {
+  document.getElementById('upgradeOv').classList.remove('open');
+}
+
+function partager(nom) {
+  const url = window.location.href;
+  if (navigator.share) {
+    navigator.share({ title: nom + ' sur ShowOne', text: 'Découvrez le profil de ' + nom + ' sur ShowOne !', url });
+  } else {
+    navigator.clipboard.writeText(url).then(() => {
+      alert('Lien copié !');
+    });
+  }
+}
+
+charger();
 </script>
 </body>
 </html>
