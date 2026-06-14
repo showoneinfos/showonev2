@@ -65,6 +65,10 @@
     {
       "src": "/mon-profil",
       "dest": "/mon-profil.html"
+    },
+    {
+      "src": "/casting-detail",
+      "dest": "/casting-detail.html"
     }
   ]
 }

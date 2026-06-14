@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casting — ShowOne</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: #111; min-height: 100vh; padding-bottom: 80px; }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; border-bottom: 1px solid #f0f0f0; }
+    .logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; }
+    .logo span { color: #E8383A; }
+    .btn-back { font-size: 13px; color: #999; text-decoration: none; }
+    .btn-back:hover { color: #111; }
+    .main { max-width: 680px; margin: 0 auto; padding: 40px 20px; }
+
+    .casting-cat { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #E8383A; margin-bottom: 10px; }
+    .casting-titre { font-size: 28px; font-weight: 900; letter-spacing: -0.8px; margin-bottom: 16px; line-height: 1.2; }
+    .casting-meta { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+    .meta-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #777; }
+
+    /* VIDEO */
+    .video-wrap { border-radius: 12px; overflow: hidden; background: #000; margin-bottom: 28px; aspect-ratio: 16/9; position: relative; cursor: pointer; }
+    .video-wrap video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .video-thumb { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+    .play-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); }
+    .play-btn { width: 60px; height: 60px; border-radius: 50%; background: #E8383A; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px; }
+
+    /* DESCRIPTION */
+    .section-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #bbb; margin-bottom: 10px; }
+    .description { font-size: 15px; color: #444; line-height: 1.8; margin-bottom: 28px; white-space: pre-wrap; }
+
+    /* RECRUTEUR */
+    .recruteur-box { background: #f8f8f8; border-radius: 12px; padding: 20px; margin-bottom: 28px; display: flex; align-items: center; gap: 14px; }
+    .rec-av { width: 48px; height: 48px; border-radius: 50%; background: #111; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; flex-shrink: 0; }
+    .rec-nom { font-size: 15px; font-weight: 700; color: #111; }
+    .rec-label { font-size: 12px; color: #999; margin-top: 2px; }
+
+    /* BOUTON POSTULER */
+    .btn-postuler { display: block; width: 100%; padding: 16px; border-radius: 10px; background: #E8383A; color: #fff; border: none; font-size: 16px; font-weight: 700; cursor: pointer; text-align: center; text-decoration: none; }
+    .btn-postuler:hover { background: #cc2e30; }
+    .btn-login-msg { text-align: center; font-size: 13px; color: #999; margin-top: 12px; }
+    .btn-login-msg a { color: #111; font-weight: 600; }
+
+    /* REMUNERATION */
+    .remun-badge { display: inline-block; padding: 4px 12px; border-radius: 100px; background: #f0f0f0; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 20px; }
+
+    @media (max-width: 600px) {
+      nav { padding: 14px 20px; }
+      .casting-titre { font-size: 22px; }
+    }
+
+    /* BARRE MOBILE */
+    .mobile-bar { display: none; }
+    @media (max-width: 768px) {
+      .mobile-bar { display: flex; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #f0f0f0; padding: 8px 4px 14px; z-index: 1000; align-items: center; }
+      .mobile-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600; }
+      .mobile-btn span { font-size: 10px; display: block; }
+      .mobile-btn.active { color: #111; }
+      .mobile-join { flex: none; margin: 0 8px; background: #E8383A; color: #fff !important; padding: 8px 14px; border-radius: 8px; font-size: 12px !important; font-weight: 700; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">Show<span>One</span></a>
+  <a href="/castings" class="btn-back">← Tous les castings</a>
+</nav>
+
+<div class="main" id="main">
+  <div style="text-align:center;padding:60px;color:#bbb;">Chargement…</div>
+</div>
+
+<div class="mobile-bar">
+  <a href="/" class="mobile-btn">🏠<span>Accueil</span></a>
+  <a href="/castings" class="mobile-btn active">🎬<span>Castings</span></a>
+  <a href="/messagerie" class="mobile-btn">💬<span>Messages</span></a>
+  <a href="/inscription" class="mobile-btn mobile-join" id="mb-auth">S'inscrire</a>
+</div>
+
+<script>
+const SB_URL = 'https://emiuzigtlomlrsofxqyf.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtaXV6aWd0bG9tbHJzb2Z4cXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MDI4NTcsImV4cCI6MjA5MzQ3ODg1N30.Cwe-Z1vNGc-puz8jEnHdMMCwllNbl9fRAdwLe5zWyIY';
+const sb = supabase.createClient(SB_URL, SB_KEY);
+let _hls = null;
+
+// Session mobile
+(function() {
+  const u = JSON.parse(localStorage.getItem('showone_user') || '{}');
+  const btn = document.getElementById('mb-auth');
+  if (u && u.id) {
+    const dashboard = u.type_compte === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
+    btn.href = dashboard;
+    btn.innerHTML = '👤<span>Mon espace</span>';
+    btn.style.background = '#111';
+  }
+})();
+
+async function charger() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  if (!id) { window.location.href = '/castings'; return; }
+
+  const { data, error } = await sb
+    .from('castings')
+    .select('*, profils_recruteurs(nom_societe, description, utilisateur_id)')
+    .eq('id', id)
+    .single();
+
+  if (error || !data) { document.getElementById('main').innerHTML = '<div style="text-align:center;padding:60px;color:#bbb;">Casting introuvable.</div>'; return; }
+
+  const rec = data.profils_recruteurs;
+  const recNom = rec?.nom_societe || 'Recruteur ShowOne';
+  const isConnecte = !!localStorage.getItem('showone_token');
+  const user = JSON.parse(localStorage.getItem('showone_user') || '{}');
+
+  document.title = (data.titre || 'Casting') + ' — ShowOne';
+
+  let videoHtml = '';
+  if (data.video_playback_id) {
+    const thumb = `https://image.mux.com/${data.video_playback_id}/thumbnail.jpg?width=680&height=382&fit_mode=crop`;
+    videoHtml = `<div class="video-wrap" id="videoWrap" onclick="jouerVideo('${data.video_playback_id}')">
+      <img class="video-thumb" src="${thumb}" alt="vidéo casting" id="videoThumb">
+      <div class="play-overlay" id="playOverlay"><div class="play-btn">▶</div></div>
+      <video id="castingVid" controls playsinline style="display:none;position:absolute;inset:0;width:100%;height:100%;"></video>
+    </div>`;
+  }
+
+  let postBtn = '';
+  if (isConnecte && user.type_compte === 'talent') {
+    postBtn = `<button class="btn-postuler" onclick="postuler()">Postuler à ce casting →</button>`;
+  } else if (isConnecte && user.type_compte === 'recruteur') {
+    postBtn = `<div class="btn-login-msg">Vous êtes recruteur — <a href="/">voir les talents</a></div>`;
+  } else {
+    postBtn = `<a href="/inscription" class="btn-postuler">Postuler — S'inscrire gratuitement →</a>
+    <div class="btn-login-msg">Déjà inscrit ? <a href="/connexion">Connexion</a></div>`;
+  }
+
+  document.getElementById('main').innerHTML = `
+    <div class="casting-cat">${data.categorie || 'Casting'}</div>
+    <h1 class="casting-titre">${data.titre || 'Casting'}</h1>
+    <div class="casting-meta">
+      ${data.ville ? `<div class="meta-item">📍 ${data.ville}</div>` : ''}
+      ${data.date_casting ? `<div class="meta-item">📅 ${new Date(data.date_casting).toLocaleDateString('fr-FR')}</div>` : ''}
+      ${data.remuneration ? `<div class="meta-item">💰 ${data.remuneration}</div>` : ''}
+    </div>
+    ${videoHtml}
+    <div class="section-title">Description</div>
+    <div class="description">${(data.description || '').replace(/</g,'&lt;')}</div>
+    <div class="recruteur-box">
+      <div class="rec-av">${recNom[0]?.toUpperCase() || '?'}</div>
+      <div>
+        <div class="rec-nom">${recNom}</div>
+        <div class="rec-label">Recruteur ShowOne</div>
+      </div>
+    </div>
+    ${postBtn}`;
+}
+
+function jouerVideo(playbackId) {
+  const vid = document.getElementById('castingVid');
+  const thumb = document.getElementById('videoThumb');
+  const overlay = document.getElementById('playOverlay');
+  if (!vid) return;
+  thumb.style.display = 'none';
+  overlay.style.display = 'none';
+  vid.style.display = 'block';
+  const src = `https://stream.mux.com/${playbackId}.m3u8`;
+  if (Hls.isSupported()) {
+    _hls = new Hls(); _hls.loadSource(src); _hls.attachMedia(vid);
+    _hls.on(Hls.Events.MANIFEST_PARSED, () => vid.play());
+  } else if (vid.canPlayType('application/vnd.apple.mpegurl')) {
+    vid.src = src; vid.play();
+  }
+}
+
+async function postuler() {
+  const params = new URLSearchParams(window.location.search);
+  const castingId = params.get('id');
+  const user = JSON.parse(localStorage.getItem('showone_user') || '{}');
+  const token = localStorage.getItem('showone_token');
+
+  // Chercher profil talent
+  const { data: talents } = await sb.from('profils_talents').select('id').eq('utilisateur_id', user.id);
+  const talentId = talents?.[0]?.id;
+  if (!talentId) { alert('Profil talent introuvable.'); return; }
+
+  // Vérifier si déjà postulé
+  const { data: existing } = await sb.from('candidatures').select('id').eq('casting_id', castingId).eq('talent_id', talentId);
+  if (existing?.length) { alert('Vous avez déjà postulé à ce casting.'); return; }
+
+  // Créer candidature
+  const { error } = await sb.from('candidatures').insert({ casting_id: castingId, talent_id: talentId, statut: 'en_attente' });
+  if (error) { alert('Erreur lors de la candidature.'); return; }
+  alert('✅ Candidature envoyée ! Le recruteur va vous contacter.');
+}
+
+charger();
+</script>
+</body>
+</html>

@@ -358,7 +358,7 @@ async function chargerCastings() {
   if (!castings.length) { g.innerHTML = '<div class="loading">Aucun casting vidéo.</div>'; return; }
   g.innerHTML = castings.map(c => {
     const thumb = `https://image.mux.com/${c.video_playback_id}/thumbnail.jpg?width=300&height=400&fit_mode=crop`;
-    return `<div class="tcard" onclick="ouvrirCasting('${c.video_playback_id}','${(c.rec_nom||'').replace(/'/g,"\\'")}','${c.categorie||''}','${c.id}','${(c.titre||'').replace(/'/g,"\\'")}')">
+    return `<div class="tcard" onclick="location.href='/casting-detail?id=${c.id}'",'${c.categorie||''}','${c.id}','${(c.titre||'').replace(/'/g,"\\'")}')">
       <img src="${thumb}" alt="${c.titre}" loading="lazy">
       <div class="tcard-overlay"></div>
       <div class="tcard-play">▶</div>
