@@ -9,7 +9,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Inter', sans-serif; background: #fff; color: #111; display: flex; height: 100vh; overflow: hidden; }
 
-    /* SIDEBAR */
     .sidebar { width: 220px; background: #fff; border-right: 1px solid #f0f0f0; display: flex; flex-direction: column; flex-shrink: 0; }
     .sidebar-logo { padding: 20px; border-bottom: 1px solid #f0f0f0; }
     .sidebar-logo a { font-size: 18px; font-weight: 900; color: #111; text-decoration: none; }
@@ -18,7 +17,7 @@
     .side-av { width: 36px; height: 36px; border-radius: 50%; background: #111; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 13px; font-weight: 700; flex-shrink: 0; overflow: hidden; }
     .side-nom { font-size: 13px; font-weight: 700; color: #111; }
     .side-role { font-size: 11px; color: #bbb; }
-    .sidebar-nav { padding: 10px 10px; flex: 1; }
+    .sidebar-nav { padding: 10px; flex: 1; }
     .nav-item { display: flex; align-items: center; gap: 9px; padding: 9px 10px; border-radius: 8px; cursor: pointer; color: #888; font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.15s; }
     .nav-item:hover { background: #f8f8f8; color: #111; }
     .nav-item.active { background: #f0f0f0; color: #111; font-weight: 700; }
@@ -26,7 +25,6 @@
     .nav-item-danger { color: #E8383A; }
     .nav-item-danger:hover { background: #fff0f0; }
 
-    /* PANEL CONVERSATIONS */
     .conv-panel { width: 300px; border-right: 1px solid #f0f0f0; display: flex; flex-direction: column; flex-shrink: 0; }
     .conv-header { padding: 16px 18px; border-bottom: 1px solid #f0f0f0; }
     .conv-header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
@@ -48,7 +46,6 @@
     .conv-dot { width: 8px; height: 8px; border-radius: 50%; background: #E8383A; flex-shrink: 0; margin-top: 4px; }
     .conv-empty { text-align: center; padding: 40px 20px; color: #bbb; font-size: 13px; }
 
-    /* VUE CONVERSATION */
     .conv-view { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
     .conv-placeholder { flex: 1; display: flex; align-items: center; justify-content: center; color: #bbb; font-size: 14px; text-align: center; padding: 40px; }
     .conv-active { display: none; flex-direction: column; flex: 1; overflow: hidden; }
@@ -75,7 +72,6 @@
     .reply-ta:focus { border-color: #111; }
     .btn-reply { padding: 10px 18px; border-radius: 9px; border: none; background: #111; color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; }
 
-    /* MODAL NOUVEAU MESSAGE */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
     .modal-overlay.open { display: flex; }
     .modal { background: #fff; border-radius: 16px; padding: 28px; width: 100%; max-width: 420px; }
@@ -91,7 +87,6 @@
     .btn-cancel { padding: 10px 16px; border-radius: 8px; border: 1px solid #e8e8e8; background: transparent; font-size: 13px; font-weight: 600; cursor: pointer; color: #999; }
     .btn-send { flex: 1; padding: 10px; border-radius: 8px; border: none; background: #111; color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; }
 
-    /* MOBILE */
     @media (max-width: 768px) {
       .sidebar { display: none; }
       .conv-panel { width: 100%; border-right: none; }
@@ -104,78 +99,19 @@
       .mobile-back { display: none; }
     }
 
-    /* ── MOBILE RESPONSIVE ── */
-    @media (max-width: 768px) {
-      /* Index sidebar → bottom nav */
-      .sidebar {
-        width: 100% !important; height: 56px !important;
-        top: auto !important; bottom: 0 !important; left: 0 !important;
-        border-right: none !important; border-top: 1px solid #f0f0f0 !important;
-        flex-direction: row !important; padding: 6px 8px 10px !important;
-        align-items: center !important;
-      }
-      .logo, .side-divider, .sep, .side-bottom, #side-auth, #side-user-box,
-      .side-nav .nav-item:not(.active):nth-child(n+4) { display: none !important; }
-      .side-nav { flex-direction: row !important; gap: 0 !important; padding: 0 !important; }
-      .nav-item { flex-direction: column !important; gap: 1px !important; padding: 4px 8px !important;
-        font-size: 10px !important; flex: 1 !important; justify-content: center !important;
-        align-items: center !important; background: transparent !important; font-weight: 500 !important; }
-      .ico { font-size: 20px !important; width: auto !important; }
-      .main { margin-left: 0 !important; padding-bottom: 65px !important; }
-
-      /* Grilles */
-      .grid { grid-template-columns: repeat(2, 1fr) !important; gap: 2px !important; }
-      .grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
-
-      /* Dashboard */
-      .sidebar-nav, .sidebar { display: none; }
-      body.dashboard { display: block; }
-      .main.dashboard-main { margin-left: 0 !important; padding: 16px !important; padding-bottom: 70px !important; max-width: 100% !important; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
-      .content-grid { grid-template-columns: 1fr !important; }
-
-      /* Nav */
-      nav { padding: 12px 16px !important; }
-
-      /* Forms */
-      .form-row { grid-template-columns: 1fr !important; }
-      .cat-grid { grid-template-columns: repeat(2, 1fr) !important; }
-      .type-selector { grid-template-columns: 1fr 1fr !important; }
-
-      /* Legal layout */
-      .layout { flex-direction: column !important; padding: 20px 16px !important; gap: 24px !important; }
-      .sidebar.legal-sidebar { width: 100% !important; height: auto !important; position: relative !important; flex-direction: column !important; border: none !important; border-bottom: 1px solid #f0f0f0 !important; padding: 0 0 16px !important; }
-
-      /* Contact */
-      .main { padding: 30px 16px !important; }
-      .contact-info { flex-wrap: wrap !important; }
-
-      /* Sections */
-      .sec-head { padding: 14px 10px 8px !important; }
-      .cats { padding: 8px 10px !important; }
-    }
-
-
-    /* ── BARRE MOBILE ── */
     .mobile-bar { display: none; }
     @media (max-width: 768px) {
       .mobile-bar {
         display: flex; position: fixed; bottom: 0; left: 0; right: 0;
         background: #fff; border-top: 1px solid #f0f0f0;
         padding: 8px 4px 14px; z-index: 1000; align-items: center;
+        justify-content: space-around;
       }
-      .mobile-btn {
-        flex: 1; display: flex; flex-direction: column; align-items: center;
-        gap: 2px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600;
-      }
-      .mobile-btn:first-child { font-size: 22px; }
-      .mobile-btn span { font-size: 10px; display: block; }
+      .mobile-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600; }
+      .mobile-btn-icon { font-size: 20px; line-height: 1; display: block; }
+      .mobile-btn-label { font-size: 10px; display: block; }
       .mobile-btn.active { color: #111; }
-      .mobile-btn.mobile-join {
-        flex: none; margin: 0 8px; background: #E8383A; color: #fff !important;
-        padding: 8px 14px; border-radius: 8px; font-size: 12px !important; font-weight: 700;
-        display: flex; flex-direction: column; align-items: center; gap: 1px;
-      }
+      .mobile-btn.mobile-join { flex: none; margin: 0 6px; background: #111; color: #fff !important; padding: 8px 14px; border-radius: 8px; font-size: 12px !important; font-weight: 700; display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; }
     }
   </style>
 </head>
@@ -248,12 +184,27 @@
   </div>
 </div>
 
+<!-- BARRE MOBILE -->
+<div class="mobile-bar" id="mobileBar">
+  <a href="/" class="mobile-btn">
+    <span class="mobile-btn-icon">🏠</span><span class="mobile-btn-label">Accueil</span>
+  </a>
+  <a href="/castings" class="mobile-btn">
+    <span class="mobile-btn-icon">🎬</span><span class="mobile-btn-label">Castings</span>
+  </a>
+  <a href="/messagerie" class="mobile-btn active">
+    <span class="mobile-btn-icon">💬</span><span class="mobile-btn-label">Messages</span>
+  </a>
+  <a href="/" class="mobile-btn mobile-join" id="mb-auth">
+    <span class="mobile-btn-icon">👤</span><span class="mobile-btn-label">Mon espace</span>
+  </a>
+</div>
+
 <script>
 const SB = 'https://emiuzigtlomlrsofxqyf.supabase.co';
 const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtaXV6aWd0bG9tbHJzb2Z4cXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MDI4NTcsImV4cCI6MjA5MzQ3ODg1N30.Cwe-Z1vNGc-puz8jEnHdMMCwllNbl9fRAdwLe5zWyIY';
 let role = null, profilId = null, token = null, convs = [], convActive = null;
 
-function toggleSidebarMsg() { document.querySelector('.sidebar').classList.toggle('open'); }
 function fermerConvMobile() { document.getElementById('convView').classList.remove('mobile-open'); }
 
 async function get(url) {
@@ -268,138 +219,211 @@ async function init() {
   token = localStorage.getItem('showone_token');
   const us = localStorage.getItem('showone_user');
   if (!token || !us) { location.href='/connexion'; return; }
-  const u = JSON.parse(us); role = u.type_compte||'talent';
-  document.getElementById('sideNom').textContent = ((u.prenom||'')+' '+(u.nom||'')).trim()||u.email;
-  document.getElementById('sideRole').textContent = role==='recruteur'?'Recruteur':'Talent';
-  if (u.photo_url) document.getElementById('sideAv').innerHTML=`<img src="${u.photo_url}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">`;
-  else document.getElementById('sideAv').textContent=((u.prenom?.[0]||'')+(u.nom?.[0]||'')).toUpperCase()||'?';
+  const u = JSON.parse(us);
+  role = u.type_compte || 'talent';
+
+  // ── FIX : afficher prénom + nom, pas l'email ──
+  const nomAffiche = ((u.prenom||'') + ' ' + (u.nom||'')).trim();
+  document.getElementById('sideNom').textContent = nomAffiche || 'Mon compte';
+  document.getElementById('sideRole').textContent = role === 'recruteur' ? 'Recruteur' : 'Talent';
+
+  // Initiales ou photo
+  const initiales = ((u.prenom?.[0]||'') + (u.nom?.[0]||'')).toUpperCase() || '?';
+  if (u.photo_url) {
+    document.getElementById('sideAv').innerHTML = `<img src="${u.photo_url}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">`;
+  } else {
+    document.getElementById('sideAv').textContent = initiales;
+  }
+
+  // Barre mobile — lien "Mon espace"
+  const mbAuth = document.getElementById('mb-auth');
+  const dest = role === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
+  mbAuth.href = dest;
+
+  // Sidebar nav — FIX : "Talents" pointe vers / au lieu de /categories
   const nav = document.getElementById('sideNav');
-  if (role==='recruteur') { nav.innerHTML=`<a href="dashboard-recruteur.html" class="nav-item">🏠 Tableau de bord</a><a href="messagerie.html" class="nav-item active">💬 Messagerie</a><a href="categories.html" class="nav-item">🔍 Talents</a>`; document.getElementById('btnNew').style.display='block'; }
-  else { nav.innerHTML=`<a href="dashboard-talent.html" class="nav-item">🏠 Tableau de bord</a><a href="messagerie.html" class="nav-item active">💬 Messagerie</a><a href="castings.html" class="nav-item">🎬 Castings</a>`; }
-  if (role==='recruteur') { const d=await get(`/rest/v1/profils_recruteurs?utilisateur_id=eq.${u.id}&select=id&limit=1`); profilId=d[0]?.id; }
-  else { const d=await get(`/rest/v1/profils_talents?utilisateur_id=eq.${u.id}&select=id&limit=1`); profilId=d[0]?.id; }
+  if (role === 'recruteur') {
+    nav.innerHTML = `
+      <a href="/dashboard-recruteur" class="nav-item">🏠 Tableau de bord</a>
+      <a href="/messagerie" class="nav-item active">💬 Messagerie</a>
+      <a href="/" class="nav-item">🔍 Talents</a>`;
+    document.getElementById('btnNew').style.display = 'block';
+  } else {
+    nav.innerHTML = `
+      <a href="/dashboard-talent" class="nav-item">🏠 Tableau de bord</a>
+      <a href="/messagerie" class="nav-item active">💬 Messagerie</a>
+      <a href="/castings" class="nav-item">🎬 Castings</a>`;
+  }
+
+  // Charger l'ID du profil
+  if (role === 'recruteur') {
+    const d = await get(`/rest/v1/profils_recruteurs?utilisateur_id=eq.${u.id}&select=id&limit=1`);
+    profilId = d[0]?.id;
+  } else {
+    const d = await get(`/rest/v1/profils_talents?utilisateur_id=eq.${u.id}&select=id&limit=1`);
+    profilId = d[0]?.id;
+  }
+
   await charger();
+
+  // Si on arrive depuis /messagerie?talent_id=xxx
   const p = new URLSearchParams(location.search);
-  if (p.get('talent_id') && role==='recruteur') ouvrirModal(p.get('talent_id'));
+  if (p.get('talent_id') && role === 'recruteur') ouvrirModal(p.get('talent_id'));
 }
 
 async function charger() {
-  const el = document.getElementById('convItems'); el.innerHTML='<div class="conv-empty">Chargement…</div>';
-  if (!profilId) { el.innerHTML='<div class="conv-empty">Profil introuvable.</div>'; return; }
-  const filtre = role==='talent'?`talent_id=eq.${profilId}`:`recruteur_id=eq.${profilId}`;
+  const el = document.getElementById('convItems');
+  el.innerHTML = '<div class="conv-empty">Chargement…</div>';
+  if (!profilId) { el.innerHTML = '<div class="conv-empty">Profil introuvable.</div>'; return; }
+  const filtre = role === 'talent' ? `talent_id=eq.${profilId}` : `recruteur_id=eq.${profilId}`;
   const msgs = await get(`/rest/v1/messages?${filtre}&select=id,recruteur_id,talent_id,objet,contenu,lu,created_at&order=created_at.desc`);
-  if (!msgs.length) { el.innerHTML='<div class="conv-empty">Aucune conversation.</div>'; return; }
+  if (!msgs.length) { el.innerHTML = '<div class="conv-empty">Aucune conversation.</div>'; return; }
   const map = {};
-  msgs.forEach(m => { if(!m.recruteur_id||!m.talent_id) return; const k=m.recruteur_id+'__'+m.talent_id; if(!map[k]) map[k]={k,rId:m.recruteur_id,tId:m.talent_id,last:m,unread:0,nom:'…',photo:null}; if(new Date(m.created_at)>new Date(map[k].last.created_at)) map[k].last=m; if(!m.lu&&role==='talent') map[k].unread++; });
-  convs = Object.values(map).sort((a,b)=>new Date(b.last.created_at)-new Date(a.last.created_at));
+  msgs.forEach(m => {
+    if (!m.recruteur_id || !m.talent_id) return;
+    const k = m.recruteur_id+'__'+m.talent_id;
+    if (!map[k]) map[k] = { k, rId: m.recruteur_id, tId: m.talent_id, last: m, unread: 0, nom: '…', photo: null };
+    if (new Date(m.created_at) > new Date(map[k].last.created_at)) map[k].last = m;
+    if (!m.lu && role === 'talent') map[k].unread++;
+  });
+  convs = Object.values(map).sort((a,b) => new Date(b.last.created_at) - new Date(a.last.created_at));
   afficher(convs);
+
+  // Charger les noms en parallèle
   for (const c of convs) {
-    const autreId=role==='talent'?c.rId:c.tId; const table=role==='talent'?'profils_recruteurs':'profils_talents'; const champs=role==='talent'?'id,nom_entreprise,photo_url,utilisateur_id':'id,nom_scene,photo_url,utilisateur_id';
-    const d=await get(`/rest/v1/${table}?id=eq.${autreId}&select=${champs}&limit=1`);
-    if (d.length) { c.photo=d[0].photo_url; if(role==='talent'){c.nom=d[0].nom_entreprise||'Recruteur';if(!d[0].nom_entreprise&&d[0].utilisateur_id){const u2=await get(`/rest/v1/utilisateurs?id=eq.${d[0].utilisateur_id}&select=prenom,nom&limit=1`);if(u2.length)c.nom=((u2[0].prenom||'')+' '+(u2[0].nom||'')).trim()||'Recruteur';}}else{c.nom=d[0].nom_scene||'Talent';} }
+    const autreId = role === 'talent' ? c.rId : c.tId;
+    const table = role === 'talent' ? 'profils_recruteurs' : 'profils_talents';
+    const champs = role === 'talent' ? 'id,nom_societe,photo_url,utilisateur_id' : 'id,nom_scene,photo_url,utilisateur_id';
+    const d = await get(`/rest/v1/${table}?id=eq.${autreId}&select=${champs}&limit=1`);
+    if (d.length) {
+      c.photo = d[0].photo_url;
+      if (role === 'talent') {
+        // FIX : chercher nom_societe (pas nom_entreprise qui n'existe pas)
+        if (d[0].nom_societe) {
+          c.nom = d[0].nom_societe;
+        } else if (d[0].utilisateur_id) {
+          const u2 = await get(`/rest/v1/utilisateurs?id=eq.${d[0].utilisateur_id}&select=prenom,nom&limit=1`);
+          c.nom = u2.length ? ((u2[0].prenom||'')+' '+(u2[0].nom||'')).trim() || 'Recruteur' : 'Recruteur';
+        } else {
+          c.nom = 'Recruteur';
+        }
+      } else {
+        c.nom = d[0].nom_scene || 'Talent';
+      }
+    }
     afficher(convs);
   }
 }
 
 function afficher(liste) {
   const el = document.getElementById('convItems');
-  if (!liste.length) { el.innerHTML='<div class="conv-empty">Aucune conversation.</div>'; return; }
+  if (!liste.length) { el.innerHTML = '<div class="conv-empty">Aucune conversation.</div>'; return; }
   el.innerHTML = liste.map(c => {
-    const ini=(c.nom[0]||'?').toUpperCase(); const d=new Date(c.last.created_at); const dh=Math.round((Date.now()-d)/36e5);
-    const t=dh<1?"À l'instant":dh<24?dh+'h':dh<48?'Hier':d.toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
+    const ini = (c.nom[0]||'?').toUpperCase();
+    const d = new Date(c.last.created_at);
+    const dh = Math.round((Date.now()-d)/36e5);
+    const t = dh<1 ? "À l'instant" : dh<24 ? dh+'h' : dh<48 ? 'Hier' : d.toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
     return `<div class="conv-item ${convActive===c.k?'active':''}" data-k="${c.k}" data-r="${c.rId}" data-t="${c.tId}" onclick="ouvrir(this)">
-      <div class="conv-avatar">${c.photo?`<img src="${c.photo}">`:(ini)}</div>
-      <div class="conv-info"><div class="conv-top"><div class="conv-name">${c.nom}</div><div class="conv-time">${t}</div></div><div class="conv-preview">${c.last.objet?c.last.objet+' — ':''}${c.last.contenu}</div></div>
-      ${c.unread?'<div class="conv-dot"></div>':''}
+      <div class="conv-avatar">${c.photo ? `<img src="${c.photo}">` : ini}</div>
+      <div class="conv-info">
+        <div class="conv-top"><div class="conv-name">${c.nom}</div><div class="conv-time">${t}</div></div>
+        <div class="conv-preview">${c.last.objet ? c.last.objet+' — ' : ''}${c.last.contenu}</div>
+      </div>
+      ${c.unread ? '<div class="conv-dot"></div>' : ''}
     </div>`;
   }).join('');
 }
 
 let _lastTouch = 0;
 async function ouvrir(el) {
-  const now=Date.now(); if(now-_lastTouch<300) return; _lastTouch=now;
-  if (window.innerWidth<=768) document.getElementById('convView').classList.add('mobile-open');
-  const rId=el.dataset.r; const tId=el.dataset.t; const k=el.dataset.k; convActive=k;
-  const c=convs.find(x=>x.k===k);
-  document.getElementById('hNom').textContent=c?.nom||(role==='talent'?'Recruteur':'Talent');
-  document.getElementById('hSub').textContent=role==='talent'?'Recruteur':'Talent ShowOne';
-  const hAv=document.getElementById('hAv'); hAv.innerHTML=c?.photo?`<img src="${c.photo}" style="width:40px;height:40px;object-fit:cover;">`:(c?.nom?.[0]||'?').toUpperCase();
-  document.querySelectorAll('.conv-item').forEach(x=>x.classList.toggle('active',x.dataset.k===k));
-  const thread=await get(`/rest/v1/messages?recruteur_id=eq.${rId}&talent_id=eq.${tId}&order=created_at.asc&select=*`);
-  if(role==='talent'&&thread.some(m=>!m.lu)){await fetch(`${SB}/rest/v1/messages?recruteur_id=eq.${rId}&talent_id=eq.${tId}&lu=eq.false`,{method:'PATCH',headers:{'Content-Type':'application/json',apikey:KEY,Authorization:'Bearer '+token,Prefer:'return=minimal'},body:JSON.stringify({lu:true})});if(c)c.unread=0;afficher(convs);}
-  const area=document.getElementById('msgArea'); area.innerHTML=''; let lastDate=null;
-  thread.forEach(m=>{
-    const d=new Date(m.created_at); const ds=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
-    if(ds!==lastDate){area.innerHTML+=`<div class="msg-date">${ds}</div>`;lastDate=ds;}
-    const isSent=(m.objet||'').startsWith('RE:')?role==='talent':role==='recruteur';
-    const t=d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
-    area.innerHTML+=`<div class="msg-wrap ${isSent?'sent':''}"><div class="msg-av">${isSent?'M':'R'}</div><div class="msg-bubble ${isSent?'sent':'recv'}">${m.objet&&!m.objet.startsWith('RE:')?`<div class="msg-objet">📌 ${m.objet}</div>`:''} ${m.contenu}<div class="msg-time">${t}</div></div></div>`;
+  const now = Date.now(); if (now-_lastTouch < 300) return; _lastTouch = now;
+  if (window.innerWidth <= 768) document.getElementById('convView').classList.add('mobile-open');
+  const rId = el.dataset.r, tId = el.dataset.t, k = el.dataset.k;
+  convActive = k;
+  const c = convs.find(x => x.k === k);
+  document.getElementById('hNom').textContent = c?.nom || (role==='talent' ? 'Recruteur' : 'Talent');
+  document.getElementById('hSub').textContent = role==='talent' ? 'Recruteur' : 'Talent ShowOne';
+  const hAv = document.getElementById('hAv');
+  hAv.innerHTML = c?.photo ? `<img src="${c.photo}" style="width:40px;height:40px;object-fit:cover;">` : (c?.nom?.[0]||'?').toUpperCase();
+  document.querySelectorAll('.conv-item').forEach(x => x.classList.toggle('active', x.dataset.k===k));
+  const thread = await get(`/rest/v1/messages?recruteur_id=eq.${rId}&talent_id=eq.${tId}&order=created_at.asc&select=*`);
+  if (role==='talent' && thread.some(m => !m.lu)) {
+    await fetch(`${SB}/rest/v1/messages?recruteur_id=eq.${rId}&talent_id=eq.${tId}&lu=eq.false`, {method:'PATCH',headers:{'Content-Type':'application/json',apikey:KEY,Authorization:'Bearer '+token,Prefer:'return=minimal'},body:JSON.stringify({lu:true})});
+    if (c) c.unread = 0; afficher(convs);
+  }
+  const area = document.getElementById('msgArea');
+  area.innerHTML = ''; let lastDate = null;
+  thread.forEach(m => {
+    const d = new Date(m.created_at);
+    const ds = d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+    if (ds !== lastDate) { area.innerHTML += `<div class="msg-date">${ds}</div>`; lastDate = ds; }
+    const isSent = role === 'recruteur'; // recruteur = envoyé, talent = reçu (dans ce sens)
+    const t = d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+    const objetHtml = m.objet && !m.objet.startsWith('RE:') ? `<div class="msg-objet">📌 ${m.objet}</div>` : '';
+    area.innerHTML += `<div class="msg-wrap ${isSent?'sent':''}">
+      <div class="msg-av">${isSent ? 'R' : 'T'}</div>
+      <div class="msg-bubble ${isSent?'sent':'recv'}">${objetHtml}${m.contenu}<div class="msg-time">${t}</div></div>
+    </div>`;
   });
-  area.scrollTop=area.scrollHeight;
-  document.getElementById('replyTa').dataset.rId=rId; document.getElementById('replyTa').dataset.tId=tId; document.getElementById('replyTa').dataset.objet=c?.last?.objet||'';
-  document.getElementById('placeholder').style.display='none'; const ca=document.getElementById('convActive'); ca.style.display='flex';
+  area.scrollTop = area.scrollHeight;
+  document.getElementById('replyTa').dataset.rId = rId;
+  document.getElementById('replyTa').dataset.tId = tId;
+  document.getElementById('replyTa').dataset.objet = c?.last?.objet || '';
+  document.getElementById('placeholder').style.display = 'none';
+  document.getElementById('convActive').style.display = 'flex';
 }
 
 async function envoyer() {
-  const ta=document.getElementById('replyTa'); const contenu=ta.value.trim(); if(!contenu) return;
-  const rId=ta.dataset.rId; const tId=ta.dataset.tId; const objet='RE: '+(ta.dataset.objet||'Message');
-  document.getElementById('btnReply').disabled=true;
-  await post('/rest/v1/messages',{recruteur_id:rId,talent_id:tId,objet,contenu,lu:false});
-  ta.value=''; ta.style.height='auto'; document.getElementById('btnReply').disabled=false;
-  const el=document.querySelector(`.conv-item[data-r="${rId}"][data-t="${tId}"]`); if(el) await ouvrir(el);
+  const ta = document.getElementById('replyTa');
+  const contenu = ta.value.trim(); if (!contenu) return;
+  const rId = ta.dataset.rId, tId = ta.dataset.tId;
+  const objet = 'RE: ' + (ta.dataset.objet || 'Message');
+  document.getElementById('btnReply').disabled = true;
+  await post('/rest/v1/messages', {recruteur_id:rId, talent_id:tId, objet, contenu, lu:false});
+  ta.value = ''; ta.style.height = 'auto';
+  document.getElementById('btnReply').disabled = false;
+  const el = document.querySelector(`.conv-item[data-r="${rId}"][data-t="${tId}"]`);
+  if (el) await ouvrir(el);
   await charger();
 }
 
-function filtrer(q) { if(!q){afficher(convs);return;} afficher(convs.filter(c=>c.nom.toLowerCase().includes(q.toLowerCase())||(c.last.objet||'').toLowerCase().includes(q.toLowerCase()))); }
+function filtrer(q) {
+  if (!q) { afficher(convs); return; }
+  afficher(convs.filter(c => c.nom.toLowerCase().includes(q.toLowerCase()) || (c.last.objet||'').toLowerCase().includes(q.toLowerCase())));
+}
 
 async function ouvrirModal(preId) {
   document.getElementById('modalOv').classList.add('open');
-  const d=await get('/rest/v1/profils_talents?select=id,nom_scene&order=nom_scene.asc');
-  const sel=document.getElementById('selTalent'); sel.innerHTML='<option value="">Choisir un talent…</option>'+d.map(t=>`<option value="${t.id}" ${t.id===preId?'selected':''}>${t.nom_scene||t.id}</option>`).join('');
+  const d = await get('/rest/v1/profils_talents?select=id,nom_scene&order=nom_scene.asc');
+  const sel = document.getElementById('selTalent');
+  sel.innerHTML = '<option value="">Choisir un talent…</option>' + d.map(t => `<option value="${t.id}" ${t.id===preId?'selected':''}>${t.nom_scene||'Talent'}</option>`).join('');
 }
 function fermerModal() { document.getElementById('modalOv').classList.remove('open'); }
 
 async function envoyerNouveauMsg() {
-  const tId=document.getElementById('selTalent').value; const objet=document.getElementById('newObjet').value.trim()||'Message'; const contenu=document.getElementById('newContenu').value.trim();
-  if(!tId||!contenu){alert('Remplissez tous les champs.');return;}
-  await post('/rest/v1/messages',{recruteur_id:profilId,talent_id:tId,objet,contenu,lu:false});
-  fermerModal(); document.getElementById('newObjet').value=''; document.getElementById('newContenu').value='';
-  await charger(); const el=document.querySelector(`.conv-item[data-r="${profilId}"][data-t="${tId}"]`); if(el) setTimeout(()=>ouvrir(el),300);
+  const tId = document.getElementById('selTalent').value;
+  const objet = document.getElementById('newObjet').value.trim() || 'Message';
+  const contenu = document.getElementById('newContenu').value.trim();
+  if (!tId || !contenu) { alert('Remplissez tous les champs.'); return; }
+  await post('/rest/v1/messages', {recruteur_id:profilId, talent_id:tId, objet, contenu, lu:false});
+  fermerModal();
+  document.getElementById('newObjet').value = '';
+  document.getElementById('newContenu').value = '';
+  await charger();
+  setTimeout(() => {
+    const el = document.querySelector(`.conv-item[data-r="${profilId}"][data-t="${tId}"]`);
+    if (el) ouvrir(el);
+  }, 300);
 }
 
-function deconnecter() { localStorage.removeItem('showone_token'); localStorage.removeItem('showone_user'); location.href='/connexion'; }
+function deconnecter() {
+  localStorage.removeItem('showone_token');
+  localStorage.removeItem('showone_user');
+  location.href = '/connexion';
+}
 
-document.getElementById('modalOv').addEventListener('click',function(e){if(e.target===this)fermerModal();});
+document.getElementById('modalOv').addEventListener('click', function(e) { if (e.target===this) fermerModal(); });
 init();
-</script>
-
-<!-- BARRE MOBILE -->
-<div class="mobile-bar" id="mobileBar">
-  <a href="/" class="mobile-btn" id="mb-home">🏠<span>Accueil</span></a>
-  <a href="/castings" class="mobile-btn" id="mb-castings">🎬<span>Castings</span></a>
-  <a href="/connexion" class="mobile-btn" id="mb-conn" style="display:none">🔑<span>Connexion</span></a>
-  <a href="/inscription" class="mobile-btn mobile-join" id="mb-auth">S'inscrire</a>
-</div>
-<script>
-(function() {
-  try {
-    const u = JSON.parse(localStorage.getItem('showone_user') || '{}');
-    const btnAuth = document.getElementById('mb-auth');
-    const btnConn = document.getElementById('mb-conn');
-    if (u && u.id) {
-      const dashboard = u.type_compte === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
-      btnAuth.href = dashboard;
-      btnAuth.innerHTML = '👤<span>Mon espace</span>';
-      btnAuth.style.background = '#111';
-      btnConn.style.display = 'none';
-    } else {
-      btnConn.style.display = 'flex';
-    }
-  } catch(e) {}
-  const path = window.location.pathname;
-  if (path === '/' || path === '/index') document.getElementById('mb-home').classList.add('active');
-  else if (path.includes('castings')) document.getElementById('mb-castings').classList.add('active');
-})();
 </script>
 </body>
 </html>
