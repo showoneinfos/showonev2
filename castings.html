@@ -381,7 +381,7 @@ function afficherCastings(castings) {
     const date = c.date_casting ? new Date(c.date_casting).toLocaleDateString('fr-FR') : null;
     const cid = c.id; const titreEsc = (c.titre||'').replace(/'/g,"\\'");
     const hasVideo = !!c.video_playback_id;
-    return `<div class="casting-card" style="cursor:pointer;" onclick="location.href='/casting-detail?id=${cid}'">
+    return `<div class="casting-card">
       ${hasVideo?`<div style="margin-bottom:12px;border-radius:8px;overflow:hidden;cursor:pointer;" onclick="event.stopPropagation();lireVideoCasting('${c.video_playback_id}','${(c.recruteur_nom||'').replace(/'/g,"\\'")}','${c.categorie||''}','${cid}')"><img src="https://image.mux.com/${c.video_playback_id}/thumbnail.jpg?width=600&height=200&fit_mode=crop" style="width:100%;height:100px;object-fit:cover;display:block;" alt="Vidéo"><div style="background:#111;padding:5px 10px;display:flex;align-items:center;gap:5px;"><span style="background:#E8383A;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;">▶ Voir la vidéo</span></div></div>`:''}
       <div class="casting-head"><span class="casting-badge">${c.categorie||'Général'}</span><span class="casting-statut">✅ Actif</span></div>
       <div class="casting-titre">${c.titre}</div>
