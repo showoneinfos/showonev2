@@ -365,7 +365,7 @@ async function chargerCastings() {
       <div class="tcard-info">
         <div class="tcard-name">${c.titre||'Casting'}</div>
         <div class="tcard-cat">${c.rec_nom}${c.ville?' · '+c.ville:''}</div>
-        <button class="tcard-btn" style="background:#111;" onclick="event.stopPropagation();location.href='/castings'">Postuler →</button>
+        <button class="tcard-btn" style="background:#111;" onclick="event.stopPropagation();location.href='/casting-detail?id=${c.id}'">Voir le détail →</button>
       </div>
     </div>`;
   }).join('');
