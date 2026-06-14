@@ -179,19 +179,16 @@
     @keyframes slideArrow { 0%,100%{transform:translateX(0)} 50%{transform:translateX(6px)} }
     @media (min-width:769px) { .scroll-hint { display:none; } }
 
-    /* Tapotement modal — couvre tout l'écran sauf vidéo et boutons */
-    .modal-tap-zone {
-      position: absolute; inset: 0; z-index: 1; cursor: pointer;
-    }
+    /* Tapotement modal — hint visible en haut */
     .modal-tap {
-      position: absolute; top: 14px; left: 50%;
+      position: absolute; top: 16px; left: 50%;
       transform: translateX(-50%);
-      background: rgba(0,0,0,0.55);
-      border: 1.5px solid rgba(255,255,255,0.3);
+      background: rgba(0,0,0,0.6);
+      border: 1.5px solid rgba(255,255,255,0.25);
       color: #fff; font-size: 13px; font-weight: 700;
       padding: 8px 20px; border-radius: 100px;
-      pointer-events: none; z-index: 10;
-      white-space: nowrap; letter-spacing: 0.2px;
+      z-index: 20; white-space: nowrap;
+      pointer-events: none;
     }
 
     /* ── DESKTOP (sidebar) ── */
@@ -324,14 +321,10 @@
 </div>
 
 <!-- MODAL VIDÉO -->
-<div class="modal-ov" id="modal">
-  <!-- Zone de tap pour fermer — couvre tout sauf vidéo et boutons -->
-  <div class="modal-tap-zone" onclick="fermerModalDirect()">
-    <div class="modal-tap">👆 Tapotez pour fermer</div>
-  </div>
-  <button class="modal-close" onclick="fermerModalDirect()">✕</button>
-  <video id="modalVid" controls playsinline class="modal-vid" style="position:relative;z-index:2;pointer-events:auto;"></video>
-  <div class="modal-info" style="position:relative;z-index:3;">
+<div class="modal-ov" id="modal" onclick="fermerModalDirect()">
+  <div class="modal-tap">👆 Tapotez pour fermer</div>
+  <video id="modalVid" controls playsinline class="modal-vid"></video>
+  <div class="modal-info" onclick="event.stopPropagation()">
     <div class="modal-name" id="modalName"></div>
     <div class="modal-cat" id="modalCat"></div>
     <button class="modal-btn" id="modalBtn">✉ Contacter</button>
@@ -557,6 +550,20 @@ function jouer(pid) {
   if (_hls) { _hls.destroy(); _hls=null; }
   if (Hls.isSupported()) { _hls=new Hls(); _hls.loadSource(src); _hls.attachMedia(vid); _hls.on(Hls.Events.MANIFEST_PARSED,()=>vid.play()); }
   else if (vid.canPlayType('application/vnd.apple.mpegurl')) { vid.src=src; vid.play(); }
+
+  // Sur mobile : tap sur la vidéo = ferme la modal
+  // On utilise touchend pour éviter le conflit avec les contrôles natifs
+  vid.ontouchend = function(e) {
+    // Si l'utilisateur touche la zone des contrôles (bas 15% de la vidéo), on ne ferme pas
+    const rect = vid.getBoundingClientRect();
+    const touchY = e.changedTouches[0].clientY;
+    const fromBottom = rect.bottom - touchY;
+    if (fromBottom > rect.height * 0.15) {
+      // Tap sur la vidéo hors contrôles → fermer
+      e.preventDefault();
+      fermerModalDirect();
+    }
+  };
 }
 
 function fermerModalDirect() {
