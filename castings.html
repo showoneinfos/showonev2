@@ -391,12 +391,13 @@ function afficherCastings(castings) {
         ${date?`<div class="casting-info">📅 ${date}</div>`:''}
         ${c.remuneration?`<div class="casting-info">💰 ${c.remuneration}</div>`:''}
       </div>
-      <div class="casting-footer" style="flex-direction:column;gap:10px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;">
-          <div class="casting-recruteur">Par <strong>${c.recruteur_nom||'Recruteur ShowOne'}</strong></div>
-          <a href="/casting-detail?id=${cid}" onclick="event.stopPropagation();" style="display:inline-block;padding:8px 14px;border-radius:8px;border:1px solid #e8e8e8;color:#111;font-size:12px;font-weight:600;text-decoration:none;margin-right:6px;">📄 Descriptif</a>
-          ${!_isRecruteur?`<button class="btn-postuler" onclick="event.stopPropagation();ouvrirModal('${cid}','${titreEsc}','${c.categorie||''}','${c.ville||''}')">Postuler →</button>`:''}
+      <div class="casting-footer" style="flex-direction:column;gap:8px;">
+        <div class="casting-recruteur">Par <strong>${c.recruteur_nom||'Recruteur ShowOne'}</strong></div>
+        <div style="display:flex;gap:8px;">
+          <a href="/casting-detail?id=${cid}" onclick="event.stopPropagation();" style="flex:1;display:block;text-align:center;padding:9px;border-radius:8px;border:1px solid #e8e8e8;color:#111;font-size:12px;font-weight:700;text-decoration:none;">📄 Descriptif</a>
+          ${!_isRecruteur?`<button class="btn-postuler" onclick="event.stopPropagation();ouvrirModal('${cid}','${titreEsc}','${c.categorie||''}','${c.ville||''}')" style="flex:1;">Postuler →</button>`:''}
         </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;">
         ${(_isRecruteur && c.recruteur_id === _monRecruteurId)?`<div style="display:flex;gap:8px;">
           <span style="font-size:12px;color:#bbb;align-self:center;">✏️ Votre casting</span>
           <button onclick="event.stopPropagation();voirCandidatures('${cid}','${titreEsc}')" style="flex:1;padding:8px;border-radius:7px;border:1px solid #e8e8e8;background:transparent;color:#111;font-size:12px;font-weight:700;cursor:pointer;">👥 Candidatures</button>
