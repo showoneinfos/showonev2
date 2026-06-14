@@ -394,12 +394,13 @@ function afficherCastings(castings) {
       <div class="casting-footer" style="flex-direction:column;gap:10px;">
         <div style="display:flex;align-items:center;justify-content:space-between;">
           <div class="casting-recruteur">Par <strong>${c.recruteur_nom||'Recruteur ShowOne'}</strong></div>
-          ${_isRecruteur?`<span style="font-size:12px;color:#bbb;">✏️ Votre casting</span>`:`<button class="btn-postuler" onclick="ouvrirModal('${cid}','${titreEsc}','${c.categorie||''}','${c.ville||''}')">Postuler →</button>`}
+          ${!_isRecruteur?`<button class="btn-postuler" onclick="ouvrirModal('${cid}','${titreEsc}','${c.categorie||''}','${c.ville||''}')">Postuler →</button>`:''}
         </div>
-        ${_isRecruteur?`<div style="display:flex;gap:8px;">
+        ${(_isRecruteur && c.recruteur_id === _monRecruteurId)?`<div style="display:flex;gap:8px;">
+          <span style="font-size:12px;color:#bbb;align-self:center;">✏️ Votre casting</span>
           <button onclick="voirCandidatures('${cid}','${titreEsc}')" style="flex:1;padding:8px;border-radius:7px;border:1px solid #e8e8e8;background:transparent;color:#111;font-size:12px;font-weight:700;cursor:pointer;">👥 Candidatures</button>
           <button onclick="supprimerCasting('${cid}')" style="padding:8px 12px;border-radius:7px;border:1px solid #ffd0d0;background:transparent;color:#E8383A;font-size:12px;font-weight:700;cursor:pointer;">🗑️</button>
-        </div>`:''}
+        </div>`:''} 
       </div>
     </div>`;
   }).join('');
