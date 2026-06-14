@@ -12,14 +12,8 @@
     html, body { height: 100%; }
     body { font-family: 'Inter', sans-serif; background: #fff; color: #111; display: flex; }
 
-    /* ── SIDEBAR ── */
-    .sidebar {
-      width: 240px; height: 100vh;
-      position: fixed; left: 0; top: 0;
-      background: #fff; border-right: 1px solid #ececec;
-      display: flex; flex-direction: column;
-      padding: 20px 14px; z-index: 50;
-    }
+    /* SIDEBAR */
+    .sidebar { width: 240px; height: 100vh; position: fixed; left: 0; top: 0; background: #fff; border-right: 1px solid #ececec; display: flex; flex-direction: column; padding: 20px 14px; z-index: 50; }
     .logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; margin-bottom: 22px; display: block; }
     .logo span { color: #E8383A; }
     .side-nav { display: flex; flex-direction: column; gap: 1px; flex: 1; }
@@ -29,28 +23,28 @@
     .ico { font-size: 17px; width: 20px; text-align: center; flex-shrink: 0; }
     .sep { height: 1px; background: #f0f0f0; margin: 8px 2px; }
     .side-bottom { display: flex; flex-direction: column; gap: 7px; margin-top: 8px; }
-    .btn-join { display: block; width: 100%; padding: 11px; border-radius: 8px; background: #E8383A; color: #fff; border: none; font-size: 13px; font-weight: 700; cursor: pointer; text-align: center; }
-    .btn-conn { display: block; width: 100%; padding: 10px; border-radius: 8px; background: transparent; color: #111; border: 1.5px solid #e0e0e0; font-size: 13px; font-weight: 600; cursor: pointer; text-align: center; }
+    .btn-join { display: block; width: 100%; padding: 11px; border-radius: 8px; background: #E8383A; color: #fff; border: none; font-size: 13px; font-weight: 700; cursor: pointer; text-align: center; text-decoration: none; }
+    .btn-conn { display: block; width: 100%; padding: 10px; border-radius: 8px; background: transparent; color: #111; border: 1.5px solid #e0e0e0; font-size: 13px; font-weight: 600; cursor: pointer; text-align: center; text-decoration: none; }
     .side-user { display: flex; align-items: center; gap: 8px; }
     .side-av { width: 30px; height: 30px; border-radius: 50%; background: #111; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
     .side-nom { font-size: 12px; font-weight: 700; color: #111; }
     .side-role { font-size: 10px; color: #bbb; }
-    .side-copy { font-size: 11px; color: #ccc; padding: 2px 2px; }
+    .side-copy { font-size: 11px; color: #ccc; padding: 2px; }
 
-    /* BANDEAU TOP */
+    /* TOP BANNER */
     .top-banner { display: flex; align-items: center; justify-content: center; padding: 8px 16px; border-bottom: 1px solid #f0f0f0; }
     .top-site { font-size: 14px; font-weight: 700; color: #111; letter-spacing: -0.3px; }
 
-    /* ── MAIN ── */
+    /* MAIN */
     .main { margin-left: 240px; flex: 1; overflow-y: auto; height: 100vh; }
 
     /* Filtres */
-    .cats { display: flex; gap: 6px; padding: 10px 14px; border-bottom: 1px solid #f0f0f0; overflow-x: auto; position: sticky; top: 0; background: #fff; z-index: 10; }
+    .cats { display: flex; gap: 6px; padding: 10px 14px; border-bottom: 1px solid #f0f0f0; overflow-x: auto; position: sticky; top: 0; background: #fff; z-index: 10; scrollbar-width: none; }
     .cats::-webkit-scrollbar { display: none; }
-    .chip { padding: 5px 14px; border-radius: 100px; font-size: 11px; font-weight: 600; white-space: nowrap; border: 1px solid #e8e8e8; color: #888; cursor: pointer; background: #fff; flex-shrink: 0; }
+    .chip { padding: 5px 14px; border-radius: 100px; font-size: 11px; font-weight: 600; white-space: nowrap; border: 1px solid #e8e8e8; color: #888; cursor: pointer; background: #fff; flex-shrink: 0; transition: all 0.15s; }
+    .chip:hover { border-color: #bbb; color: #333; }
     .chip.active { background: #111; border-color: #111; color: #fff; }
 
-    /* Section header */
     .sec-head { padding: 16px 14px 10px; display: flex; align-items: baseline; gap: 8px; }
     .sec-title { font-size: 15px; font-weight: 900; color: #111; letter-spacing: -0.3px; }
     .sec-count { font-size: 12px; color: #bbb; }
@@ -58,7 +52,7 @@
     /* Grille */
     .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; padding: 0 2px 2px; }
 
-    /* Card thumbnail */
+    /* Card */
     .tcard { position: relative; aspect-ratio: 3/4; overflow: hidden; cursor: pointer; background: #f0f0f0; }
     .tcard img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .tcard-bg { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: rgba(0,0,0,0.08); font-weight: 900; }
@@ -71,134 +65,49 @@
     .tcard-cat { font-size: 10px; color: rgba(255,255,255,0.65); margin-bottom: 5px; }
     .tcard-btn { display: block; width: 100%; padding: 5px; background: #E8383A; color: #fff; border: none; font-size: 10px; font-weight: 700; cursor: pointer; text-align: center; }
 
-    /* Séparateur section */
     .sec-sep { height: 8px; background: #f5f5f5; margin: 12px 0 0; }
+    .loading { grid-column: 1/-1; text-align: center; padding: 40px; color: #bbb; font-size: 13px; }
 
-    /* Modal */
+    /* Modal plein écran */
     .modal-ov { display: none; position: fixed; inset: 0; background: #000; z-index: 1000; cursor: pointer; }
     .modal-ov.open { display: block; }
     .modal-tap-hint { position: absolute; top: 16px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.2); color: #fff; font-size: 13px; font-weight: 600; padding: 6px 16px; border-radius: 100px; z-index: 10; pointer-events: none; backdrop-filter: blur(4px); white-space: nowrap; }
     .modal-fullvid { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; pointer-events: none; }
-    .modal-overlay-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 16px; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); pointer-events: none; }
-    .modal-name { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
-    .modal-cat { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 12px; }
-    .modal-vid { aspect-ratio: 9/16; background: #000; }
-    .modal-vid video { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .modal-info { padding: 12px 14px 14px; }
-    .modal-name { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 2px; }
-    .modal-cat { font-size: 12px; color: #999; margin-bottom: 10px; }
-    .modal-btn { width: 100%; padding: 10px; border-radius: 8px; background: #E8383A; color: #fff; border: none; font-size: 13px; font-weight: 700; cursor: pointer; }
+    .modal-overlay-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 16px; background: linear-gradient(to top, rgba(0,0,0,0.85), transparent); pointer-events: none; }
+    .modal-name-txt { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .modal-cat-txt { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 12px; }
+    .modal-btn { pointer-events: all; padding: 11px 24px; border-radius: 8px; background: #E8383A; color: #fff; border: none; font-size: 13px; font-weight: 700; cursor: pointer; }
 
-    /* Loading */
-    .loading { grid-column: 1/-1; text-align: center; padding: 40px; color: #bbb; font-size: 13px; }
-
+    /* MOBILE */
     @media (max-width: 768px) {
-      .sidebar { width: 100%; height: 56px; top: auto; bottom: 0; left: 0; border-right: none; border-top: 1px solid #f0f0f0; flex-direction: row; padding: 6px 12px 10px; align-items: center; }
-      .logo, .divider, .cta-bloc, .side-bottom, #side-auth, #side-user-box { display: none !important; }
-      .nav-item { flex-direction: column; gap: 1px; padding: 4px 6px; font-size: 9px; flex: 1; justify-content: center; background: transparent !important; }
-      .main { margin-left: 0; padding-bottom: 60px; }
-      .grid { grid-template-columns: repeat(3, 1fr); }
-    }
-
-    /* ── MOBILE RESPONSIVE ── */
-    @media (max-width: 768px) {
-      /* Index sidebar → bottom nav */
-      .sidebar {
-        width: 100% !important; height: 56px !important;
-        top: auto !important; bottom: 0 !important; left: 0 !important;
-        border-right: none !important; border-top: 1px solid #f0f0f0 !important;
-        flex-direction: row !important; padding: 6px 8px 10px !important;
-        align-items: center !important;
-      }
-      .logo, .side-divider, .sep, .side-bottom, #side-auth, #side-user-box,
-      .side-nav .nav-item:not(.active):nth-child(n+4) { display: none !important; }
-      .side-nav { flex-direction: row !important; gap: 0 !important; padding: 0 !important; }
-      .nav-item { flex-direction: column !important; gap: 1px !important; padding: 4px 8px !important;
-        font-size: 10px !important; flex: 1 !important; justify-content: center !important;
-        align-items: center !important; background: transparent !important; font-weight: 500 !important; }
-      .ico { font-size: 20px !important; width: auto !important; }
-      .main { margin-left: 0 !important; padding-bottom: 65px !important; }
-
-      /* Grilles */
-      .grid { grid-template-columns: repeat(2, 1fr) !important; gap: 2px !important; }
-      .grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
-
-      /* Dashboard */
-      .sidebar-nav, .sidebar { display: none; }
-      body.dashboard { display: block; }
-      .main.dashboard-main { margin-left: 0 !important; padding: 16px !important; padding-bottom: 70px !important; max-width: 100% !important; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
-      .content-grid { grid-template-columns: 1fr !important; }
-
-      /* Nav */
-      nav { padding: 12px 16px !important; }
-
-      /* Forms */
-      .form-row { grid-template-columns: 1fr !important; }
-      .cat-grid { grid-template-columns: repeat(2, 1fr) !important; }
-      .type-selector { grid-template-columns: 1fr 1fr !important; }
-
-      /* Legal layout */
-      .layout { flex-direction: column !important; padding: 20px 16px !important; gap: 24px !important; }
-      .sidebar.legal-sidebar { width: 100% !important; height: auto !important; position: relative !important; flex-direction: column !important; border: none !important; border-bottom: 1px solid #f0f0f0 !important; padding: 0 0 16px !important; }
-
-      /* Contact */
-      .main { padding: 30px 16px !important; }
-      .contact-info { flex-wrap: wrap !important; }
-
-      /* Sections */
+      .sidebar { display: none !important; }
+      .main { margin-left: 0 !important; padding-bottom: 65px !important; height: auto; overflow-y: visible; }
+      .grid { grid-template-columns: repeat(2, 1fr) !important; }
       .sec-head { padding: 14px 10px 8px !important; }
       .cats { padding: 8px 10px !important; }
     }
 
-
-    /* BARRE MOBILE FIXE */
-    .mobile-bar { display: none; }
-    @media (max-width: 768px) {
-      .sidebar { display: none !important; }
-      .main { margin-left: 0 !important; padding-bottom: 65px !important; }
-      .mobile-bar {
-        display: flex;
-        position: fixed; bottom: 0; left: 0; right: 0;
-        background: #fff; border-top: 1px solid #f0f0f0;
-        padding: 8px 0 12px; z-index: 100; align-items: center;
-      }
-      .mobile-btn {
-        flex: 1; display: flex; flex-direction: column; align-items: center;
-        gap: 2px; text-decoration: none; color: #999;
-        font-size: 10px; font-weight: 600;
-      }
-      .mobile-btn:first-child { font-size: 20px; }
-      .mobile-btn span { font-size: 10px; }
-      .mobile-btn.active { color: #111; }
-      .mobile-btn.mobile-join {
-        flex: none; margin: 0 12px;
-        background: #E8383A; color: #fff !important;
-        padding: 8px 16px; border-radius: 8px;
-        font-size: 12px !important; font-weight: 700;
-      }
-      .grid { grid-template-columns: repeat(2, 1fr) !important; }
-    }
-
-    /* ── BARRE MOBILE ── */
+    /* BARRE MOBILE */
     .mobile-bar { display: none; }
     @media (max-width: 768px) {
       .mobile-bar {
         display: flex; position: fixed; bottom: 0; left: 0; right: 0;
         background: #fff; border-top: 1px solid #f0f0f0;
         padding: 8px 4px 14px; z-index: 1000; align-items: center;
+        justify-content: space-around;
       }
       .mobile-btn {
         flex: 1; display: flex; flex-direction: column; align-items: center;
-        gap: 2px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600;
+        gap: 3px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600;
       }
-      .mobile-btn:first-child { font-size: 22px; }
-      .mobile-btn span { font-size: 10px; display: block; }
+      .mobile-btn-icon { font-size: 20px; line-height: 1; display: block; }
+      .mobile-btn-label { font-size: 10px; display: block; }
       .mobile-btn.active { color: #111; }
       .mobile-btn.mobile-join {
-        flex: none; margin: 0 8px; background: #E8383A; color: #fff !important;
+        flex: none; margin: 0 6px; background: #E8383A; color: #fff !important;
         padding: 8px 14px; border-radius: 8px; font-size: 12px !important; font-weight: 700;
-        display: flex; flex-direction: column; align-items: center; gap: 1px;
+        display: flex; flex-direction: column; align-items: center; gap: 2px;
+        text-decoration: none;
       }
     }
   </style>
@@ -223,8 +132,8 @@
   </nav>
   <div class="side-bottom">
     <div id="side-auth">
-      <button class="btn-join" onclick="location.href='/inscription'">S'inscrire gratuitement</button>
-      <button class="btn-conn" onclick="location.href='/connexion'">Connexion</button>
+      <a href="/inscription" class="btn-join">S'inscrire gratuitement</a>
+      <a href="/connexion" class="btn-conn">Connexion</a>
     </div>
     <div id="side-user-box" style="display:none">
       <div class="side-user">
@@ -241,15 +150,20 @@
 
 <div class="main">
   <div class="top-banner"><span class="top-site">www.<strong>Show</strong><span style="color:#E8383A;">One</span>.fr</span></div>
+
+  <!-- FILTRES — 10 catégories complètes -->
   <div class="cats" id="catsTalents">
     <div class="chip active" onclick="filtrerCat(this,'')">Tous</div>
     <div class="chip" onclick="filtrerCat(this,'acting')">🎬 Acting</div>
     <div class="chip" onclick="filtrerCat(this,'musique')">🎤 Musique</div>
     <div class="chip" onclick="filtrerCat(this,'danse')">💃 Danse</div>
     <div class="chip" onclick="filtrerCat(this,'sport')">⚽ Sport</div>
+    <div class="chip" onclick="filtrerCat(this,'createurs')">📱 Créateurs</div>
     <div class="chip" onclick="filtrerCat(this,'mode')">👗 Mode</div>
     <div class="chip" onclick="filtrerCat(this,'art')">🎨 Art</div>
+    <div class="chip" onclick="filtrerCat(this,'talents')">✨ Talents</div>
     <div class="chip" onclick="filtrerCat(this,'animaux')">🐾 Animaux</div>
+    <div class="chip" onclick="filtrerCat(this,'pro')">🎙️ Pro</div>
   </div>
 
   <div class="sec-head">
@@ -271,14 +185,35 @@
   </div>
 </div>
 
-<div class="modal-ov" id="modal">
+<!-- MODAL VIDÉO PLEIN ÉCRAN -->
+<div class="modal-ov" id="modal" onclick="fermerModal(event)">
   <div class="modal-tap-hint">👆 Tapotez pour fermer</div>
   <video id="modalVid" controls playsinline class="modal-fullvid"></video>
   <div class="modal-overlay-info">
-    <div class="modal-name" id="modalName"></div>
-    <div class="modal-cat" id="modalCat"></div>
+    <div class="modal-name-txt" id="modalName"></div>
+    <div class="modal-cat-txt" id="modalCat"></div>
     <button class="modal-btn" id="modalBtn" onclick="event.stopPropagation()">✉ Contacter</button>
   </div>
+</div>
+
+<!-- BARRE MOBILE -->
+<div class="mobile-bar" id="mobileBar">
+  <a href="/" class="mobile-btn active" id="mb-home">
+    <span class="mobile-btn-icon">🏠</span>
+    <span class="mobile-btn-label">Accueil</span>
+  </a>
+  <a href="/castings" class="mobile-btn" id="mb-castings">
+    <span class="mobile-btn-icon">🎬</span>
+    <span class="mobile-btn-label">Castings</span>
+  </a>
+  <a href="/connexion" class="mobile-btn" id="mb-conn">
+    <span class="mobile-btn-icon">🔑</span>
+    <span class="mobile-btn-label">Connexion</span>
+  </a>
+  <a href="/inscription" class="mobile-btn mobile-join" id="mb-auth">
+    <span class="mobile-btn-icon">✨</span>
+    <span class="mobile-btn-label">S'inscrire</span>
+  </a>
 </div>
 
 <script>
@@ -287,92 +222,150 @@ const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJ
 const sb = supabase.createClient(SB_URL, SB_KEY);
 let allTalents = [], _hls = null;
 
+// Labels lisibles pour chaque clé de catégorie
+const catLabels = {
+  acting: '🎬 Acting / Cinéma',
+  musique: '🎤 Musique / Chant',
+  danse: '💃 Danse',
+  sport: '⚽ Sport',
+  createurs: '📱 Créateurs de contenu',
+  mode: '👗 Mode / Mannequinat',
+  art: '🎨 Art & Création',
+  talents: '✨ Performances & Talents',
+  animaux: '🐾 Animaux',
+  pro: '🎙️ Compétences Pro'
+};
+
+function catLabel(val) {
+  if (!val) return '';
+  return catLabels[val] || val;
+}
+
 async function init() {
-  const { data: { session } } = await sb.auth.getSession();
-  if (session) {
-    document.getElementById('side-auth').style.display = 'none';
-    document.getElementById('side-user-box').style.display = 'block';
+  // Auth sidebar
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    if (session) {
+      document.getElementById('side-auth').style.display = 'none';
+      document.getElementById('side-user-box').style.display = 'block';
+      const u = JSON.parse(localStorage.getItem('showone_user') || '{}');
+      const prenom = u.prenom || session.user.email.split('@')[0];
+      const type = u.type_compte || 'talent';
+      document.getElementById('sideAv').textContent = (prenom[0]||'?').toUpperCase();
+      document.getElementById('sideNom').textContent = prenom;
+      document.getElementById('sideRole').textContent = type === 'recruteur' ? 'Recruteur' : 'Talent';
+      document.getElementById('navDashboard').style.display = 'flex';
+      document.getElementById('navDashboard').href = type === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
+      document.getElementById('navDeco').style.display = 'flex';
+    }
+  } catch(e) {}
+
+  // Barre mobile
+  try {
     const u = JSON.parse(localStorage.getItem('showone_user') || '{}');
-    const prenom = u.prenom || session.user.email.split('@')[0];
-    const type = u.type_compte || 'talent';
-    document.getElementById('sideAv').textContent = prenom[0]?.toUpperCase() || '?';
-    document.getElementById('sideNom').textContent = prenom;
-    document.getElementById('sideRole').textContent = type === 'recruteur' ? 'Recruteur' : 'Talent';
-    document.getElementById('navDashboard').style.display = 'flex';
-    document.getElementById('navDashboard').href = type === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
-    document.getElementById('navDeco').style.display = 'flex';
-  }
+    const btnAuth = document.getElementById('mb-auth');
+    const btnConn = document.getElementById('mb-conn');
+    if (u && u.id) {
+      const dashboard = u.type_compte === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
+      btnAuth.href = dashboard;
+      btnAuth.querySelector('.mobile-btn-icon').textContent = '👤';
+      btnAuth.querySelector('.mobile-btn-label').textContent = 'Mon espace';
+      btnAuth.style.background = '#111';
+      btnConn.style.display = 'none';
+    }
+  } catch(e) {}
+
   chargerTalents();
   chargerCastings();
 }
 
 async function chargerTalents() {
-  const { data } = await sb.from('videos')
-    .select('id,playback_id,vues,profils_talents!inner(id,nom_scene,categorie,sous_categorie,utilisateurs(prenom,nom,ville))')
-    .eq('statut','en_ligne').not('playback_id','is',null)
-    .order('vues',{ascending:false}).limit(60);
-  allTalents = data || [];
-  afficherTalents(allTalents);
+  try {
+    const { data } = await sb.from('videos')
+      .select('id,playback_id,vues,profils_talents!inner(id,nom_scene,categorie,sous_categorie,utilisateurs(prenom,nom,ville))')
+      .eq('statut','en_ligne').not('playback_id','is',null)
+      .order('vues',{ascending:false}).limit(60);
+    allTalents = data || [];
+    afficherTalents(allTalents);
+  } catch(e) {
+    document.getElementById('gridTalents').innerHTML = '<div class="loading">Erreur de chargement.</div>';
+  }
 }
 
 function filtrerCat(el, cat) {
   document.querySelectorAll('#catsTalents .chip').forEach(c => c.classList.remove('active'));
   el.classList.add('active');
-  afficherTalents(cat ? allTalents.filter(v => (v.profils_talents?.categorie||'').toLowerCase().includes(cat)) : allTalents);
+  const filtres = cat ? allTalents.filter(v => (v.profils_talents?.categorie||'').toLowerCase() === cat) : allTalents;
+  afficherTalents(filtres);
 }
 
 function afficherTalents(liste) {
   const g = document.getElementById('gridTalents');
-  document.getElementById('cntTalents').textContent = liste.length + ' talent' + (liste.length>1?'s':'');
-  if (!liste.length) { g.innerHTML = '<div class="loading">Aucun talent.</div>'; return; }
+  document.getElementById('cntTalents').textContent = liste.length + ' talent' + (liste.length > 1 ? 's' : '');
+  if (!liste.length) { g.innerHTML = '<div class="loading">Aucun talent dans cette catégorie.</div>'; return; }
   g.innerHTML = liste.map(v => {
     const p = v.profils_talents, u = p?.utilisateurs;
-    const nom = p?.nom_scene || ((u?.prenom||'')+' '+(u?.nom||'')).trim();
-    const cat = p?.sous_categorie || p?.categorie || '';
+    const nom = p?.nom_scene || ((u?.prenom||'') + ' ' + (u?.nom||'')).trim() || 'Talent';
+    // Afficher sous-catégorie si dispo, sinon label lisible de la catégorie
+    const cat = p?.sous_categorie || catLabel(p?.categorie) || '';
     const thumb = v.playback_id ? `https://image.mux.com/${v.playback_id}/thumbnail.jpg?width=300&height=400&fit_mode=crop` : '';
-    return `<div class="tcard" onclick="ouvrirVideo('${v.playback_id}','${nom.replace(/'/g,"\\'")}','${cat}','${p?.id}')">
-      ${thumb ? `<img src="${thumb}" alt="${nom}" loading="lazy">` : `<div class="tcard-bg">${nom.substring(0,2).toUpperCase()}</div>`}
+    const pid = v.playback_id || '';
+    const talentId = p?.id || '';
+    return `<div class="tcard" onclick="ouvrirVideo('${pid}','${nom.replace(/'/g,"\\'")}','${cat.replace(/'/g,"\\'")}','${talentId}')">
+      ${thumb
+        ? `<img src="${thumb}" alt="${nom}" loading="lazy">`
+        : `<div class="tcard-bg">${nom.substring(0,2).toUpperCase()}</div>`}
       <div class="tcard-overlay"></div>
       <div class="tcard-views">👁 ${(v.vues||0).toLocaleString('fr-FR')}</div>
       <div class="tcard-play">▶</div>
       <div class="tcard-info">
         <div class="tcard-name">${nom}</div>
         <div class="tcard-cat">${cat}</div>
-        <button class="tcard-btn" onclick="event.stopPropagation();contacter('${p?.id}')">Contacter</button>
+        <button class="tcard-btn" onclick="event.stopPropagation();contacter('${talentId}')">Contacter</button>
       </div>
     </div>`;
   }).join('');
 }
 
 async function chargerCastings() {
-  const { data } = await sb.from('castings')
-    .select('id,titre,categorie,ville,video_playback_id,recruteur_id')
-    .eq('statut','actif').not('video_playback_id','is',null)
-    .order('created_at',{ascending:false}).limit(20);
-  const castings = data || [];
-  for (const c of castings) {
-    try { const {data:r} = await sb.from('profils_recruteurs').select('nom_societe').eq('id',c.recruteur_id).single(); c.rec_nom = r?.nom_societe||'Recruteur'; } catch(e) { c.rec_nom='Recruteur'; }
-  }
-  const g = document.getElementById('gridCastings');
-  document.getElementById('cntCastings').textContent = castings.length + ' casting' + (castings.length>1?'s':'');
-  if (!castings.length) { g.innerHTML = '<div class="loading">Aucun casting vidéo.</div>'; return; }
-  g.innerHTML = castings.map(c => {
-    const thumb = `https://image.mux.com/${c.video_playback_id}/thumbnail.jpg?width=300&height=400&fit_mode=crop`;
-    return `<div style="background:#fff;border-radius:10px;overflow:hidden;border:1px solid #f0f0f0;">
-      <div style="position:relative;aspect-ratio:9/16;cursor:pointer;" onclick="ouvrirCasting('${c.video_playback_id}','${(c.rec_nom||'').replace(/'/g,"\\'")}','${c.categorie||''}','${c.id}','${(c.titre||'').replace(/'/g,"\\'")}')">
-        <img src="${thumb}" alt="${c.titre}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
-        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5),transparent 50%);"></div>
-        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:rgba(232,56,58,0.9);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;">▶</div>
-        <div style="position:absolute;bottom:0;left:0;right:0;padding:10px;">
-          <div style="font-size:12px;font-weight:700;color:#fff;">${c.titre||'Casting'}</div>
-          <div style="font-size:10px;color:rgba(255,255,255,0.7);">${c.rec_nom}</div>
+  try {
+    const { data } = await sb.from('castings')
+      .select('id,titre,categorie,ville,video_playback_id,recruteur_id')
+      .eq('statut','actif').not('video_playback_id','is',null)
+      .order('created_at',{ascending:false}).limit(20);
+    const castings = data || [];
+    for (const c of castings) {
+      try {
+        const { data: r } = await sb.from('profils_recruteurs').select('nom_societe').eq('id',c.recruteur_id).single();
+        c.rec_nom = r?.nom_societe || 'Recruteur';
+      } catch(e) { c.rec_nom = 'Recruteur'; }
+    }
+    const g = document.getElementById('gridCastings');
+    document.getElementById('cntCastings').textContent = castings.length + ' casting' + (castings.length > 1 ? 's' : '');
+    if (!castings.length) { g.innerHTML = '<div class="loading">Aucun casting vidéo.</div>'; return; }
+    g.innerHTML = castings.map(c => {
+      const thumb = `https://image.mux.com/${c.video_playback_id}/thumbnail.jpg?width=300&height=400&fit_mode=crop`;
+      const titre = (c.titre||'Casting').replace(/'/g,"\\'");
+      const recNom = (c.rec_nom||'').replace(/'/g,"\\'");
+      const cat = (c.categorie||'').replace(/'/g,"\\'");
+      return `<div style="background:#fff;border-radius:10px;overflow:hidden;border:1px solid #f0f0f0;">
+        <div style="position:relative;aspect-ratio:3/4;cursor:pointer;" onclick="ouvrirCasting('${c.video_playback_id}','${recNom}','${cat}','${c.id}','${titre}')">
+          <img src="${thumb}" alt="${c.titre}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.6),transparent 50%);"></div>
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:rgba(232,56,58,0.9);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;">▶</div>
+          <div style="position:absolute;bottom:0;left:0;right:0;padding:10px;">
+            <div style="font-size:12px;font-weight:700;color:#fff;">${c.titre||'Casting'}</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.7);">${c.rec_nom}</div>
+          </div>
         </div>
-      </div>
-      <div style="padding:10px;">
-        <a href="/casting-detail?id=${c.id}" style="display:block;text-align:center;padding:9px;border-radius:7px;background:#111;color:#fff;font-size:12px;font-weight:700;text-decoration:none;">📄 Lire le descriptif →</a>
-      </div>
-    </div>`;
-  }).join('');
+        <div style="padding:10px;">
+          <a href="/casting-detail?id=${c.id}" style="display:block;text-align:center;padding:9px;border-radius:7px;background:#111;color:#fff;font-size:12px;font-weight:700;text-decoration:none;">📄 Lire le descriptif →</a>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    document.getElementById('gridCastings').innerHTML = '<div class="loading">Erreur de chargement.</div>';
+  }
 }
 
 function ouvrirVideo(pid, nom, cat, talentId) {
@@ -381,43 +374,50 @@ function ouvrirVideo(pid, nom, cat, talentId) {
   document.getElementById('modalName').textContent = nom;
   document.getElementById('modalCat').textContent = cat;
   document.getElementById('modalBtn').textContent = '✉ Contacter ce talent';
-  document.getElementById('modalBtn').onclick = () => { fermerModal(); contacter(talentId); };
+  document.getElementById('modalBtn').onclick = (e) => { e.stopPropagation(); fermerModalDirect(); contacter(talentId); };
   document.getElementById('modal').classList.add('open');
-    document.getElementById('modal').onclick = fermerModal;
-    document.body.style.overflow = 'hidden';
+  document.body.style.overflow = 'hidden';
 }
 
 function ouvrirCasting(pid, rec, cat, id, titre) {
   if (!pid) return;
   jouer(pid);
   document.getElementById('modalName').textContent = titre;
-  document.getElementById('modalCat').textContent = 'Par '+rec+(cat?' · '+cat:'');
-  document.getElementById('modalBtn').textContent = '→ Postuler';
-  document.getElementById('modalBtn').onclick = () => { fermerModal(); location.href='/castings'; };
+  document.getElementById('modalCat').textContent = 'Par ' + rec + (cat ? ' · ' + cat : '');
+  document.getElementById('modalBtn').textContent = '→ Voir le casting';
+  document.getElementById('modalBtn').onclick = (e) => { e.stopPropagation(); fermerModalDirect(); location.href='/casting-detail?id='+id; };
   document.getElementById('modal').classList.add('open');
-    document.getElementById('modal').onclick = fermerModal;
-    document.body.style.overflow = 'hidden';
+  document.body.style.overflow = 'hidden';
 }
 
 function jouer(pid) {
   const vid = document.getElementById('modalVid');
   const src = `https://stream.mux.com/${pid}.m3u8`;
   if (_hls) { _hls.destroy(); _hls = null; }
-  if (Hls.isSupported()) { _hls = new Hls(); _hls.loadSource(src); _hls.attachMedia(vid); _hls.on(Hls.Events.MANIFEST_PARSED,()=>vid.play()); }
-  else if (vid.canPlayType('application/vnd.apple.mpegurl')) { vid.src=src; vid.play(); }
+  if (Hls.isSupported()) {
+    _hls = new Hls(); _hls.loadSource(src); _hls.attachMedia(vid);
+    _hls.on(Hls.Events.MANIFEST_PARSED, () => vid.play());
+  } else if (vid.canPlayType('application/vnd.apple.mpegurl')) {
+    vid.src = src; vid.play();
+  }
 }
 
 function fermerModal(e) {
-  if (e && e.target !== document.getElementById('modal')) return;
+  if (e && e.target !== document.getElementById('modal') && e.target !== document.getElementById('modalVid')) return;
+  fermerModalDirect();
+}
+
+function fermerModalDirect() {
   document.getElementById('modal').classList.remove('open');
-  const vid = document.getElementById('modalVid'); vid.pause(); vid.src='';
-  if (_hls) { _hls.destroy(); _hls=null; }
+  const vid = document.getElementById('modalVid'); vid.pause(); vid.src = '';
+  if (_hls) { _hls.destroy(); _hls = null; }
+  document.body.style.overflow = '';
 }
 
 function contacter(talentId) {
-  const u = JSON.parse(localStorage.getItem('showone_user')||'{}');
-  if (!u.id) { location.href='/connexion'; return; }
-  if (u.type_compte !== 'recruteur') { alert('Seuls les recruteurs peuvent contacter les talents.'); return; }
+  const u = JSON.parse(localStorage.getItem('showone_user') || '{}');
+  if (!u.id) { location.href = '/connexion'; return; }
+  if (u.type_compte !== 'recruteur') { alert('Seuls les recruteurs peuvent contacter les talents directement.'); return; }
   location.href = `/messagerie?talent_id=${talentId}`;
 }
 
@@ -428,43 +428,6 @@ function seDeconnecter() {
 }
 
 init();
-</script>
-
-<!-- BARRE MOBILE -->
-<div class="mobile-bar">
-  <a href="/" class="mobile-btn active">🏠<span>Accueil</span></a>
-  <a href="/castings" class="mobile-btn">🎬<span>Castings</span></a>
-  <a href="/messagerie" class="mobile-btn">💬<span>Messages</span></a>
-  <a href="/inscription" class="mobile-btn mobile-join">S'inscrire</a>
-</div>
-
-<!-- BARRE MOBILE -->
-<div class="mobile-bar" id="mobileBar">
-  <a href="/" class="mobile-btn" id="mb-home">🏠<span>Accueil</span></a>
-  <a href="/castings" class="mobile-btn" id="mb-castings">🎬<span>Castings</span></a>
-  <a href="/connexion" class="mobile-btn" id="mb-conn" style="display:none">🔑<span>Connexion</span></a>
-  <a href="/inscription" class="mobile-btn mobile-join" id="mb-auth">S'inscrire</a>
-</div>
-<script>
-(function() {
-  try {
-    const u = JSON.parse(localStorage.getItem('showone_user') || '{}');
-    const btnAuth = document.getElementById('mb-auth');
-    const btnConn = document.getElementById('mb-conn');
-    if (u && u.id) {
-      const dashboard = u.type_compte === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
-      btnAuth.href = dashboard;
-      btnAuth.innerHTML = '👤<span>Mon espace</span>';
-      btnAuth.style.background = '#111';
-      btnConn.style.display = 'none';
-    } else {
-      btnConn.style.display = 'flex';
-    }
-  } catch(e) {}
-  const path = window.location.pathname;
-  if (path === '/' || path === '/index') document.getElementById('mb-home').classList.add('active');
-  else if (path.includes('castings')) document.getElementById('mb-castings').classList.add('active');
-})();
 </script>
 </body>
 </html>
