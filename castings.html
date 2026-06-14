@@ -305,7 +305,7 @@ async function chargerVideosCastings() {
     }
     grid.innerHTML = data.map(c => {
       const thumb = `https://image.mux.com/${c.video_playback_id}/thumbnail.jpg?width=400&height=560&fit_mode=crop`;
-      return `<div class="video-casting-card" onclick="lireVideoCasting('${c.video_playback_id}','${c.recruteur_nom.replace(/'/g,"\\'")}','${c.categorie||''}','${c.id}')">
+      return `<div class="video-casting-card" onclick="event.stopPropagation();lireVideoCasting('${c.video_playback_id}','${c.recruteur_nom.replace(/'/g,"\\'")}','${c.categorie||''}','${c.id}')">
         <div class="video-thumb"><img src="${thumb}" alt="${c.titre}" onerror="this.parentElement.innerHTML='🎭'"><div class="video-thumb-overlay"></div><div class="video-badge">${c.categorie||'Casting'}</div><div class="video-play-btn">▶</div></div>
         <div class="video-info"><div class="video-recruteur">${c.recruteur_nom}</div><div class="video-meta">${c.titre}${c.ville?' · '+c.ville:''}</div><button class="btn-postuler-video" onclick="event.stopPropagation();ouvrirModal('${c.id}','${c.titre.replace(/'/g,"\\'")}','${c.categorie||''}','${c.ville||''}')">Postuler →</button></div>
       </div>`;
@@ -382,7 +382,7 @@ function afficherCastings(castings) {
     const cid = c.id; const titreEsc = (c.titre||'').replace(/'/g,"\\'");
     const hasVideo = !!c.video_playback_id;
     return `<div class="casting-card" style="cursor:pointer;" onclick="location.href='/casting-detail?id=${cid}'">
-      ${hasVideo?`<div style="margin-bottom:12px;border-radius:8px;overflow:hidden;cursor:pointer;" onclick="lireVideoCasting('${c.video_playback_id}','${(c.recruteur_nom||'').replace(/'/g,"\\'")}','${c.categorie||''}','${cid}')"><img src="https://image.mux.com/${c.video_playback_id}/thumbnail.jpg?width=600&height=200&fit_mode=crop" style="width:100%;height:100px;object-fit:cover;display:block;" alt="Vidéo"><div style="background:#111;padding:5px 10px;display:flex;align-items:center;gap:5px;"><span style="background:#E8383A;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;">▶ Voir la vidéo</span></div></div>`:''}
+      ${hasVideo?`<div style="margin-bottom:12px;border-radius:8px;overflow:hidden;cursor:pointer;" onclick="event.stopPropagation();lireVideoCasting('${c.video_playback_id}','${(c.recruteur_nom||'').replace(/'/g,"\\'")}','${c.categorie||''}','${cid}')"><img src="https://image.mux.com/${c.video_playback_id}/thumbnail.jpg?width=600&height=200&fit_mode=crop" style="width:100%;height:100px;object-fit:cover;display:block;" alt="Vidéo"><div style="background:#111;padding:5px 10px;display:flex;align-items:center;gap:5px;"><span style="background:#E8383A;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;">▶ Voir la vidéo</span></div></div>`:''}
       <div class="casting-head"><span class="casting-badge">${c.categorie||'Général'}</span><span class="casting-statut">✅ Actif</span></div>
       <div class="casting-titre">${c.titre}</div>
       <div class="casting-desc">${c.description||''}</div>
@@ -394,12 +394,12 @@ function afficherCastings(castings) {
       <div class="casting-footer" style="flex-direction:column;gap:10px;">
         <div style="display:flex;align-items:center;justify-content:space-between;">
           <div class="casting-recruteur">Par <strong>${c.recruteur_nom||'Recruteur ShowOne'}</strong></div>
-          ${!_isRecruteur?`<button class="btn-postuler" onclick="ouvrirModal('${cid}','${titreEsc}','${c.categorie||''}','${c.ville||''}')">Postuler →</button>`:''}
+          ${!_isRecruteur?`<button class="btn-postuler" onclick="event.stopPropagation();ouvrirModal('${cid}','${titreEsc}','${c.categorie||''}','${c.ville||''}')">Postuler →</button>`:''}
         </div>
         ${(_isRecruteur && c.recruteur_id === _monRecruteurId)?`<div style="display:flex;gap:8px;">
           <span style="font-size:12px;color:#bbb;align-self:center;">✏️ Votre casting</span>
-          <button onclick="voirCandidatures('${cid}','${titreEsc}')" style="flex:1;padding:8px;border-radius:7px;border:1px solid #e8e8e8;background:transparent;color:#111;font-size:12px;font-weight:700;cursor:pointer;">👥 Candidatures</button>
-          <button onclick="supprimerCasting('${cid}')" style="padding:8px 12px;border-radius:7px;border:1px solid #ffd0d0;background:transparent;color:#E8383A;font-size:12px;font-weight:700;cursor:pointer;">🗑️</button>
+          <button onclick="event.stopPropagation();voirCandidatures('${cid}','${titreEsc}')" style="flex:1;padding:8px;border-radius:7px;border:1px solid #e8e8e8;background:transparent;color:#111;font-size:12px;font-weight:700;cursor:pointer;">👥 Candidatures</button>
+          <button onclick="event.stopPropagation();supprimerCasting('${cid}')" style="padding:8px 12px;border-radius:7px;border:1px solid #ffd0d0;background:transparent;color:#E8383A;font-size:12px;font-weight:700;cursor:pointer;">🗑️</button>
         </div>`:''} 
       </div>
     </div>`;
