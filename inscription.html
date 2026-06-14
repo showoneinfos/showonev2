@@ -7,7 +7,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; background: #fff; color: #111; min-height: 100vh; display: flex; flex-direction: column; } @media (max-width: 768px) { body { padding-bottom: 70px; } }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: #111; min-height: 100vh; display: flex; flex-direction: column; }
+    @media (max-width: 768px) { body { padding-bottom: 70px; } }
 
     nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; border-bottom: 1px solid #f0f0f0; }
     .logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; }
@@ -18,7 +19,6 @@
     .main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 48px 20px; }
     .card { width: 100%; max-width: 460px; }
 
-    /* STEPS */
     .steps { display: flex; align-items: center; gap: 0; margin-bottom: 36px; }
     .step { display: flex; align-items: center; gap: 8px; }
     .step-circle { width: 28px; height: 28px; border-radius: 50%; border: 2px solid #e8e8e8; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #bbb; flex-shrink: 0; }
@@ -33,7 +33,6 @@
     .card-title { font-size: 26px; font-weight: 900; letter-spacing: -0.8px; color: #111; margin-bottom: 6px; }
     .card-sub { font-size: 14px; color: #999; margin-bottom: 28px; }
 
-    /* TYPE SELECTOR */
     .type-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 28px; }
     .type-btn { padding: 16px 12px; border-radius: 10px; border: 1.5px solid #e8e8e8; background: #fff; cursor: pointer; text-align: center; transition: all 0.15s; }
     .type-btn.active { border-color: #111; background: #111; }
@@ -43,14 +42,21 @@
     .type-desc { font-size: 11px; color: #999; margin-top: 2px; }
     .type-btn.active .type-desc { color: rgba(255,255,255,0.6); }
 
-    /* FORM */
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .form-group { margin-bottom: 14px; }
     .form-label { font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
     .form-input { width: 100%; padding: 12px 14px; font-size: 14px; border: 1.5px solid #e8e8e8; border-radius: 9px; background: #fff; color: #111; outline: none; font-family: 'Inter', sans-serif; transition: border-color 0.15s; }
     .form-input:focus { border-color: #111; }
     .form-input::placeholder { color: #ccc; }
-    .form-select { width: 100%; padding: 12px 14px; font-size: 14px; border: 1.5px solid #e8e8e8; border-radius: 9px; background: #fff; color: #111; outline: none; font-family: 'Inter', sans-serif; cursor: pointer; }
+    .form-select { width: 100%; padding: 12px 14px; font-size: 14px; border: 1.5px solid #e8e8e8; border-radius: 9px; background: #fff; color: #111; outline: none; font-family: 'Inter', sans-serif; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+    .form-select:focus { border-color: #111; }
+
+    /* Sous-cat : chips scrollables */
+    .sous-cat-wrap { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 6px; margin-bottom: 14px; }
+    .sous-cat-chip { padding: 7px 13px; border-radius: 100px; border: 1.5px solid #e8e8e8; font-size: 12px; font-weight: 600; color: #555; cursor: pointer; transition: all 0.15s; background: #fff; white-space: nowrap; }
+    .sous-cat-chip:hover { border-color: #bbb; color: #111; }
+    .sous-cat-chip.active { border-color: #111; background: #111; color: #fff; }
+    #sousCatLabel { font-size: 12px; font-weight: 600; color: #555; display: none; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
 
     .form-error { background: #fff0f0; border: 1px solid #ffd0d0; border-radius: 8px; padding: 11px 13px; font-size: 13px; color: #cc2e30; margin-bottom: 14px; display: none; line-height: 1.5; }
 
@@ -61,101 +67,41 @@
     .terms { font-size: 11px; color: #bbb; text-align: center; margin-top: 14px; line-height: 1.5; }
     .terms a { color: #999; }
 
-    /* CAT GRID */
-    .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
-    .cat-option { padding: 10px 8px; border-radius: 8px; border: 1.5px solid #e8e8e8; text-align: center; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; color: #555; }
-    .cat-option:hover { border-color: #bbb; }
-    .cat-option.active { border-color: #111; background: #111; color: #fff; }
-
-    /* SUCCESS */
     .success-box { text-align: center; padding: 20px 0; }
     .success-icon { font-size: 56px; margin-bottom: 16px; }
     .success-title { font-size: 24px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 8px; }
     .success-sub { font-size: 14px; color: #999; line-height: 1.6; margin-bottom: 28px; }
     .btn-dashboard { display: block; width: 100%; padding: 14px; font-size: 15px; font-weight: 700; border-radius: 10px; background: #111; color: #fff; border: none; cursor: pointer; text-decoration: none; text-align: center; }
 
-    /* STEP PAGES */
     .step-page { display: none; }
     .step-page.active { display: block; }
 
     @media (max-width: 600px) {
       nav { padding: 14px 20px; }
       .form-row { grid-template-columns: 1fr; }
-      .cat-grid { grid-template-columns: repeat(2, 1fr); }
       .steps { display: none; }
     }
 
-    /* ── MOBILE RESPONSIVE ── */
-    @media (max-width: 768px) {
-      /* Index sidebar → bottom nav */
-      .sidebar {
-        width: 100% !important; height: 56px !important;
-        top: auto !important; bottom: 0 !important; left: 0 !important;
-        border-right: none !important; border-top: 1px solid #f0f0f0 !important;
-        flex-direction: row !important; padding: 6px 8px 10px !important;
-        align-items: center !important;
-      }
-      .logo, .side-divider, .sep, .side-bottom, #side-auth, #side-user-box,
-      .side-nav .nav-item:not(.active):nth-child(n+4) { display: none !important; }
-      .side-nav { flex-direction: row !important; gap: 0 !important; padding: 0 !important; }
-      .nav-item { flex-direction: column !important; gap: 1px !important; padding: 4px 8px !important;
-        font-size: 10px !important; flex: 1 !important; justify-content: center !important;
-        align-items: center !important; background: transparent !important; font-weight: 500 !important; }
-      .ico { font-size: 20px !important; width: auto !important; }
-      .main { margin-left: 0 !important; padding-bottom: 65px !important; }
-
-      /* Grilles */
-      .grid { grid-template-columns: repeat(2, 1fr) !important; gap: 2px !important; }
-      .grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
-
-      /* Dashboard */
-      .sidebar-nav, .sidebar { display: none; }
-      body.dashboard { display: block; }
-      .main.dashboard-main { margin-left: 0 !important; padding: 16px !important; padding-bottom: 70px !important; max-width: 100% !important; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
-      .content-grid { grid-template-columns: 1fr !important; }
-
-      /* Nav */
-      nav { padding: 12px 16px !important; }
-
-      /* Forms */
-      .form-row { grid-template-columns: 1fr !important; }
-      .cat-grid { grid-template-columns: repeat(2, 1fr) !important; }
-      .type-selector { grid-template-columns: 1fr 1fr !important; }
-
-      /* Legal layout */
-      .layout { flex-direction: column !important; padding: 20px 16px !important; gap: 24px !important; }
-      .sidebar.legal-sidebar { width: 100% !important; height: auto !important; position: relative !important; flex-direction: column !important; border: none !important; border-bottom: 1px solid #f0f0f0 !important; padding: 0 0 16px !important; }
-
-      /* Contact */
-      .main { padding: 30px 16px !important; }
-      .contact-info { flex-wrap: wrap !important; }
-
-      /* Sections */
-      .sec-head { padding: 14px 10px 8px !important; }
-      .cats { padding: 8px 10px !important; }
-    }
-
-
-    /* ── BARRE MOBILE ── */
     .mobile-bar { display: none; }
     @media (max-width: 768px) {
       .mobile-bar {
         display: flex; position: fixed; bottom: 0; left: 0; right: 0;
         background: #fff; border-top: 1px solid #f0f0f0;
         padding: 8px 4px 14px; z-index: 1000; align-items: center;
+        justify-content: space-around;
       }
       .mobile-btn {
         flex: 1; display: flex; flex-direction: column; align-items: center;
-        gap: 2px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600;
+        gap: 3px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600;
       }
-      .mobile-btn:first-child { font-size: 22px; }
-      .mobile-btn span { font-size: 10px; display: block; }
+      .mobile-btn-icon { font-size: 20px; line-height: 1; display: block; }
+      .mobile-btn-label { font-size: 10px; display: block; }
       .mobile-btn.active { color: #111; }
       .mobile-btn.mobile-join {
-        flex: none; margin: 0 8px; background: #E8383A; color: #fff !important;
+        flex: none; margin: 0 6px; background: #111; color: #fff !important;
         padding: 8px 14px; border-radius: 8px; font-size: 12px !important; font-weight: 700;
-        display: flex; flex-direction: column; align-items: center; gap: 1px;
+        display: flex; flex-direction: column; align-items: center; gap: 2px;
+        text-decoration: none;
       }
     }
   </style>
@@ -170,14 +116,13 @@
 <div class="main">
   <div class="card">
 
-    <!-- STEPS INDICATOR -->
     <div class="steps" id="stepsBar">
       <div class="step active" id="s1"><div class="step-circle">1</div><div class="step-label">Compte</div></div>
       <div class="step-line" id="l1"></div>
       <div class="step" id="s2"><div class="step-circle">2</div><div class="step-label">Profil</div></div>
     </div>
 
-    <!-- STEP 1 : COMPTE -->
+    <!-- STEP 1 -->
     <div class="step-page active" id="p1">
       <div class="card-title">Créer mon compte</div>
       <div class="card-sub">Gratuit, sans carte bancaire.</div>
@@ -217,17 +162,16 @@
       </div>
 
       <button class="btn-submit" id="btnStep1" onclick="validerEtape1()">Continuer →</button>
-      <p class="terms">En créant un compte, tu acceptes nos <a href="#">CGU</a> et notre <a href="#">Politique de confidentialité</a>.</p>
+      <p class="terms">En créant un compte, tu acceptes nos <a href="/legal">CGU</a> et notre <a href="/legal">Politique de confidentialité</a>.</p>
     </div>
 
-    <!-- STEP 2 : PROFIL -->
+    <!-- STEP 2 -->
     <div class="step-page" id="p2">
-      <div class="card-title" id="step2Title">Ton profil talent</div>
+      <div class="card-title">Ton profil talent</div>
       <div class="card-sub">Quelques infos pour te présenter.</div>
 
       <div class="form-error" id="profilError"></div>
 
-      <!-- CATEGORIE (talent seulement) -->
       <div id="sectionCategorie">
         <div class="form-group">
           <label class="form-label">Ta catégorie *</label>
@@ -240,15 +184,17 @@
             <option value="createurs">📱 Créateurs de contenu</option>
             <option value="mode">👗 Mode / Mannequinat</option>
             <option value="art">🎨 Art & Création</option>
-            <option value="talents">✨ Talents variés</option>
+            <option value="talents">✨ Performances & Talents uniques</option>
             <option value="animaux">🐾 Animaux</option>
+            <option value="pro">🎙️ Compétences Pro / Animation</option>
           </select>
         </div>
-        <div class="form-group" id="sousCatGroup" style="display:none;">
-          <label class="form-label">Sous-catégorie</label>
-          <select class="form-select" id="sousCatSelect">
-            <option value="">-- Choisir --</option>
-          </select>
+
+        <!-- Sous-catégories en chips -->
+        <div id="sousCatSection" style="display:none; margin-bottom:6px;">
+          <div id="sousCatLabel" style="display:block;">Spécialité</div>
+          <div class="sous-cat-wrap" id="sousCatChips"></div>
+          <input type="hidden" id="sousCatValue" value="">
         </div>
       </div>
 
@@ -257,7 +203,7 @@
         <input class="form-input" type="text" id="ville" placeholder="Paris, Lyon, Marseille…">
       </div>
 
-      <div class="form-group" id="nomSceneGroup">
+      <div class="form-group">
         <label class="form-label">Nom de scène (optionnel)</label>
         <input class="form-input" type="text" id="nomscene" placeholder="Laisse vide pour utiliser ton prénom">
       </div>
@@ -271,7 +217,7 @@
         <div class="success-icon">🎉</div>
         <div class="success-title">Bienvenue sur ShowOne !</div>
         <p class="success-sub">Ton profil est créé. Tu peux maintenant uploader ta vidéo de présentation et te faire découvrir par les recruteurs.</p>
-        <a href="/dashboard-talent" class="btn-dashboard" id="btnDashboard">Accéder à mon espace →</a>
+        <a href="/dashboard-talent" class="btn-dashboard">Accéder à mon espace →</a>
       </div>
     </div>
 
@@ -279,245 +225,282 @@
 </div>
 
 <script>
-  // Rediriger si déjà connecté
-  (function() {
-    try {
-      const u = JSON.parse(localStorage.getItem('showone_user') || '{}');
-      if (u.type_compte === 'recruteur') window.location.href = '/dashboard-recruteur';
-      else if (u.type_compte === 'talent') window.location.href = '/dashboard-talent';
-    } catch(e) {}
-  })();
-
-  const SUPABASE_URL = 'https://emiuzigtlomlrsofxqyf.supabase.co';
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtaXV6aWd0bG9tbHJzb2Z4cXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MDI4NTcsImV4cCI6MjA5MzQ3ODg1N30.Cwe-Z1vNGc-puz8jEnHdMMCwllNbl9fRAdwLe5zWyIY';
-
-  let typeCompte = 'talent';
-  let _authData = null;
-
-  const sousCats = {
-    acting: ['Acteur cinéma','Acteur série TV','Acteur publicité','Figuration','Voix off / doublage','Acteur théâtre'],
-    musique: ['Chanteur solo','Groupe / Band','Rap / Hip-hop','Pop','Rock','DJ','Compositeur / Beatmaker','Musicien'],
-    danse: ['Danse urbaine (hip-hop)','Danse contemporaine','Danse classique','Danse latino','Chorégraphe'],
-    sport: ['Football','Basketball','Tennis','Sports de combat','Fitness / Coaching','Freestyle','Sports extrêmes'],
-    createurs: ['YouTuber','TikToker','Streamer','Créateur lifestyle','Créateur humour','Gaming'],
-    mode: ['Mannequin photo','Mannequin défilé','Modèle fitness','Modèle pub'],
-    art: ['Dessin / Illustration','Peinture','Sculpture','Photographie','Vidéaste / Monteur'],
-    talents: ['Magicien','Humoriste / Stand-up','Imitateur','Acrobate','Cascadeur'],
-    animaux: ['Chat','Chien','Dresseur','Autre']
-  };
-
-  function setType(type) {
-    typeCompte = type;
-    document.getElementById('btn-talent').classList.toggle('active', type === 'talent');
-    document.getElementById('btn-recruteur').classList.toggle('active', type === 'recruteur');
-  }
-
-  function updateSousCat() {
-    const cat = document.getElementById('catSelect').value;
-    const sel = document.getElementById('sousCatSelect');
-    const group = document.getElementById('sousCatGroup');
-    sel.innerHTML = '<option value="">-- Choisir --</option>';
-    if (cat && sousCats[cat]) {
-      sousCats[cat].forEach(s => { const o = document.createElement('option'); o.value = s; o.textContent = s; sel.appendChild(o); });
-      group.style.display = 'block';
-    } else { group.style.display = 'none'; }
-  }
-
-  async function validerEtape1() {
-    const prenom = document.getElementById('prenom').value.trim();
-    const nom = document.getElementById('nom').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
-    const errDiv = document.getElementById('inscriptionError');
-    errDiv.style.display = 'none';
-
-    if (!prenom || !nom) { errDiv.innerHTML = '⚠️ Merci de renseigner ton prénom et ton nom.'; errDiv.style.display = 'block'; return; }
-    if (!email) { errDiv.innerHTML = '⚠️ Merci de renseigner ton email.'; errDiv.style.display = 'block'; return; }
-    if (password.length < 8) { errDiv.innerHTML = '⚠️ Le mot de passe doit faire au moins 8 caractères.'; errDiv.style.display = 'block'; return; }
-
-    const btn = document.getElementById('btnStep1');
-    btn.disabled = true; btn.textContent = 'Création du compte…';
-
-    try {
-      // Utiliser fetch direct comme la V1 — récupère le access_token immédiatement
-      const authRes = await fetch(`${SUPABASE_URL}/auth/v1/signup`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
-        body: JSON.stringify({ email, password })
-      });
-      const authData = await authRes.json();
-
-      if (authData.error) {
-        const errMsg = authData.error.message || authData.msg || '';
-        const emailExiste = errMsg.toLowerCase().includes('already') || errMsg.toLowerCase().includes('registered') || errMsg.toLowerCase().includes('exist');
-        if (emailExiste) {
-          try {
-            const chk = await fetch(`${SUPABASE_URL}/rest/v1/utilisateurs?email=eq.${email}&select=type_compte&limit=1`, { headers: { 'apikey': SUPABASE_KEY } });
-            const chkData = await chk.json();
-            if (chkData?.[0]?.type_compte === 'recruteur') {
-              errDiv.innerHTML = "⚠️ Cette adresse est associée à un compte recruteur. <a href='/connexion' style='color:#E8383A;font-weight:700;'>Connexion →</a>";
-            } else {
-              errDiv.innerHTML = "⚠️ Cette adresse email est déjà utilisée. <a href='/connexion' style='color:#E8383A;font-weight:700;'>Connexion →</a>";
-            }
-          } catch(e) { errDiv.innerHTML = "⚠️ Email déjà utilisé. <a href='/connexion' style='color:#E8383A;font-weight:700;'>Connexion →</a>"; }
-        } else {
-          errDiv.innerHTML = '⚠️ ' + (errMsg || 'Une erreur est survenue.');
-        }
-        errDiv.style.display = 'block';
-        btn.disabled = false; btn.textContent = 'Continuer →';
-        return;
-      }
-
-      // Stocker authData pour étape 2
-      _authData = authData;
-      const userId = authData.user?.id;
-      const token = authData.access_token;
-
-      // Insérer dans utilisateurs avec le token valide
-      await fetch(`${SUPABASE_URL}/rest/v1/utilisateurs`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}`, 'Prefer': 'return=minimal' },
-        body: JSON.stringify({ id: userId, email, prenom, nom, type_compte: typeCompte, plan: 'gratuit' })
-      });
-
-      // Stocker en localStorage
-      localStorage.setItem('showone_token', token);
-      localStorage.setItem('showone_user', JSON.stringify({ id: userId, email, prenom, nom, photo_url: '', type_compte: typeCompte }));
-
-      // Passer étape 2
-      if (typeCompte === 'recruteur') {
-        // Recruteur : créer profil et rediriger directement
-        const recRes = await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}`, 'Prefer': 'return=minimal' },
-          body: JSON.stringify({ utilisateur_id: userId, nom_societe: prenom + ' ' + nom })
-        });
-        if (!recRes.ok) {
-          const errText = await recRes.text();
-          console.error('Erreur profil recruteur:', errText);
-          // Réessayer sans nom_societe
-          await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}`, 'Prefer': 'return=minimal' },
-            body: JSON.stringify({ utilisateur_id: userId })
-          });
-        }
-        // Envoyer email bienvenue recruteur
-        try {
-          await fetch('/api/send-email', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ type: 'confirmation_recruteur', to: email, prenom })
-          });
-        } catch(e) { console.log('email:', e); }
-        // Redirection directe vers dashboard recruteur
-        setTimeout(() => { window.location.href = '/dashboard-recruteur'; }, 500);
-      } else {
-        // Talent : passer à étape 2
-        document.getElementById('p1').classList.remove('active');
-        document.getElementById('s1').classList.remove('active'); document.getElementById('s1').classList.add('done');
-        document.getElementById('l1').classList.add('done');
-        document.getElementById('s2').classList.add('active');
-        document.getElementById('p2').classList.add('active');
-      }
-
-    } catch(err) {
-      console.error(err);
-      errDiv.innerHTML = '⚠️ Une erreur est survenue. Veuillez réessayer.';
-      errDiv.style.display = 'block';
-      btn.disabled = false; btn.textContent = 'Continuer →';
-    }
-  }
-
-  async function creerCompte() {
-    if (!_authData) { window.location.href = '/inscription'; return; }
-    const userId = _authData.user?.id;
-    const token = _authData.access_token;
-    const ville = document.getElementById('ville').value.trim();
-    const categorie = document.getElementById('catSelect').value;
-    const souscategorie = document.getElementById('sousCatSelect').value;
-    const nomscene = document.getElementById('nomscene').value.trim();
-    const prenom = localStorage.getItem('showone_user') ? JSON.parse(localStorage.getItem('showone_user')).prenom : '';
-    const errDiv = document.getElementById('profilError');
-    errDiv.style.display = 'none';
-
-    if (!categorie) { errDiv.innerHTML = '⚠️ Merci de choisir ta catégorie.'; errDiv.style.display = 'block'; return; }
-
-    const btn = document.getElementById('btnStep2');
-    btn.disabled = true; btn.textContent = 'Création du profil…';
-
-    try {
-      // Mettre à jour ville dans utilisateurs
-      if (ville) {
-        await fetch(`${SUPABASE_URL}/rest/v1/utilisateurs?id=eq.${userId}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}`, 'Prefer': 'return=minimal' },
-          body: JSON.stringify({ ville })
-        });
-      }
-
-      // Créer profil talent
-      await fetch(`${SUPABASE_URL}/rest/v1/profils_talents`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}`, 'Prefer': 'return=minimal' },
-        body: JSON.stringify({
-          utilisateur_id: userId,
-          nom_scene: nomscene || prenom,
-          categorie: categorie || 'autre',
-          sous_categorie: souscategorie || null
-        })
-      });
-
-      // Envoyer email bienvenue talent
-      try {
-        const emailTalent = document.getElementById('email').value.trim();
-        await fetch('/api/send-email', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ type: 'confirmation_talent', to: emailTalent, prenom: JSON.parse(localStorage.getItem('showone_user')||'{}').prenom || '' })
-        });
-      } catch(e) { console.log('email:', e); }
-      // Succès
-      document.getElementById('p2').classList.remove('active');
-      document.getElementById('stepsBar').style.display = 'none';
-      document.getElementById('success').classList.add('active');
-
-    } catch(err) {
-      console.error(err);
-      errDiv.innerHTML = '⚠️ Une erreur est survenue. Veuillez réessayer.';
-      errDiv.style.display = 'block';
-      btn.disabled = false; btn.textContent = 'Créer mon profil ✓';
-    }
-  }
-</script>
-
-<!-- BARRE MOBILE -->
-<div class="mobile-bar" id="mobileBar">
-  <a href="/" class="mobile-btn" id="mb-home">🏠<span>Accueil</span></a>
-  <a href="/castings" class="mobile-btn" id="mb-castings">🎬<span>Castings</span></a>
-  <a href="/messagerie" class="mobile-btn" id="mb-msg">💬<span>Messages</span></a>
-  <a href="/connexion" class="mobile-btn mobile-join" id="mb-auth" style="background:#111;">Connexion</a>
-</div>
-<script>
 (function() {
   try {
     const u = JSON.parse(localStorage.getItem('showone_user') || '{}');
-    const btn = document.getElementById('mb-auth');
-    if (u && u.id) {
-      const dashboard = u.type_compte === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
-      btn.href = dashboard;
-      btn.textContent = '👤';
-      btn.innerHTML = '👤<span>Mon espace</span>';
-      btn.style.background = '#111';
-    }
+    if (u.type_compte === 'recruteur') window.location.href = '/dashboard-recruteur';
+    else if (u.type_compte === 'talent') window.location.href = '/dashboard-talent';
   } catch(e) {}
-  // Marquer page active
-  const path = window.location.pathname;
-  if (path === '/' || path === '/index') document.getElementById('mb-home').classList.add('active');
-  else if (path.includes('inscription')) { /* déjà sur la page */ }
-  else if (path.includes('castings')) document.getElementById('mb-castings').classList.add('active');
-  else if (path.includes('messagerie')) document.getElementById('mb-msg').classList.add('active');
 })();
+
+const SUPABASE_URL = 'https://emiuzigtlomlrsofxqyf.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtaXV6aWd0bG9tbHJzb2Z4cXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MDI4NTcsImV4cCI6MjA5MzQ3ODg1N30.Cwe-Z1vNGc-puz8jEnHdMMCwllNbl9fRAdwLe5zWyIY';
+
+let typeCompte = 'talent';
+let _authData = null;
+
+// ── 10 CATÉGORIES + SOUS-CATÉGORIES COMPLÈTES ──
+const sousCats = {
+  acting: [
+    'Acteur cinéma', 'Acteur série TV', 'Acteur publicité', 'Figuration',
+    'Voix off / Doublage', 'Acteur théâtre', 'Acteur comédie musicale'
+  ],
+  musique: [
+    'Chanteur solo', 'Chanteur lyrique / Opéra', 'Groupe / Band',
+    'Rap / Hip-hop', 'Pop', 'Rock', 'R&B / Soul', 'Jazz / Blues',
+    'Électro / DJ', 'Compositeur / Beatmaker', 'Musicien instrumentiste',
+    'Pianiste', 'Guitariste', 'Violoniste', 'Batteur'
+  ],
+  danse: [
+    'Danse urbaine (hip-hop)', 'Danse contemporaine', 'Danse classique / Ballet',
+    'Danse latino (salsa, bachata…)', 'Danse orientale', 'Danse africaine',
+    'Claquettes', 'Popping / Locking', 'Break dance', 'Chorégraphe'
+  ],
+  sport: [
+    'Football', 'Basketball', 'Tennis', 'Sports de combat (MMA, boxe…)',
+    'Fitness / Coaching sportif', 'Freestyle football', 'Skateboard',
+    'Sports extrêmes', 'Natation', 'Athlétisme', 'Rugby', 'Volleyball',
+    'Escalade', 'Équitation'
+  ],
+  createurs: [
+    'YouTuber', 'TikToker', 'Instagrameur', 'Streamer / Gaming',
+    'Créateur lifestyle', 'Créateur humour / Sketchs', 'Vlogger',
+    'Podcaster', 'Créateur beauté / Mode', 'Créateur food'
+  ],
+  mode: [
+    'Mannequin photo — Femme', 'Mannequin photo — Homme',
+    'Mannequin photo — Enfant', 'Mannequin Curvy femme',
+    'Mannequin Curvy homme', 'Mannequin défilé', 'Modèle fitness',
+    'Modèle publicité', 'Modèle lingerie', 'Modèle beauté / Cosmétique'
+  ],
+  art: [
+    'Dessin / Illustration', 'Peinture', 'Sculpture', 'Photographie artistique',
+    'Vidéaste / Réalisateur', 'Monteur vidéo', 'Graffiti / Street art',
+    'Calligraphie', 'Artiste numérique / Digital art'
+  ],
+  talents: [
+    'Magicien / Illusionniste', 'Humoriste / Stand-up', 'Imitateur',
+    'Acrobate / Contorsionniste', 'Cascadeur', 'Cracheur de feu',
+    'Jongleur', 'Mime', 'Marionnettiste', 'Beatboxer',
+    'Artiste de rue', 'Escape artist'
+  ],
+  animaux: [
+    'Chien dressé', 'Chat', 'Cheval / Équitation', 'Perroquet / Oiseaux',
+    'Animaux exotiques', 'Dresseur animalier', 'Animal acteur'
+  ],
+  pro: [
+    'Animateur TV / Radio', 'Présentateur événements', 'MC / Maître de cérémonie',
+    'Coach vocal', 'Coach artistique', 'Directeur artistique',
+    'Maquilleur artistique', 'Coiffeur styliste', 'Chef cuisinier',
+    'Barman / Flair bartending'
+  ]
+};
+
+function setType(type) {
+  typeCompte = type;
+  document.getElementById('btn-talent').classList.toggle('active', type === 'talent');
+  document.getElementById('btn-recruteur').classList.toggle('active', type === 'recruteur');
+}
+
+function updateSousCat() {
+  const cat = document.getElementById('catSelect').value;
+  const section = document.getElementById('sousCatSection');
+  const chipsWrap = document.getElementById('sousCatChips');
+  document.getElementById('sousCatValue').value = '';
+
+  if (cat && sousCats[cat]) {
+    chipsWrap.innerHTML = sousCats[cat].map(s =>
+      `<div class="sous-cat-chip" onclick="selectSousCat(this, '${s.replace(/'/g, "\\'")}')">${s}</div>`
+    ).join('');
+    section.style.display = 'block';
+  } else {
+    section.style.display = 'none';
+    chipsWrap.innerHTML = '';
+  }
+}
+
+function selectSousCat(el, val) {
+  document.querySelectorAll('.sous-cat-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('sousCatValue').value = val;
+}
+
+async function validerEtape1() {
+  const prenom = document.getElementById('prenom').value.trim();
+  const nom = document.getElementById('nom').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const errDiv = document.getElementById('inscriptionError');
+  errDiv.style.display = 'none';
+
+  if (!prenom || !nom) { errDiv.innerHTML = '⚠️ Merci de renseigner ton prénom et ton nom.'; errDiv.style.display = 'block'; return; }
+  if (!email) { errDiv.innerHTML = '⚠️ Merci de renseigner ton email.'; errDiv.style.display = 'block'; return; }
+  if (password.length < 8) { errDiv.innerHTML = '⚠️ Le mot de passe doit faire au moins 8 caractères.'; errDiv.style.display = 'block'; return; }
+
+  const btn = document.getElementById('btnStep1');
+  btn.disabled = true; btn.textContent = 'Création du compte…';
+
+  try {
+    const authRes = await fetch(`${SUPABASE_URL}/auth/v1/signup`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
+      body: JSON.stringify({ email, password })
+    });
+    const authData = await authRes.json();
+
+    if (authData.error) {
+      const errMsg = authData.error.message || authData.msg || '';
+      const emailExiste = errMsg.toLowerCase().includes('already') || errMsg.toLowerCase().includes('registered') || errMsg.toLowerCase().includes('exist');
+      if (emailExiste) {
+        try {
+          const chk = await fetch(`${SUPABASE_URL}/rest/v1/utilisateurs?email=eq.${email}&select=type_compte&limit=1`, { headers: { 'apikey': SUPABASE_KEY } });
+          const chkData = await chk.json();
+          if (chkData?.[0]?.type_compte === 'recruteur') {
+            errDiv.innerHTML = "⚠️ Cette adresse est associée à un compte recruteur. <a href='/connexion' style='color:#E8383A;font-weight:700;'>Connexion →</a>";
+          } else {
+            errDiv.innerHTML = "⚠️ Cette adresse email est déjà utilisée. <a href='/connexion' style='color:#E8383A;font-weight:700;'>Connexion →</a>";
+          }
+        } catch(e) { errDiv.innerHTML = "⚠️ Email déjà utilisé. <a href='/connexion' style='color:#E8383A;font-weight:700;'>Connexion →</a>"; }
+      } else {
+        errDiv.innerHTML = '⚠️ ' + (errMsg || 'Une erreur est survenue.');
+      }
+      errDiv.style.display = 'block';
+      btn.disabled = false; btn.textContent = 'Continuer →';
+      return;
+    }
+
+    _authData = authData;
+    const userId = authData.user?.id;
+    const token = authData.access_token;
+
+    await fetch(`${SUPABASE_URL}/rest/v1/utilisateurs`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}`, 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ id: userId, email, prenom, nom, type_compte: typeCompte, plan: 'gratuit' })
+    });
+
+    localStorage.setItem('showone_token', token);
+    localStorage.setItem('showone_user', JSON.stringify({ id: userId, email, prenom, nom, photo_url: '', type_compte: typeCompte }));
+
+    if (typeCompte === 'recruteur') {
+      const recRes = await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}`, 'Prefer': 'return=minimal' },
+        body: JSON.stringify({ utilisateur_id: userId, nom_societe: prenom + ' ' + nom })
+      });
+      if (!recRes.ok) {
+        await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}`, 'Prefer': 'return=minimal' },
+          body: JSON.stringify({ utilisateur_id: userId })
+        });
+      }
+      try {
+        await fetch('/api/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'confirmation_recruteur', to: email, prenom })
+        });
+      } catch(e) {}
+      setTimeout(() => { window.location.href = '/dashboard-recruteur'; }, 500);
+    } else {
+      document.getElementById('p1').classList.remove('active');
+      document.getElementById('s1').classList.remove('active');
+      document.getElementById('s1').classList.add('done');
+      document.getElementById('l1').classList.add('done');
+      document.getElementById('s2').classList.add('active');
+      document.getElementById('p2').classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+  } catch(err) {
+    console.error(err);
+    errDiv.innerHTML = '⚠️ Une erreur est survenue. Veuillez réessayer.';
+    errDiv.style.display = 'block';
+    btn.disabled = false; btn.textContent = 'Continuer →';
+  }
+}
+
+async function creerCompte() {
+  if (!_authData) { window.location.href = '/inscription'; return; }
+  const userId = _authData.user?.id;
+  const token = _authData.access_token;
+  const ville = document.getElementById('ville').value.trim();
+  const categorie = document.getElementById('catSelect').value;
+  const souscategorie = document.getElementById('sousCatValue').value;
+  const nomscene = document.getElementById('nomscene').value.trim();
+  const userObj = JSON.parse(localStorage.getItem('showone_user') || '{}');
+  const prenom = userObj.prenom || '';
+  const email = userObj.email || '';
+  const errDiv = document.getElementById('profilError');
+  errDiv.style.display = 'none';
+
+  if (!categorie) { errDiv.innerHTML = '⚠️ Merci de choisir ta catégorie.'; errDiv.style.display = 'block'; return; }
+
+  const btn = document.getElementById('btnStep2');
+  btn.disabled = true; btn.textContent = 'Création du profil…';
+
+  try {
+    if (ville) {
+      await fetch(`${SUPABASE_URL}/rest/v1/utilisateurs?id=eq.${userId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}`, 'Prefer': 'return=minimal' },
+        body: JSON.stringify({ ville })
+      });
+    }
+
+    await fetch(`${SUPABASE_URL}/rest/v1/profils_talents`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}`, 'Prefer': 'return=minimal' },
+      body: JSON.stringify({
+        utilisateur_id: userId,
+        nom_scene: nomscene || prenom,
+        categorie: categorie,
+        sous_categorie: souscategorie || null
+      })
+    });
+
+    try {
+      await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'confirmation_talent', to: email, prenom })
+      });
+    } catch(e) {}
+
+    document.getElementById('p2').classList.remove('active');
+    document.getElementById('stepsBar').style.display = 'none';
+    document.getElementById('success').classList.add('active');
+    window.scrollTo(0, 0);
+
+  } catch(err) {
+    console.error(err);
+    errDiv.innerHTML = '⚠️ Une erreur est survenue. Veuillez réessayer.';
+    errDiv.style.display = 'block';
+    btn.disabled = false; btn.textContent = 'Créer mon profil ✓';
+  }
+}
 </script>
+
+<!-- BARRE MOBILE -->
+<div class="mobile-bar">
+  <a href="/" class="mobile-btn">
+    <span class="mobile-btn-icon">🏠</span>
+    <span class="mobile-btn-label">Accueil</span>
+  </a>
+  <a href="/castings" class="mobile-btn">
+    <span class="mobile-btn-icon">🎬</span>
+    <span class="mobile-btn-label">Castings</span>
+  </a>
+  <a href="/connexion" class="mobile-btn">
+    <span class="mobile-btn-icon">🔑</span>
+    <span class="mobile-btn-label">Connexion</span>
+  </a>
+  <a href="/inscription" class="mobile-btn mobile-join">
+    <span class="mobile-btn-icon">✨</span>
+    <span class="mobile-btn-label">S'inscrire</span>
+  </a>
+</div>
+
 </body>
 </html>
