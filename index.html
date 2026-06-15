@@ -525,6 +525,19 @@ async function chargerCastings() {
 function ouvrirVideo(pid, nom, cat, talentId) {
   if (!pid) return;
   jouer(pid);
+  // Incrémenter les vues
+  const video = allTalents.find(v => v.playback_id === pid);
+  if (video?.id) {
+    sb.from('videos').update({ vues: (video.vues||0) + 1 }).eq('id', video.id).then(() => {
+      video.vues = (video.vues||0) + 1;
+      // Mettre à jour le compteur affiché sur la carte
+      document.querySelectorAll('.tcard-views').forEach(el => {
+        if (el.closest('.tcard')?.onclick?.toString().includes(pid)) {
+          el.textContent = '👁 ' + video.vues.toLocaleString('fr-FR');
+        }
+      });
+    });
+  }
   document.getElementById('modalName').textContent = nom;
   document.getElementById('modalCat').textContent = cat;
   document.getElementById('modalBtn').textContent = '✉ Contacter ce talent';
