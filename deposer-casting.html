@@ -7,25 +7,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; background: #fff; color: #111; min-height: 100vh; }
-    nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; border-bottom: 1px solid #f0f0f0; }
+    body { font-family: 'Inter', sans-serif; background: #fff; color: #111; min-height: 100vh; padding-bottom: 40px; }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid #f0f0f0; }
     .logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; }
     .logo span { color: #E8383A; }
     .btn-back { font-size: 13px; color: #999; text-decoration: none; }
-    .btn-back:hover { color: #111; }
-    .main { max-width: 600px; margin: 0 auto; padding: 48px 20px 80px; }
-    h1 { font-size: 32px; font-weight: 900; letter-spacing: -1px; margin-bottom: 6px; }
-    .sub { font-size: 14px; color: #999; margin-bottom: 36px; line-height: 1.6; }
+    .main { max-width: 600px; margin: 0 auto; padding: 32px 16px 80px; }
+    h1 { font-size: 28px; font-weight: 900; letter-spacing: -1px; margin-bottom: 6px; }
+    .sub { font-size: 14px; color: #999; margin-bottom: 28px; line-height: 1.6; }
 
-    /* UPLOAD VIDEO */
-    .upload-zone { border: 2px dashed #e8e8e8; border-radius: 12px; padding: 28px; text-align: center; cursor: pointer; margin-bottom: 24px; transition: all 0.15s; }
+    .upload-zone { border: 2px dashed #e8e8e8; border-radius: 12px; padding: 28px; text-align: center; cursor: pointer; margin-bottom: 20px; transition: all 0.15s; }
     .upload-zone:hover { border-color: #bbb; background: #fafafa; }
-    .upload-zone.has-video { border-style: solid; border-color: #111; }
     .upload-ico { font-size: 32px; margin-bottom: 8px; }
     .upload-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 4px; }
     .upload-sub { font-size: 12px; color: #bbb; }
     .upload-tip { font-size: 12px; color: #E8383A; margin-top: 8px; font-weight: 500; }
-    .video-preview { display: none; margin-bottom: 24px; }
+    .video-preview { display: none; margin-bottom: 20px; }
     .video-preview video { width: 100%; border-radius: 10px; max-height: 240px; background: #000; display: block; }
     .btn-retirer { margin-top: 8px; padding: 7px 16px; border-radius: 7px; border: 1px solid #e8e8e8; background: transparent; font-size: 12px; font-weight: 600; color: #999; cursor: pointer; }
     .progress-wrap { display: none; margin-bottom: 20px; }
@@ -33,7 +30,6 @@
     .progress-fill { height: 100%; background: #E8383A; border-radius: 3px; width: 0%; transition: width 0.3s; }
     .progress-label { font-size: 12px; color: #999; text-align: center; }
 
-    /* FORM */
     .form-group { margin-bottom: 16px; }
     .form-label { display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
     .form-input { width: 100%; padding: 12px 14px; border: 1.5px solid #e8e8e8; border-radius: 9px; font-size: 14px; font-family: 'Inter', sans-serif; outline: none; color: #111; background: #fff; }
@@ -42,20 +38,18 @@
     textarea.form-input { resize: vertical; min-height: 100px; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-    /* CATEGORIES */
-    .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .cat-option { display: flex; align-items: center; gap: 7px; padding: 9px 12px; border-radius: 8px; border: 1.5px solid #e8e8e8; cursor: pointer; font-size: 13px; font-weight: 500; }
+    .cat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .cat-option { display: flex; align-items: center; gap: 7px; padding: 11px 12px; border-radius: 8px; border: 1.5px solid #e8e8e8; cursor: pointer; font-size: 13px; font-weight: 500; }
     .cat-option input { display: none; }
     .cat-option:has(input:checked) { border-color: #111; background: #111; color: #fff; }
 
-    /* REMUNERATION */
     .remun-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-    .remun-option { padding: 10px 12px; border-radius: 8px; border: 1.5px solid #e8e8e8; cursor: pointer; text-align: center; font-size: 13px; font-weight: 500; }
+    .remun-option { padding: 11px 12px; border-radius: 8px; border: 1.5px solid #e8e8e8; cursor: pointer; text-align: center; font-size: 13px; font-weight: 500; }
     .remun-option input { display: none; }
     .remun-option:has(input:checked) { border-color: #111; background: #111; color: #fff; }
 
-    .form-error { background: #fff0f0; border: 1px solid #ffd0d0; border-radius: 8px; padding: 11px 13px; font-size: 13px; color: #cc2e30; margin-bottom: 14px; display: none; }
-    .btn-submit { width: 100%; padding: 15px; border-radius: 10px; background: #111; color: #fff; border: none; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 8px; }
+    .form-error { background: #fff0f0; border: 1px solid #ffd0d0; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #cc2e30; margin-bottom: 14px; display: none; line-height: 1.5; }
+    .btn-submit { width: 100%; padding: 16px; border-radius: 10px; background: #111; color: #fff; border: none; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 8px; }
     .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
 
     .success-box { display: none; text-align: center; padding: 48px 20px; }
@@ -65,9 +59,7 @@
     .btn-voir { display: inline-block; padding: 12px 28px; border-radius: 9px; background: #111; color: #fff; text-decoration: none; font-size: 14px; font-weight: 700; }
 
     @media (max-width: 600px) {
-      nav { padding: 14px 20px; }
       .form-row { grid-template-columns: 1fr; }
-      .cat-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -80,14 +72,14 @@
 <div class="main">
   <div id="formSection">
     <h1>Déposer un casting</h1>
-    <p class="sub">Publiez votre annonce gratuitement et touchez des milliers de talents en France.</p>
+    <p class="sub">Publiez votre annonce gratuitement et touchez des milliers de talents.</p>
 
     <!-- VIDEO -->
     <div class="upload-zone" id="videoUploadZone" onclick="document.getElementById('videoFileInput').click()">
-      <div class="upload-ico" id="uploadIco">🎬</div>
-      <div class="upload-title" id="uploadTitle">Ajouter une vidéo de présentation</div>
+      <div class="upload-ico">🎬</div>
+      <div class="upload-title">Ajouter une vidéo (optionnel)</div>
       <div class="upload-sub">MP4, MOV · max 2 minutes</div>
-      <div class="upload-tip">Les castings avec vidéo reçoivent 3x plus de candidatures</div>
+      <div class="upload-tip">Les castings avec vidéo reçoivent 3× plus de candidatures</div>
       <input type="file" accept="video/*" id="videoFileInput" onchange="selectionnerVideo(this)" style="display:none">
     </div>
     <div class="video-preview" id="videoPreview">
@@ -161,7 +153,7 @@
   <div class="success-box" id="successBox">
     <div class="success-ico">🎉</div>
     <div class="success-title">Casting publié !</div>
-    <p class="success-sub">Votre casting est maintenant visible par tous les talents ShowOne.<br>Vous recevrez les candidatures dans votre espace recruteur.</p>
+    <p class="success-sub">Votre casting est visible par tous les talents ShowOne.<br>Les candidatures arrivent dans votre espace recruteur.</p>
     <a href="/castings" class="btn-voir">Voir tous les castings →</a>
   </div>
 </div>
@@ -182,8 +174,7 @@ function selectionnerVideo(input) {
   const file = input.files[0]; if (!file) return;
   if (!file.type.startsWith('video/')) { alert('Merci de sélectionner un fichier vidéo.'); input.value=''; return; }
   _videoFile = file;
-  const url = URL.createObjectURL(file);
-  document.getElementById('videoPreviewEl').src = url;
+  document.getElementById('videoPreviewEl').src = URL.createObjectURL(file);
   document.getElementById('videoPreview').style.display = 'block';
   document.getElementById('videoUploadZone').style.display = 'none';
 }
@@ -202,24 +193,106 @@ async function uploadVideoMux() {
   document.getElementById('progressLabel').textContent = 'Obtention URL upload…';
   document.getElementById('progressFill').style.width = '10%';
   try {
-    const urlRes = await fetch('/api/upload?action=upload-url', { headers: { 'Authorization': `Bearer ${_token}` } });
+    const urlRes = await fetch('/api/upload?action=upload-url&type=recruiter', { headers: { 'Authorization': `Bearer ${_token}` } });
     const urlData = await urlRes.json();
     if (!urlData.upload_url) throw new Error('URL Mux indisponible');
     const { upload_url, upload_id } = urlData; _videoUploadId = upload_id;
     document.getElementById('progressLabel').textContent = 'Upload de la vidéo…';
     document.getElementById('progressFill').style.width = '40%';
-    const putRes = await fetch(upload_url, { method:'PUT', headers:{'Content-Type':_videoFile.type||'video/mp4'}, body:_videoFile });
+    const putRes = await fetch(upload_url, { method:'PUT', headers:{'Content-Type': _videoFile.type||'video/mp4'}, body: _videoFile });
     if (!putRes.ok) throw new Error('Erreur envoi Mux');
     document.getElementById('progressFill').style.width = '70%';
-    document.getElementById('progressLabel').textContent = 'Traitement…';
-    for (let i=0; i<24; i++) {
-      await new Promise(r=>setTimeout(r,5000));
+    document.getElementById('progressLabel').textContent = 'Traitement vidéo…';
+    for (let i = 0; i < 24; i++) {
+      await new Promise(r => setTimeout(r, 5000));
       const pbRes = await fetch(`/api/upload?action=get-playback&upload_id=${upload_id}`);
       const pbData = await pbRes.json();
-      if (pbData.playback_id) { _videoPlaybackId=pbData.playback_id; document.getElementById('progressFill').style.width='100%'; document.getElementById('progressLabel').textContent='✅ Vidéo prête !'; return true; }
+      if (pbData.playback_id) {
+        _videoPlaybackId = pbData.playback_id;
+        document.getElementById('progressFill').style.width = '100%';
+        document.getElementById('progressLabel').textContent = '✅ Vidéo prête !';
+        return true;
+      }
     }
-    return true;
-  } catch(err) { console.error(err); return true; }
+    return true; // continuer même si pas de playback_id encore
+  } catch(err) {
+    console.error('Upload vidéo:', err);
+    return true; // on publie quand même sans vidéo
+  }
+}
+
+async function trouverRecruteurId() {
+  // Essai 1 : auth.uid() via le token JWT
+  try {
+    const meRes = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${_token}` }
+    });
+    const meData = await meRes.json();
+    const authId = meData?.id;
+    console.log('Auth ID:', authId);
+
+    if (authId) {
+      const r = await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs?utilisateur_id=eq.${authId}&select=id&limit=1`, {
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${_token}` }
+      });
+      const d = await r.json();
+      console.log('Profil recruteur par authId:', d);
+      if (d[0]?.id) return d[0].id;
+
+      // Essai 2 : chercher dans utilisateurs via authId
+      const uRes = await fetch(`${SUPABASE_URL}/rest/v1/utilisateurs?id=eq.${authId}&select=id&limit=1`, {
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${_token}` }
+      });
+      const uData = await uRes.json();
+      console.log('Utilisateurs par authId:', uData);
+      if (uData[0]?.id) {
+        const r2 = await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs?utilisateur_id=eq.${uData[0].id}&select=id&limit=1`, {
+          headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${_token}` }
+        });
+        const d2 = await r2.json();
+        if (d2[0]?.id) return d2[0].id;
+      }
+    }
+  } catch(e) { console.error('Auth lookup:', e); }
+
+  // Essai 3 : via email
+  if (_user.email) {
+    try {
+      const uRes = await fetch(`${SUPABASE_URL}/rest/v1/utilisateurs?email=eq.${encodeURIComponent(_user.email)}&select=id&limit=1`, {
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${_token}` }
+      });
+      const uData = await uRes.json();
+      console.log('Utilisateurs par email:', uData);
+      if (uData[0]?.id) {
+        const rRes = await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs?utilisateur_id=eq.${uData[0].id}&select=id&limit=1`, {
+          headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${_token}` }
+        });
+        const rData = await rRes.json();
+        console.log('Profil recruteur par email:', rData);
+        if (rData[0]?.id) return rData[0].id;
+      }
+    } catch(e) { console.error('Email lookup:', e); }
+  }
+
+  // Essai 4 : créer le profil recruteur s'il manque
+  try {
+    console.log('Création profil recruteur manquant…');
+    const meRes = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${_token}` }
+    });
+    const meData = await meRes.json();
+    const authId = meData?.id;
+    if (!authId) return null;
+
+    const createRes = await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${_token}`, 'Prefer': 'return=representation' },
+      body: JSON.stringify({ utilisateur_id: authId, nom_societe: ((_user.prenom||'') + ' ' + (_user.nom||'')).trim() || 'Recruteur' })
+    });
+    const createData = await createRes.json();
+    console.log('Profil créé:', createData);
+    return createData[0]?.id || null;
+  } catch(e) { console.error('Création profil:', e); return null; }
 }
 
 async function deposerCasting() {
@@ -233,61 +306,70 @@ async function deposerCasting() {
   const errDiv = document.getElementById('formError');
   errDiv.style.display = 'none';
 
-  if (!titre || !description || !ville || !categorie) { errDiv.innerHTML = '⚠️ Merci de remplir tous les champs obligatoires.'; errDiv.style.display='block'; return; }
+  if (!titre) { errDiv.innerHTML = '⚠️ Le titre est obligatoire.'; errDiv.style.display='block'; return; }
+  if (!description) { errDiv.innerHTML = '⚠️ La description est obligatoire.'; errDiv.style.display='block'; return; }
+  if (!ville) { errDiv.innerHTML = '⚠️ La ville est obligatoire.'; errDiv.style.display='block'; return; }
+  if (!categorie) { errDiv.innerHTML = '⚠️ Merci de choisir une catégorie.'; errDiv.style.display='block'; return; }
 
-  const btn = document.getElementById('btnSubmit'); btn.disabled=true; btn.textContent='Publication en cours…';
+  const btn = document.getElementById('btnSubmit');
+  btn.disabled = true; btn.textContent = 'Publication en cours…';
 
   try {
-    if (_videoFile) { btn.textContent='Upload de la vidéo…'; await uploadVideoMux(); }
-    btn.textContent='Publication…';
-
-    // Chercher profil recruteur — essayer plusieurs méthodes
-    let recruteurId = null;
-    
-    // Méthode 1 : par user.id directement
-    const recRes1 = await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs?utilisateur_id=eq.${_user.id}&select=id`, { headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${_token}`} });
-    const recData1 = await recRes1.json();
-    if (recData1[0]?.id) { recruteurId = recData1[0].id; }
-    
-    // Méthode 2 : chercher via l'email dans utilisateurs
-    if (!recruteurId) {
-      const uRes = await fetch(`${SUPABASE_URL}/rest/v1/utilisateurs?email=eq.${encodeURIComponent(_user.email)}&select=id`, { headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${_token}`} });
-      const uData = await uRes.json();
-      const uid = uData[0]?.id;
-      if (uid) {
-        const recRes2 = await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs?utilisateur_id=eq.${uid}&select=id`, { headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${_token}`} });
-        const recData2 = await recRes2.json();
-        if (recData2[0]?.id) { recruteurId = recData2[0].id; }
-      }
+    // Upload vidéo si présente
+    if (_videoFile) {
+      btn.textContent = 'Upload de la vidéo…';
+      await uploadVideoMux();
     }
-    
-    // Méthode 3 : créer le profil s'il n'existe pas
-    if (!recruteurId) {
-      const createRes = await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs`, {
-        method: 'POST',
-        headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${_token}`,'Prefer':'return=representation'},
-        body: JSON.stringify({ utilisateur_id: _user.id, nom_societe: _user.prenom + ' ' + _user.nom, siret: 'TEMP' + Date.now() })
-      });
-      const createData = await createRes.json();
-      recruteurId = createData[0]?.id;
-    }
-    
-    if (!recruteurId) { alert('Erreur technique. Contactez le support.'); btn.disabled=false; btn.textContent='🎬 Publier le casting'; return; }
 
-    await fetch(`${SUPABASE_URL}/rest/v1/castings`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${_token}`,'Prefer':'return=minimal'},
-      body:JSON.stringify({ recruteur_id:recruteurId, titre, description, categorie, ville, date_casting:dateCasting||null, remuneration:remun+(remunDetail?' — '+remunDetail:''), statut:'actif', video_playback_id:_videoPlaybackId||null, video_upload_id:_videoUploadId||null })
+    btn.textContent = 'Recherche du profil…';
+
+    // Trouver l'ID recruteur
+    const recruteurId = await trouverRecruteurId();
+    console.log('recruteurId final:', recruteurId);
+
+    if (!recruteurId) {
+      errDiv.innerHTML = '⚠️ Profil recruteur introuvable. Essayez de vous déconnecter et reconnecter.';
+      errDiv.style.display = 'block';
+      btn.disabled = false; btn.textContent = '🎬 Publier le casting';
+      return;
+    }
+
+    btn.textContent = 'Publication…';
+
+    // Insérer le casting
+    const castingRes = await fetch(`${SUPABASE_URL}/rest/v1/castings`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${_token}`, 'Prefer': 'return=minimal' },
+      body: JSON.stringify({
+        recruteur_id: recruteurId,
+        titre,
+        description,
+        categorie,
+        ville,
+        date_casting: dateCasting || null,
+        remuneration: remun + (remunDetail ? ' — ' + remunDetail : '') || null,
+        statut: 'actif',
+        video_playback_id: _videoPlaybackId || null,
+        video_upload_id: _videoUploadId || null
+      })
     });
 
+    if (!castingRes.ok) {
+      const errText = await castingRes.text();
+      console.error('Erreur insertion casting:', errText);
+      throw new Error('Insertion échouée: ' + errText);
+    }
+
+    // Succès
     document.getElementById('formSection').style.display = 'none';
     document.getElementById('successBox').style.display = 'block';
+    window.scrollTo(0, 0);
 
   } catch(err) {
-    console.error(err);
-    errDiv.innerHTML = '⚠️ Erreur lors de la publication. Veuillez réessayer.';
+    console.error('deposerCasting error:', err);
+    errDiv.innerHTML = '⚠️ ' + (err.message || 'Erreur lors de la publication. Veuillez réessayer.');
     errDiv.style.display = 'block';
-    btn.disabled=false; btn.textContent='🎬 Publier le casting';
+    btn.disabled = false; btn.textContent = '🎬 Publier le casting';
   }
 }
 </script>
