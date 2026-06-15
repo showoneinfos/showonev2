@@ -161,6 +161,12 @@
         <input class="form-input" type="password" id="password" placeholder="8 caractères minimum" autocomplete="new-password">
       </div>
 
+      <!-- Champ visible uniquement pour les recruteurs -->
+      <div class="form-group" id="nomSocieteGroup" style="display:none;">
+        <label class="form-label">Nom de société / Agence <span style="color:#bbb;font-weight:400;">(optionnel)</span></label>
+        <input class="form-input" type="text" id="nomSociete" placeholder="Ex : ACT Diffusion, Agence Studio…">
+      </div>
+
       <button class="btn-submit" id="btnStep1" onclick="validerEtape1()">Continuer →</button>
       <p class="terms">En créant un compte, tu acceptes nos <a href="/legal">CGU</a> et notre <a href="/legal">Politique de confidentialité</a>.</p>
     </div>
@@ -300,6 +306,8 @@ function setType(type) {
   typeCompte = type;
   document.getElementById('btn-talent').classList.toggle('active', type === 'talent');
   document.getElementById('btn-recruteur').classList.toggle('active', type === 'recruteur');
+  // Afficher champ nom société uniquement pour recruteur
+  document.getElementById('nomSocieteGroup').style.display = type === 'recruteur' ? 'block' : 'none';
 }
 
 function updateSousCat() {
@@ -383,10 +391,11 @@ async function validerEtape1() {
     localStorage.setItem('showone_user', JSON.stringify({ id: userId, email, prenom, nom, photo_url: '', type_compte: typeCompte }));
 
     if (typeCompte === 'recruteur') {
+      const nomSociete = document.getElementById('nomSociete').value.trim() || (prenom + ' ' + nom).trim();
       const recRes = await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}`, 'Prefer': 'return=minimal' },
-        body: JSON.stringify({ utilisateur_id: userId, nom_societe: prenom + ' ' + nom })
+        body: JSON.stringify({ utilisateur_id: userId, nom_societe: nomSociete })
       });
       if (!recRes.ok) {
         await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs`, {
