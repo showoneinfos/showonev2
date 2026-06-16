@@ -8,8 +8,6 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Inter', sans-serif; background: #f8f8f8; color: #111; display: flex; min-height: 100vh; }
-
-    /* SIDEBAR */
     .sidebar { width: 220px; min-height: 100vh; background: #fff; border-right: 1px solid #f0f0f0; display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 50; }
     .sidebar-logo { padding: 24px 20px 18px; border-bottom: 1px solid #f0f0f0; }
     .sidebar-logo a { font-size: 18px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; }
@@ -28,15 +26,16 @@
     .nav-item-danger:hover { background: #fff0f0; }
     .nav-badge { margin-left: auto; background: #E8383A; color: #fff; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 100px; }
     .sidebar-bottom { padding: 12px 10px; border-top: 1px solid #f0f0f0; }
+    .s-lang { display: flex; gap: 4px; padding: 8px 10px; }
+    .s-lang-btn { flex: 1; padding: 7px; border-radius: 7px; border: 1.5px solid #e0e0e0; font-size: 12px; font-weight: 700; cursor: pointer; background: #fff; color: #888; text-align: center; transition: all 0.15s; }
+    .s-lang-btn.active { background: #111; border-color: #111; color: #fff; }
 
-    /* MAIN */
     .main { margin-left: 220px; flex: 1; padding: 32px 36px; max-width: calc(100% - 220px); }
     .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; }
     .topbar h1 { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; }
     .topbar p { font-size: 13px; color: #999; margin-top: 2px; }
     .btn-casting { padding: 9px 18px; border-radius: 8px; border: none; background: #111; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
 
-    /* BANNER CANDIDATURES */
     .cand-banner { background: #111; border-radius: 12px; padding: 20px 24px; margin-bottom: 24px; display: none; align-items: center; gap: 20px; }
     .cand-banner-info { flex: 1; }
     .cand-banner-info h3 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px; }
@@ -46,14 +45,12 @@
     .cand-count-label { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 3px; }
     .btn-pro-banner { padding: 11px 20px; border-radius: 8px; border: none; background: #E8383A; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; }
 
-    /* STATS */
     .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
     .stat-card { background: #fff; border: 1px solid #f0f0f0; border-radius: 12px; padding: 18px 20px; }
     .stat-ico { font-size: 20px; margin-bottom: 10px; }
     .stat-num { font-size: 26px; font-weight: 900; color: #111; letter-spacing: -0.5px; }
     .stat-label { font-size: 11px; color: #bbb; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
 
-    /* ACTIONS */
     .actions-row { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
     .action-btn { display: inline-flex; align-items: center; gap: 7px; padding: 10px 18px; border-radius: 9px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; border: 1px solid #e8e8e8; background: #fff; color: #111; transition: border-color 0.15s; }
     .action-btn:hover { border-color: #bbb; }
@@ -61,13 +58,11 @@
     .action-btn .badge { background: #E8383A; color: #fff; border-radius: 100px; padding: 1px 7px; font-size: 10px; font-weight: 700; }
     .action-btn.primary .badge { background: #fff; color: #111; }
 
-    /* CONTENT */
     .content-grid { display: grid; grid-template-columns: 1fr 280px; gap: 16px; }
     .card { background: #fff; border: 1px solid #f0f0f0; border-radius: 12px; padding: 20px 22px; }
     .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
     .card-title { font-size: 14px; font-weight: 700; color: #111; }
 
-    /* SEARCH & FILTRES */
     .search-wrap { position: relative; margin-bottom: 14px; }
     .search-wrap input { width: 100%; padding: 11px 16px 11px 38px; border: 1px solid #e8e8e8; border-radius: 9px; font-size: 13px; font-family: 'Inter', sans-serif; outline: none; color: #111; }
     .search-wrap input:focus { border-color: #111; }
@@ -77,7 +72,6 @@
     .chip:hover { border-color: #bbb; color: #333; }
     .chip.active { background: #111; border-color: #111; color: #fff; }
 
-    /* TALENTS GRID */
     .talents-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
     .talent-card { background: #fff; border: 1px solid #f0f0f0; border-radius: 12px; overflow: hidden; cursor: pointer; transition: box-shadow 0.15s; }
     .talent-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
@@ -90,7 +84,6 @@
     .talent-loc { font-size: 11px; color: #bbb; margin-top: 2px; }
     .btn-contact { padding: 6px 14px; border-radius: 7px; border: none; background: #111; color: #fff; font-size: 11px; font-weight: 700; cursor: pointer; }
 
-    /* RIGHT COL */
     .right-col { display: flex; flex-direction: column; gap: 14px; }
     .sub-card { background: #111; border-radius: 10px; padding: 16px 18px; }
     .sub-card h3 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 4px; }
@@ -111,21 +104,9 @@
     .fav-cat { font-size: 11px; color: #bbb; }
     .btn-fav-contact { padding: 5px 10px; border-radius: 6px; border: none; background: #111; color: #fff; font-size: 10px; font-weight: 700; cursor: pointer; margin-left: auto; flex-shrink: 0; }
 
-    /* ── MODAL CONTACT — CORRIGÉE ── */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px; }
     .modal-overlay.open { display: flex; }
-    .modal {
-      background: #fff;
-      border-radius: 16px;
-      padding: 20px 22px;
-      width: 100%;
-      max-width: 460px;
-      /* Hauteur max = 85% viewport, scroll si dépassement */
-      max-height: 85vh;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-    }
+    .modal { background: #fff; border-radius: 16px; padding: 20px 22px; width: 100%; max-width: 460px; max-height: 85vh; overflow-y: auto; display: flex; flex-direction: column; }
     .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-shrink: 0; }
     .modal-head h2 { font-size: 17px; font-weight: 900; letter-spacing: -0.5px; }
     .modal-close-btn { width: 28px; height: 28px; border-radius: 7px; border: 1px solid #e8e8e8; background: transparent; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
@@ -138,14 +119,11 @@
     .modal-input:focus { border-color: #111; }
     .modal-textarea { width: 100%; padding: 10px 12px; border: 1px solid #e8e8e8; border-radius: 8px; font-size: 13px; font-family: 'Inter', sans-serif; outline: none; resize: vertical; min-height: 70px; color: #111; margin-bottom: 12px; }
     .modal-textarea:focus { border-color: #111; }
-    /* Boutons toujours visibles en bas */
     .modal-btns { display: flex; gap: 10px; flex-shrink: 0; margin-top: auto; padding-top: 4px; }
     .btn-cancel { padding: 11px 18px; border-radius: 8px; border: 1px solid #e8e8e8; background: transparent; font-size: 13px; font-weight: 600; cursor: pointer; color: #999; }
     .btn-send { flex: 1; padding: 11px; border-radius: 8px; border: none; background: #111; color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; }
-    /* Vidéo dans la modal — limitée pour laisser de la place */
     #modalVideoWrap video { max-height: 180px; width: 100%; border-radius: 8px; background: #000; display: block; }
 
-    /* POPUP UPGRADE */
     .upgrade-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 500; display: none; align-items: center; justify-content: center; padding: 20px; }
     .upgrade-overlay.open { display: flex; }
     .upgrade-box { background: #fff; border-radius: 16px; padding: 36px; max-width: 440px; width: 100%; text-align: center; }
@@ -159,46 +137,23 @@
     @media (max-width: 768px) {
       .mobile-topbar { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #f0f0f0; background: #fff; }
       .topbar { display: none; }
-    }
-    /* MOBILE */
-    @media (max-width: 768px) {
       .sidebar { display: none; }
       .main { margin-left: 0; padding: 16px; max-width: 100%; padding-bottom: 80px; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
       .content-grid { grid-template-columns: 1fr; }
       .talents-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .topbar h1 { font-size: 18px; }
       .modal { max-height: 92vh; padding: 16px 18px; }
       #modalVideoWrap video { max-height: 150px; }
-      .bottom-nav { display: flex !important; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #f0f0f0; z-index: 100; padding: 8px 0 14px; }
-      .bottom-nav a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; color: #bbb; font-size: 10px; font-weight: 600; }
-      .bottom-nav a.active { color: #111; }
-      .bottom-nav a .nav-ico { font-size: 20px; }
     }
-    @media (min-width: 769px) { .bottom-nav { display: none !important; } }
 
-    /* BARRE MOBILE */
     .mobile-bar { display: none; }
     @media (max-width: 768px) {
-      .mobile-bar {
-        display: flex; position: fixed; bottom: 0; left: 0; right: 0;
-        background: #fff; border-top: 1px solid #f0f0f0;
-        padding: 8px 4px 14px; z-index: 1000; align-items: center;
-        justify-content: space-around;
-      }
-      .mobile-btn {
-        flex: 1; display: flex; flex-direction: column; align-items: center;
-        gap: 3px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600;
-      }
+      .mobile-bar { display: flex; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #f0f0f0; padding: 8px 4px 14px; z-index: 1000; align-items: center; justify-content: space-around; }
+      .mobile-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600; }
       .mobile-btn-icon { font-size: 20px; line-height: 1; display: block; }
       .mobile-btn-label { font-size: 10px; display: block; }
       .mobile-btn.active { color: #111; }
-      .mobile-btn.mobile-join {
-        flex: none; margin: 0 6px; background: #E8383A; color: #fff !important;
-        padding: 8px 14px; border-radius: 8px; font-size: 12px !important; font-weight: 700;
-        display: flex; flex-direction: column; align-items: center; gap: 2px;
-        text-decoration: none;
-      }
+      .mobile-btn.mobile-join { flex: none; margin: 0 6px; background: #E8383A; color: #fff !important; padding: 8px 14px; border-radius: 8px; font-size: 12px !important; font-weight: 700; display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; }
     }
   </style>
 </head>
@@ -208,7 +163,7 @@
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <div class="modal-head">
-      <h2>Contacter ce talent</h2>
+      <h2 id="modalContactTitle">Contacter ce talent</h2>
       <button class="modal-close-btn" onclick="closeModal()">✕</button>
     </div>
     <div id="modalVideoWrap" style="margin-bottom:10px;"></div>
@@ -219,13 +174,13 @@
         <div class="modal-talent-cat" id="modalCat"></div>
       </div>
     </div>
-    <label class="modal-label">Objet</label>
-    <input id="msgObjet" class="modal-input" type="text" placeholder="Ex : Audition comédie musicale — Juin 2025">
-    <label class="modal-label">Message</label>
-    <textarea id="msgContenu" class="modal-textarea" placeholder="Bonjour, nous avons découvert votre profil ShowOne et…"></textarea>
+    <label class="modal-label" id="modalLabelObjet">Objet</label>
+    <input id="msgObjet" class="modal-input" type="text">
+    <label class="modal-label" id="modalLabelMessage">Message</label>
+    <textarea id="msgContenu" class="modal-textarea"></textarea>
     <div class="modal-btns">
-      <button class="btn-cancel" onclick="closeModal()">Annuler</button>
-      <button class="btn-send" onclick="sendMsg()">Envoyer ✓</button>
+      <button class="btn-cancel" id="btnCancelModal" onclick="closeModal()">Annuler</button>
+      <button class="btn-send" id="btnSendModal" onclick="sendMsg()">Envoyer ✓</button>
     </div>
   </div>
 </div>
@@ -234,16 +189,16 @@
 <div class="upgrade-overlay" id="upgradeOverlay">
   <div class="upgrade-box">
     <div style="font-size:40px;margin-bottom:12px;">🔒</div>
-    <h2>Passez Recruteur Pro</h2>
-    <p>Vous avez <strong id="upgradeNbCands" style="color:#E8383A;">X</strong> candidature(s) en attente.<br>Passez Pro pour lire les messages et contacter les talents.</p>
-    <ul class="upgrade-features">
+    <h2 id="upgradeTitle">Passez Recruteur Pro</h2>
+    <p id="upgradeDesc">Vous avez <strong id="upgradeNbCands" style="color:#E8383A;">X</strong> candidature(s) en attente.<br>Passez Pro pour lire les messages et contacter les talents.</p>
+    <ul class="upgrade-features" id="upgradeFeatures">
       <li>✅ Lire toutes les candidatures</li>
       <li>✅ Contacter tous les talents</li>
       <li>✅ Messagerie illimitée</li>
       <li>✅ Castings illimités</li>
     </ul>
-    <button class="btn-upgrade-big" onclick="lancerPaiementRecruteur()">🔍 Devenir Recruteur Pro — 19,99€/mois</button>
-    <button class="btn-close-upgrade" onclick="document.getElementById('upgradeOverlay').classList.remove('open')">Fermer</button>
+    <button class="btn-upgrade-big" id="btnUpgradeBig" onclick="lancerPaiementRecruteur()">🔍 Devenir Recruteur Pro — 19,99€/mois</button>
+    <button class="btn-close-upgrade" id="btnCloseUpgrade" onclick="document.getElementById('upgradeOverlay').classList.remove('open')">Fermer</button>
   </div>
 </div>
 
@@ -251,7 +206,7 @@
 <div class="sidebar">
   <div class="sidebar-logo">
     <a href="/">Show<span>One</span></a>
-    <p>Espace Recruteur</p>
+    <p id="sidebarLabel">Espace Recruteur</p>
   </div>
   <div class="sidebar-avatar">
     <div class="avatar-circle" id="avatarInitiales">?</div>
@@ -261,98 +216,100 @@
     </div>
   </div>
   <nav class="sidebar-nav">
-    <div class="nav-label">Mon espace</div>
-    <a href="/dashboard-recruteur" class="nav-item active">🏠 Tableau de bord</a>
-    <a href="#" class="nav-item">🔍 Rechercher des talents</a>
-    <a href="/messagerie" class="nav-item">💬 Messages <span class="nav-badge" id="msgBadgeR" style="display:none">0</span></a>
-    <a href="#" class="nav-item" onclick="voirCandidatures()">👥 Candidatures <span class="nav-badge" id="badgeCandidatures" style="display:none">0</span></a>
-    <a href="#" class="nav-item">❤️ Mes favoris</a>
-    <div class="nav-label">Gestion</div>
-    <a href="/deposer-casting" class="nav-item">🎬 Déposer un casting</a>
+    <div class="nav-label" data-fr="Mon espace" data-en="My space">Mon espace</div>
+    <a href="/dashboard-recruteur" class="nav-item active" data-fr="🏠 Tableau de bord" data-en="🏠 Dashboard">🏠 Tableau de bord</a>
+    <a href="#" class="nav-item" data-fr="🔍 Rechercher des talents" data-en="🔍 Search talents">🔍 Rechercher des talents</a>
+    <a href="/messagerie" class="nav-item" data-fr="💬 Messages" data-en="💬 Messages">💬 Messages <span class="nav-badge" id="msgBadgeR" style="display:none">0</span></a>
+    <a href="#" class="nav-item" onclick="voirCandidatures()" data-fr="👥 Candidatures" data-en="👥 Applications">👥 Candidatures <span class="nav-badge" id="badgeCandidatures" style="display:none">0</span></a>
+    <a href="#" class="nav-item" data-fr="❤️ Mes favoris" data-en="❤️ My favorites">❤️ Mes favoris</a>
+    <div class="nav-label" data-fr="Gestion" data-en="Management">Gestion</div>
+    <a href="/deposer-casting" class="nav-item" data-fr="🎬 Déposer un casting" data-en="🎬 Post a casting">🎬 Déposer un casting</a>
   </nav>
   <div class="sidebar-bottom">
-    <a href="#" onclick="seDeconnecter()" class="nav-item nav-item-danger">🚪 Déconnexion</a>
+    <div class="s-lang">
+      <button class="s-lang-btn active" onclick="setLang('fr')">🇫🇷 FR</button>
+      <button class="s-lang-btn" onclick="setLang('en')">🇺🇸 EN</button>
+    </div>
+    <a href="#" onclick="seDeconnecter()" class="nav-item nav-item-danger" data-fr="🚪 Déconnexion" data-en="🚪 Log out">🚪 Déconnexion</a>
   </div>
 </div>
 
 <!-- MAIN -->
 <div class="main">
   <div class="mobile-topbar">
-    <div style="font-size:15px;font-weight:700;">Mon espace</div>
-    <button onclick="seDeconnecter()" style="padding:8px 14px;border-radius:8px;border:1px solid #e8e8e8;background:#fff;color:#E8383A;font-size:12px;font-weight:700;cursor:pointer;">🚪 Déconnexion</button>
+    <div style="font-size:15px;font-weight:700;" id="mobileTopLabel">Mon espace</div>
+    <button onclick="seDeconnecter()" id="btnDecoMobile" style="padding:8px 14px;border-radius:8px;border:1px solid #e8e8e8;background:#fff;color:#E8383A;font-size:12px;font-weight:700;cursor:pointer;">🚪 Déconnexion</button>
   </div>
   <div class="topbar">
     <div>
       <h1 id="topbarNom">Bonjour 👋</h1>
-      <p>Explorez les talents disponibles sur ShowOne.</p>
+      <p id="topbarSub">Explorez les talents disponibles sur ShowOne.</p>
     </div>
-    <a href="/deposer-casting" class="btn-casting">🎬 Déposer un casting</a>
+    <a href="/deposer-casting" class="btn-casting" id="btnDeposerCasting">🎬 Déposer un casting</a>
   </div>
 
   <div class="cand-banner" id="candidaturesBanner">
     <div class="cand-banner-info">
-      <h3>Vous avez des candidatures en attente !</h3>
-      <p>Passez au plan Recruteur Pro pour lire les messages et contacter les talents.</p>
+      <h3 id="bannerTitle">Vous avez des candidatures en attente !</h3>
+      <p id="bannerSub">Passez au plan Recruteur Pro pour lire les messages et contacter les talents.</p>
     </div>
     <div class="cand-count">
       <div class="cand-count-num" id="bannerNbCands">0</div>
-      <div class="cand-count-label">candidature(s)</div>
+      <div class="cand-count-label" id="bannerCandLabel">candidature(s)</div>
     </div>
-    <button class="btn-pro-banner" onclick="document.getElementById('upgradeOverlay').classList.add('open');document.getElementById('upgradeNbCands').textContent=document.getElementById('bannerNbCands').textContent;">Voir les candidatures →</button>
+    <button class="btn-pro-banner" id="btnVoirCands" onclick="document.getElementById('upgradeOverlay').classList.add('open');document.getElementById('upgradeNbCands').textContent=document.getElementById('bannerNbCands').textContent;">Voir les candidatures →</button>
   </div>
 
   <div class="stats-grid">
-    <div class="stat-card"><div class="stat-ico">🔍</div><div class="stat-num" id="statTalents">—</div><div class="stat-label">Talents</div></div>
-    <div class="stat-card"><div class="stat-ico">💬</div><div class="stat-num" id="statMessages">—</div><div class="stat-label">Messages</div></div>
-    <div class="stat-card"><div class="stat-ico">🎬</div><div class="stat-num" id="statCastings">—</div><div class="stat-label">Castings</div></div>
-    <div class="stat-card"><div class="stat-ico">👥</div><div class="stat-num" id="statCandidatures">—</div><div class="stat-label">Candidatures</div></div>
+    <div class="stat-card"><div class="stat-ico">🔍</div><div class="stat-num" id="statTalents">—</div><div class="stat-label" id="statLabelTalents">Talents</div></div>
+    <div class="stat-card"><div class="stat-ico">💬</div><div class="stat-num" id="statMessages">—</div><div class="stat-label" id="statLabelMessages">Messages</div></div>
+    <div class="stat-card"><div class="stat-ico">🎬</div><div class="stat-num" id="statCastings">—</div><div class="stat-label" id="statLabelCastings">Castings</div></div>
+    <div class="stat-card"><div class="stat-ico">👥</div><div class="stat-num" id="statCandidatures">—</div><div class="stat-label" id="statLabelCandidatures">Candidatures</div></div>
   </div>
 
   <div class="actions-row">
-    <a href="/deposer-casting" class="action-btn primary">🎬 Déposer un casting</a>
-    <a href="/castings" class="action-btn">📋 Mes castings <span class="badge" id="nbCastings">0</span></a>
-    <button class="action-btn" onclick="voirCandidatures()">👥 Candidatures <span class="badge" id="nbCandidatures">0</span></button>
+    <a href="/deposer-casting" class="action-btn primary" id="actionDeposer">🎬 Déposer un casting</a>
+    <a href="/castings" class="action-btn" id="actionCastings">📋 Mes castings <span class="badge" id="nbCastings">0</span></a>
+    <button class="action-btn" onclick="voirCandidatures()" id="actionCandidatures">👥 Candidatures <span class="badge" id="nbCandidatures">0</span></button>
   </div>
 
   <div class="content-grid">
     <div>
       <div class="card">
-        <div class="card-head"><div class="card-title">Talents disponibles</div></div>
+        <div class="card-head"><div class="card-title" id="cardTalentsTitle">Talents disponibles</div></div>
         <div class="search-wrap">
           <span class="search-ico">🔍</span>
-          <input type="text" id="searchInput" placeholder="Rechercher par nom, ville, catégorie…" oninput="filtrerTalents()">
+          <input type="text" id="searchInput" oninput="filtrerTalents()">
         </div>
         <div class="filters">
-          <div class="chip active" onclick="filtrerCat('Tous', this)">Tous</div>
-          <div class="chip" onclick="filtrerCat('Acting', this)">🎬 Acting</div>
-          <div class="chip" onclick="filtrerCat('Musique', this)">🎤 Musique</div>
-          <div class="chip" onclick="filtrerCat('Danse', this)">💃 Danse</div>
-          <div class="chip" onclick="filtrerCat('Sport', this)">⚽ Sport</div>
-          <div class="chip" onclick="filtrerCat('Mode', this)">👗 Mode</div>
-          <div class="chip" onclick="filtrerCat('Art', this)">🎨 Art</div>
-          <div class="chip" onclick="filtrerCat('Animaux', this)">🐾 Animaux</div>
+          <div class="chip active" onclick="filtrerCat('Tous', this)" data-fr="Tous" data-en="All">Tous</div>
+          <div class="chip" onclick="filtrerCat('Acting', this)" data-fr="🎬 Acting" data-en="🎬 Acting">🎬 Acting</div>
+          <div class="chip" onclick="filtrerCat('Musique', this)" data-fr="🎤 Musique" data-en="🎤 Music">🎤 Musique</div>
+          <div class="chip" onclick="filtrerCat('Danse', this)" data-fr="💃 Danse" data-en="💃 Dance">💃 Danse</div>
+          <div class="chip" onclick="filtrerCat('Sport', this)" data-fr="⚽ Sport" data-en="⚽ Sport">⚽ Sport</div>
+          <div class="chip" onclick="filtrerCat('Mode', this)" data-fr="👗 Mode" data-en="👗 Fashion">👗 Mode</div>
+          <div class="chip" onclick="filtrerCat('Art', this)" data-fr="🎨 Art" data-en="🎨 Art">🎨 Art</div>
+          <div class="chip" onclick="filtrerCat('Animaux', this)" data-fr="🐾 Animaux" data-en="🐾 Animals">🐾 Animaux</div>
         </div>
-        <div class="talents-grid" id="talentsGrid">
-          <div style="grid-column:1/-1;text-align:center;padding:40px;color:#bbb;">Chargement des talents…</div>
-        </div>
+        <div class="talents-grid" id="talentsGrid"></div>
       </div>
     </div>
 
     <div class="right-col">
       <div class="card">
-        <div class="card-head"><div class="card-title">🧾 Abonnement</div></div>
+        <div class="card-head"><div class="card-title" id="cardAbonnementTitle">🧾 Abonnement</div></div>
         <div id="subCardPro" style="display:none;" class="sub-card">
-          <h3>✅ Recruteur Pro</h3>
-          <p>Accès illimité à tous les talents ShowOne</p>
+          <h3 id="subProTitle">✅ Recruteur Pro</h3>
+          <p id="subProDesc">Accès illimité à tous les talents ShowOne</p>
           <div style="display:flex;justify-content:space-between;font-size:12px;background:rgba(255,255,255,0.06);border-radius:8px;padding:9px 12px;">
-            <span style="color:rgba(255,255,255,0.4);">Montant</span>
+            <span style="color:rgba(255,255,255,0.4);" id="subMontantLabel">Montant</span>
             <span style="color:#fff;font-weight:700;">19,99€ / mois</span>
           </div>
         </div>
         <div id="subCardGratuit" class="sub-card">
-          <h3>🔓 Passez Recruteur Pro</h3>
-          <p>Contactez tous les talents et lisez vos candidatures.</p>
-          <ul>
+          <h3 id="subGratuitTitle">🔓 Passez Recruteur Pro</h3>
+          <p id="subGratuitDesc">Contactez tous les talents et lisez vos candidatures.</p>
+          <ul id="subFeaturesList">
             <li>✓ Lire les candidatures reçues</li>
             <li>✓ Contacter tous les talents</li>
             <li>✓ Messagerie illimitée</li>
@@ -364,29 +321,42 @@
 
       <div class="card">
         <div class="card-head">
-          <div class="card-title">💬 Conversations</div>
-          <a href="/messagerie" style="font-size:12px;color:#E8383A;font-weight:600;text-decoration:none;">Tout voir →</a>
+          <div class="card-title" id="cardConversationsTitle">💬 Conversations</div>
+          <a href="/messagerie" style="font-size:12px;color:#E8383A;font-weight:600;text-decoration:none;" id="voirToutMsgs">Tout voir →</a>
         </div>
         <div class="msg-list" id="msgList">
-          <div style="text-align:center;padding:16px;color:#bbb;font-size:13px;">Chargement…</div>
+          <div style="text-align:center;padding:16px;color:#bbb;font-size:13px;" id="msgLoading">Chargement…</div>
         </div>
       </div>
 
       <div class="card">
-        <div class="card-head"><div class="card-title">❤️ Mes favoris</div></div>
+        <div class="card-head"><div class="card-title" id="cardFavorisTitle">❤️ Mes favoris</div></div>
         <div id="favsList">
-          <div style="text-align:center;padding:16px;color:#bbb;font-size:13px;">Chargement…</div>
+          <div style="text-align:center;padding:16px;color:#bbb;font-size:13px;" id="favsLoading">Chargement…</div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="bottom-nav" style="display:none;">
-  <a href="/dashboard-recruteur" class="active"><span class="nav-ico">🏠</span><span>Accueil</span></a>
-  <a href="/castings"><span class="nav-ico">🎬</span><span>Castings</span></a>
-  <a href="/messagerie"><span class="nav-ico">💬</span><span>Messages</span></a>
-  <a href="#"><span class="nav-ico">🔍</span><span>Talents</span></a>
+<!-- BARRE MOBILE -->
+<div class="mobile-bar" id="mobileBar">
+  <a href="/" class="mobile-btn" id="mb-home">
+    <span class="mobile-btn-icon">🏠</span>
+    <span class="mobile-btn-label" id="mbHome">Accueil</span>
+  </a>
+  <a href="/castings" class="mobile-btn" id="mb-castings">
+    <span class="mobile-btn-icon">🎬</span>
+    <span class="mobile-btn-label" id="mbCastings">Castings</span>
+  </a>
+  <a href="/messagerie" class="mobile-btn" id="mb-msg">
+    <span class="mobile-btn-icon">💬</span>
+    <span class="mobile-btn-label" id="mbMessages">Messages</span>
+  </a>
+  <a href="/dashboard-recruteur" class="mobile-btn mobile-join active" id="mb-auth">
+    <span class="mobile-btn-icon">👤</span>
+    <span class="mobile-btn-label" id="mbAuth">Mon espace</span>
+  </a>
 </div>
 
 <script>
@@ -394,8 +364,193 @@ const SUPABASE_URL = 'https://emiuzigtlomlrsofxqyf.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtaXV6aWd0bG9tbHJzb2Z4cXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MDI4NTcsImV4cCI6MjA5MzQ3ODg1N30.Cwe-Z1vNGc-puz8jEnHdMMCwllNbl9fRAdwLe5zWyIY';
 let tousVideos = [];
 let catActiveRec = 'Tous';
+let currentLang = localStorage.getItem('showone_lang') || 'fr';
 window.token = localStorage.getItem('showone_token');
 window.planRecruteur = 'gratuit';
+
+const T = {
+  fr: {
+    pageTitle: 'ShowOne — Espace Recruteur',
+    espaceLabel: 'Espace Recruteur',
+    bonjour: 'Bonjour, ',
+    topbarSub: 'Explorez les talents disponibles sur ShowOne.',
+    btnDeposer: '🎬 Déposer un casting',
+    bannerTitle: 'Vous avez des candidatures en attente !',
+    bannerSub: 'Passez au plan Recruteur Pro pour lire les messages et contacter les talents.',
+    bannerCandLabel: 'candidature(s)',
+    btnVoirCands: 'Voir les candidatures →',
+    statTalents: 'Talents', statMessages: 'Messages', statCastings: 'Castings', statCandidatures: 'Candidatures',
+    actionDeposer: '🎬 Déposer un casting',
+    actionCastings: '📋 Mes castings',
+    actionCandidatures: '👥 Candidatures',
+    cardTalents: 'Talents disponibles',
+    searchPlaceholder: 'Rechercher par nom, ville, catégorie…',
+    cardAbonnement: '🧾 Abonnement',
+    subProTitle: '✅ Recruteur Pro',
+    subProDesc: 'Accès illimité à tous les talents ShowOne',
+    subMontant: 'Montant',
+    subGratuitTitle: '🔓 Passez Recruteur Pro',
+    subGratuitDesc: 'Contactez tous les talents et lisez vos candidatures.',
+    subFeatures: ['✓ Lire les candidatures reçues','✓ Contacter tous les talents','✓ Messagerie illimitée','✓ Castings illimités'],
+    btnPaiement: '🔍 Devenir Recruteur Pro — 19,99€/mois',
+    cardConversations: '💬 Conversations',
+    voirTout: 'Tout voir →',
+    cardFavoris: '❤️ Mes favoris',
+    aucunMessage: 'Aucun message.',
+    aucunFavori: 'Aucun favori.',
+    aucunTalent: 'Aucun talent trouvé.',
+    chargement: 'Chargement des talents…',
+    contacter: 'Contacter',
+    planGratuit: 'Recruteur Gratuit', planPro: '⭐ Recruteur Pro',
+    upgradeTitle: 'Passez Recruteur Pro',
+    upgradeDesc: 'candidature(s) en attente.<br>Passez Pro pour lire les messages et contacter les talents.',
+    upgradeFeatures: ['✅ Lire toutes les candidatures','✅ Contacter tous les talents','✅ Messagerie illimitée','✅ Castings illimités'],
+    btnUpgradeBig: '🔍 Devenir Recruteur Pro — 19,99€/mois',
+    btnCloseUpgrade: 'Fermer',
+    modalContactTitle: 'Contacter ce talent',
+    modalLabelObjet: 'Objet',
+    modalLabelMessage: 'Message',
+    modalObjetPlaceholder: 'Ex : Audition comédie musicale — Juin 2025',
+    modalMessagePlaceholder: 'Bonjour, nous avons découvert votre profil ShowOne et…',
+    btnAnnuler: 'Annuler',
+    btnEnvoyer: 'Envoyer ✓',
+    msgEnvoye: '✓ Message envoyé !',
+    errMessage: 'Veuillez écrire un message !',
+    errEnvoi: "Erreur lors de l'envoi.",
+    deconnexion: '🚪 Déconnexion',
+    accueil: 'Accueil', castings: 'Castings', messages: 'Messages', monEspace: 'Mon espace',
+    tempsInstant: "À l'instant", tempsHier: 'Hier',
+    redirectionPaiement: 'Redirection…',
+    errPaiement: 'Erreur.',
+  },
+  en: {
+    pageTitle: 'ShowOne — Recruiter Space',
+    espaceLabel: 'Recruiter Space',
+    bonjour: 'Hello, ',
+    topbarSub: 'Explore the talents available on ShowOne.',
+    btnDeposer: '🎬 Post a casting',
+    bannerTitle: 'You have pending applications!',
+    bannerSub: 'Go Pro to read messages and contact talents.',
+    bannerCandLabel: 'application(s)',
+    btnVoirCands: 'View applications →',
+    statTalents: 'Talents', statMessages: 'Messages', statCastings: 'Castings', statCandidatures: 'Applications',
+    actionDeposer: '🎬 Post a casting',
+    actionCastings: '📋 My castings',
+    actionCandidatures: '👥 Applications',
+    cardTalents: 'Available talents',
+    searchPlaceholder: 'Search by name, city, category…',
+    cardAbonnement: '🧾 Subscription',
+    subProTitle: '✅ Pro Recruiter',
+    subProDesc: 'Unlimited access to all ShowOne talents',
+    subMontant: 'Amount',
+    subGratuitTitle: '🔓 Go Pro Recruiter',
+    subGratuitDesc: 'Contact all talents and read your applications.',
+    subFeatures: ['✓ Read all received applications','✓ Contact all talents','✓ Unlimited messaging','✓ Unlimited castings'],
+    btnPaiement: '🔍 Become Pro Recruiter — €19.99/month',
+    cardConversations: '💬 Conversations',
+    voirTout: 'See all →',
+    cardFavoris: '❤️ My favorites',
+    aucunMessage: 'No messages.',
+    aucunFavori: 'No favorites.',
+    aucunTalent: 'No talents found.',
+    chargement: 'Loading talents…',
+    contacter: 'Contact',
+    planGratuit: 'Free Recruiter', planPro: '⭐ Pro Recruiter',
+    upgradeTitle: 'Go Pro Recruiter',
+    upgradeDesc: 'application(s) pending.<br>Go Pro to read messages and contact talents.',
+    upgradeFeatures: ['✅ Read all applications','✅ Contact all talents','✅ Unlimited messaging','✅ Unlimited castings'],
+    btnUpgradeBig: '🔍 Become Pro Recruiter — €19.99/month',
+    btnCloseUpgrade: 'Close',
+    modalContactTitle: 'Contact this talent',
+    modalLabelObjet: 'Subject',
+    modalLabelMessage: 'Message',
+    modalObjetPlaceholder: 'E.g. Musical audition — June 2025',
+    modalMessagePlaceholder: 'Hello, we discovered your ShowOne profile and…',
+    btnAnnuler: 'Cancel',
+    btnEnvoyer: 'Send ✓',
+    msgEnvoye: '✓ Message sent!',
+    errMessage: 'Please write a message!',
+    errEnvoi: 'Error sending message.',
+    deconnexion: '🚪 Log out',
+    accueil: 'Home', castings: 'Castings', messages: 'Messages', monEspace: 'Dashboard',
+    tempsInstant: 'Just now', tempsHier: 'Yesterday',
+    redirectionPaiement: 'Redirecting…',
+    errPaiement: 'Error.',
+  }
+};
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('showone_lang', lang);
+  document.documentElement.lang = lang;
+  const t = T[lang];
+  document.title = t.pageTitle;
+
+  document.querySelectorAll('[data-fr]').forEach(el => {
+    const val = el.getAttribute('data-' + lang);
+    if (val !== null) el.textContent = val;
+  });
+  document.querySelectorAll('.s-lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick').includes("'" + lang + "'"));
+  });
+
+  // Textes dynamiques
+  document.getElementById('sidebarLabel').textContent = t.espaceLabel;
+  document.getElementById('topbarSub').textContent = t.topbarSub;
+  document.getElementById('btnDeposerCasting').textContent = t.btnDeposer;
+  document.getElementById('bannerTitle').textContent = t.bannerTitle;
+  document.getElementById('bannerSub').textContent = t.bannerSub;
+  document.getElementById('bannerCandLabel').textContent = t.bannerCandLabel;
+  document.getElementById('btnVoirCands').textContent = t.btnVoirCands;
+  document.getElementById('statLabelTalents').textContent = t.statTalents;
+  document.getElementById('statLabelMessages').textContent = t.statMessages;
+  document.getElementById('statLabelCastings').textContent = t.statCastings;
+  document.getElementById('statLabelCandidatures').textContent = t.statCandidatures;
+  document.getElementById('actionDeposer').textContent = t.actionDeposer;
+  document.getElementById('cardTalentsTitle').textContent = t.cardTalents;
+  document.getElementById('searchInput').placeholder = t.searchPlaceholder;
+  document.getElementById('cardAbonnementTitle').textContent = t.cardAbonnement;
+  document.getElementById('subProTitle').textContent = t.subProTitle;
+  document.getElementById('subProDesc').textContent = t.subProDesc;
+  document.getElementById('subMontantLabel').textContent = t.subMontant;
+  document.getElementById('subGratuitTitle').textContent = t.subGratuitTitle;
+  document.getElementById('subGratuitDesc').textContent = t.subGratuitDesc;
+  document.getElementById('subFeaturesList').innerHTML = t.subFeatures.map(f=>`<li>${f}</li>`).join('');
+  document.getElementById('btnPaiementRecruteur').textContent = t.btnPaiement;
+  document.getElementById('cardConversationsTitle').textContent = t.cardConversations;
+  document.getElementById('voirToutMsgs').textContent = t.voirTout;
+  document.getElementById('cardFavorisTitle').textContent = t.cardFavoris;
+  document.getElementById('upgradeTitle').textContent = t.upgradeTitle;
+  document.getElementById('upgradeFeatures').innerHTML = t.upgradeFeatures.map(f=>`<li>${f}</li>`).join('');
+  document.getElementById('btnUpgradeBig').textContent = t.btnUpgradeBig;
+  document.getElementById('btnCloseUpgrade').textContent = t.btnCloseUpgrade;
+  document.getElementById('modalContactTitle').textContent = t.modalContactTitle;
+  document.getElementById('modalLabelObjet').textContent = t.modalLabelObjet;
+  document.getElementById('modalLabelMessage').textContent = t.modalLabelMessage;
+  document.getElementById('msgObjet').placeholder = t.modalObjetPlaceholder;
+  document.getElementById('msgContenu').placeholder = t.modalMessagePlaceholder;
+  document.getElementById('btnCancelModal').textContent = t.btnAnnuler;
+  document.getElementById('btnSendModal').textContent = t.btnEnvoyer;
+  document.getElementById('btnDecoMobile').textContent = t.deconnexion;
+  document.getElementById('mobileTopLabel').textContent = t.monEspace;
+  document.getElementById('mbHome').textContent = t.accueil;
+  document.getElementById('mbCastings').textContent = t.castings;
+  document.getElementById('mbMessages').textContent = t.messages;
+  document.getElementById('mbAuth').textContent = t.monEspace;
+
+  // Re-render talents
+  if (tousVideos.length > 0) afficherTalents(filtrerListe());
+}
+
+function tempsDepuis(dateStr) {
+  const t = T[currentLang];
+  const diffH = Math.round((Date.now()-new Date(dateStr))/36e5);
+  if (diffH < 1) return t.tempsInstant;
+  if (diffH < 24) return currentLang === 'fr' ? `Il y a ${diffH}h` : `${diffH}h ago`;
+  if (diffH < 48) return t.tempsHier;
+  const j = Math.round(diffH/24);
+  return currentLang === 'fr' ? `Il y a ${j}j` : `${j}d ago`;
+}
 
 async function chargerDonnees() {
   const token = localStorage.getItem('showone_token');
@@ -410,28 +565,34 @@ async function chargerDonnees() {
     const u = data[0];
     const prenom = u.prenom||''; const nom = u.nom||''; const plan = u.plan||'gratuit';
     window.planRecruteur = plan;
+    const lang = currentLang;
     document.getElementById('avatarInitiales').textContent = ((prenom[0]||'')+(nom[0]||'')).toUpperCase();
     document.getElementById('avatarNom').textContent = prenom+' '+nom;
-    document.getElementById('topbarNom').textContent = 'Bonjour, '+prenom+' 👋';
-    document.getElementById('avatarPlanBadge').textContent = plan==='pro' ? '⭐ Recruteur Pro' : 'Recruteur Gratuit';
+    document.getElementById('topbarNom').textContent = T[lang].bonjour + prenom + ' 👋';
+    document.getElementById('avatarPlanBadge').textContent = plan==='pro' ? T[lang].planPro : T[lang].planGratuit;
     document.getElementById('subCardPro').style.display = plan==='pro' ? 'block' : 'none';
     document.getElementById('subCardGratuit').style.display = plan==='pro' ? 'none' : 'block';
+
     const profRes = await fetch(`${SUPABASE_URL}/rest/v1/profils_recruteurs?utilisateur_id=eq.${u.id}&select=*`, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` } });
     const profData = await profRes.json();
     if (!profData || profData.length === 0) return;
     const recruteurId = profData[0].id;
     window.recruteurId = recruteurId;
+
     const talentsRes = await fetch(`${SUPABASE_URL}/rest/v1/profils_talents?select=id`, { headers: { 'apikey': SUPABASE_KEY } });
     const talentsData = await talentsRes.json();
     document.getElementById('statTalents').textContent = Array.isArray(talentsData) ? talentsData.length : 0;
+
     const msgRes = await fetch(`${SUPABASE_URL}/rest/v1/messages?recruteur_id=eq.${recruteurId}&select=id,lu,objet`, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` } });
     const msgData = await msgRes.json();
     document.getElementById('statMessages').textContent = Array.isArray(msgData) ? msgData.length : 0;
+
     const castingsRes = await fetch(`${SUPABASE_URL}/rest/v1/castings?recruteur_id=eq.${recruteurId}&statut=eq.actif&select=id`, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` } });
     const castingsData = await castingsRes.json();
     const nbCastings = Array.isArray(castingsData) ? castingsData.length : 0;
     document.getElementById('statCastings').textContent = nbCastings;
     document.getElementById('nbCastings').textContent = nbCastings;
+
     if (nbCastings > 0) {
       const castingIds = castingsData.map(c => c.id).join(',');
       const candRes = await fetch(`${SUPABASE_URL}/rest/v1/candidatures?casting_id=in.(${castingIds})&select=id,statut`, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` } });
@@ -447,30 +608,34 @@ async function chargerDonnees() {
         document.getElementById('upgradeNbCands').textContent = nbCands;
       }
     } else { document.getElementById('statCandidatures').textContent = 0; }
+
     await chargerMessages(recruteurId, token);
     await chargerFavoris(recruteurId, token);
   } catch(err) { console.error(err); }
   await chargerTalents(token);
 }
 
+function filtrerListe() {
+  const search = document.getElementById('searchInput')?.value?.toLowerCase() || '';
+  let filtres = tousVideos;
+  if (catActiveRec !== 'Tous' && catActiveRec !== 'All') filtres = filtres.filter(v => { const c=(v.profils_talents?.categorie||'').toLowerCase(); const sc=(v.profils_talents?.sous_categorie||'').toLowerCase(); return c.includes(catActiveRec.toLowerCase())||sc.includes(catActiveRec.toLowerCase()); });
+  if (search) filtres = filtres.filter(v => { const p=v.profils_talents; const u=p?.utilisateurs; const nom=((p?.nom_scene||'')+' '+(u?.prenom||'')+' '+(u?.nom||'')).toLowerCase(); const ville=(u?.ville||'').toLowerCase(); const cat=(p?.categorie||'').toLowerCase(); return nom.includes(search)||ville.includes(search)||cat.includes(search); });
+  return filtres;
+}
+
 function filtrerCat(cat, btn) {
   catActiveRec = cat;
   document.querySelectorAll('.chip').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  filtrerTalents();
+  afficherTalents(filtrerListe());
 }
 
-function filtrerTalents() {
-  const search = document.getElementById('searchInput')?.value?.toLowerCase() || '';
-  let filtres = tousVideos;
-  if (catActiveRec !== 'Tous') filtres = filtres.filter(v => { const c=(v.profils_talents?.categorie||'').toLowerCase(); const sc=(v.profils_talents?.sous_categorie||'').toLowerCase(); return c.includes(catActiveRec.toLowerCase())||sc.includes(catActiveRec.toLowerCase()); });
-  if (search) filtres = filtres.filter(v => { const p=v.profils_talents; const u=p?.utilisateurs; const nom=((p?.nom_scene||'')+' '+(u?.prenom||'')+' '+(u?.nom||'')).toLowerCase(); const ville=(u?.ville||'').toLowerCase(); const cat=(p?.categorie||'').toLowerCase(); return nom.includes(search)||ville.includes(search)||cat.includes(search); });
-  afficherTalents(filtres);
-}
+function filtrerTalents() { afficherTalents(filtrerListe()); }
 
 function afficherTalents(videos) {
   const grid = document.getElementById('talentsGrid');
-  if (!videos || videos.length === 0) { grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#bbb;">Aucun talent trouvé.</div>'; return; }
+  const lang = currentLang;
+  if (!videos || videos.length === 0) { grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:#bbb;">${T[lang].aucunTalent}</div>`; return; }
   grid.innerHTML = videos.map(v => {
     const p = v.profils_talents; const u = p?.utilisateurs;
     const nom = p?.nom_scene || ((u?.prenom||'')+' '+(u?.nom||''));
@@ -481,13 +646,14 @@ function afficherTalents(videos) {
       <div class="talent-thumb">${thumb}<div class="talent-cat-pill">${cat}</div><div class="talent-play">▶</div></div>
       <div class="talent-info">
         <div><div class="talent-name">${nom}</div>${ville?`<div class="talent-loc">📍 ${ville}</div>`:''}</div>
-        <button class="btn-contact" onclick="event.stopPropagation();ouvrirContact('${v.playback_id}','${nom.replace(/'/g,"\\'")}','${cat}','${p?.photo_url||''}','${p?.id}','${ville}',${v.vues||0})">Contacter</button>
+        <button class="btn-contact" onclick="event.stopPropagation();ouvrirContact('${v.playback_id}','${nom.replace(/'/g,"\\'")}','${cat}','${p?.photo_url||''}','${p?.id}','${ville}',${v.vues||0})">${T[lang].contacter}</button>
       </div>
     </div>`;
   }).join('');
 }
 
 async function chargerTalents(token) {
+  document.getElementById('talentsGrid').innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:#bbb;">${T[currentLang].chargement}</div>`;
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/videos?statut=eq.en_ligne&playback_id=not.is.null&select=*,profils_talents!inner(id,nom_scene,categorie,sous_categorie,photo_url,utilisateur_id,utilisateurs!utilisateur_id(prenom,nom,ville))&order=vues.desc&limit=50`, { headers: { 'apikey': SUPABASE_KEY } });
     tousVideos = await res.json();
@@ -500,14 +666,13 @@ async function chargerMessages(recruteurId, token) {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/messages?recruteur_id=eq.${recruteurId}&select=*,profils_talents(nom_scene,photo_url,utilisateurs(prenom,nom))&order=created_at.desc&limit=5`, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` } });
     const msgs = await res.json();
     const list = document.getElementById('msgList');
-    if (!msgs || msgs.length === 0) { list.innerHTML = '<div style="text-align:center;padding:16px;color:#bbb;font-size:13px;">Aucun message.</div>'; return; }
+    if (!msgs || msgs.length === 0) { list.innerHTML = `<div style="text-align:center;padding:16px;color:#bbb;font-size:13px;">${T[currentLang].aucunMessage}</div>`; return; }
     list.innerHTML = msgs.map(m => {
       const p=m.profils_talents; const u=p?.utilisateurs;
       const nom=p?.nom_scene||((u?.prenom||'')+' '+(u?.nom||'')).trim()||'Talent';
       const photo=p?.photo_url||'';
       const avatar=photo?`<img class="msg-avatar" src="${photo}" alt="">`:`<div class="msg-avatar">${nom[0]||'?'}</div>`;
-      const diffH=Math.round((Date.now()-new Date(m.created_at))/36e5);
-      const temps=diffH<1?'À l\'instant':diffH<24?`Il y a ${diffH}h`:diffH<48?'Hier':`Il y a ${Math.round(diffH/24)}j`;
+      const temps = tempsDepuis(m.created_at);
       return `<div class="msg-item ${!m.lu?'unread':''}">${avatar}<div style="flex:1;min-width:0;"><div style="display:flex;justify-content:space-between;"><span class="msg-name">${nom}</span><span class="msg-time">${temps}</span></div><div class="msg-text">${m.contenu||m.objet||''}</div></div></div>`;
     }).join('');
   } catch(e) { console.error(e); }
@@ -518,13 +683,13 @@ async function chargerFavoris(recruteurId, token) {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/favoris?recruteur_id=eq.${recruteurId}&select=*,profils_talents(id,nom_scene,photo_url,categorie,sous_categorie,utilisateurs(prenom,nom,ville))&limit=5`, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` } });
     const favs = await res.json();
     const list = document.getElementById('favsList');
-    if (!favs || favs.length === 0) { list.innerHTML = '<div style="text-align:center;padding:16px;color:#bbb;font-size:13px;">Aucun favori.</div>'; return; }
+    if (!favs || favs.length === 0) { list.innerHTML = `<div style="text-align:center;padding:16px;color:#bbb;font-size:13px;">${T[currentLang].aucunFavori}</div>`; return; }
     list.innerHTML = favs.map(f => {
       const p=f.profils_talents; const u=p?.utilisateurs;
       const nom=p?.nom_scene||((u?.prenom||'')+' '+(u?.nom||'')).trim()||'Talent';
       const cat=p?.sous_categorie||p?.categorie||''; const ville=u?.ville||''; const photo=p?.photo_url||'';
       const avatar=photo?`<img class="fav-thumb" src="${photo}" alt="" style="width:38px;height:38px;border-radius:8px;object-fit:cover;">`:`<div class="fav-thumb">${nom[0]||'?'}</div>`;
-      return `<div class="fav-item">${avatar}<div style="flex:1;min-width:0;"><div class="fav-name">${nom}</div><div class="fav-cat">${cat}${ville?' · '+ville:''}</div></div><button class="btn-fav-contact" onclick="ouvrirContact('','${nom.replace(/'/g,"\\'")}','${cat}','${photo}','${p?.id}','${ville}',0)">Contacter</button></div>`;
+      return `<div class="fav-item">${avatar}<div style="flex:1;min-width:0;"><div class="fav-name">${nom}</div><div class="fav-cat">${cat}${ville?' · '+ville:''}</div></div><button class="btn-fav-contact" onclick="ouvrirContact('','${nom.replace(/'/g,"\\'")}','${cat}','${photo}','${p?.id}','${ville}',0)">${T[currentLang].contacter}</button></div>`;
     }).join('');
   } catch(e) { console.error(e); }
 }
@@ -550,9 +715,7 @@ function ouvrirTalent(playbackId, nom, cat, photo, talentId, ville, vues) {
     const src = 'https://stream.mux.com/'+playbackId+'.m3u8';
     if (video.canPlayType('application/vnd.apple.mpegurl')) { video.src=src; video.play(); }
     else { const s=document.createElement('script'); s.src='https://cdn.jsdelivr.net/npm/hls.js@latest'; s.onload=()=>{ if(window.Hls?.isSupported()){const hls=new Hls();hls.loadSource(src);hls.attachMedia(video);hls.on(Hls.Events.MANIFEST_PARSED,()=>video.play());} }; document.head.appendChild(s); }
-  } else if (playerWrap) {
-    playerWrap.innerHTML = '';
-  }
+  } else if (playerWrap) { playerWrap.innerHTML = ''; }
   document.getElementById('modalOverlay').dataset.talentId = talentId;
   document.getElementById('modalOverlay').classList.add('open');
 }
@@ -568,36 +731,42 @@ function voirCandidatures() {
 }
 
 async function sendMsg() {
+  const lang = currentLang;
   const token=localStorage.getItem('showone_token');
   const talentId=document.getElementById('modalOverlay').dataset.talentId;
   const objet=document.getElementById('msgObjet')?.value||'Proposition';
   const contenu=document.getElementById('msgContenu')?.value||'';
-  if (!contenu.trim()) { alert('Veuillez écrire un message !'); return; }
+  if (!contenu.trim()) { alert(T[lang].errMessage); return; }
   try {
     await fetch(`${SUPABASE_URL}/rest/v1/messages`, { method:'POST', headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':`Bearer ${token}`,'Prefer':'return=minimal'}, body:JSON.stringify({recruteur_id:window.recruteurId,talent_id:talentId,objet,contenu,lu:false}) });
     closeModal();
-    const notif=document.createElement('div'); notif.style.cssText='position:fixed;bottom:80px;right:20px;background:#10b981;color:#fff;padding:12px 18px;border-radius:10px;font-weight:700;font-size:13px;z-index:999;'; notif.textContent='✓ Message envoyé !'; document.body.appendChild(notif); setTimeout(()=>notif.remove(),3000);
-  } catch(err) { alert('Erreur lors de l\'envoi.'); }
+    const notif=document.createElement('div');
+    notif.style.cssText='position:fixed;bottom:80px;right:20px;background:#10b981;color:#fff;padding:12px 18px;border-radius:10px;font-weight:700;font-size:13px;z-index:999;';
+    notif.textContent=T[lang].msgEnvoye;
+    document.body.appendChild(notif);
+    setTimeout(()=>notif.remove(),3000);
+  } catch(err) { alert(T[lang].errEnvoi); }
 }
 
 function closeModal() {
   document.getElementById('modalOverlay').classList.remove('open');
-  const video=document.getElementById('modalPlayer'); if(video) { video.pause(); video.src=''; }
-  document.getElementById('modalVideoWrap').innerHTML = '';
-  document.getElementById('msgObjet').value = '';
-  document.getElementById('msgContenu').value = '';
+  const video=document.getElementById('modalPlayer'); if(video){video.pause();video.src='';}
+  document.getElementById('modalVideoWrap').innerHTML='';
+  document.getElementById('msgObjet').value='';
+  document.getElementById('msgContenu').value='';
 }
 
 async function lancerPaiementRecruteur() {
+  const lang = currentLang;
   const btn=document.getElementById('btnPaiementRecruteur');
-  if(btn){btn.textContent='Redirection…';btn.disabled=true;}
+  if(btn){btn.textContent=T[lang].redirectionPaiement;btn.disabled=true;}
   try {
     const user=JSON.parse(localStorage.getItem('showone_user')||'{}');
     const res=await fetch('/api/create-checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({plan:'recruteur_pro',userId:user.id,userEmail:user.email,successUrl:'https://www.showone.fr/paiement-succes?type=recruteur',cancelUrl:'https://www.showone.fr/dashboard-recruteur'})});
     const data=await res.json();
     if(data.url) window.location.href=data.url;
-    else { alert('Erreur.'); if(btn){btn.textContent='Devenir Recruteur Pro — 19,99€/mois';btn.disabled=false;} }
-  } catch(e) { alert('Erreur.'); if(btn){btn.textContent='Devenir Recruteur Pro — 19,99€/mois';btn.disabled=false;} }
+    else { alert(T[lang].errPaiement); if(btn){btn.textContent=T[lang].btnPaiement;btn.disabled=false;} }
+  } catch(e) { alert(T[lang].errPaiement); if(btn){btn.textContent=T[lang].btnPaiement;btn.disabled=false;} }
 }
 
 function seDeconnecter() {
@@ -607,27 +776,8 @@ function seDeconnecter() {
 document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
 document.getElementById('upgradeOverlay').addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
 
+setLang(currentLang);
 chargerDonnees();
 </script>
-
-<!-- BARRE MOBILE -->
-<div class="mobile-bar" id="mobileBar">
-  <a href="/" class="mobile-btn" id="mb-home">
-    <span class="mobile-btn-icon">🏠</span>
-    <span class="mobile-btn-label">Accueil</span>
-  </a>
-  <a href="/castings" class="mobile-btn" id="mb-castings">
-    <span class="mobile-btn-icon">🎬</span>
-    <span class="mobile-btn-label">Castings</span>
-  </a>
-  <a href="/messagerie" class="mobile-btn" id="mb-msg">
-    <span class="mobile-btn-icon">💬</span>
-    <span class="mobile-btn-label">Messages</span>
-  </a>
-  <a href="/dashboard-recruteur" class="mobile-btn mobile-join active" id="mb-auth">
-    <span class="mobile-btn-icon">👤</span>
-    <span class="mobile-btn-label">Mon espace</span>
-  </a>
-</div>
 </body>
 </html>
