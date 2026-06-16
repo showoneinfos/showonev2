@@ -11,6 +11,10 @@
     nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; border-bottom: 1px solid #f0f0f0; }
     .logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; }
     .logo span { color: #E8383A; }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .lang-switch { display: flex; align-items: center; gap: 2px; background: #f5f5f5; border-radius: 100px; padding: 3px; }
+    .lang-btn { padding: 4px 9px; border-radius: 100px; border: none; cursor: pointer; font-size: 12px; font-weight: 700; background: transparent; color: #888; transition: all 0.15s; }
+    .lang-btn.active { background: #fff; color: #111; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
     .main { max-width: 680px; margin: 0 auto; padding: 60px 20px; }
     h1 { font-size: 40px; font-weight: 900; letter-spacing: -1.5px; margin-bottom: 8px; }
     h1 em { font-style: italic; color: #E8383A; }
@@ -21,33 +25,98 @@
     .stat { text-align: center; }
     .stat-num { font-size: 32px; font-weight: 900; color: #111; letter-spacing: -1px; }
     .stat-label { font-size: 12px; color: #bbb; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+    @media (max-width: 600px) { nav { padding: 14px 20px; } h1 { font-size: 28px; } .stat-row { gap: 16px; } }
   </style>
 </head>
 <body>
 <nav>
   <a href="/" class="logo">Show<span>One</span></a>
+  <div class="nav-right">
+    <div class="lang-switch">
+      <button class="lang-btn active" onclick="setLang('fr')">🇫🇷</button>
+      <button class="lang-btn" onclick="setLang('en')">🇺🇸</button>
+    </div>
+  </div>
 </nav>
 <div class="main">
-  <h1>Qui sommes-<em>nous</em> ?</h1>
-  <p class="sub">ShowOne est la plateforme française qui connecte les talents avec les recruteurs.</p>
-
+  <h1 id="h1Title">Qui sommes-<em id="h1Em">nous</em> ?</h1>
+  <p class="sub" id="subtitle">ShowOne est la plateforme française qui connecte les talents avec les recruteurs.</p>
   <div class="stat-row">
-    <div class="stat"><div class="stat-num">2 400+</div><div class="stat-label">Talents inscrits</div></div>
-    <div class="stat"><div class="stat-num">380+</div><div class="stat-label">Recruteurs</div></div>
-    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Gratuit</div></div>
+    <div class="stat"><div class="stat-num">2 400+</div><div class="stat-label" id="statTalents">Talents inscrits</div></div>
+    <div class="stat"><div class="stat-num">380+</div><div class="stat-label" id="statRecruteurs">Recruteurs</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label" id="statGratuit">Gratuit</div></div>
   </div>
-
-  <h2>Notre mission</h2>
-  <p>ShowOne est né d'un constat simple : les talents ont du mal à se faire remarquer, et les recruteurs peinent à trouver les bons profils. Notre plateforme résout ce problème en permettant à chaque talent de poster une vidéo de présentation visible par des milliers de recruteurs professionnels.</p>
-
-  <h2>Pour les talents</h2>
-  <p>Inscrivez-vous gratuitement, uploadez une vidéo de 1 minute et mettez-vous en avant auprès de recruteurs partout en France. Chanteurs, danseurs, acteurs, sportifs, humoristes — ShowOne est fait pour vous.</p>
-
-  <h2>Pour les recruteurs</h2>
-  <p>Accédez à une base de talents vérifiés, publiez vos annonces vidéo gratuitement et contactez directement les profils qui vous intéressent. Simple, rapide, efficace.</p>
-
-  <h2>Notre équipe</h2>
-  <p>ShowOne est une startup fondée en Corse avec l'ambition de devenir la référence française du talent digital. Nous croyons que chaque talent mérite d'être vu.</p>
+  <h2 id="h2Mission">Notre mission</h2>
+  <p id="pMission">ShowOne est né d'un constat simple : les talents ont du mal à se faire remarquer, et les recruteurs peinent à trouver les bons profils. Notre plateforme résout ce problème en permettant à chaque talent de poster une vidéo de présentation visible par des milliers de recruteurs professionnels.</p>
+  <h2 id="h2Talents">Pour les talents</h2>
+  <p id="pTalents">Inscrivez-vous gratuitement, uploadez une vidéo de 1 minute et mettez-vous en avant auprès de recruteurs partout en France. Chanteurs, danseurs, acteurs, sportifs, humoristes — ShowOne est fait pour vous.</p>
+  <h2 id="h2Recruteurs">Pour les recruteurs</h2>
+  <p id="pRecruteurs">Accédez à une base de talents vérifiés, publiez vos annonces vidéo gratuitement et contactez directement les profils qui vous intéressent. Simple, rapide, efficace.</p>
+  <h2 id="h2Equipe">Notre équipe</h2>
+  <p id="pEquipe">ShowOne est une startup fondée en Corse avec l'ambition de devenir la référence française du talent digital. Nous croyons que chaque talent mérite d'être vu.</p>
 </div>
+
+<script>
+let currentLang = localStorage.getItem('showone_lang') || 'fr';
+
+const T = {
+  fr: {
+    pageTitle: 'Qui sommes-nous — ShowOne',
+    h1: 'Qui sommes-', h1Em: 'nous', h1Suffix: ' ?',
+    subtitle: 'ShowOne est la plateforme française qui connecte les talents avec les recruteurs.',
+    statTalents: 'Talents inscrits', statRecruteurs: 'Recruteurs', statGratuit: 'Gratuit',
+    h2Mission: 'Notre mission',
+    pMission: "ShowOne est né d'un constat simple : les talents ont du mal à se faire remarquer, et les recruteurs peinent à trouver les bons profils. Notre plateforme résout ce problème en permettant à chaque talent de poster une vidéo de présentation visible par des milliers de recruteurs professionnels.",
+    h2Talents: 'Pour les talents',
+    pTalents: "Inscrivez-vous gratuitement, uploadez une vidéo de 1 minute et mettez-vous en avant auprès de recruteurs partout en France. Chanteurs, danseurs, acteurs, sportifs, humoristes — ShowOne est fait pour vous.",
+    h2Recruteurs: 'Pour les recruteurs',
+    pRecruteurs: "Accédez à une base de talents vérifiés, publiez vos annonces vidéo gratuitement et contactez directement les profils qui vous intéressent. Simple, rapide, efficace.",
+    h2Equipe: 'Notre équipe',
+    pEquipe: "ShowOne est une startup fondée en Corse avec l'ambition de devenir la référence française du talent digital. Nous croyons que chaque talent mérite d'être vu.",
+  },
+  en: {
+    pageTitle: 'About us — ShowOne',
+    h1: 'Who are ', h1Em: 'we', h1Suffix: '?',
+    subtitle: 'ShowOne is the French platform connecting talents with recruiters.',
+    statTalents: 'Registered talents', statRecruteurs: 'Recruiters', statGratuit: 'Free',
+    h2Mission: 'Our mission',
+    pMission: "ShowOne was born from a simple observation: talents struggle to get noticed, and recruiters struggle to find the right profiles. Our platform solves this by letting every talent post a presentation video visible to thousands of professional recruiters.",
+    h2Talents: 'For talents',
+    pTalents: "Sign up for free, upload a 1-minute video and showcase yourself to recruiters across France and beyond. Singers, dancers, actors, athletes, comedians — ShowOne is made for you.",
+    h2Recruteurs: 'For recruiters',
+    pRecruteurs: "Access a database of verified talents, post your video castings for free and directly contact the profiles that interest you. Simple, fast, effective.",
+    h2Equipe: 'Our team',
+    pEquipe: "ShowOne is a startup founded in Corsica with the ambition of becoming the French reference for digital talent. We believe every talent deserves to be seen.",
+  }
+};
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('showone_lang', lang);
+  document.documentElement.lang = lang;
+  const t = T[lang];
+  document.title = t.pageTitle;
+
+  document.getElementById('h1Title').innerHTML = t.h1 + `<em id="h1Em">${t.h1Em}</em>` + t.h1Suffix;
+  document.getElementById('subtitle').textContent = t.subtitle;
+  document.getElementById('statTalents').textContent = t.statTalents;
+  document.getElementById('statRecruteurs').textContent = t.statRecruteurs;
+  document.getElementById('statGratuit').textContent = t.statGratuit;
+  document.getElementById('h2Mission').textContent = t.h2Mission;
+  document.getElementById('pMission').textContent = t.pMission;
+  document.getElementById('h2Talents').textContent = t.h2Talents;
+  document.getElementById('pTalents').textContent = t.pTalents;
+  document.getElementById('h2Recruteurs').textContent = t.h2Recruteurs;
+  document.getElementById('pRecruteurs').textContent = t.pRecruteurs;
+  document.getElementById('h2Equipe').textContent = t.h2Equipe;
+  document.getElementById('pEquipe').textContent = t.pEquipe;
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick').includes("'" + lang + "'"));
+  });
+}
+
+setLang(currentLang);
+</script>
 </body>
 </html>
