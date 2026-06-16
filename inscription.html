@@ -13,8 +13,13 @@
     nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; border-bottom: 1px solid #f0f0f0; }
     .logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; }
     .logo span { color: #E8383A; }
-    .nav-right { font-size: 13px; color: #999; }
+    .nav-right { font-size: 13px; color: #999; display: flex; align-items: center; gap: 12px; }
     .nav-right a { color: #111; font-weight: 600; text-decoration: none; }
+
+    /* Switch langue */
+    .lang-switch { display: flex; align-items: center; gap: 2px; background: #f5f5f5; border-radius: 100px; padding: 3px; }
+    .lang-btn { padding: 4px 9px; border-radius: 100px; border: none; cursor: pointer; font-size: 12px; font-weight: 700; background: transparent; color: #888; transition: all 0.15s; }
+    .lang-btn.active { background: #fff; color: #111; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
 
     .main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 48px 20px; }
     .card { width: 100%; max-width: 460px; }
@@ -51,12 +56,10 @@
     .form-select { width: 100%; padding: 12px 14px; font-size: 14px; border: 1.5px solid #e8e8e8; border-radius: 9px; background: #fff; color: #111; outline: none; font-family: 'Inter', sans-serif; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
     .form-select:focus { border-color: #111; }
 
-    /* Sous-cat : chips scrollables */
     .sous-cat-wrap { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 6px; margin-bottom: 14px; }
     .sous-cat-chip { padding: 7px 13px; border-radius: 100px; border: 1.5px solid #e8e8e8; font-size: 12px; font-weight: 600; color: #555; cursor: pointer; transition: all 0.15s; background: #fff; white-space: nowrap; }
     .sous-cat-chip:hover { border-color: #bbb; color: #111; }
     .sous-cat-chip.active { border-color: #111; background: #111; color: #fff; }
-    #sousCatLabel { font-size: 12px; font-weight: 600; color: #555; display: none; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
 
     .form-error { background: #fff0f0; border: 1px solid #ffd0d0; border-radius: 8px; padding: 11px 13px; font-size: 13px; color: #cc2e30; margin-bottom: 14px; display: none; line-height: 1.5; }
 
@@ -90,19 +93,11 @@
         padding: 8px 4px 14px; z-index: 1000; align-items: center;
         justify-content: space-around;
       }
-      .mobile-btn {
-        flex: 1; display: flex; flex-direction: column; align-items: center;
-        gap: 3px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600;
-      }
+      .mobile-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600; }
       .mobile-btn-icon { font-size: 20px; line-height: 1; display: block; }
       .mobile-btn-label { font-size: 10px; display: block; }
       .mobile-btn.active { color: #111; }
-      .mobile-btn.mobile-join {
-        flex: none; margin: 0 6px; background: #111; color: #fff !important;
-        padding: 8px 14px; border-radius: 8px; font-size: 12px !important; font-weight: 700;
-        display: flex; flex-direction: column; align-items: center; gap: 2px;
-        text-decoration: none;
-      }
+      .mobile-btn.mobile-join { flex: none; margin: 0 6px; background: #111; color: #fff !important; padding: 8px 14px; border-radius: 8px; font-size: 12px !important; font-weight: 700; display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; }
     }
   </style>
 </head>
@@ -110,33 +105,46 @@
 
 <nav>
   <a href="/" class="logo">Show<span>One</span></a>
-  <div class="nav-right">Déjà inscrit ? <a href="/connexion">Connexion</a></div>
+  <div class="nav-right">
+    <div class="lang-switch">
+      <button class="lang-btn active" onclick="setLang('fr')">🇫🇷</button>
+      <button class="lang-btn" onclick="setLang('en')">🇺🇸</button>
+    </div>
+    <span id="navAlready" data-fr="Déjà inscrit ?" data-en="Already have an account?">Déjà inscrit ?</span>
+    <a href="/connexion" id="navConnLink" data-fr="Connexion" data-en="Log in">Connexion</a>
+  </div>
 </nav>
 
 <div class="main">
   <div class="card">
 
     <div class="steps" id="stepsBar">
-      <div class="step active" id="s1"><div class="step-circle">1</div><div class="step-label">Compte</div></div>
+      <div class="step active" id="s1">
+        <div class="step-circle">1</div>
+        <div class="step-label" data-fr="Compte" data-en="Account">Compte</div>
+      </div>
       <div class="step-line" id="l1"></div>
-      <div class="step" id="s2"><div class="step-circle">2</div><div class="step-label">Profil</div></div>
+      <div class="step" id="s2">
+        <div class="step-circle">2</div>
+        <div class="step-label" data-fr="Profil" data-en="Profile">Profil</div>
+      </div>
     </div>
 
     <!-- STEP 1 -->
     <div class="step-page active" id="p1">
-      <div class="card-title">Créer mon compte</div>
-      <div class="card-sub">Gratuit, sans carte bancaire.</div>
+      <div class="card-title" data-fr="Créer mon compte" data-en="Create my account">Créer mon compte</div>
+      <div class="card-sub" data-fr="Gratuit, sans carte bancaire." data-en="Free, no credit card required.">Gratuit, sans carte bancaire.</div>
 
       <div class="type-selector">
         <div class="type-btn active" id="btn-talent" onclick="setType('talent')">
           <div class="type-icon">🎤</div>
-          <div class="type-label">Je suis un talent</div>
-          <div class="type-desc">Chanteur, danseur, acteur…</div>
+          <div class="type-label" data-fr="Je suis un talent" data-en="I'm a talent">Je suis un talent</div>
+          <div class="type-desc" data-fr="Chanteur, danseur, acteur…" data-en="Singer, dancer, actor…">Chanteur, danseur, acteur…</div>
         </div>
         <div class="type-btn" id="btn-recruteur" onclick="setType('recruteur')">
           <div class="type-icon">🎬</div>
-          <div class="type-label">Je recrute</div>
-          <div class="type-desc">Agence, producteur…</div>
+          <div class="type-label" data-fr="Je recrute" data-en="I'm recruiting">Je recrute</div>
+          <div class="type-desc" data-fr="Agence, producteur…" data-en="Agency, producer…">Agence, producteur…</div>
         </div>
       </div>
 
@@ -144,169 +152,235 @@
 
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Prénom *</label>
+          <label class="form-label" data-fr="Prénom *" data-en="First name *">Prénom *</label>
           <input class="form-input" type="text" id="prenom" placeholder="Sophie" autocomplete="given-name">
         </div>
         <div class="form-group">
-          <label class="form-label">Nom *</label>
+          <label class="form-label" data-fr="Nom *" data-en="Last name *">Nom *</label>
           <input class="form-input" type="text" id="nom" placeholder="Martin" autocomplete="family-name">
         </div>
       </div>
       <div class="form-group">
-        <label class="form-label">Email *</label>
+        <label class="form-label" data-fr="Email *" data-en="Email *">Email *</label>
         <input class="form-input" type="email" id="email" placeholder="sophie@email.com" autocomplete="email">
       </div>
       <div class="form-group">
-        <label class="form-label">Mot de passe *</label>
-        <input class="form-input" type="password" id="password" placeholder="8 caractères minimum" autocomplete="new-password">
+        <label class="form-label" data-fr="Mot de passe *" data-en="Password *">Mot de passe *</label>
+        <input class="form-input" type="password" id="password" data-placeholder-fr="8 caractères minimum" data-placeholder-en="Minimum 8 characters" placeholder="8 caractères minimum" autocomplete="new-password">
       </div>
 
-      <!-- Champ visible uniquement pour les recruteurs -->
       <div class="form-group" id="nomSocieteGroup" style="display:none;">
-        <label class="form-label">Nom de société / Agence <span style="color:#bbb;font-weight:400;">(optionnel)</span></label>
-        <input class="form-input" type="text" id="nomSociete" placeholder="Ex : ACT Diffusion, Agence Studio…">
+        <label class="form-label" data-fr="Nom de société / Agence" data-en="Company / Agency name">Nom de société / Agence <span style="color:#bbb;font-weight:400;" data-fr="(optionnel)" data-en="(optional)">(optionnel)</span></label>
+        <input class="form-input" type="text" id="nomSociete" data-placeholder-fr="Ex : ACT Diffusion, Agence Studio…" data-placeholder-en="E.g. Talent Agency, Studio…" placeholder="Ex : ACT Diffusion, Agence Studio…">
       </div>
 
-      <button class="btn-submit" id="btnStep1" onclick="validerEtape1()">Continuer →</button>
-      <p class="terms">En créant un compte, tu acceptes nos <a href="/legal">CGU</a> et notre <a href="/legal">Politique de confidentialité</a>.</p>
+      <button class="btn-submit" id="btnStep1" onclick="validerEtape1()" data-fr="Continuer →" data-en="Continue →">Continuer →</button>
+      <p class="terms">
+        <span data-fr="En créant un compte, tu acceptes nos" data-en="By creating an account, you agree to our">En créant un compte, tu acceptes nos</span>
+        <a href="/legal" data-fr="CGU" data-en="Terms of Use">CGU</a>
+        <span data-fr="et notre" data-en="and our">et notre</span>
+        <a href="/legal" data-fr="Politique de confidentialité" data-en="Privacy Policy">Politique de confidentialité</a>.
+      </p>
     </div>
 
     <!-- STEP 2 -->
     <div class="step-page" id="p2">
-      <div class="card-title">Ton profil talent</div>
-      <div class="card-sub">Quelques infos pour te présenter.</div>
+      <div class="card-title" data-fr="Ton profil talent" data-en="Your talent profile">Ton profil talent</div>
+      <div class="card-sub" data-fr="Quelques infos pour te présenter." data-en="A few details to introduce yourself.">Quelques infos pour te présenter.</div>
 
       <div class="form-error" id="profilError"></div>
 
       <div id="sectionCategorie">
         <div class="form-group">
-          <label class="form-label">Ta catégorie *</label>
+          <label class="form-label" data-fr="Ta catégorie *" data-en="Your category *">Ta catégorie *</label>
           <select class="form-select" id="catSelect" onchange="updateSousCat()">
-            <option value="">-- Choisir une catégorie --</option>
-            <option value="acting">🎬 Acting / Cinéma & TV</option>
-            <option value="musique">🎤 Musique / Chant</option>
-            <option value="danse">💃 Danse</option>
-            <option value="sport">⚽ Sport</option>
-            <option value="createurs">📱 Créateurs de contenu</option>
-            <option value="mode">👗 Mode / Mannequinat</option>
-            <option value="art">🎨 Art & Création</option>
-            <option value="talents">✨ Performances & Talents uniques</option>
-            <option value="animaux">🐾 Animaux</option>
-            <option value="pro">🎙️ Compétences Pro / Animation</option>
+            <option value="" data-fr="-- Choisir une catégorie --" data-en="-- Choose a category --">-- Choisir une catégorie --</option>
+            <option value="acting" data-fr="🎬 Acting / Cinéma & TV" data-en="🎬 Acting / Film & TV">🎬 Acting / Cinéma & TV</option>
+            <option value="musique" data-fr="🎤 Musique / Chant" data-en="🎤 Music / Singing">🎤 Musique / Chant</option>
+            <option value="danse" data-fr="💃 Danse" data-en="💃 Dance">💃 Danse</option>
+            <option value="sport" data-fr="⚽ Sport" data-en="⚽ Sport">⚽ Sport</option>
+            <option value="createurs" data-fr="📱 Créateurs de contenu" data-en="📱 Content Creators">📱 Créateurs de contenu</option>
+            <option value="mode" data-fr="👗 Mode / Mannequinat" data-en="👗 Fashion / Modeling">👗 Mode / Mannequinat</option>
+            <option value="art" data-fr="🎨 Art & Création" data-en="🎨 Art & Creation">🎨 Art & Création</option>
+            <option value="talents" data-fr="✨ Performances & Talents uniques" data-en="✨ Performances & Unique Talents">✨ Performances & Talents uniques</option>
+            <option value="animaux" data-fr="🐾 Animaux" data-en="🐾 Animals">🐾 Animaux</option>
+            <option value="pro" data-fr="🎙️ Compétences Pro / Animation" data-en="🎙️ Pro Skills / Hosting">🎙️ Compétences Pro / Animation</option>
           </select>
         </div>
 
-        <!-- Sous-catégories en chips -->
         <div id="sousCatSection" style="display:none; margin-bottom:6px;">
-          <div id="sousCatLabel" style="display:block;">Spécialité</div>
+          <div id="sousCatLabel" style="display:block; font-size:12px; font-weight:600; color:#555; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.5px;" data-fr="Spécialité" data-en="Specialty">Spécialité</div>
           <div class="sous-cat-wrap" id="sousCatChips"></div>
           <input type="hidden" id="sousCatValue" value="">
         </div>
       </div>
 
       <div class="form-group">
-        <label class="form-label">Ville</label>
-        <input class="form-input" type="text" id="ville" placeholder="Paris, Lyon, Marseille…">
+        <label class="form-label" data-fr="Ville" data-en="City">Ville</label>
+        <input class="form-input" type="text" id="ville" data-placeholder-fr="Paris, Lyon, Marseille…" data-placeholder-en="New York, Los Angeles, London…" placeholder="Paris, Lyon, Marseille…">
       </div>
 
       <div class="form-group">
-        <label class="form-label">Nom de scène (optionnel)</label>
-        <input class="form-input" type="text" id="nomscene" placeholder="Laisse vide pour utiliser ton prénom">
+        <label class="form-label" data-fr="Nom de scène (optionnel)" data-en="Stage name (optional)">Nom de scène (optionnel)</label>
+        <input class="form-input" type="text" id="nomscene" data-placeholder-fr="Laisse vide pour utiliser ton prénom" data-placeholder-en="Leave blank to use your first name" placeholder="Laisse vide pour utiliser ton prénom">
       </div>
 
-      <button class="btn-submit" id="btnStep2" onclick="creerCompte()">Créer mon profil ✓</button>
+      <button class="btn-submit" id="btnStep2" onclick="creerCompte()" data-fr="Créer mon profil ✓" data-en="Create my profile ✓">Créer mon profil ✓</button>
     </div>
 
     <!-- SUCCESS -->
     <div class="step-page" id="success">
       <div class="success-box">
         <div class="success-icon">🎉</div>
-        <div class="success-title">Bienvenue sur ShowOne !</div>
-        <p class="success-sub">Ton profil est créé. Tu peux maintenant uploader ta vidéo de présentation et te faire découvrir par les recruteurs.</p>
-        <a href="/dashboard-talent" class="btn-dashboard">Accéder à mon espace →</a>
+        <div class="success-title" data-fr="Bienvenue sur ShowOne !" data-en="Welcome to ShowOne!">Bienvenue sur ShowOne !</div>
+        <p class="success-sub" data-fr="Ton profil est créé. Tu peux maintenant uploader ta vidéo de présentation et te faire découvrir par les recruteurs." data-en="Your profile is ready. You can now upload your intro video and get discovered by recruiters.">Ton profil est créé. Tu peux maintenant uploader ta vidéo de présentation et te faire découvrir par les recruteurs.</p>
+        <a href="/dashboard-talent" class="btn-dashboard" data-fr="Accéder à mon espace →" data-en="Go to my dashboard →">Accéder à mon espace →</a>
       </div>
     </div>
 
   </div>
 </div>
 
+<!-- BARRE MOBILE -->
+<div class="mobile-bar">
+  <a href="/" class="mobile-btn">
+    <span class="mobile-btn-icon">🏠</span>
+    <span class="mobile-btn-label" data-fr="Accueil" data-en="Home">Accueil</span>
+  </a>
+  <a href="/castings" class="mobile-btn">
+    <span class="mobile-btn-icon">🎬</span>
+    <span class="mobile-btn-label" data-fr="Castings" data-en="Castings">Castings</span>
+  </a>
+  <a href="/connexion" class="mobile-btn">
+    <span class="mobile-btn-icon">🔑</span>
+    <span class="mobile-btn-label" data-fr="Connexion" data-en="Log in">Connexion</span>
+  </a>
+  <a href="/inscription" class="mobile-btn mobile-join">
+    <span class="mobile-btn-icon">✨</span>
+    <span class="mobile-btn-label" data-fr="S'inscrire" data-en="Sign up">S'inscrire</span>
+  </a>
+</div>
+
 <script>
+const SUPABASE_URL = 'https://emiuzigtlomlrsofxqyf.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtaXV6aWd0bG9tbHJzb2Z4cXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MDI4NTcsImV4cCI6MjA5MzQ3ODg1N30.Cwe-Z1vNGc-puz8jEnHdMMCwllNbl9fRAdwLe5zWyIY';
+
+let typeCompte = 'talent';
+let _authData = null;
+let currentLang = localStorage.getItem('showone_lang') || 'fr';
+
+// ── TRADUCTIONS MESSAGES DYNAMIQUES ──
+const T = {
+  fr: {
+    errPrenom: '⚠️ Merci de renseigner ton prénom et ton nom.',
+    errEmail: '⚠️ Merci de renseigner ton email.',
+    errPassword: '⚠️ Le mot de passe doit faire au moins 8 caractères.',
+    errCat: '⚠️ Merci de choisir ta catégorie.',
+    errGeneral: '⚠️ Une erreur est survenue. Veuillez réessayer.',
+    emailRecruteur: "⚠️ Cette adresse est associée à un compte recruteur. <a href='/connexion' style='color:#E8383A;font-weight:700;'>Connexion →</a>",
+    emailExiste: "⚠️ Cette adresse email est déjà utilisée. <a href='/connexion' style='color:#E8383A;font-weight:700;'>Connexion →</a>",
+    creatingAccount: 'Création du compte…',
+    creatingProfile: 'Création du profil…',
+    continuer: 'Continuer →',
+    creerProfil: 'Créer mon profil ✓',
+    pageTitle: 'Inscription — ShowOne',
+  },
+  en: {
+    errPrenom: '⚠️ Please enter your first and last name.',
+    errEmail: '⚠️ Please enter your email address.',
+    errPassword: '⚠️ Password must be at least 8 characters.',
+    errCat: '⚠️ Please choose your category.',
+    errGeneral: '⚠️ An error occurred. Please try again.',
+    emailRecruteur: "⚠️ This email is linked to a recruiter account. <a href='/connexion' style='color:#E8383A;font-weight:700;'>Log in →</a>",
+    emailExiste: "⚠️ This email is already in use. <a href='/connexion' style='color:#E8383A;font-weight:700;'>Log in →</a>",
+    creatingAccount: 'Creating account…',
+    creatingProfile: 'Creating profile…',
+    continuer: 'Continue →',
+    creerProfil: 'Create my profile ✓',
+    pageTitle: 'Sign up — ShowOne',
+  }
+};
+
+// ── SOUS-CATÉGORIES FR + EN ──
+const sousCats = {
+  fr: {
+    acting: ['Acteur cinéma','Acteur série TV','Acteur publicité','Figuration','Voix off / Doublage','Acteur théâtre','Acteur comédie musicale'],
+    musique: ['Chanteur solo','Chanteur lyrique / Opéra','Groupe / Band','Rap / Hip-hop','Pop','Rock','R&B / Soul','Jazz / Blues','Électro / DJ','Compositeur / Beatmaker','Musicien instrumentiste','Pianiste','Guitariste','Violoniste','Batteur'],
+    danse: ['Danse urbaine (hip-hop)','Danse contemporaine','Danse classique / Ballet','Danse latino (salsa, bachata…)','Danse orientale','Danse africaine','Claquettes','Popping / Locking','Break dance','Chorégraphe'],
+    sport: ['Football','Basketball','Tennis','Sports de combat (MMA, boxe…)','Fitness / Coaching sportif','Freestyle football','Skateboard','Sports extrêmes','Natation','Athlétisme','Rugby','Volleyball','Escalade','Équitation'],
+    createurs: ['YouTuber','TikToker','Instagrameur','Streamer / Gaming','Créateur lifestyle','Créateur humour / Sketchs','Vlogger','Podcaster','Créateur beauté / Mode','Créateur food'],
+    mode: ['Mannequin photo — Femme','Mannequin photo — Homme','Mannequin photo — Enfant','Mannequin Curvy femme','Mannequin Curvy homme','Mannequin défilé','Modèle fitness','Modèle publicité','Modèle lingerie','Modèle beauté / Cosmétique'],
+    art: ['Dessin / Illustration','Peinture','Sculpture','Photographie artistique','Vidéaste / Réalisateur','Monteur vidéo','Graffiti / Street art','Calligraphie','Artiste numérique / Digital art'],
+    talents: ['Magicien / Illusionniste','Humoriste / Stand-up','Imitateur','Acrobate / Contorsionniste','Cascadeur','Cracheur de feu','Jongleur','Mime','Marionnettiste','Beatboxer','Artiste de rue','Escape artist'],
+    animaux: ['Chien dressé','Chat','Cheval / Équitation','Perroquet / Oiseaux','Animaux exotiques','Dresseur animalier','Animal acteur'],
+    pro: ['Animateur TV / Radio','Présentateur événements','MC / Maître de cérémonie','Coach vocal','Coach artistique','Directeur artistique','Maquilleur artistique','Coiffeur styliste','Chef cuisinier','Barman / Flair bartending']
+  },
+  en: {
+    acting: ['Film actor','TV series actor','Commercial actor','Extra / Background','Voice over / Dubbing','Theater actor','Musical theater actor'],
+    musique: ['Solo singer','Classical / Opera singer','Band / Group','Rap / Hip-hop','Pop','Rock','R&B / Soul','Jazz / Blues','Electronic / DJ','Composer / Beatmaker','Instrumentalist','Pianist','Guitarist','Violinist','Drummer'],
+    danse: ['Urban dance (hip-hop)','Contemporary dance','Classical / Ballet','Latin dance (salsa, bachata…)','Oriental dance','African dance','Tap dance','Popping / Locking','Break dance','Choreographer'],
+    sport: ['Football / Soccer','Basketball','Tennis','Combat sports (MMA, boxing…)','Fitness / Sports coaching','Freestyle football','Skateboard','Extreme sports','Swimming','Athletics','Rugby','Volleyball','Climbing','Equestrian'],
+    createurs: ['YouTuber','TikToker','Instagrammer','Streamer / Gaming','Lifestyle creator','Comedy / Sketch creator','Vlogger','Podcaster','Beauty / Fashion creator','Food creator'],
+    mode: ['Female photo model','Male photo model','Child model','Plus-size female model','Plus-size male model','Runway model','Fitness model','Ad model','Lingerie model','Beauty / Cosmetics model'],
+    art: ['Drawing / Illustration','Painting','Sculpture','Art photography','Videographer / Director','Video editor','Graffiti / Street art','Calligraphy','Digital art'],
+    talents: ['Magician / Illusionist','Stand-up comedian','Impressionist','Acrobat / Contortionist','Stuntman','Fire breather','Juggler','Mime','Puppeteer','Beatboxer','Street performer','Escape artist'],
+    animaux: ['Trained dog','Cat','Horse / Equestrian','Parrot / Birds','Exotic animals','Animal trainer','Acting animal'],
+    pro: ['TV / Radio host','Event presenter','MC / Master of ceremonies','Vocal coach','Artistic coach','Artistic director','Artistic makeup artist','Hair stylist','Chef','Bartender / Flair bartending']
+  }
+};
+
+// ── SWITCH LANGUE ──
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('showone_lang', lang);
+  document.documentElement.lang = lang;
+  document.title = T[lang].pageTitle;
+
+  document.querySelectorAll('[data-fr]').forEach(el => {
+    const val = el.getAttribute('data-' + lang);
+    if (val !== null) el.textContent = val;
+  });
+
+  // Placeholders
+  document.querySelectorAll('[data-placeholder-fr]').forEach(el => {
+    el.placeholder = el.getAttribute('data-placeholder-' + lang) || '';
+  });
+
+  // Options du select catégorie
+  document.querySelectorAll('#catSelect option').forEach(opt => {
+    const val = opt.getAttribute('data-' + lang);
+    if (val) opt.textContent = val;
+  });
+
+  // Boutons langue
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick').includes("'" + lang + "'"));
+  });
+
+  // Rafraîchir sous-cats si une catégorie est déjà choisie
+  const cat = document.getElementById('catSelect').value;
+  if (cat) updateSousCat();
+}
+
+// ── REDIRECT SI DÉJÀ CONNECTÉ ──
 (function() {
   try {
     const u = JSON.parse(localStorage.getItem('showone_user') || '{}');
     if (u.type_compte === 'recruteur') window.location.href = '/dashboard-recruteur';
     else if (u.type_compte === 'talent') window.location.href = '/dashboard-talent';
   } catch(e) {}
+  // Appliquer la langue au chargement
+  setLang(currentLang);
+
+  // Pré-sélectionner type depuis URL
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('type') === 'recruteur') setType('recruteur');
 })();
-
-const SUPABASE_URL = 'https://emiuzigtlomlrsofxqyf.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtaXV6aWd0bG9tbHJzb2Z4cXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MDI4NTcsImV4cCI6MjA5MzQ3ODg1N30.Cwe-Z1vNGc-puz8jEnHdMMCwllNbl9fRAdwLe5zWyIY';
-
-let typeCompte = 'talent';
-let _authData = null;
-
-// ── 10 CATÉGORIES + SOUS-CATÉGORIES COMPLÈTES ──
-const sousCats = {
-  acting: [
-    'Acteur cinéma', 'Acteur série TV', 'Acteur publicité', 'Figuration',
-    'Voix off / Doublage', 'Acteur théâtre', 'Acteur comédie musicale'
-  ],
-  musique: [
-    'Chanteur solo', 'Chanteur lyrique / Opéra', 'Groupe / Band',
-    'Rap / Hip-hop', 'Pop', 'Rock', 'R&B / Soul', 'Jazz / Blues',
-    'Électro / DJ', 'Compositeur / Beatmaker', 'Musicien instrumentiste',
-    'Pianiste', 'Guitariste', 'Violoniste', 'Batteur'
-  ],
-  danse: [
-    'Danse urbaine (hip-hop)', 'Danse contemporaine', 'Danse classique / Ballet',
-    'Danse latino (salsa, bachata…)', 'Danse orientale', 'Danse africaine',
-    'Claquettes', 'Popping / Locking', 'Break dance', 'Chorégraphe'
-  ],
-  sport: [
-    'Football', 'Basketball', 'Tennis', 'Sports de combat (MMA, boxe…)',
-    'Fitness / Coaching sportif', 'Freestyle football', 'Skateboard',
-    'Sports extrêmes', 'Natation', 'Athlétisme', 'Rugby', 'Volleyball',
-    'Escalade', 'Équitation'
-  ],
-  createurs: [
-    'YouTuber', 'TikToker', 'Instagrameur', 'Streamer / Gaming',
-    'Créateur lifestyle', 'Créateur humour / Sketchs', 'Vlogger',
-    'Podcaster', 'Créateur beauté / Mode', 'Créateur food'
-  ],
-  mode: [
-    'Mannequin photo — Femme', 'Mannequin photo — Homme',
-    'Mannequin photo — Enfant', 'Mannequin Curvy femme',
-    'Mannequin Curvy homme', 'Mannequin défilé', 'Modèle fitness',
-    'Modèle publicité', 'Modèle lingerie', 'Modèle beauté / Cosmétique'
-  ],
-  art: [
-    'Dessin / Illustration', 'Peinture', 'Sculpture', 'Photographie artistique',
-    'Vidéaste / Réalisateur', 'Monteur vidéo', 'Graffiti / Street art',
-    'Calligraphie', 'Artiste numérique / Digital art'
-  ],
-  talents: [
-    'Magicien / Illusionniste', 'Humoriste / Stand-up', 'Imitateur',
-    'Acrobate / Contorsionniste', 'Cascadeur', 'Cracheur de feu',
-    'Jongleur', 'Mime', 'Marionnettiste', 'Beatboxer',
-    'Artiste de rue', 'Escape artist'
-  ],
-  animaux: [
-    'Chien dressé', 'Chat', 'Cheval / Équitation', 'Perroquet / Oiseaux',
-    'Animaux exotiques', 'Dresseur animalier', 'Animal acteur'
-  ],
-  pro: [
-    'Animateur TV / Radio', 'Présentateur événements', 'MC / Maître de cérémonie',
-    'Coach vocal', 'Coach artistique', 'Directeur artistique',
-    'Maquilleur artistique', 'Coiffeur styliste', 'Chef cuisinier',
-    'Barman / Flair bartending'
-  ]
-};
 
 function setType(type) {
   typeCompte = type;
   document.getElementById('btn-talent').classList.toggle('active', type === 'talent');
   document.getElementById('btn-recruteur').classList.toggle('active', type === 'recruteur');
-  // Afficher champ nom société uniquement pour recruteur
   document.getElementById('nomSocieteGroup').style.display = type === 'recruteur' ? 'block' : 'none';
 }
 
@@ -315,10 +389,10 @@ function updateSousCat() {
   const section = document.getElementById('sousCatSection');
   const chipsWrap = document.getElementById('sousCatChips');
   document.getElementById('sousCatValue').value = '';
-
-  if (cat && sousCats[cat]) {
-    chipsWrap.innerHTML = sousCats[cat].map(s =>
-      `<div class="sous-cat-chip" onclick="selectSousCat(this, '${s.replace(/'/g, "\\'")}')">${s}</div>`
+  const defs = sousCats[currentLang];
+  if (cat && defs[cat]) {
+    chipsWrap.innerHTML = defs[cat].map(s =>
+      `<div class="sous-cat-chip" onclick="selectSousCat(this,'${s.replace(/'/g,"\\'")}')">${s}</div>`
     ).join('');
     section.style.display = 'block';
   } else {
@@ -339,14 +413,15 @@ async function validerEtape1() {
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;
   const errDiv = document.getElementById('inscriptionError');
+  const lang = currentLang;
   errDiv.style.display = 'none';
 
-  if (!prenom || !nom) { errDiv.innerHTML = '⚠️ Merci de renseigner ton prénom et ton nom.'; errDiv.style.display = 'block'; return; }
-  if (!email) { errDiv.innerHTML = '⚠️ Merci de renseigner ton email.'; errDiv.style.display = 'block'; return; }
-  if (password.length < 8) { errDiv.innerHTML = '⚠️ Le mot de passe doit faire au moins 8 caractères.'; errDiv.style.display = 'block'; return; }
+  if (!prenom || !nom) { errDiv.innerHTML = T[lang].errPrenom; errDiv.style.display = 'block'; return; }
+  if (!email) { errDiv.innerHTML = T[lang].errEmail; errDiv.style.display = 'block'; return; }
+  if (password.length < 8) { errDiv.innerHTML = T[lang].errPassword; errDiv.style.display = 'block'; return; }
 
   const btn = document.getElementById('btnStep1');
-  btn.disabled = true; btn.textContent = 'Création du compte…';
+  btn.disabled = true; btn.textContent = T[lang].creatingAccount;
 
   try {
     const authRes = await fetch(`${SUPABASE_URL}/auth/v1/signup`, {
@@ -363,17 +438,13 @@ async function validerEtape1() {
         try {
           const chk = await fetch(`${SUPABASE_URL}/rest/v1/utilisateurs?email=eq.${email}&select=type_compte&limit=1`, { headers: { 'apikey': SUPABASE_KEY } });
           const chkData = await chk.json();
-          if (chkData?.[0]?.type_compte === 'recruteur') {
-            errDiv.innerHTML = "⚠️ Cette adresse est associée à un compte recruteur. <a href='/connexion' style='color:#E8383A;font-weight:700;'>Connexion →</a>";
-          } else {
-            errDiv.innerHTML = "⚠️ Cette adresse email est déjà utilisée. <a href='/connexion' style='color:#E8383A;font-weight:700;'>Connexion →</a>";
-          }
-        } catch(e) { errDiv.innerHTML = "⚠️ Email déjà utilisé. <a href='/connexion' style='color:#E8383A;font-weight:700;'>Connexion →</a>"; }
+          errDiv.innerHTML = chkData?.[0]?.type_compte === 'recruteur' ? T[lang].emailRecruteur : T[lang].emailExiste;
+        } catch(e) { errDiv.innerHTML = T[lang].emailExiste; }
       } else {
-        errDiv.innerHTML = '⚠️ ' + (errMsg || 'Une erreur est survenue.');
+        errDiv.innerHTML = '⚠️ ' + (errMsg || T[lang].errGeneral);
       }
       errDiv.style.display = 'block';
-      btn.disabled = false; btn.textContent = 'Continuer →';
+      btn.disabled = false; btn.textContent = T[lang].continuer;
       return;
     }
 
@@ -404,13 +475,7 @@ async function validerEtape1() {
           body: JSON.stringify({ utilisateur_id: userId })
         });
       }
-      try {
-        await fetch('/api/send-email', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ type: 'confirmation_recruteur', to: email, prenom })
-        });
-      } catch(e) {}
+      try { await fetch('/api/send-email', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'confirmation_recruteur', to: email, prenom }) }); } catch(e) {}
       setTimeout(() => { window.location.href = '/dashboard-recruteur'; }, 500);
     } else {
       document.getElementById('p1').classList.remove('active');
@@ -424,9 +489,9 @@ async function validerEtape1() {
 
   } catch(err) {
     console.error(err);
-    errDiv.innerHTML = '⚠️ Une erreur est survenue. Veuillez réessayer.';
+    errDiv.innerHTML = T[currentLang].errGeneral;
     errDiv.style.display = 'block';
-    btn.disabled = false; btn.textContent = 'Continuer →';
+    btn.disabled = false; btn.textContent = T[currentLang].continuer;
   }
 }
 
@@ -442,12 +507,13 @@ async function creerCompte() {
   const prenom = userObj.prenom || '';
   const email = userObj.email || '';
   const errDiv = document.getElementById('profilError');
+  const lang = currentLang;
   errDiv.style.display = 'none';
 
-  if (!categorie) { errDiv.innerHTML = '⚠️ Merci de choisir ta catégorie.'; errDiv.style.display = 'block'; return; }
+  if (!categorie) { errDiv.innerHTML = T[lang].errCat; errDiv.style.display = 'block'; return; }
 
   const btn = document.getElementById('btnStep2');
-  btn.disabled = true; btn.textContent = 'Création du profil…';
+  btn.disabled = true; btn.textContent = T[lang].creatingProfile;
 
   try {
     if (ville) {
@@ -461,55 +527,31 @@ async function creerCompte() {
     await fetch(`${SUPABASE_URL}/rest/v1/profils_talents`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}`, 'Prefer': 'return=minimal' },
-      body: JSON.stringify({
-        utilisateur_id: userId,
-        nom_scene: nomscene || prenom,
-        categorie: categorie,
-        sous_categorie: souscategorie || null
-      })
+      body: JSON.stringify({ utilisateur_id: userId, nom_scene: nomscene || prenom, categorie, sous_categorie: souscategorie || null })
     });
 
-    try {
-      await fetch('/api/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'confirmation_talent', to: email, prenom })
-      });
-    } catch(e) {}
+    try { await fetch('/api/send-email', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'confirmation_talent', to: email, prenom }) }); } catch(e) {}
 
     document.getElementById('p2').classList.remove('active');
     document.getElementById('stepsBar').style.display = 'none';
     document.getElementById('success').classList.add('active');
+
+    // Appliquer les traductions à la page succès
+    document.querySelectorAll('[data-fr]').forEach(el => {
+      const val = el.getAttribute('data-' + lang);
+      if (val !== null) el.textContent = val;
+    });
+
     window.scrollTo(0, 0);
 
   } catch(err) {
     console.error(err);
-    errDiv.innerHTML = '⚠️ Une erreur est survenue. Veuillez réessayer.';
+    errDiv.innerHTML = T[currentLang].errGeneral;
     errDiv.style.display = 'block';
-    btn.disabled = false; btn.textContent = 'Créer mon profil ✓';
+    btn.disabled = false; btn.textContent = T[currentLang].creerProfil;
   }
 }
 </script>
-
-<!-- BARRE MOBILE -->
-<div class="mobile-bar">
-  <a href="/" class="mobile-btn">
-    <span class="mobile-btn-icon">🏠</span>
-    <span class="mobile-btn-label">Accueil</span>
-  </a>
-  <a href="/castings" class="mobile-btn">
-    <span class="mobile-btn-icon">🎬</span>
-    <span class="mobile-btn-label">Castings</span>
-  </a>
-  <a href="/connexion" class="mobile-btn">
-    <span class="mobile-btn-icon">🔑</span>
-    <span class="mobile-btn-label">Connexion</span>
-  </a>
-  <a href="/inscription" class="mobile-btn mobile-join">
-    <span class="mobile-btn-icon">✨</span>
-    <span class="mobile-btn-label">S'inscrire</span>
-  </a>
-</div>
 
 </body>
 </html>
