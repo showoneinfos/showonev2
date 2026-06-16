@@ -11,8 +11,12 @@
     nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; border-bottom: 1px solid #f0f0f0; }
     .logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; }
     .logo span { color: #E8383A; }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
     .btn-back { font-size: 13px; color: #999; text-decoration: none; }
     .btn-back:hover { color: #111; }
+    .lang-switch { display: flex; align-items: center; gap: 2px; background: #f5f5f5; border-radius: 100px; padding: 3px; }
+    .lang-btn { padding: 4px 9px; border-radius: 100px; border: none; cursor: pointer; font-size: 12px; font-weight: 700; background: transparent; color: #888; transition: all 0.15s; }
+    .lang-btn.active { background: #fff; color: #111; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
     .layout { display: flex; max-width: 960px; margin: 0 auto; padding: 40px 20px; gap: 48px; }
     .sidebar { width: 180px; flex-shrink: 0; }
     .sidebar-title { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #bbb; margin-bottom: 12px; }
@@ -36,249 +40,321 @@
     .alert { background: #fff8f0; border: 1px solid #ffe0b0; border-radius: 8px; padding: 12px 14px; margin: 14px 0; font-size: 13px; color: #885500; }
     strong { font-weight: 700; color: #111; }
     a { color: #E8383A; }
-    @media (max-width: 700px) { .layout { flex-direction: column; } .sidebar { width: 100%; } nav { padding: 14px 20px; } }
-
-    /* ── MOBILE RESPONSIVE ── */
-    @media (max-width: 768px) {
-      /* Index sidebar → bottom nav */
-      .sidebar {
-        width: 100% !important; height: 56px !important;
-        top: auto !important; bottom: 0 !important; left: 0 !important;
-        border-right: none !important; border-top: 1px solid #f0f0f0 !important;
-        flex-direction: row !important; padding: 6px 8px 10px !important;
-        align-items: center !important;
-      }
-      .logo, .side-divider, .sep, .side-bottom, #side-auth, #side-user-box,
-      .side-nav .nav-item:not(.active):nth-child(n+4) { display: none !important; }
-      .side-nav { flex-direction: row !important; gap: 0 !important; padding: 0 !important; }
-      .nav-item { flex-direction: column !important; gap: 1px !important; padding: 4px 8px !important;
-        font-size: 10px !important; flex: 1 !important; justify-content: center !important;
-        align-items: center !important; background: transparent !important; font-weight: 500 !important; }
-      .ico { font-size: 20px !important; width: auto !important; }
-      .main { margin-left: 0 !important; padding-bottom: 65px !important; }
-
-      /* Grilles */
-      .grid { grid-template-columns: repeat(2, 1fr) !important; gap: 2px !important; }
-      .grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
-
-      /* Dashboard */
-      .sidebar-nav, .sidebar { display: none; }
-      body.dashboard { display: block; }
-      .main.dashboard-main { margin-left: 0 !important; padding: 16px !important; padding-bottom: 70px !important; max-width: 100% !important; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
-      .content-grid { grid-template-columns: 1fr !important; }
-
-      /* Nav */
-      nav { padding: 12px 16px !important; }
-
-      /* Forms */
-      .form-row { grid-template-columns: 1fr !important; }
-      .cat-grid { grid-template-columns: repeat(2, 1fr) !important; }
-      .type-selector { grid-template-columns: 1fr 1fr !important; }
-
-      /* Legal layout */
-      .layout { flex-direction: column !important; padding: 20px 16px !important; gap: 24px !important; }
-      .sidebar.legal-sidebar { width: 100% !important; height: auto !important; position: relative !important; flex-direction: column !important; border: none !important; border-bottom: 1px solid #f0f0f0 !important; padding: 0 0 16px !important; }
-
-      /* Contact */
-      .main { padding: 30px 16px !important; }
-      .contact-info { flex-wrap: wrap !important; }
-
-      /* Sections */
-      .sec-head { padding: 14px 10px 8px !important; }
-      .cats { padding: 8px 10px !important; }
-    }
-
-
-    /* ── BARRE MOBILE ── */
+    @media (max-width: 700px) { .layout { flex-direction: column; padding: 20px 16px; gap: 24px; } .sidebar { width: 100%; } nav { padding: 14px 20px; } }
     .mobile-bar { display: none; }
     @media (max-width: 768px) {
-      .mobile-bar {
-        display: flex; position: fixed; bottom: 0; left: 0; right: 0;
-        background: #fff; border-top: 1px solid #f0f0f0;
-        padding: 8px 4px 14px; z-index: 1000; align-items: center;
-      }
-      .mobile-btn {
-        flex: 1; display: flex; flex-direction: column; align-items: center;
-        gap: 2px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600;
-      }
-      .mobile-btn:first-child { font-size: 22px; }
+      .mobile-bar { display: flex; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #f0f0f0; padding: 8px 4px 14px; z-index: 1000; align-items: center; }
+      .mobile-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600; }
       .mobile-btn span { font-size: 10px; display: block; }
       .mobile-btn.active { color: #111; }
-      .mobile-btn.mobile-join {
-        flex: none; margin: 0 8px; background: #E8383A; color: #fff !important;
-        padding: 8px 14px; border-radius: 8px; font-size: 12px !important; font-weight: 700;
-        display: flex; flex-direction: column; align-items: center; gap: 1px;
-      }
+      .mobile-join { flex: none; margin: 0 8px; background: #E8383A; color: #fff !important; padding: 8px 14px; border-radius: 8px; font-size: 12px !important; font-weight: 700; display: flex; flex-direction: column; align-items: center; gap: 1px; }
     }
   </style>
 </head>
 <body>
 <nav>
   <a href="/" class="logo">Show<span>One</span></a>
-  <a href="/" class="btn-back">← Retour</a>
+  <div class="nav-right">
+    <div class="lang-switch">
+      <button class="lang-btn active" onclick="setLang('fr')">🇫🇷</button>
+      <button class="lang-btn" onclick="setLang('en')">🇺🇸</button>
+    </div>
+    <a href="/" class="btn-back" id="btnBack">← Retour</a>
+  </div>
 </nav>
+
 <div class="layout">
   <div class="sidebar">
-    <div class="sidebar-title">Documents</div>
-    <a href="#" class="active" onclick="showPage('cgu',this);return false;">📄 CGU</a>
-    <a href="#" onclick="showPage('confidentialite',this);return false;">🔒 Confidentialité</a>
-    <a href="#" onclick="showPage('mentions',this);return false;">🏢 Mentions légales</a>
-    <a href="#" onclick="showPage('cookies',this);return false;">🍪 Cookies</a>
-    <a href="#" onclick="showPage('charte',this);return false;">🤝 Charte recruteurs</a>
+    <div class="sidebar-title" id="sidebarTitle">Documents</div>
+    <a href="#" class="active" id="navCgu" onclick="showPage('cgu',this);return false;">📄 CGU</a>
+    <a href="#" id="navConf" onclick="showPage('confidentialite',this);return false;">🔒 Confidentialité</a>
+    <a href="#" id="navMentions" onclick="showPage('mentions',this);return false;">🏢 Mentions légales</a>
+    <a href="#" id="navCookies" onclick="showPage('cookies',this);return false;">🍪 Cookies</a>
+    <a href="#" id="navCharte" onclick="showPage('charte',this);return false;">🤝 Charte recruteurs</a>
   </div>
 
   <div class="content">
 
     <!-- CGU -->
     <div class="page active" id="page-cgu">
-      <div class="page-title">Conditions Générales d'Utilisation</div>
-      <div class="page-sub">Les règles d'utilisation de la plateforme ShowOne.</div>
-      <div class="page-date">Dernière mise à jour : mai 2025</div>
-      <h2>1. Objet</h2>
-      <p>Les présentes CGU régissent l'accès et l'utilisation de la plateforme ShowOne (showone.fr). En utilisant la plateforme, vous acceptez sans réserve les présentes CGU.</p>
-      <h2>2. Inscription et comptes</h2>
-      <h3>Conditions d'accès</h3>
-      <p>L'inscription est ouverte à toute personne âgée d'au moins 15 ans. Pour les mineurs entre 15 et 18 ans, l'accord d'un représentant légal est requis.</p>
-      <h3>Obligations</h3>
-      <ul>
+      <div class="page-title" id="cguTitle">Conditions Générales d'Utilisation</div>
+      <div class="page-sub" id="cguSub">Les règles d'utilisation de la plateforme ShowOne.</div>
+      <div class="page-date" id="cguDate">Dernière mise à jour : mai 2025</div>
+      <h2 id="cgu1">1. Objet</h2>
+      <p id="cgu1p">Les présentes CGU régissent l'accès et l'utilisation de la plateforme ShowOne (showone.fr). En utilisant la plateforme, vous acceptez sans réserve les présentes CGU.</p>
+      <h2 id="cgu2">2. Inscription et comptes</h2>
+      <h3 id="cgu2h3">Conditions d'accès</h3>
+      <p id="cgu2p">L'inscription est ouverte à toute personne âgée d'au moins 15 ans. Pour les mineurs entre 15 et 18 ans, l'accord d'un représentant légal est requis.</p>
+      <h3 id="cgu2obli">Obligations</h3>
+      <ul id="cgu2ul">
         <li>Fournir des informations exactes et à jour</li>
         <li>Ne créer qu'un seul compte par personne</li>
         <li>Maintenir la confidentialité de ses identifiants</li>
         <li>Notifier ShowOne de toute utilisation non autorisée</li>
       </ul>
-      <h2>3. Contenus publiés</h2>
-      <p>Vous êtes seul responsable des contenus que vous publiez. Tout contenu illicite ou offensant sera supprimé. ShowOne se réserve le droit de modérer les contenus.</p>
-      <h2>4. Propriété intellectuelle</h2>
-      <p>Vous conservez tous les droits sur vos vidéos. En les publiant, vous accordez à ShowOne une licence non exclusive d'affichage. ShowOne n'utilise pas vos contenus à des fins commerciales sans accord.</p>
-      <h2>5. Responsabilité</h2>
-      <p>ShowOne est une plateforme de mise en relation. Nous ne sommes pas responsables des contacts établis entre talents et recruteurs, ni des suites données.</p>
-      <h2>6. Contact</h2>
-      <p>Toute question : <a href="/contact">notre formulaire de contact</a> ou showone.infos@gmail.com</p>
+      <h2 id="cgu3">3. Contenus publiés</h2>
+      <p id="cgu3p">Vous êtes seul responsable des contenus que vous publiez. Tout contenu illicite ou offensant sera supprimé. ShowOne se réserve le droit de modérer les contenus.</p>
+      <h2 id="cgu4">4. Propriété intellectuelle</h2>
+      <p id="cgu4p">Vous conservez tous les droits sur vos vidéos. En les publiant, vous accordez à ShowOne une licence non exclusive d'affichage. ShowOne n'utilise pas vos contenus à des fins commerciales sans accord.</p>
+      <h2 id="cgu5">5. Responsabilité</h2>
+      <p id="cgu5p">ShowOne est une plateforme de mise en relation. Nous ne sommes pas responsables des contacts établis entre talents et recruteurs, ni des suites données.</p>
+      <h2 id="cgu6">6. Contact</h2>
+      <p id="cgu6p">Toute question : <a href="/contact">notre formulaire de contact</a> ou showone.infos@gmail.com</p>
     </div>
 
     <!-- CONFIDENTIALITE -->
     <div class="page" id="page-confidentialite">
-      <div class="page-title">Politique de confidentialité</div>
-      <div class="page-sub">Comment ShowOne collecte et protège vos données.</div>
-      <div class="page-date">Dernière mise à jour : mai 2025</div>
-      <h2>Données collectées</h2>
-      <p>ShowOne collecte uniquement les données nécessaires : nom, email, ville, vidéos et informations de profil. Aucune donnée sensible n'est collectée sans votre consentement explicite.</p>
-      <h2>Utilisation des données</h2>
-      <ul>
+      <div class="page-title" id="confTitle">Politique de confidentialité</div>
+      <div class="page-sub" id="confSub">Comment ShowOne collecte et protège vos données.</div>
+      <div class="page-date" id="confDate">Dernière mise à jour : mai 2025</div>
+      <h2 id="confH1">Données collectées</h2>
+      <p id="confP1">ShowOne collecte uniquement les données nécessaires : nom, email, ville, vidéos et informations de profil. Aucune donnée sensible n'est collectée sans votre consentement explicite.</p>
+      <h2 id="confH2">Utilisation des données</h2>
+      <ul id="confUl1">
         <li>Fonctionnement de la plateforme et gestion de votre compte</li>
         <li>Mise en relation entre talents et recruteurs</li>
         <li>Amélioration de nos services</li>
         <li>Communications relatives à votre compte</li>
       </ul>
-      <h2>Partage des données</h2>
-      <p>Vos données ne sont <strong>jamais vendues</strong> à des tiers. Elles peuvent être partagées avec nos prestataires techniques (Supabase, Mux, Stripe) dans le cadre strict du service.</p>
-      <h2>Vos droits (RGPD)</h2>
-      <p>Conformément au RGPD, vous pouvez à tout moment : accéder à vos données, les corriger, les supprimer, ou demander leur portabilité. Contactez-nous à showone.infos@gmail.com.</p>
-      <h2>Durée de conservation</h2>
-      <p>Vos données sont conservées tant que votre compte est actif. Après suppression, elles sont effacées dans un délai de 30 jours.</p>
+      <h2 id="confH3">Partage des données</h2>
+      <p id="confP2">Vos données ne sont <strong>jamais vendues</strong> à des tiers. Elles peuvent être partagées avec nos prestataires techniques (Supabase, Mux, Stripe) dans le cadre strict du service.</p>
+      <h2 id="confH4">Vos droits (RGPD)</h2>
+      <p id="confP3">Conformément au RGPD, vous pouvez à tout moment : accéder à vos données, les corriger, les supprimer, ou demander leur portabilité. Contactez-nous à showone.infos@gmail.com.</p>
+      <h2 id="confH5">Durée de conservation</h2>
+      <p id="confP4">Vos données sont conservées tant que votre compte est actif. Après suppression, elles sont effacées dans un délai de 30 jours.</p>
     </div>
 
     <!-- MENTIONS LEGALES -->
     <div class="page" id="page-mentions">
-      <div class="page-title">Mentions légales</div>
-      <div class="page-sub">Informations légales relatives à ShowOne.</div>
-      <div class="page-date">Dernière mise à jour : mai 2025</div>
-      <h2>Éditeur</h2>
-      <p><strong>ShowOne</strong><br>Plateforme de mise en relation talents-recruteurs<br>Email : showone.infos@gmail.com</p>
-      <h2>Hébergement</h2>
-      <p><strong>Vercel Inc.</strong><br>340 Pine Street, Suite 700, San Francisco, CA 94104, USA</p>
-      <h2>Directeur de la publication</h2>
-      <p>ShowOne — showone.infos@gmail.com</p>
-      <h2>Propriété intellectuelle</h2>
-      <p>Le nom ShowOne, son logo et l'ensemble des contenus éditoriaux sont la propriété exclusive de ShowOne. Toute reproduction sans autorisation est interdite.</p>
+      <div class="page-title" id="mentTitle">Mentions légales</div>
+      <div class="page-sub" id="mentSub">Informations légales relatives à ShowOne.</div>
+      <div class="page-date" id="mentDate">Dernière mise à jour : mai 2025</div>
+      <h2 id="mentH1">Éditeur</h2>
+      <p id="mentP1"><strong>ShowOne</strong><br>Plateforme de mise en relation talents-recruteurs<br>Email : showone.infos@gmail.com</p>
+      <h2 id="mentH2">Hébergement</h2>
+      <p id="mentP2"><strong>Vercel Inc.</strong><br>340 Pine Street, Suite 700, San Francisco, CA 94104, USA</p>
+      <h2 id="mentH3">Directeur de la publication</h2>
+      <p id="mentP3">ShowOne — showone.infos@gmail.com</p>
+      <h2 id="mentH4">Propriété intellectuelle</h2>
+      <p id="mentP4">Le nom ShowOne, son logo et l'ensemble des contenus éditoriaux sont la propriété exclusive de ShowOne. Toute reproduction sans autorisation est interdite.</p>
     </div>
 
     <!-- COOKIES -->
     <div class="page" id="page-cookies">
-      <div class="page-title">Politique de cookies</div>
-      <div class="page-sub">Comment ShowOne utilise les cookies.</div>
-      <div class="page-date">Dernière mise à jour : mai 2025</div>
-      <h2>Qu'est-ce qu'un cookie ?</h2>
-      <p>Un cookie est un petit fichier texte déposé sur votre appareil lors de votre visite. Il permet de vous reconnaître et d'améliorer votre expérience.</p>
-      <h2>Types de cookies utilisés</h2>
+      <div class="page-title" id="cookTitle">Politique de cookies</div>
+      <div class="page-sub" id="cookSub">Comment ShowOne utilise les cookies.</div>
+      <div class="page-date" id="cookDate">Dernière mise à jour : mai 2025</div>
+      <h2 id="cookH1">Qu'est-ce qu'un cookie ?</h2>
+      <p id="cookP1">Un cookie est un petit fichier texte déposé sur votre appareil lors de votre visite. Il permet de vous reconnaître et d'améliorer votre expérience.</p>
+      <h2 id="cookH2">Types de cookies utilisés</h2>
       <table>
-        <tr><th>Type</th><th>Finalité</th><th>Durée</th></tr>
-        <tr><td>Essentiels</td><td>Connexion, session utilisateur</td><td>Session</td></tr>
-        <tr><td>Fonctionnels</td><td>Préférences, langue</td><td>1 an</td></tr>
-        <tr><td>Analytiques</td><td>Statistiques de visite (anonymisés)</td><td>13 mois</td></tr>
-        <tr><td>Paiement</td><td>Stripe (sécurisation des paiements)</td><td>Session</td></tr>
+        <tr><th id="cookTh1">Type</th><th id="cookTh2">Finalité</th><th id="cookTh3">Durée</th></tr>
+        <tr><td id="cookTd1">Essentiels</td><td id="cookTd2">Connexion, session utilisateur</td><td id="cookTd3">Session</td></tr>
+        <tr><td id="cookTd4">Fonctionnels</td><td id="cookTd5">Préférences, langue</td><td id="cookTd6">1 an</td></tr>
+        <tr><td id="cookTd7">Analytiques</td><td id="cookTd8">Statistiques de visite (anonymisés)</td><td id="cookTd9">13 mois</td></tr>
+        <tr><td id="cookTd10">Paiement</td><td id="cookTd11">Stripe (sécurisation des paiements)</td><td id="cookTd12">Session</td></tr>
       </table>
-      <p>ShowOne <strong>n'utilise pas</strong> de cookies publicitaires ou de tracking tiers.</p>
-      <h2>Gérer vos cookies</h2>
-      <p>Vous pouvez refuser les cookies non essentiels depuis les paramètres de votre navigateur. Le refus des cookies essentiels peut empêcher la connexion à votre compte.</p>
+      <p id="cookP2">ShowOne <strong>n'utilise pas</strong> de cookies publicitaires ou de tracking tiers.</p>
+      <h2 id="cookH3">Gérer vos cookies</h2>
+      <p id="cookP3">Vous pouvez refuser les cookies non essentiels depuis les paramètres de votre navigateur. Le refus des cookies essentiels peut empêcher la connexion à votre compte.</p>
     </div>
 
     <!-- CHARTE RECRUTEURS -->
     <div class="page" id="page-charte">
-      <div class="page-title">Charte des recruteurs</div>
-      <div class="page-sub">Les engagements que tout recruteur ShowOne doit respecter.</div>
-      <div class="page-date">Dernière mise à jour : mai 2025</div>
-      <h2>Nos valeurs</h2>
-      <p>ShowOne est une plateforme bienveillante. En tant que recruteur, vous vous engagez à traiter chaque talent avec respect et professionnalisme.</p>
-      <h2>Engagements obligatoires</h2>
-      <ul>
+      <div class="page-title" id="charteTitle">Charte des recruteurs</div>
+      <div class="page-sub" id="charteSub">Les engagements que tout recruteur ShowOne doit respecter.</div>
+      <div class="page-date" id="charteDate">Dernière mise à jour : mai 2025</div>
+      <h2 id="charteH1">Nos valeurs</h2>
+      <p id="charteP1">ShowOne est une plateforme bienveillante. En tant que recruteur, vous vous engagez à traiter chaque talent avec respect et professionnalisme.</p>
+      <h2 id="charteH2">Engagements obligatoires</h2>
+      <ul id="charteUl1">
         <li>Ne contacter les talents que dans un cadre professionnel légitime</li>
         <li>Être honnête sur votre identité et votre société</li>
         <li>Respecter les délais de réponse</li>
         <li>Ne pas collecter les données des talents en dehors de ShowOne</li>
         <li>Respecter la confidentialité des échanges</li>
       </ul>
-      <h2>Comportements interdits</h2>
-      <ul>
+      <h2 id="charteH3">Comportements interdits</h2>
+      <ul id="charteUl2">
         <li>Harcèlement ou sollicitations répétées non désirées</li>
         <li>Demandes de contenu inapproprié ou illégal</li>
         <li>Usurpation d'identité professionnelle</li>
       </ul>
-      <div class="alert">🚨 Tout manquement peut entraîner la suspension immédiate du compte recruteur.</div>
-      <h2>Signaler un abus</h2>
-      <p>Signalez tout comportement inapproprié à <a href="mailto:showone.infos@gmail.com">showone.infos@gmail.com</a></p>
+      <div class="alert" id="charteAlert">🚨 Tout manquement peut entraîner la suspension immédiate du compte recruteur.</div>
+      <h2 id="charteH4">Signaler un abus</h2>
+      <p id="charteP2">Signalez tout comportement inapproprié à <a href="mailto:showone.infos@gmail.com">showone.infos@gmail.com</a></p>
     </div>
 
   </div>
 </div>
 
-<script>
-  function showPage(id, btn) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
-    document.getElementById('page-' + id).classList.add('active');
-    btn.classList.add('active');
-    window.scrollTo(0, 0);
-  }
-</script>
-
 <!-- BARRE MOBILE -->
 <div class="mobile-bar" id="mobileBar">
-  <a href="/" class="mobile-btn" id="mb-home">🏠<span>Accueil</span></a>
-  <a href="/castings" class="mobile-btn" id="mb-castings">🎬<span>Castings</span></a>
-  <a href="/connexion" class="mobile-btn" id="mb-conn" style="display:none">🔑<span>Connexion</span></a>
+  <a href="/" class="mobile-btn" id="mb-home">🏠<span id="mbHome">Accueil</span></a>
+  <a href="/castings" class="mobile-btn" id="mb-castings">🎬<span id="mbCastings">Castings</span></a>
+  <a href="/connexion" class="mobile-btn" id="mb-conn" style="display:none">🔑<span id="mbConn">Connexion</span></a>
   <a href="/inscription" class="mobile-btn mobile-join" id="mb-auth">S'inscrire</a>
 </div>
+
 <script>
+let currentLang = localStorage.getItem('showone_lang') || 'fr';
+
+const T = {
+  fr: {
+    pageTitle: 'CGU — ShowOne',
+    btnBack: '← Retour',
+    sidebarTitle: 'Documents',
+    navCgu: '📄 CGU', navConf: '🔒 Confidentialité', navMentions: '🏢 Mentions légales', navCookies: '🍪 Cookies', navCharte: '🤝 Charte recruteurs',
+    cguTitle: "Conditions Générales d'Utilisation", cguSub: "Les règles d'utilisation de la plateforme ShowOne.", cguDate: 'Dernière mise à jour : mai 2025',
+    cgu1: '1. Objet', cgu1p: "Les présentes CGU régissent l'accès et l'utilisation de la plateforme ShowOne (showone.fr). En utilisant la plateforme, vous acceptez sans réserve les présentes CGU.",
+    cgu2: '2. Inscription et comptes', cgu2h3: "Conditions d'accès", cgu2p: "L'inscription est ouverte à toute personne âgée d'au moins 15 ans. Pour les mineurs entre 15 et 18 ans, l'accord d'un représentant légal est requis.",
+    cgu2obli: 'Obligations', cgu2ul: ["Fournir des informations exactes et à jour", "Ne créer qu'un seul compte par personne", "Maintenir la confidentialité de ses identifiants", "Notifier ShowOne de toute utilisation non autorisée"],
+    cgu3: '3. Contenus publiés', cgu3p: "Vous êtes seul responsable des contenus que vous publiez. Tout contenu illicite ou offensant sera supprimé. ShowOne se réserve le droit de modérer les contenus.",
+    cgu4: '4. Propriété intellectuelle', cgu4p: "Vous conservez tous les droits sur vos vidéos. En les publiant, vous accordez à ShowOne une licence non exclusive d'affichage. ShowOne n'utilise pas vos contenus à des fins commerciales sans accord.",
+    cgu5: '5. Responsabilité', cgu5p: "ShowOne est une plateforme de mise en relation. Nous ne sommes pas responsables des contacts établis entre talents et recruteurs, ni des suites données.",
+    cgu6: '6. Contact', cgu6p: 'Toute question : <a href="/contact">notre formulaire de contact</a> ou showone.infos@gmail.com',
+    confTitle: 'Politique de confidentialité', confSub: 'Comment ShowOne collecte et protège vos données.', confDate: 'Dernière mise à jour : mai 2025',
+    confH1: 'Données collectées', confP1: "ShowOne collecte uniquement les données nécessaires : nom, email, ville, vidéos et informations de profil. Aucune donnée sensible n'est collectée sans votre consentement explicite.",
+    confH2: "Utilisation des données", confUl1: ["Fonctionnement de la plateforme et gestion de votre compte", "Mise en relation entre talents et recruteurs", "Amélioration de nos services", "Communications relatives à votre compte"],
+    confH3: 'Partage des données', confP2: 'Vos données ne sont <strong>jamais vendues</strong> à des tiers. Elles peuvent être partagées avec nos prestataires techniques (Supabase, Mux, Stripe) dans le cadre strict du service.',
+    confH4: 'Vos droits (RGPD)', confP3: 'Conformément au RGPD, vous pouvez à tout moment : accéder à vos données, les corriger, les supprimer, ou demander leur portabilité. Contactez-nous à showone.infos@gmail.com.',
+    confH5: 'Durée de conservation', confP4: 'Vos données sont conservées tant que votre compte est actif. Après suppression, elles sont effacées dans un délai de 30 jours.',
+    mentTitle: 'Mentions légales', mentSub: 'Informations légales relatives à ShowOne.', mentDate: 'Dernière mise à jour : mai 2025',
+    mentH1: 'Éditeur', mentP1: '<strong>ShowOne</strong><br>Plateforme de mise en relation talents-recruteurs<br>Email : showone.infos@gmail.com',
+    mentH2: 'Hébergement', mentP2: '<strong>Vercel Inc.</strong><br>340 Pine Street, Suite 700, San Francisco, CA 94104, USA',
+    mentH3: 'Directeur de la publication', mentP3: 'ShowOne — showone.infos@gmail.com',
+    mentH4: 'Propriété intellectuelle', mentP4: "Le nom ShowOne, son logo et l'ensemble des contenus éditoriaux sont la propriété exclusive de ShowOne. Toute reproduction sans autorisation est interdite.",
+    cookTitle: 'Politique de cookies', cookSub: 'Comment ShowOne utilise les cookies.', cookDate: 'Dernière mise à jour : mai 2025',
+    cookH1: "Qu'est-ce qu'un cookie ?", cookP1: "Un cookie est un petit fichier texte déposé sur votre appareil lors de votre visite. Il permet de vous reconnaître et d'améliorer votre expérience.",
+    cookH2: 'Types de cookies utilisés', cookTh1: 'Type', cookTh2: 'Finalité', cookTh3: 'Durée',
+    cookTd1: 'Essentiels', cookTd2: 'Connexion, session utilisateur', cookTd3: 'Session',
+    cookTd4: 'Fonctionnels', cookTd5: 'Préférences, langue', cookTd6: '1 an',
+    cookTd7: 'Analytiques', cookTd8: 'Statistiques de visite (anonymisés)', cookTd9: '13 mois',
+    cookTd10: 'Paiement', cookTd11: 'Stripe (sécurisation des paiements)', cookTd12: 'Session',
+    cookP2: "ShowOne <strong>n'utilise pas</strong> de cookies publicitaires ou de tracking tiers.",
+    cookH3: 'Gérer vos cookies', cookP3: "Vous pouvez refuser les cookies non essentiels depuis les paramètres de votre navigateur. Le refus des cookies essentiels peut empêcher la connexion à votre compte.",
+    charteTitle: 'Charte des recruteurs', charteSub: 'Les engagements que tout recruteur ShowOne doit respecter.', charteDate: 'Dernière mise à jour : mai 2025',
+    charteH1: 'Nos valeurs', charteP1: "ShowOne est une plateforme bienveillante. En tant que recruteur, vous vous engagez à traiter chaque talent avec respect et professionnalisme.",
+    charteH2: 'Engagements obligatoires', charteUl1: ["Ne contacter les talents que dans un cadre professionnel légitime", "Être honnête sur votre identité et votre société", "Respecter les délais de réponse", "Ne pas collecter les données des talents en dehors de ShowOne", "Respecter la confidentialité des échanges"],
+    charteH3: 'Comportements interdits', charteUl2: ["Harcèlement ou sollicitations répétées non désirées", "Demandes de contenu inapproprié ou illégal", "Usurpation d'identité professionnelle"],
+    charteAlert: '🚨 Tout manquement peut entraîner la suspension immédiate du compte recruteur.',
+    charteH4: 'Signaler un abus', charteP2: 'Signalez tout comportement inapproprié à <a href="mailto:showone.infos@gmail.com">showone.infos@gmail.com</a>',
+    mbHome: 'Accueil', mbCastings: 'Castings', mbConn: 'Connexion', mbAuth: "S'inscrire", mbDash: 'Mon espace',
+  },
+  en: {
+    pageTitle: 'Terms of Use — ShowOne',
+    btnBack: '← Back',
+    sidebarTitle: 'Documents',
+    navCgu: '📄 Terms of Use', navConf: '🔒 Privacy', navMentions: '🏢 Legal notice', navCookies: '🍪 Cookies', navCharte: '🤝 Recruiter charter',
+    cguTitle: 'Terms of Use', cguSub: 'The rules for using the ShowOne platform.', cguDate: 'Last updated: May 2025',
+    cgu1: '1. Purpose', cgu1p: "These Terms of Use govern access to and use of the ShowOne platform (showone.fr). By using the platform, you unconditionally accept these Terms.",
+    cgu2: '2. Registration and accounts', cgu2h3: 'Access conditions', cgu2p: "Registration is open to anyone aged at least 15. For minors between 15 and 18, consent from a legal guardian is required.",
+    cgu2obli: 'Obligations', cgu2ul: ["Provide accurate and up-to-date information", "Create only one account per person", "Maintain the confidentiality of your credentials", "Notify ShowOne of any unauthorized use"],
+    cgu3: '3. Published content', cgu3p: "You are solely responsible for the content you publish. Any unlawful or offensive content will be removed. ShowOne reserves the right to moderate content.",
+    cgu4: '4. Intellectual property', cgu4p: "You retain all rights to your videos. By publishing them, you grant ShowOne a non-exclusive display license. ShowOne does not use your content for commercial purposes without agreement.",
+    cgu5: '5. Liability', cgu5p: "ShowOne is a matchmaking platform. We are not responsible for contacts made between talents and recruiters, or their outcomes.",
+    cgu6: '6. Contact', cgu6p: 'Any questions: <a href="/contact">our contact form</a> or showone.infos@gmail.com',
+    confTitle: 'Privacy Policy', confSub: 'How ShowOne collects and protects your data.', confDate: 'Last updated: May 2025',
+    confH1: 'Data collected', confP1: "ShowOne only collects necessary data: name, email, city, videos and profile information. No sensitive data is collected without your explicit consent.",
+    confH2: 'Use of data', confUl1: ["Platform operation and account management", "Connecting talents and recruiters", "Improving our services", "Communications related to your account"],
+    confH3: 'Data sharing', confP2: 'Your data is <strong>never sold</strong> to third parties. It may be shared with our technical providers (Supabase, Mux, Stripe) strictly within the scope of the service.',
+    confH4: 'Your rights (GDPR)', confP3: 'Under GDPR, you may at any time: access, correct, delete your data, or request its portability. Contact us at showone.infos@gmail.com.',
+    confH5: 'Retention period', confP4: 'Your data is kept as long as your account is active. After deletion, it is erased within 30 days.',
+    mentTitle: 'Legal notice', mentSub: 'Legal information about ShowOne.', mentDate: 'Last updated: May 2025',
+    mentH1: 'Publisher', mentP1: '<strong>ShowOne</strong><br>Talent-recruiter matchmaking platform<br>Email: showone.infos@gmail.com',
+    mentH2: 'Hosting', mentP2: '<strong>Vercel Inc.</strong><br>340 Pine Street, Suite 700, San Francisco, CA 94104, USA',
+    mentH3: 'Publication director', mentP3: 'ShowOne — showone.infos@gmail.com',
+    mentH4: 'Intellectual property', mentP4: "The name ShowOne, its logo and all editorial content are the exclusive property of ShowOne. Any reproduction without authorization is prohibited.",
+    cookTitle: 'Cookie Policy', cookSub: 'How ShowOne uses cookies.', cookDate: 'Last updated: May 2025',
+    cookH1: 'What is a cookie?', cookP1: "A cookie is a small text file placed on your device when you visit. It allows us to recognize you and improve your experience.",
+    cookH2: 'Types of cookies used', cookTh1: 'Type', cookTh2: 'Purpose', cookTh3: 'Duration',
+    cookTd1: 'Essential', cookTd2: 'Login, user session', cookTd3: 'Session',
+    cookTd4: 'Functional', cookTd5: 'Preferences, language', cookTd6: '1 year',
+    cookTd7: 'Analytics', cookTd8: 'Visit statistics (anonymized)', cookTd9: '13 months',
+    cookTd10: 'Payment', cookTd11: 'Stripe (payment security)', cookTd12: 'Session',
+    cookP2: "ShowOne does <strong>not use</strong> advertising or third-party tracking cookies.",
+    cookH3: 'Managing your cookies', cookP3: "You can refuse non-essential cookies from your browser settings. Refusing essential cookies may prevent you from logging into your account.",
+    charteTitle: 'Recruiter charter', charteSub: 'The commitments every ShowOne recruiter must respect.', charteDate: 'Last updated: May 2025',
+    charteH1: 'Our values', charteP1: "ShowOne is a caring platform. As a recruiter, you commit to treating every talent with respect and professionalism.",
+    charteH2: 'Mandatory commitments', charteUl1: ["Only contact talents for legitimate professional purposes", "Be honest about your identity and company", "Respect response timeframes", "Do not collect talent data outside of ShowOne", "Respect the confidentiality of exchanges"],
+    charteH3: 'Prohibited behaviors', charteUl2: ["Harassment or repeated unwanted solicitations", "Requests for inappropriate or illegal content", "Professional identity theft"],
+    charteAlert: '🚨 Any breach may result in the immediate suspension of the recruiter account.',
+    charteH4: 'Report an abuse', charteP2: 'Report any inappropriate behavior to <a href="mailto:showone.infos@gmail.com">showone.infos@gmail.com</a>',
+    mbHome: 'Home', mbCastings: 'Castings', mbConn: 'Log in', mbAuth: 'Sign up', mbDash: 'Dashboard',
+  }
+};
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('showone_lang', lang);
+  document.documentElement.lang = lang;
+  const t = T[lang];
+  document.title = t.pageTitle;
+
+  document.getElementById('btnBack').textContent = t.btnBack;
+  document.getElementById('sidebarTitle').textContent = t.sidebarTitle;
+  document.getElementById('navCgu').textContent = t.navCgu;
+  document.getElementById('navConf').textContent = t.navConf;
+  document.getElementById('navMentions').textContent = t.navMentions;
+  document.getElementById('navCookies').textContent = t.navCookies;
+  document.getElementById('navCharte').textContent = t.navCharte;
+  document.getElementById('mbHome').textContent = t.mbHome;
+  document.getElementById('mbCastings').textContent = t.mbCastings;
+  document.getElementById('mbConn').textContent = t.mbConn;
+
+  // Textes simples
+  const simples = ['cguTitle','cguSub','cguDate','cgu1','cgu1p','cgu2','cgu2h3','cgu2p','cgu2obli','cgu3','cgu3p','cgu4','cgu4p','cgu5','cgu5p','cgu6','confTitle','confSub','confDate','confH1','confP1','confH2','confH3','confH4','confP3','confH5','confP4','mentTitle','mentSub','mentDate','mentH1','mentH2','mentH3','mentP3','mentH4','mentP4','cookTitle','cookSub','cookDate','cookH1','cookP1','cookH2','cookTh1','cookTh2','cookTh3','cookTd1','cookTd2','cookTd3','cookTd4','cookTd5','cookTd6','cookTd7','cookTd8','cookTd9','cookTd10','cookTd11','cookTd12','cookH3','cookP3','charteTitle','charteSub','charteDate','charteH1','charteP1','charteH2','charteH3','charteAlert','charteH4'];
+  simples.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && t[id] !== undefined) el.textContent = t[id];
+  });
+
+  // innerHTML pour les textes avec balises
+  const html = ['cgu6p','confP2','mentP1','mentP2','cookP2','charteP2'];
+  html.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && t[id] !== undefined) el.innerHTML = t[id];
+  });
+
+  // Listes
+  const listes = { cgu2ul: t.cgu2ul, confUl1: t.confUl1, charteUl1: t.charteUl1, charteUl2: t.charteUl2 };
+  Object.entries(listes).forEach(([id, items]) => {
+    const el = document.getElementById(id);
+    if (el && items) el.innerHTML = items.map(i => `<li>${i}</li>`).join('');
+  });
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick').includes("'" + lang + "'"));
+  });
+}
+
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+setLang(currentLang);
+
 (function() {
   try {
     const u = JSON.parse(localStorage.getItem('showone_user') || '{}');
     const btnAuth = document.getElementById('mb-auth');
     const btnConn = document.getElementById('mb-conn');
+    const t = T[currentLang];
     if (u && u.id) {
       const dashboard = u.type_compte === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
       btnAuth.href = dashboard;
-      btnAuth.innerHTML = '👤<span>Mon espace</span>';
+      btnAuth.innerHTML = `👤<span>${t.mbDash}</span>`;
       btnAuth.style.background = '#111';
       btnConn.style.display = 'none';
     } else {
       btnConn.style.display = 'flex';
+      btnAuth.innerHTML = `<span>${t.mbAuth}</span>`;
     }
   } catch(e) {}
-  const path = window.location.pathname;
-  if (path === '/' || path === '/index') document.getElementById('mb-home').classList.add('active');
-  else if (path.includes('castings')) document.getElementById('mb-castings').classList.add('active');
 })();
 </script>
 </body>
