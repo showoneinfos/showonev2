@@ -14,10 +14,15 @@
     nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; background: #fff; z-index: 100; }
     .logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; }
     .logo span { color: #E8383A; }
-    .nav-right { display: flex; gap: 10px; align-items: center; }
+    .nav-right-wrap { display: flex; gap: 10px; align-items: center; }
     #navRight { display: flex; gap: 10px; align-items: center; }
     .btn-outline { padding: 8px 16px; font-size: 13px; border-radius: 8px; border: 1px solid #e0e0e0; background: transparent; color: #333; cursor: pointer; font-weight: 500; text-decoration: none; }
     .btn-fill { padding: 8px 18px; font-size: 13px; font-weight: 700; border-radius: 8px; background: #E8383A; color: #fff; border: none; cursor: pointer; text-decoration: none; }
+
+    /* Switch langue */
+    .lang-switch { display: flex; align-items: center; gap: 2px; background: #f5f5f5; border-radius: 100px; padding: 3px; }
+    .lang-btn { padding: 4px 9px; border-radius: 100px; border: none; cursor: pointer; font-size: 12px; font-weight: 700; background: transparent; color: #888; transition: all 0.15s; }
+    .lang-btn.active { background: #fff; color: #111; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
 
     .hero { padding: 56px 40px 40px; border-bottom: 1px solid #f0f0f0; max-width: 800px; }
     .hero-tag { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #E8383A; margin-bottom: 16px; }
@@ -37,26 +42,15 @@
     .section-label { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #bbb; margin-bottom: 6px; }
     .section-title { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 20px; }
 
-    /* FILTRES */
     .filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
     .filter-btn { padding: 6px 14px; border-radius: 100px; font-size: 12px; font-weight: 500; border: 1px solid #e8e8e8; color: #888; cursor: pointer; background: #fff; transition: all 0.15s; }
     .filter-btn:hover { border-color: #bbb; color: #333; }
     .filter-btn.active { background: #111; border-color: #111; color: #fff; }
 
-    /* CASTINGS */
     .castings-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 
-    .casting-card {
-      background: #fff;
-      border: 1px solid #f0f0f0;
-      border-radius: 12px;
-      padding: 20px 22px;
-      transition: box-shadow 0.15s;
-      display: flex;
-      flex-direction: column;
-    }
+    .casting-card { background: #fff; border: 1px solid #f0f0f0; border-radius: 12px; padding: 20px 22px; transition: box-shadow 0.15s; display: flex; flex-direction: column; }
     .casting-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
-
     .casting-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
     .casting-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; background: #f0f0f0; color: #555; }
     .casting-statut { font-size: 11px; color: #10b981; font-weight: 600; }
@@ -64,86 +58,22 @@
     .casting-desc { font-size: 13px; color: #888; line-height: 1.6; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
     .casting-infos { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
     .casting-info { font-size: 12px; color: #999; }
-
-    /* ── FOOTER CASTING FIXÉ ── */
-    .casting-footer {
-      margin-top: auto;
-      padding-top: 12px;
-      border-top: 1px solid #f8f8f8;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+    .casting-footer { margin-top: auto; padding-top: 12px; border-top: 1px solid #f8f8f8; display: flex; flex-direction: column; gap: 8px; }
     .casting-recruteur { font-size: 12px; color: #bbb; }
-    .casting-actions {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-    .btn-descriptif {
-      flex: 1;
-      display: block;
-      text-align: center;
-      padding: 9px 10px;
-      border-radius: 8px;
-      border: 1.5px solid #e8e8e8;
-      color: #111;
-      font-size: 12px;
-      font-weight: 700;
-      text-decoration: none;
-      background: #fff;
-      cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
-      white-space: nowrap;
-    }
+    .casting-actions { display: flex; gap: 8px; align-items: center; }
+    .btn-descriptif { flex: 1; display: block; text-align: center; padding: 9px 10px; border-radius: 8px; border: 1.5px solid #e8e8e8; color: #111; font-size: 12px; font-weight: 700; text-decoration: none; background: #fff; cursor: pointer; transition: border-color 0.15s, background 0.15s; white-space: nowrap; }
     .btn-descriptif:hover { border-color: #bbb; background: #f8f8f8; }
-    .btn-postuler {
-      flex: 1;
-      padding: 9px 10px;
-      border-radius: 8px;
-      border: none;
-      background: #111;
-      color: #fff;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      white-space: nowrap;
-    }
+    .btn-postuler { flex: 1; padding: 9px 10px; border-radius: 8px; border: none; background: #111; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; }
     .btn-postuler:hover { background: #222; }
-
-    .casting-owner-actions {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-    .btn-cands {
-      flex: 1;
-      padding: 8px;
-      border-radius: 7px;
-      border: 1px solid #e8e8e8;
-      background: transparent;
-      color: #111;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .btn-del {
-      padding: 8px 12px;
-      border-radius: 7px;
-      border: 1px solid #ffd0d0;
-      background: transparent;
-      color: #E8383A;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-    }
+    .casting-owner-actions { display: flex; gap: 8px; align-items: center; }
+    .btn-cands { flex: 1; padding: 8px; border-radius: 7px; border: 1px solid #e8e8e8; background: transparent; color: #111; font-size: 12px; font-weight: 700; cursor: pointer; }
+    .btn-del { padding: 8px 12px; border-radius: 7px; border: 1px solid #ffd0d0; background: transparent; color: #E8383A; font-size: 12px; font-weight: 700; cursor: pointer; }
 
     .empty-state { grid-column: 1/-1; text-align: center; padding: 60px; }
     .empty-ico { font-size: 40px; margin-bottom: 12px; }
     .empty-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
     .empty-sub { font-size: 13px; color: #999; }
 
-    /* PLAYER */
     .player-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
     .player-overlay.open { display: flex; }
     .player-wrap { position: relative; width: 100%; max-width: 360px; }
@@ -154,7 +84,6 @@
     .player-info span { font-size: 12px; color: rgba(255,255,255,0.5); }
     .btn-postuler-player { margin-top: 12px; padding: 12px 28px; border-radius: 9px; background: #E8383A; color: #fff; border: none; font-size: 14px; font-weight: 700; cursor: pointer; }
 
-    /* MODAL POSTULER */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; align-items: center; justify-content: center; padding: 20px; }
     .modal-overlay.open { display: flex; }
     .modal { background: #fff; border-radius: 16px; padding: 28px; width: 100%; max-width: 460px; max-height: 90vh; overflow-y: auto; }
@@ -170,49 +99,25 @@
     .btn-cancel { padding: 11px 18px; border-radius: 8px; border: 1px solid #e8e8e8; background: transparent; font-size: 13px; font-weight: 600; cursor: pointer; color: #999; }
     .btn-send { flex: 1; padding: 11px; border-radius: 8px; border: none; background: #111; color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; }
 
-    /* MOBILE */
     @media (max-width: 768px) {
       nav { padding: 14px 20px; }
       .hero { padding: 36px 20px 28px; }
       .hero h1 { font-size: 32px; letter-spacing: -1px; }
       .content { padding: 28px 20px 90px; }
-
       .castings-grid { grid-template-columns: 1fr; }
       .recruiter-banner { flex-direction: column; align-items: flex-start; }
       .casting-actions { flex-direction: row; }
       .btn-descriptif, .btn-postuler { font-size: 11px; padding: 9px 8px; }
     }
 
-    /* BARRE MOBILE */
     .mobile-bar { display: none; }
     @media (max-width: 768px) {
-      .mobile-bar {
-        display: flex;
-        position: fixed; bottom: 0; left: 0; right: 0;
-        background: #fff; border-top: 1px solid #f0f0f0;
-        padding: 8px 4px 14px; z-index: 999;
-        align-items: center; justify-content: space-around;
-      }
-      .mobile-btn {
-        flex: 1;
-        display: flex; flex-direction: column; align-items: center;
-        gap: 3px; text-decoration: none; color: #aaa;
-        font-size: 10px; font-weight: 600; padding: 4px 0;
-        background: none; border: none; cursor: pointer;
-      }
+      .mobile-bar { display: flex; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #f0f0f0; padding: 8px 4px 14px; z-index: 999; align-items: center; justify-content: space-around; }
+      .mobile-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600; padding: 4px 0; background: none; border: none; cursor: pointer; }
       .mobile-btn-icon { font-size: 20px; line-height: 1; display: block; }
       .mobile-btn-label { font-size: 10px; display: block; }
       .mobile-btn.active { color: #111; }
-      .mobile-btn.mobile-join {
-        flex: none;
-        margin: 0 6px;
-        background: #E8383A; color: #fff !important;
-        padding: 8px 16px; border-radius: 8px;
-        font-size: 12px !important; font-weight: 700;
-        display: flex; flex-direction: column; align-items: center; gap: 2px;
-        text-decoration: none;
-      }
-      .mobile-btn.mobile-join .mobile-btn-icon { font-size: 16px; }
+      .mobile-btn.mobile-join { flex: none; margin: 0 6px; background: #E8383A; color: #fff !important; padding: 8px 16px; border-radius: 8px; font-size: 12px !important; font-weight: 700; display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; }
     }
   </style>
 </head>
@@ -220,42 +125,50 @@
 
 <nav>
   <a href="/" class="logo">Show<span>One</span></a>
-  <div id="navRight">
-    <a href="/connexion" class="btn-outline">Connexion</a>
-    <a href="/inscription" class="btn-fill">Rejoindre</a>
+  <div class="nav-right-wrap">
+    <div class="lang-switch">
+      <button class="lang-btn active" onclick="setLang('fr')">🇫🇷</button>
+      <button class="lang-btn" onclick="setLang('en')">🇺🇸</button>
+    </div>
+    <div id="navRight">
+      <a href="/connexion" class="btn-outline" data-fr="Connexion" data-en="Log in">Connexion</a>
+      <a href="/inscription" class="btn-fill" data-fr="Rejoindre" data-en="Join">Rejoindre</a>
+    </div>
   </div>
 </nav>
 
 <div class="hero">
-  <div class="hero-tag">🎬 Opportunités</div>
-  <h1>Castings <em>disponibles</em></h1>
-  <p class="hero-sub">Des recruteurs professionnels cherchent des talents comme vous. Postulez directement depuis ShowOne !</p>
+  <div class="hero-tag" data-fr="🎬 Opportunités" data-en="🎬 Opportunities">🎬 Opportunités</div>
+  <h1><span data-fr="Castings" data-en="Castings">Castings</span> <em data-fr="disponibles" data-en="available">disponibles</em></h1>
+  <p class="hero-sub" data-fr="Des recruteurs professionnels cherchent des talents comme vous. Postulez directement depuis ShowOne !" data-en="Professional recruiters are looking for talents like you. Apply directly on ShowOne!">Des recruteurs professionnels cherchent des talents comme vous. Postulez directement depuis ShowOne !</p>
   <div class="hero-search">
-    <input id="searchInput" type="text" placeholder="Rechercher un casting, une catégorie, une ville…" oninput="filtrerCastings()">
-    <button onclick="filtrerCastings()">🔍 Chercher</button>
+    <input id="searchInput" type="text" data-placeholder-fr="Rechercher un casting, une catégorie, une ville…" data-placeholder-en="Search a casting, category, city…" placeholder="Rechercher un casting, une catégorie, une ville…" oninput="filtrerCastings()">
+    <button onclick="filtrerCastings()" data-fr="🔍 Chercher" data-en="🔍 Search">🔍 Chercher</button>
   </div>
   <div class="recruiter-banner">
-    <div class="recruiter-banner-text"><strong>🎬 Vous êtes recruteur ?</strong><br>Déposez votre annonce vidéo gratuitement.</div>
-    <a href="/deposer-casting" class="btn-deposer">Déposer mon casting →</a>
+    <div class="recruiter-banner-text">
+      <strong data-fr="🎬 Vous êtes recruteur ?" data-en="🎬 Are you a recruiter?">🎬 Vous êtes recruteur ?</strong><br>
+      <span data-fr="Déposez votre annonce vidéo gratuitement." data-en="Post your video casting for free.">Déposez votre annonce vidéo gratuitement.</span>
+    </div>
+    <a href="/deposer-casting" class="btn-deposer" data-fr="Déposer mon casting →" data-en="Post my casting →">Déposer mon casting →</a>
   </div>
 </div>
 
 <div class="content">
-
-  <div class="section-label">Toutes les annonces</div>
-  <div class="section-title">Castings disponibles</div>
+  <div class="section-label" data-fr="Toutes les annonces" data-en="All listings">Toutes les annonces</div>
+  <div class="section-title" data-fr="Castings disponibles" data-en="Available castings">Castings disponibles</div>
   <div class="filters">
-    <button class="filter-btn active" onclick="filtrerCat('Tous', this)">Tous</button>
-    <button class="filter-btn" onclick="filtrerCat('Acting / Cinéma & TV', this)">🎬 Acting</button>
-    <button class="filter-btn" onclick="filtrerCat('Musique / Chant', this)">🎤 Musique</button>
-    <button class="filter-btn" onclick="filtrerCat('Danse', this)">💃 Danse</button>
-    <button class="filter-btn" onclick="filtrerCat('Sport', this)">⚽ Sport</button>
-    <button class="filter-btn" onclick="filtrerCat('Mode / Mannequinat', this)">👗 Mode</button>
-    <button class="filter-btn" onclick="filtrerCat('Art & Création', this)">🎨 Art</button>
-    <button class="filter-btn" onclick="filtrerCat('Créateurs de contenu', this)">📱 Créateurs</button>
+    <button class="filter-btn active" onclick="filtrerCat('Tous', this)" data-fr="Tous" data-en="All">Tous</button>
+    <button class="filter-btn" onclick="filtrerCat('Acting / Cinéma & TV', this)" data-fr="🎬 Acting" data-en="🎬 Acting">🎬 Acting</button>
+    <button class="filter-btn" onclick="filtrerCat('Musique / Chant', this)" data-fr="🎤 Musique" data-en="🎤 Music">🎤 Musique</button>
+    <button class="filter-btn" onclick="filtrerCat('Danse', this)" data-fr="💃 Danse" data-en="💃 Dance">💃 Danse</button>
+    <button class="filter-btn" onclick="filtrerCat('Sport', this)" data-fr="⚽ Sport" data-en="⚽ Sport">⚽ Sport</button>
+    <button class="filter-btn" onclick="filtrerCat('Mode / Mannequinat', this)" data-fr="👗 Mode" data-en="👗 Fashion">👗 Mode</button>
+    <button class="filter-btn" onclick="filtrerCat('Art & Création', this)" data-fr="🎨 Art" data-en="🎨 Art">🎨 Art</button>
+    <button class="filter-btn" onclick="filtrerCat('Créateurs de contenu', this)" data-fr="📱 Créateurs" data-en="📱 Creators">📱 Créateurs</button>
   </div>
   <div class="castings-grid" id="castingsGrid">
-    <div style="grid-column:1/-1;text-align:center;padding:40px;color:#bbb;">Chargement des castings…</div>
+    <div style="grid-column:1/-1;text-align:center;padding:40px;color:#bbb;" id="loadingMsg" data-fr="Chargement des castings…" data-en="Loading castings…">Chargement des castings…</div>
   </div>
 </div>
 
@@ -269,7 +182,7 @@
     <strong id="playerNom"></strong>
     <span id="playerCat"></span>
     <br>
-    <button class="btn-postuler-player" onclick="ouvrirModalDepuisPlayer()">Postuler à ce casting →</button>
+    <button class="btn-postuler-player" id="btnPostulerPlayer" onclick="ouvrirModalDepuisPlayer()" data-fr="Postuler à ce casting →" data-en="Apply for this casting →">Postuler à ce casting →</button>
   </div>
 </div>
 
@@ -284,19 +197,19 @@
 <div class="mobile-bar" id="mobileBar">
   <a href="/" class="mobile-btn" id="mb-home">
     <span class="mobile-btn-icon">🏠</span>
-    <span class="mobile-btn-label">Accueil</span>
+    <span class="mobile-btn-label" data-fr="Accueil" data-en="Home">Accueil</span>
   </a>
   <a href="/castings" class="mobile-btn active" id="mb-castings">
     <span class="mobile-btn-icon">🎬</span>
-    <span class="mobile-btn-label">Castings</span>
+    <span class="mobile-btn-label" data-fr="Castings" data-en="Castings">Castings</span>
   </a>
   <a href="/connexion" class="mobile-btn" id="mb-conn">
     <span class="mobile-btn-icon">🔑</span>
-    <span class="mobile-btn-label">Connexion</span>
+    <span class="mobile-btn-label" data-fr="Connexion" data-en="Log in">Connexion</span>
   </a>
   <a href="/inscription" class="mobile-btn mobile-join" id="mb-auth">
     <span class="mobile-btn-icon">👤</span>
-    <span class="mobile-btn-label">S'inscrire</span>
+    <span class="mobile-btn-label" data-fr="S'inscrire" data-en="Sign up">S'inscrire</span>
   </a>
 </div>
 
@@ -309,11 +222,113 @@ let catActive = 'Tous';
 let castingSelectionne = null;
 let playerCastingId = null;
 let _hls = null;
-let _monRecruteurId = null; // FIX : était absent, causait un bug silencieux
+let _monRecruteurId = null;
+let currentLang = localStorage.getItem('showone_lang') || 'fr';
 
 const _user = (() => { try { return JSON.parse(localStorage.getItem('showone_user') || '{}'); } catch(e) { return {}; } })();
 const _token = localStorage.getItem('showone_token');
 const _isRecruteur = _user.type_compte === 'recruteur';
+
+const T = {
+  fr: {
+    pageTitle: 'Castings — ShowOne',
+    actif: '✅ Actif',
+    parBy: 'Par ',
+    nonPrecise: 'Non précisé',
+    descriptif: '📄 Descriptif',
+    postuler: 'Postuler →',
+    monCasting: '✏️ Votre casting',
+    candidatures: '👥 Candidatures',
+    aucunCasting: 'Aucun casting disponible',
+    aucunCastingSub: 'Les castings apparaîtront ici dès que des recruteurs en publieront.',
+    postulerModal: 'Postuler à ce casting',
+    votreMessage: 'Votre message',
+    messagePlaceholder: 'Présentez-vous et expliquez pourquoi vous correspondez à ce casting…',
+    annuler: 'Annuler',
+    envoyer: 'Envoyer ma candidature ✓',
+    envoi: 'Envoi…',
+    candidaturesTitle: '👥 Candidatures — ',
+    aucuneCandidature: "Aucune candidature pour l'instant.",
+    retenir: '✅ Retenir',
+    refuser: '❌ Refuser',
+    retenu: '✅ Retenu !',
+    refuse: '❌ Refusé',
+    candidatureEnvoyee: '✅ Candidature envoyée !',
+    errMessage: 'Veuillez écrire un message !',
+    errEnvoi: "Erreur lors de l'envoi.",
+    errCandidatures: 'Erreur chargement candidatures.',
+    errSuppression: 'Erreur suppression.',
+    confirmConnexion: 'Vous devez être connecté pour postuler. Se connecter ?',
+    seulTalent: 'Seuls les talents peuvent postuler.',
+    doitEtreTalent: 'Vous devez être inscrit comme talent !',
+    supprimer: 'Supprimer ce casting ?',
+    monEspace: 'Mon espace →',
+    voirVideo: '▶ Voir la vidéo',
+    voirVideoEN: '▶ Watch video',
+    loadingCastings: 'Chargement des castings…',
+    recruteurShowOne: 'Recruteur ShowOne',
+  },
+  en: {
+    pageTitle: 'Castings — ShowOne',
+    actif: '✅ Active',
+    parBy: 'By ',
+    nonPrecise: 'Not specified',
+    descriptif: '📄 Details',
+    postuler: 'Apply →',
+    monCasting: '✏️ Your casting',
+    candidatures: '👥 Applications',
+    aucunCasting: 'No castings available',
+    aucunCastingSub: 'Castings will appear here once recruiters publish them.',
+    postulerModal: 'Apply for this casting',
+    votreMessage: 'Your message',
+    messagePlaceholder: 'Introduce yourself and explain why you are the right fit for this casting…',
+    annuler: 'Cancel',
+    envoyer: 'Send my application ✓',
+    envoi: 'Sending…',
+    candidaturesTitle: '👥 Applications — ',
+    aucuneCandidature: 'No applications yet.',
+    retenir: '✅ Select',
+    refuser: '❌ Decline',
+    retenu: '✅ Selected!',
+    refuse: '❌ Declined',
+    candidatureEnvoyee: '✅ Application sent!',
+    errMessage: 'Please write a message!',
+    errEnvoi: 'Error sending application.',
+    errCandidatures: 'Error loading applications.',
+    errSuppression: 'Error deleting casting.',
+    confirmConnexion: 'You must be logged in to apply. Log in now?',
+    seulTalent: 'Only talents can apply.',
+    doitEtreTalent: 'You must be registered as a talent!',
+    supprimer: 'Delete this casting?',
+    monEspace: 'My dashboard →',
+    voirVideo: '▶ Watch video',
+    voirVideoEN: '▶ Watch video',
+    loadingCastings: 'Loading castings…',
+    recruteurShowOne: 'ShowOne Recruiter',
+  }
+};
+
+// ── SWITCH LANGUE ──
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('showone_lang', lang);
+  document.documentElement.lang = lang;
+  document.title = T[lang].pageTitle;
+
+  document.querySelectorAll('[data-fr]').forEach(el => {
+    const val = el.getAttribute('data-' + lang);
+    if (val !== null) el.textContent = val;
+  });
+  document.querySelectorAll('[data-placeholder-fr]').forEach(el => {
+    el.placeholder = el.getAttribute('data-placeholder-' + lang) || '';
+  });
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick').includes("'" + lang + "'"));
+  });
+
+  // Re-render castings avec nouvelles traductions
+  afficherCastings(filtrerListe());
+}
 
 // ── NAV ──
 function mettreAJourNav() {
@@ -321,12 +336,12 @@ function mettreAJourNav() {
   if (_token && _user.prenom) {
     const dest = _isRecruteur ? '/dashboard-recruteur' : '/dashboard-talent';
     navRight.innerHTML = `<span style="font-size:13px;color:#999;">${_user.prenom} 👋</span>
-      <button class="btn-fill" onclick="window.location.href='${dest}'">Mon espace →</button>`;
+      <button class="btn-fill" onclick="window.location.href='${dest}'">${T[currentLang].monEspace}</button>`;
   }
 }
 
 // ── BARRE MOBILE ──
-(function() {
+function initMobileBar() {
   try {
     const u = JSON.parse(localStorage.getItem('showone_user') || '{}');
     const btnAuth = document.getElementById('mb-auth');
@@ -334,18 +349,13 @@ function mettreAJourNav() {
     if (u && u.id) {
       const dashboard = u.type_compte === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
       btnAuth.href = dashboard;
-      btnAuth.querySelector('.mobile-btn-label').textContent = 'Mon espace';
+      btnAuth.querySelector('.mobile-btn-label').textContent = currentLang === 'en' ? 'Dashboard' : 'Mon espace';
       btnAuth.querySelector('.mobile-btn-icon').textContent = '👤';
       btnAuth.style.background = '#111';
       btnConn.style.display = 'none';
     }
-    // active state
-    const path = window.location.pathname;
-    document.querySelectorAll('.mobile-btn').forEach(b => b.classList.remove('active'));
-    if (path === '/' || path === '/index') document.getElementById('mb-home').classList.add('active');
-    else if (path.includes('castings')) document.getElementById('mb-castings').classList.add('active');
   } catch(e) {}
-})();
+}
 
 // ── RECRUTEUR ID ──
 async function chargerMonRecruteurId() {
@@ -356,10 +366,8 @@ async function chargerMonRecruteurId() {
     });
     const data = await res.json();
     if (data[0]?.id) _monRecruteurId = data[0].id;
-  } catch(e) { console.error('recruteurId', e); }
+  } catch(e) {}
 }
-
-
 
 // ── PLAYER ──
 function lireVideoCasting(playbackId, nom, categorie, castingId) {
@@ -367,14 +375,14 @@ function lireVideoCasting(playbackId, nom, categorie, castingId) {
   const video = document.getElementById('playerVideo');
   const src = `https://stream.mux.com/${playbackId}.m3u8`;
   if (_hls) { _hls.destroy(); _hls = null; }
-  if (video.canPlayType('application/vnd.apple.mpegurl')) {
-    video.src = src; video.play();
-  } else if (window.Hls && Hls.isSupported()) {
+  if (video.canPlayType('application/vnd.apple.mpegurl')) { video.src = src; video.play(); }
+  else if (window.Hls && Hls.isSupported()) {
     _hls = new Hls(); _hls.loadSource(src); _hls.attachMedia(video);
     _hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
   }
   document.getElementById('playerNom').textContent = nom;
   document.getElementById('playerCat').textContent = categorie;
+  document.getElementById('btnPostulerPlayer').textContent = T[currentLang].postuler.replace('→', '') + ' →';
   document.getElementById('playerOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -398,9 +406,7 @@ function ouvrirModalDepuisPlayer() {
 // ── CASTINGS ──
 async function chargerCastings() {
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/castings?statut=eq.actif&select=*&order=created_at.desc`, {
-      headers: { 'apikey': SUPABASE_KEY }
-    });
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/castings?statut=eq.actif&select=*&order=created_at.desc`, { headers: { 'apikey': SUPABASE_KEY } });
     const data = await res.json();
     if (Array.isArray(data)) {
       for (const c of data) {
@@ -411,24 +417,17 @@ async function chargerCastings() {
           else if (rd[0]?.utilisateur_id) {
             const u = await fetch(`${SUPABASE_URL}/rest/v1/utilisateurs?id=eq.${rd[0].utilisateur_id}&select=prenom,nom&limit=1`, { headers: { 'apikey': SUPABASE_KEY } });
             const ud = await u.json();
-            c.recruteur_nom = ud[0] ? ((ud[0].prenom || '') + ' ' + (ud[0].nom || '')).trim() : 'Recruteur ShowOne';
-          } else { c.recruteur_nom = 'Recruteur ShowOne'; }
-        } catch(e) { c.recruteur_nom = 'Recruteur ShowOne'; }
+            c.recruteur_nom = ud[0] ? ((ud[0].prenom || '') + ' ' + (ud[0].nom || '')).trim() : T[currentLang].recruteurShowOne;
+          } else { c.recruteur_nom = T[currentLang].recruteurShowOne; }
+        } catch(e) { c.recruteur_nom = T[currentLang].recruteurShowOne; }
       }
     }
     tousCastings = Array.isArray(data) ? data : [];
     afficherCastings(tousCastings);
-  } catch(err) { console.error(err); afficherVide(); }
+  } catch(err) { afficherVide(); }
 }
 
-function filtrerCat(cat, btn) {
-  catActive = cat;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  filtrerCastings();
-}
-
-function filtrerCastings() {
+function filtrerListe() {
   const search = document.getElementById('searchInput').value.toLowerCase();
   let filtres = tousCastings;
   if (catActive !== 'Tous') filtres = filtres.filter(c => c.categorie?.toLowerCase().includes(catActive.toLowerCase()));
@@ -438,14 +437,26 @@ function filtrerCastings() {
     c.ville?.toLowerCase().includes(search) ||
     c.categorie?.toLowerCase().includes(search)
   );
-  afficherCastings(filtres);
+  return filtres;
+}
+
+function filtrerCat(cat, btn) {
+  catActive = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  afficherCastings(filtrerListe());
+}
+
+function filtrerCastings() {
+  afficherCastings(filtrerListe());
 }
 
 function afficherCastings(castings) {
   const grid = document.getElementById('castingsGrid');
+  const lang = currentLang;
   if (!castings || castings.length === 0) { afficherVide(); return; }
   grid.innerHTML = castings.map(c => {
-    const date = c.date_casting ? new Date(c.date_casting).toLocaleDateString('fr-FR') : null;
+    const date = c.date_casting ? new Date(c.date_casting).toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US') : null;
     const cid = c.id;
     const titreEsc = (c.titre || '').replace(/'/g, "\\'");
     const catEsc = (c.categorie || '').replace(/'/g, "\\'");
@@ -457,32 +468,32 @@ function afficherCastings(castings) {
     return `<div class="casting-card">
       ${hasVideo ? `
         <div style="margin-bottom:12px;border-radius:8px;overflow:hidden;cursor:pointer;" onclick="lireVideoCasting('${c.video_playback_id}','${nomEsc}','${catEsc}','${cid}')">
-          <img src="https://image.mux.com/${c.video_playback_id}/thumbnail.jpg?width=600&height=200&fit_mode=crop" style="width:100%;height:100px;object-fit:cover;display:block;" alt="Vidéo">
+          <img src="https://image.mux.com/${c.video_playback_id}/thumbnail.jpg?width=600&height=200&fit_mode=crop" style="width:100%;height:100px;object-fit:cover;display:block;" alt="Video">
           <div style="background:#111;padding:5px 10px;display:flex;align-items:center;gap:5px;">
-            <span style="background:#E8383A;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;">▶ Voir la vidéo</span>
+            <span style="background:#E8383A;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;">${T[lang].voirVideo}</span>
           </div>
         </div>` : ''}
       <div class="casting-head">
         <span class="casting-badge">${c.categorie || 'Général'}</span>
-        <span class="casting-statut">✅ Actif</span>
+        <span class="casting-statut">${T[lang].actif}</span>
       </div>
       <div class="casting-titre">${c.titre || ''}</div>
       <div class="casting-desc">${c.description || ''}</div>
       <div class="casting-infos">
-        <div class="casting-info">📍 ${c.ville || 'Non précisé'}</div>
+        <div class="casting-info">📍 ${c.ville || T[lang].nonPrecise}</div>
         ${date ? `<div class="casting-info">📅 ${date}</div>` : ''}
         ${c.remuneration ? `<div class="casting-info">💰 ${c.remuneration}</div>` : ''}
       </div>
       <div class="casting-footer">
-        <div class="casting-recruteur">Par <strong>${c.recruteur_nom || 'Recruteur ShowOne'}</strong></div>
+        <div class="casting-recruteur">${T[lang].parBy}<strong>${c.recruteur_nom || T[lang].recruteurShowOne}</strong></div>
         <div class="casting-actions">
-          <a href="/casting-detail?id=${cid}" class="btn-descriptif">📄 Descriptif</a>
-          ${!_isRecruteur ? `<button class="btn-postuler" onclick="ouvrirModal('${cid}','${titreEsc}','${catEsc}','${villeEsc}')">Postuler →</button>` : ''}
+          <a href="/casting-detail?id=${cid}" class="btn-descriptif">${T[lang].descriptif}</a>
+          ${!_isRecruteur ? `<button class="btn-postuler" onclick="ouvrirModal('${cid}','${titreEsc}','${catEsc}','${villeEsc}')">${T[lang].postuler}</button>` : ''}
         </div>
         ${isMyCasting ? `
           <div class="casting-owner-actions">
-            <span style="font-size:11px;color:#bbb;">✏️ Votre casting</span>
-            <button class="btn-cands" onclick="voirCandidatures('${cid}','${titreEsc}')">👥 Candidatures</button>
+            <span style="font-size:11px;color:#bbb;">${T[lang].monCasting}</span>
+            <button class="btn-cands" onclick="voirCandidatures('${cid}','${titreEsc}')">${T[lang].candidatures}</button>
             <button class="btn-del" onclick="supprimerCasting('${cid}')">🗑️</button>
           </div>` : ''}
       </div>
@@ -491,33 +502,35 @@ function afficherCastings(castings) {
 }
 
 function afficherVide() {
-  document.getElementById('castingsGrid').innerHTML = `<div class="empty-state"><div class="empty-ico">🎬</div><div class="empty-title">Aucun casting disponible</div><p class="empty-sub">Les castings apparaîtront ici dès que des recruteurs en publieront.</p></div>`;
+  const lang = currentLang;
+  document.getElementById('castingsGrid').innerHTML = `<div class="empty-state"><div class="empty-ico">🎬</div><div class="empty-title">${T[lang].aucunCasting}</div><p class="empty-sub">${T[lang].aucunCastingSub}</p></div>`;
 }
 
 // ── MODAL POSTULER ──
 function ouvrirModal(castingId, titre, categorie, ville) {
+  const lang = currentLang;
   const us = localStorage.getItem('showone_user');
   if (!us) {
-    if (confirm('Vous devez être connecté pour postuler. Se connecter ?')) window.location.href = '/connexion';
+    if (confirm(T[lang].confirmConnexion)) window.location.href = '/connexion';
     return;
   }
   const u = JSON.parse(us);
-  if (u.type_compte === 'recruteur') { alert('Seuls les talents peuvent postuler.'); return; }
+  if (u.type_compte === 'recruteur') { alert(T[lang].seulTalent); return; }
   castingSelectionne = castingId;
   document.getElementById('modalContent').innerHTML = `
     <div class="modal-head">
-      <h2>Postuler à ce casting</h2>
+      <h2>${T[lang].postulerModal}</h2>
       <button class="modal-close" onclick="fermerModal()">✕</button>
     </div>
     <div class="modal-casting-info">
       <strong>${titre}</strong>
       <span>${categorie}${ville ? ' · ' + ville : ''}</span>
     </div>
-    <label class="modal-label">Votre message</label>
-    <textarea id="msgCandidature" class="modal-textarea" placeholder="Présentez-vous et expliquez pourquoi vous correspondez à ce casting…"></textarea>
+    <label class="modal-label">${T[lang].votreMessage}</label>
+    <textarea id="msgCandidature" class="modal-textarea" placeholder="${T[lang].messagePlaceholder}"></textarea>
     <div class="modal-btns">
-      <button class="btn-cancel" onclick="fermerModal()">Annuler</button>
-      <button class="btn-send" onclick="envoyerCandidature()">Envoyer ma candidature ✓</button>
+      <button class="btn-cancel" onclick="fermerModal()">${T[lang].annuler}</button>
+      <button class="btn-send" onclick="envoyerCandidature()">${T[lang].envoyer}</button>
     </div>`;
   document.getElementById('modalOverlay').classList.add('open');
 }
@@ -528,13 +541,14 @@ function fermerModal() {
 }
 
 async function envoyerCandidature() {
+  const lang = currentLang;
   const token = localStorage.getItem('showone_token');
   const userStr = localStorage.getItem('showone_user');
   if (!token || !userStr) { window.location.href = '/connexion'; return; }
   const message = document.getElementById('msgCandidature').value.trim();
-  if (!message) { alert('Veuillez écrire un message !'); return; }
+  if (!message) { alert(T[lang].errMessage); return; }
   const btn = document.querySelector('.btn-send');
-  btn.textContent = 'Envoi…'; btn.disabled = true;
+  btn.textContent = T[lang].envoi; btn.disabled = true;
   try {
     const userObj = JSON.parse(userStr);
     const profRes = await fetch(`${SUPABASE_URL}/rest/v1/profils_talents?utilisateur_id=eq.${userObj.id}&select=id`, {
@@ -542,7 +556,7 @@ async function envoyerCandidature() {
     });
     const profData = await profRes.json();
     const talentId = profData[0]?.id;
-    if (!talentId) { alert('Vous devez être inscrit comme talent !'); window.location.href = '/inscription'; return; }
+    if (!talentId) { alert(T[lang].doitEtreTalent); window.location.href = '/inscription'; return; }
     await fetch(`${SUPABASE_URL}/rest/v1/candidatures`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}`, 'Prefer': 'return=minimal' },
@@ -551,18 +565,18 @@ async function envoyerCandidature() {
     fermerModal();
     const notif = document.createElement('div');
     notif.style.cssText = 'position:fixed;bottom:80px;right:20px;background:#10b981;color:#fff;padding:14px 20px;border-radius:10px;font-weight:700;font-size:13px;z-index:9999;';
-    notif.textContent = '✅ Candidature envoyée !';
+    notif.textContent = T[lang].candidatureEnvoyee;
     document.body.appendChild(notif);
     setTimeout(() => notif.remove(), 4000);
   } catch(err) {
-    console.error(err);
-    alert('Erreur lors de l\'envoi.');
-    btn.textContent = 'Envoyer ma candidature ✓'; btn.disabled = false;
+    alert(T[lang].errEnvoi);
+    btn.textContent = T[lang].envoyer; btn.disabled = false;
   }
 }
 
 // ── CANDIDATURES (recruteur) ──
 async function voirCandidatures(castingId, titreCasting) {
+  const lang = currentLang;
   const token = localStorage.getItem('showone_token');
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/candidatures?casting_id=eq.${castingId}&select=*&order=created_at.desc`, {
@@ -581,11 +595,11 @@ async function voirCandidatures(castingId, titreCasting) {
     }
     document.getElementById('modalContent').innerHTML = `
       <div class="modal-head">
-        <h2>👥 Candidatures — ${titreCasting}</h2>
+        <h2>${T[lang].candidaturesTitle}${titreCasting}</h2>
         <button class="modal-close" onclick="fermerModal()">✕</button>
       </div>
       ${cands.length === 0
-        ? `<p style="text-align:center;color:#bbb;padding:30px 0;">Aucune candidature pour l'instant.</p>`
+        ? `<p style="text-align:center;color:#bbb;padding:30px 0;">${T[lang].aucuneCandidature}</p>`
         : cands.map(cand => `
           <div style="border:1px solid #f0f0f0;border-radius:10px;padding:14px;margin-bottom:10px;">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
@@ -594,20 +608,21 @@ async function voirCandidatures(castingId, titreCasting) {
               </div>
               <div>
                 <div style="font-weight:700;font-size:13px;">${cand.talent_nom}</div>
-                <div style="font-size:11px;color:#bbb;">${new Date(cand.created_at).toLocaleDateString('fr-FR')}</div>
+                <div style="font-size:11px;color:#bbb;">${new Date(cand.created_at).toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-US')}</div>
               </div>
             </div>
             <p style="font-size:13px;line-height:1.6;background:#f8f8f8;border-radius:7px;padding:9px;">${cand.message || '—'}</p>
             <div style="display:flex;gap:8px;margin-top:8px;">
-              <button onclick="changerStatut('${cand.id}','retenu')" style="flex:1;padding:7px;border-radius:7px;border:none;background:#10b981;color:#fff;font-size:11px;font-weight:700;cursor:pointer;">✅ Retenir</button>
-              <button onclick="changerStatut('${cand.id}','refuse')" style="flex:1;padding:7px;border-radius:7px;border:none;background:#fff0f0;color:#E8383A;font-size:11px;font-weight:700;cursor:pointer;">❌ Refuser</button>
+              <button onclick="changerStatut('${cand.id}','retenu')" style="flex:1;padding:7px;border-radius:7px;border:none;background:#10b981;color:#fff;font-size:11px;font-weight:700;cursor:pointer;">${T[lang].retenir}</button>
+              <button onclick="changerStatut('${cand.id}','refuse')" style="flex:1;padding:7px;border-radius:7px;border:none;background:#fff0f0;color:#E8383A;font-size:11px;font-weight:700;cursor:pointer;">${T[lang].refuser}</button>
             </div>
           </div>`).join('')}`;
     document.getElementById('modalOverlay').classList.add('open');
-  } catch(e) { alert('Erreur chargement candidatures.'); }
+  } catch(e) { alert(T[lang].errCandidatures); }
 }
 
 async function changerStatut(candidatureId, statut) {
+  const lang = currentLang;
   const token = localStorage.getItem('showone_token');
   try {
     await fetch(`${SUPABASE_URL}/rest/v1/candidatures?id=eq.${candidatureId}`, {
@@ -617,14 +632,15 @@ async function changerStatut(candidatureId, statut) {
     });
     const notif = document.createElement('div');
     notif.style.cssText = 'position:fixed;bottom:80px;right:20px;background:#10b981;color:#fff;padding:12px 18px;border-radius:10px;font-weight:700;font-size:13px;z-index:9999;';
-    notif.textContent = statut === 'retenu' ? '✅ Retenu !' : '❌ Refusé';
+    notif.textContent = statut === 'retenu' ? T[lang].retenu : T[lang].refuse;
     document.body.appendChild(notif);
     setTimeout(() => notif.remove(), 3000);
-  } catch(e) { alert('Erreur: ' + e.message); }
+  } catch(e) { alert(T[lang].errSuppression); }
 }
 
 async function supprimerCasting(castingId) {
-  if (!confirm('Supprimer ce casting ?')) return;
+  const lang = currentLang;
+  if (!confirm(T[lang].supprimer)) return;
   const token = localStorage.getItem('showone_token');
   try {
     await fetch(`${SUPABASE_URL}/rest/v1/castings?id=eq.${castingId}`, {
@@ -633,18 +649,17 @@ async function supprimerCasting(castingId) {
     });
     tousCastings = tousCastings.filter(c => c.id !== castingId);
     afficherCastings(tousCastings);
-  } catch(e) { alert('Erreur suppression.'); }
+  } catch(e) { alert(T[lang].errSuppression); }
 }
 
-// ── FERMETURE MODALS ──
 document.getElementById('modalOverlay').addEventListener('click', function(e) { if (e.target === this) fermerModal(); });
 document.getElementById('playerOverlay').addEventListener('click', function(e) { if (e.target === this) fermerPlayer(); });
 
 // ── INIT ──
+setLang(currentLang);
 mettreAJourNav();
-chargerMonRecruteurId().then(() => {
-  chargerCastings();
-});
+initMobileBar();
+chargerMonRecruteurId().then(() => chargerCastings());
 </script>
 </body>
 </html>
