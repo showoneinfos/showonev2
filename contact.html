@@ -11,8 +11,12 @@
     nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; border-bottom: 1px solid #f0f0f0; }
     .logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; }
     .logo span { color: #E8383A; }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
     .btn-back { font-size: 13px; color: #999; text-decoration: none; }
     .btn-back:hover { color: #111; }
+    .lang-switch { display: flex; align-items: center; gap: 2px; background: #f5f5f5; border-radius: 100px; padding: 3px; }
+    .lang-btn { padding: 4px 9px; border-radius: 100px; border: none; cursor: pointer; font-size: 12px; font-weight: 700; background: transparent; color: #888; transition: all 0.15s; }
+    .lang-btn.active { background: #fff; color: #111; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
     .main { max-width: 560px; margin: 0 auto; padding: 60px 20px; }
     h1 { font-size: 36px; font-weight: 900; letter-spacing: -1px; margin-bottom: 8px; }
     .sub { font-size: 15px; color: #999; margin-bottom: 36px; line-height: 1.6; }
@@ -35,148 +39,125 @@
     .success-icon { font-size: 48px; margin-bottom: 16px; }
     .success-title { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 8px; }
     .success-sub { font-size: 14px; color: #999; line-height: 1.6; }
-    @media (max-width: 600px) { nav { padding: 14px 20px; } .form-row { grid-template-columns: 1fr; } }
-
-    /* ── MOBILE RESPONSIVE ── */
-    @media (max-width: 768px) {
-      /* Index sidebar → bottom nav */
-      .sidebar {
-        width: 100% !important; height: 56px !important;
-        top: auto !important; bottom: 0 !important; left: 0 !important;
-        border-right: none !important; border-top: 1px solid #f0f0f0 !important;
-        flex-direction: row !important; padding: 6px 8px 10px !important;
-        align-items: center !important;
-      }
-      .logo, .side-divider, .sep, .side-bottom, #side-auth, #side-user-box,
-      .side-nav .nav-item:not(.active):nth-child(n+4) { display: none !important; }
-      .side-nav { flex-direction: row !important; gap: 0 !important; padding: 0 !important; }
-      .nav-item { flex-direction: column !important; gap: 1px !important; padding: 4px 8px !important;
-        font-size: 10px !important; flex: 1 !important; justify-content: center !important;
-        align-items: center !important; background: transparent !important; font-weight: 500 !important; }
-      .ico { font-size: 20px !important; width: auto !important; }
-      .main { margin-left: 0 !important; padding-bottom: 65px !important; }
-
-      /* Grilles */
-      .grid { grid-template-columns: repeat(2, 1fr) !important; gap: 2px !important; }
-      .grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
-
-      /* Dashboard */
-      .sidebar-nav, .sidebar { display: none; }
-      body.dashboard { display: block; }
-      .main.dashboard-main { margin-left: 0 !important; padding: 16px !important; padding-bottom: 70px !important; max-width: 100% !important; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
-      .content-grid { grid-template-columns: 1fr !important; }
-
-      /* Nav */
-      nav { padding: 12px 16px !important; }
-
-      /* Forms */
-      .form-row { grid-template-columns: 1fr !important; }
-      .cat-grid { grid-template-columns: repeat(2, 1fr) !important; }
-      .type-selector { grid-template-columns: 1fr 1fr !important; }
-
-      /* Legal layout */
-      .layout { flex-direction: column !important; padding: 20px 16px !important; gap: 24px !important; }
-      .sidebar.legal-sidebar { width: 100% !important; height: auto !important; position: relative !important; flex-direction: column !important; border: none !important; border-bottom: 1px solid #f0f0f0 !important; padding: 0 0 16px !important; }
-
-      /* Contact */
-      .main { padding: 30px 16px !important; }
-      .contact-info { flex-wrap: wrap !important; }
-
-      /* Sections */
-      .sec-head { padding: 14px 10px 8px !important; }
-      .cats { padding: 8px 10px !important; }
-    }
-
-
-    /* ── BARRE MOBILE ── */
+    @media (max-width: 600px) { nav { padding: 14px 20px; } .form-row { grid-template-columns: 1fr; } .main { padding: 30px 16px; } .contact-info { flex-wrap: wrap; } }
     .mobile-bar { display: none; }
     @media (max-width: 768px) {
-      .mobile-bar {
-        display: flex; position: fixed; bottom: 0; left: 0; right: 0;
-        background: #fff; border-top: 1px solid #f0f0f0;
-        padding: 8px 4px 14px; z-index: 1000; align-items: center;
-      }
-      .mobile-btn {
-        flex: 1; display: flex; flex-direction: column; align-items: center;
-        gap: 2px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600;
-      }
-      .mobile-btn:first-child { font-size: 22px; }
+      .mobile-bar { display: flex; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #f0f0f0; padding: 8px 4px 14px; z-index: 1000; align-items: center; }
+      .mobile-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600; }
       .mobile-btn span { font-size: 10px; display: block; }
       .mobile-btn.active { color: #111; }
-      .mobile-btn.mobile-join {
-        flex: none; margin: 0 8px; background: #E8383A; color: #fff !important;
-        padding: 8px 14px; border-radius: 8px; font-size: 12px !important; font-weight: 700;
-        display: flex; flex-direction: column; align-items: center; gap: 1px;
-      }
+      .mobile-join { flex: none; margin: 0 8px; background: #E8383A; color: #fff !important; padding: 8px 14px; border-radius: 8px; font-size: 12px !important; font-weight: 700; display: flex; flex-direction: column; align-items: center; gap: 1px; }
     }
   </style>
 </head>
 <body>
 <nav>
   <a href="/" class="logo">Show<span>One</span></a>
-  <a href="/" class="btn-back">← Retour</a>
+  <div class="nav-right">
+    <div class="lang-switch">
+      <button class="lang-btn active" onclick="setLang('fr')">🇫🇷</button>
+      <button class="lang-btn" onclick="setLang('en')">🇺🇸</button>
+    </div>
+    <a href="/" class="btn-back" id="btnBack">← Retour</a>
+  </div>
 </nav>
+
 <div class="main">
-  <h1>Nous contacter</h1>
-  <p class="sub">Une question, un problème ou une idée ? Notre équipe vous répond rapidement.</p>
+  <h1 id="h1Contact">Nous contacter</h1>
+  <p class="sub" id="subContact">Une question, un problème ou une idée ? Notre équipe vous répond rapidement.</p>
 
   <div class="contact-info">
     <span style="font-size:20px;">📧</span>
     <div>
       <a href="mailto:showone.infos@gmail.com">showone.infos@gmail.com</a><br>
-      <span>Réponse sous 24-48h</span>
+      <span id="reponseDelai">Réponse sous 24-48h</span>
     </div>
   </div>
 
   <div id="contactForm">
     <div class="form-row">
-      <div class="form-group"><label>Prénom *</label><input type="text" id="contactPrenom" placeholder="Marie"></div>
-      <div class="form-group"><label>Nom *</label><input type="text" id="contactNom" placeholder="Dupont"></div>
+      <div class="form-group"><label id="lblPrenom">Prénom *</label><input type="text" id="contactPrenom" placeholder="Marie"></div>
+      <div class="form-group"><label id="lblNom">Nom *</label><input type="text" id="contactNom" placeholder="Dupont"></div>
     </div>
-    <div class="form-group"><label>Email *</label><input type="email" id="contactEmail" placeholder="marie@email.com"></div>
+    <div class="form-group"><label id="lblEmail">Email *</label><input type="email" id="contactEmail" placeholder="marie@email.com"></div>
     <div class="form-group">
-      <label>Sujet *</label>
+      <label id="lblSujet">Sujet *</label>
       <select id="contactSujet" onchange="changerSujet()">
-        <option value="">-- Choisir un sujet --</option>
-        <option value="infos">ℹ️ Demande d'informations</option>
-        <option value="compte">👤 Problème de compte</option>
-        <option value="technique">🔧 Problème technique</option>
-        <option value="mineur">👶 Inscription mineur</option>
-        <option value="categorie">🎭 Suggérer une catégorie</option>
-        <option value="partenariat">🤝 Partenariat</option>
-        <option value="autre">💬 Autre</option>
+        <option value="" id="optDefault">-- Choisir un sujet --</option>
+        <option value="infos" id="optInfos">ℹ️ Demande d'informations</option>
+        <option value="compte" id="optCompte">👤 Problème de compte</option>
+        <option value="technique" id="optTechnique">🔧 Problème technique</option>
+        <option value="mineur" id="optMineur">👶 Inscription mineur</option>
+        <option value="categorie" id="optCategorie">🎭 Suggérer une catégorie</option>
+        <option value="partenariat" id="optPartenariat">🤝 Partenariat</option>
+        <option value="autre" id="optAutre">💬 Autre</option>
       </select>
     </div>
 
     <div class="section-extra" id="sectionMineur">
-      <div class="form-group"><label>Prénom du mineur *</label><input type="text" id="mineurPrenomContact" placeholder="Lucas"></div>
-      <div class="form-group"><label>Date de naissance *</label><input type="date" id="mineurDobContact"></div>
-      <div class="form-group"><label>Catégorie souhaitée</label><input type="text" id="mineurCatContact" placeholder="Ex : Danse, Chant…"></div>
+      <div class="form-group"><label id="lblMineurPrenom">Prénom du mineur *</label><input type="text" id="mineurPrenomContact" placeholder="Lucas"></div>
+      <div class="form-group"><label id="lblMineurDob">Date de naissance *</label><input type="date" id="mineurDobContact"></div>
+      <div class="form-group"><label id="lblMineurCat">Catégorie souhaitée</label><input type="text" id="mineurCatContact" placeholder="Ex : Danse, Chant…"></div>
     </div>
 
     <div class="section-extra" id="sectionCategorie">
-      <div class="form-group"><label>Nom de la catégorie *</label><input type="text" id="catNom" placeholder="Ex : Cirque, Magie…"></div>
-      <div class="form-group"><label>Pourquoi cette catégorie ?</label><input type="text" id="catRaison" placeholder="Ex : Beaucoup de talents dans ce domaine"></div>
+      <div class="form-group"><label id="lblCatNom">Nom de la catégorie *</label><input type="text" id="catNom" placeholder="Ex : Cirque, Magie…"></div>
+      <div class="form-group"><label id="lblCatRaison">Pourquoi cette catégorie ?</label><input type="text" id="catRaison" placeholder="Ex : Beaucoup de talents dans ce domaine"></div>
     </div>
 
-    <div class="form-group"><label>Message *</label><textarea id="contactMessage" placeholder="Décrivez votre demande en détail…"></textarea></div>
+    <div class="form-group"><label id="lblMessage">Message *</label><textarea id="contactMessage"></textarea></div>
     <button class="btn-submit" id="btnSubmit" onclick="envoyerContact()">Envoyer le message →</button>
   </div>
 
   <div class="success-box" id="successMsg">
     <div class="success-icon">✅</div>
-    <div class="success-title">Message envoyé !</div>
-    <p class="success-sub">Votre client mail va s'ouvrir. Nous répondrons à <strong id="emailConfirm"></strong> dans les 24-48h.</p>
+    <div class="success-title" id="successTitle">Message envoyé !</div>
+    <p class="success-sub" id="successSub">Votre client mail va s'ouvrir. Nous répondrons à <strong id="emailConfirm"></strong> dans les 24-48h.</p>
   </div>
 </div>
 
+<!-- BARRE MOBILE -->
+<div class="mobile-bar" id="mobileBar">
+  <a href="/" class="mobile-btn" id="mb-home">🏠<span id="mbHome">Accueil</span></a>
+  <a href="/castings" class="mobile-btn" id="mb-castings">🎬<span id="mbCastings">Castings</span></a>
+  <a href="/connexion" class="mobile-btn" id="mb-conn" style="display:none">🔑<span id="mbConn">Connexion</span></a>
+  <a href="/inscription" class="mobile-btn mobile-join" id="mb-auth">S'inscrire</a>
+</div>
+
 <script>
-  function changerSujet() {
-    const sujet = document.getElementById('contactSujet').value;
-    document.getElementById('sectionMineur').style.display = sujet === 'mineur' ? 'block' : 'none';
-    document.getElementById('sectionCategorie').style.display = sujet === 'categorie' ? 'block' : 'none';
-    const placeholders = {
+let currentLang = localStorage.getItem('showone_lang') || 'fr';
+
+const T = {
+  fr: {
+    pageTitle: 'Nous contacter — ShowOne',
+    btnBack: '← Retour',
+    h1: 'Nous contacter',
+    sub: 'Une question, un problème ou une idée ? Notre équipe vous répond rapidement.',
+    reponseDelai: 'Réponse sous 24-48h',
+    lblPrenom: 'Prénom *', lblNom: 'Nom *', lblEmail: 'Email *',
+    lblSujet: 'Sujet *', lblMessage: 'Message *',
+    optDefault: '-- Choisir un sujet --',
+    optInfos: "ℹ️ Demande d'informations",
+    optCompte: '👤 Problème de compte',
+    optTechnique: '🔧 Problème technique',
+    optMineur: '👶 Inscription mineur',
+    optCategorie: '🎭 Suggérer une catégorie',
+    optPartenariat: '🤝 Partenariat',
+    optAutre: '💬 Autre',
+    lblMineurPrenom: 'Prénom du mineur *',
+    lblMineurDob: 'Date de naissance *',
+    lblMineurCat: 'Catégorie souhaitée',
+    lblCatNom: 'Nom de la catégorie *',
+    lblCatRaison: 'Pourquoi cette catégorie ?',
+    btnSubmit: 'Envoyer le message →',
+    btnEnvoi: 'Envoi en cours…',
+    successTitle: 'Message envoyé !',
+    successSub: 'Votre client mail va s\'ouvrir. Nous répondrons à ',
+    successSuffix: ' dans les 24-48h.',
+    errChamps: 'Veuillez remplir tous les champs obligatoires.',
+    errEmail: 'Veuillez entrer une adresse email valide.',
+    placeholderMessage: 'Décrivez votre demande en détail…',
+    placeholders: {
       mineur: 'Décrivez votre situation (prénom du mineur, catégorie souhaitée, questions)…',
       infos: "Quelle information recherchez-vous ?",
       categorie: 'Décrivez la catégorie souhaitée et pourquoi…',
@@ -184,74 +165,177 @@
       technique: 'Décrivez le problème technique rencontré…',
       partenariat: 'Décrivez votre projet de partenariat avec ShowOne…',
       autre: 'Décrivez votre demande en détail…'
-    };
-    document.getElementById('contactMessage').placeholder = placeholders[sujet] || 'Décrivez votre demande en détail…';
+    },
+    sujetsEmail: { mineur:'Dossier mineur', infos:"Demande d'informations", categorie:'Ajout nouvelle catégorie', compte:'Problème de compte', technique:'Problème technique', partenariat:'Partenariat', autre:'Autre demande' },
+    lblMineurPrenomEmail: 'Prénom mineur',
+    lblDobEmail: 'Date naissance',
+    lblCatEmail: 'Catégorie',
+    lblRaisonEmail: 'Raison',
+    lblMessageEmail: 'Message',
+    lblDemandeEmail: 'Demande',
+    mbHome: 'Accueil', mbCastings: 'Castings', mbConn: 'Connexion', mbAuth: 'S\'inscrire', mbDash: 'Mon espace',
+  },
+  en: {
+    pageTitle: 'Contact us — ShowOne',
+    btnBack: '← Back',
+    h1: 'Contact us',
+    sub: 'A question, a problem or an idea? Our team will get back to you quickly.',
+    reponseDelai: 'Response within 24-48h',
+    lblPrenom: 'First name *', lblNom: 'Last name *', lblEmail: 'Email *',
+    lblSujet: 'Subject *', lblMessage: 'Message *',
+    optDefault: '-- Choose a subject --',
+    optInfos: 'ℹ️ Information request',
+    optCompte: '👤 Account issue',
+    optTechnique: '🔧 Technical issue',
+    optMineur: '👶 Minor registration',
+    optCategorie: '🎭 Suggest a category',
+    optPartenariat: '🤝 Partnership',
+    optAutre: '💬 Other',
+    lblMineurPrenom: 'Minor\'s first name *',
+    lblMineurDob: 'Date of birth *',
+    lblMineurCat: 'Desired category',
+    lblCatNom: 'Category name *',
+    lblCatRaison: 'Why this category?',
+    btnSubmit: 'Send message →',
+    btnEnvoi: 'Sending…',
+    successTitle: 'Message sent!',
+    successSub: 'Your mail client will open. We\'ll reply to ',
+    successSuffix: ' within 24-48h.',
+    errChamps: 'Please fill in all required fields.',
+    errEmail: 'Please enter a valid email address.',
+    placeholderMessage: 'Describe your request in detail…',
+    placeholders: {
+      mineur: 'Describe your situation (minor\'s name, desired category, questions)…',
+      infos: 'What information are you looking for?',
+      categorie: 'Describe the desired category and why…',
+      compte: 'Describe the issue with your account…',
+      technique: 'Describe the technical problem you encountered…',
+      partenariat: 'Describe your partnership project with ShowOne…',
+      autre: 'Describe your request in detail…'
+    },
+    sujetsEmail: { mineur:'Minor file', infos:'Information request', categorie:'New category suggestion', compte:'Account issue', technique:'Technical issue', partenariat:'Partnership', autre:'Other request' },
+    lblMineurPrenomEmail: 'Minor first name',
+    lblDobEmail: 'Date of birth',
+    lblCatEmail: 'Category',
+    lblRaisonEmail: 'Reason',
+    lblMessageEmail: 'Message',
+    lblDemandeEmail: 'Request',
+    mbHome: 'Home', mbCastings: 'Castings', mbConn: 'Log in', mbAuth: 'Sign up', mbDash: 'Dashboard',
   }
+};
 
-  function envoyerContact() {
-    const prenom = document.getElementById('contactPrenom').value.trim();
-    const nom = document.getElementById('contactNom').value.trim();
-    const email = document.getElementById('contactEmail').value.trim();
-    const sujet = document.getElementById('contactSujet').value;
-    const message = document.getElementById('contactMessage').value.trim();
-    if (!prenom || !nom || !email || !sujet || !message) { alert('Veuillez remplir tous les champs obligatoires.'); return; }
-    if (!email.includes('@')) { alert('Veuillez entrer une adresse email valide.'); return; }
-    const btn = document.getElementById('btnSubmit');
-    btn.textContent = 'Envoi en cours…'; btn.disabled = true;
-    const sujets = { mineur:'Dossier mineur', infos:"Demande d'informations", categorie:'Ajout nouvelle catégorie', compte:'Problème de compte', technique:'Problème technique', partenariat:'Partenariat', autre:'Autre demande' };
-    let corps = `Prénom : ${prenom}\nNom : ${nom}\nEmail : ${email}\nDemande : ${sujets[sujet]||sujet}\n\n`;
-    if (sujet === 'mineur') {
-      const pm = document.getElementById('mineurPrenomContact').value.trim();
-      const dm = document.getElementById('mineurDobContact').value;
-      const cm = document.getElementById('mineurCatContact').value.trim();
-      if (pm) corps += `Prénom mineur : ${pm}\n`;
-      if (dm) corps += `Date naissance : ${dm}\n`;
-      if (cm) corps += `Catégorie : ${cm}\n`;
-      corps += '\n';
-    }
-    if (sujet === 'categorie') {
-      const cn = document.getElementById('catNom').value.trim();
-      const cr = document.getElementById('catRaison').value.trim();
-      if (cn) corps += `Catégorie : ${cn}\n`;
-      if (cr) corps += `Raison : ${cr}\n`;
-      corps += '\n';
-    }
-    corps += `Message :\n${message}`;
-    window.location.href = `mailto:showone.infos@gmail.com?subject=${encodeURIComponent('[ShowOne] '+(sujets[sujet]||sujet))}&body=${encodeURIComponent(corps)}`;
-    setTimeout(() => {
-      document.getElementById('contactForm').style.display = 'none';
-      document.getElementById('successMsg').style.display = 'block';
-      document.getElementById('emailConfirm').textContent = email;
-    }, 800);
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('showone_lang', lang);
+  document.documentElement.lang = lang;
+  const t = T[lang];
+  document.title = t.pageTitle;
+
+  document.getElementById('btnBack').textContent = t.btnBack;
+  document.getElementById('h1Contact').textContent = t.h1;
+  document.getElementById('subContact').textContent = t.sub;
+  document.getElementById('reponseDelai').textContent = t.reponseDelai;
+  document.getElementById('lblPrenom').textContent = t.lblPrenom;
+  document.getElementById('lblNom').textContent = t.lblNom;
+  document.getElementById('lblEmail').textContent = t.lblEmail;
+  document.getElementById('lblSujet').textContent = t.lblSujet;
+  document.getElementById('lblMessage').textContent = t.lblMessage;
+  document.getElementById('optDefault').textContent = t.optDefault;
+  document.getElementById('optInfos').textContent = t.optInfos;
+  document.getElementById('optCompte').textContent = t.optCompte;
+  document.getElementById('optTechnique').textContent = t.optTechnique;
+  document.getElementById('optMineur').textContent = t.optMineur;
+  document.getElementById('optCategorie').textContent = t.optCategorie;
+  document.getElementById('optPartenariat').textContent = t.optPartenariat;
+  document.getElementById('optAutre').textContent = t.optAutre;
+  document.getElementById('lblMineurPrenom').textContent = t.lblMineurPrenom;
+  document.getElementById('lblMineurDob').textContent = t.lblMineurDob;
+  document.getElementById('lblMineurCat').textContent = t.lblMineurCat;
+  document.getElementById('lblCatNom').textContent = t.lblCatNom;
+  document.getElementById('lblCatRaison').textContent = t.lblCatRaison;
+  document.getElementById('btnSubmit').textContent = t.btnSubmit;
+  document.getElementById('successTitle').textContent = t.successTitle;
+  document.getElementById('mbHome').textContent = t.mbHome;
+  document.getElementById('mbCastings').textContent = t.mbCastings;
+  document.getElementById('mbConn').textContent = t.mbConn;
+
+  // Placeholder message selon sujet actuel
+  const sujet = document.getElementById('contactSujet').value;
+  document.getElementById('contactMessage').placeholder = (sujet && t.placeholders[sujet]) ? t.placeholders[sujet] : t.placeholderMessage;
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick').includes("'" + lang + "'"));
+  });
+}
+
+function changerSujet() {
+  const sujet = document.getElementById('contactSujet').value;
+  const t = T[currentLang];
+  document.getElementById('sectionMineur').style.display = sujet === 'mineur' ? 'block' : 'none';
+  document.getElementById('sectionCategorie').style.display = sujet === 'categorie' ? 'block' : 'none';
+  document.getElementById('contactMessage').placeholder = (sujet && t.placeholders[sujet]) ? t.placeholders[sujet] : t.placeholderMessage;
+}
+
+function envoyerContact() {
+  const t = T[currentLang];
+  const prenom = document.getElementById('contactPrenom').value.trim();
+  const nom = document.getElementById('contactNom').value.trim();
+  const email = document.getElementById('contactEmail').value.trim();
+  const sujet = document.getElementById('contactSujet').value;
+  const message = document.getElementById('contactMessage').value.trim();
+  if (!prenom || !nom || !email || !sujet || !message) { alert(t.errChamps); return; }
+  if (!email.includes('@')) { alert(t.errEmail); return; }
+  const btn = document.getElementById('btnSubmit');
+  btn.textContent = t.btnEnvoi; btn.disabled = true;
+  const sujets = t.sujetsEmail;
+  let corps = `${t.lblPrenom.replace(' *','')} : ${prenom}\n${t.lblNom.replace(' *','')} : ${nom}\nEmail : ${email}\n${t.lblDemandeEmail} : ${sujets[sujet]||sujet}\n\n`;
+  if (sujet === 'mineur') {
+    const pm = document.getElementById('mineurPrenomContact').value.trim();
+    const dm = document.getElementById('mineurDobContact').value;
+    const cm = document.getElementById('mineurCatContact').value.trim();
+    if (pm) corps += `${t.lblMineurPrenomEmail} : ${pm}\n`;
+    if (dm) corps += `${t.lblDobEmail} : ${dm}\n`;
+    if (cm) corps += `${t.lblCatEmail} : ${cm}\n`;
+    corps += '\n';
   }
-</script>
+  if (sujet === 'categorie') {
+    const cn = document.getElementById('catNom').value.trim();
+    const cr = document.getElementById('catRaison').value.trim();
+    if (cn) corps += `${t.lblCatEmail} : ${cn}\n`;
+    if (cr) corps += `${t.lblRaisonEmail} : ${cr}\n`;
+    corps += '\n';
+  }
+  corps += `${t.lblMessageEmail} :\n${message}`;
+  window.location.href = `mailto:showone.infos@gmail.com?subject=${encodeURIComponent('[ShowOne] '+(sujets[sujet]||sujet))}&body=${encodeURIComponent(corps)}`;
+  setTimeout(() => {
+    document.getElementById('contactForm').style.display = 'none';
+    const successBox = document.getElementById('successMsg');
+    successBox.style.display = 'block';
+    document.getElementById('emailConfirm').textContent = email;
+    document.getElementById('successSub').innerHTML = t.successSub + `<strong>${email}</strong>` + t.successSuffix;
+  }, 800);
+}
 
-<!-- BARRE MOBILE -->
-<div class="mobile-bar" id="mobileBar">
-  <a href="/" class="mobile-btn" id="mb-home">🏠<span>Accueil</span></a>
-  <a href="/castings" class="mobile-btn" id="mb-castings">🎬<span>Castings</span></a>
-  <a href="/connexion" class="mobile-btn" id="mb-conn" style="display:none">🔑<span>Connexion</span></a>
-  <a href="/inscription" class="mobile-btn mobile-join" id="mb-auth">S'inscrire</a>
-</div>
-<script>
+// Init
+setLang(currentLang);
+
 (function() {
   try {
     const u = JSON.parse(localStorage.getItem('showone_user') || '{}');
     const btnAuth = document.getElementById('mb-auth');
     const btnConn = document.getElementById('mb-conn');
+    const t = T[currentLang];
     if (u && u.id) {
       const dashboard = u.type_compte === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
       btnAuth.href = dashboard;
-      btnAuth.innerHTML = '👤<span>Mon espace</span>';
+      btnAuth.innerHTML = `👤<span>${t.mbDash}</span>`;
       btnAuth.style.background = '#111';
       btnConn.style.display = 'none';
     } else {
       btnConn.style.display = 'flex';
+      btnAuth.innerHTML = `<span>${t.mbAuth}</span>`;
     }
   } catch(e) {}
-  const path = window.location.pathname;
-  if (path === '/' || path === '/index') document.getElementById('mb-home').classList.add('active');
-  else if (path.includes('castings')) document.getElementById('mb-castings').classList.add('active');
 })();
 </script>
 </body>
