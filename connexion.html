@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ShowOne — Connexion</title>
+  <title>Connexion — ShowOne</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,700;0,900;1,900&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -11,8 +11,14 @@
     nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; border-bottom: 1px solid #f0f0f0; }
     .logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; }
     .logo span { color: #E8383A; }
-    .nav-right { font-size: 13px; color: #999; }
+    .nav-right { font-size: 13px; color: #999; display: flex; align-items: center; gap: 12px; }
     .nav-right a { color: #111; font-weight: 600; text-decoration: none; }
+
+    /* Switch langue */
+    .lang-switch { display: flex; align-items: center; gap: 2px; background: #f5f5f5; border-radius: 100px; padding: 3px; }
+    .lang-btn { padding: 4px 9px; border-radius: 100px; border: none; cursor: pointer; font-size: 12px; font-weight: 700; background: transparent; color: #888; transition: all 0.15s; }
+    .lang-btn.active { background: #fff; color: #111; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+
     .main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 48px 20px; }
     .card { width: 100%; max-width: 420px; }
     .card-title { font-size: 30px; font-weight: 900; letter-spacing: -1px; color: #111; margin-bottom: 6px; }
@@ -38,59 +44,6 @@
     .signup-link a { color: #111; font-weight: 600; text-decoration: none; }
     @media (max-width: 600px) { nav { padding: 14px 20px; } }
 
-    /* ── MOBILE RESPONSIVE ── */
-    @media (max-width: 768px) {
-      /* Index sidebar → bottom nav */
-      .sidebar {
-        width: 100% !important; height: 56px !important;
-        top: auto !important; bottom: 0 !important; left: 0 !important;
-        border-right: none !important; border-top: 1px solid #f0f0f0 !important;
-        flex-direction: row !important; padding: 6px 8px 10px !important;
-        align-items: center !important;
-      }
-      .logo, .side-divider, .sep, .side-bottom, #side-auth, #side-user-box,
-      .side-nav .nav-item:not(.active):nth-child(n+4) { display: none !important; }
-      .side-nav { flex-direction: row !important; gap: 0 !important; padding: 0 !important; }
-      .nav-item { flex-direction: column !important; gap: 1px !important; padding: 4px 8px !important;
-        font-size: 10px !important; flex: 1 !important; justify-content: center !important;
-        align-items: center !important; background: transparent !important; font-weight: 500 !important; }
-      .ico { font-size: 20px !important; width: auto !important; }
-      .main { margin-left: 0 !important; padding-bottom: 65px !important; }
-
-      /* Grilles */
-      .grid { grid-template-columns: repeat(2, 1fr) !important; gap: 2px !important; }
-      .grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
-
-      /* Dashboard */
-      .sidebar-nav, .sidebar { display: none; }
-      body.dashboard { display: block; }
-      .main.dashboard-main { margin-left: 0 !important; padding: 16px !important; padding-bottom: 70px !important; max-width: 100% !important; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
-      .content-grid { grid-template-columns: 1fr !important; }
-
-      /* Nav */
-      nav { padding: 12px 16px !important; }
-
-      /* Forms */
-      .form-row { grid-template-columns: 1fr !important; }
-      .cat-grid { grid-template-columns: repeat(2, 1fr) !important; }
-      .type-selector { grid-template-columns: 1fr 1fr !important; }
-
-      /* Legal layout */
-      .layout { flex-direction: column !important; padding: 20px 16px !important; gap: 24px !important; }
-      .sidebar.legal-sidebar { width: 100% !important; height: auto !important; position: relative !important; flex-direction: column !important; border: none !important; border-bottom: 1px solid #f0f0f0 !important; padding: 0 0 16px !important; }
-
-      /* Contact */
-      .main { padding: 30px 16px !important; }
-      .contact-info { flex-wrap: wrap !important; }
-
-      /* Sections */
-      .sec-head { padding: 14px 10px 8px !important; }
-      .cats { padding: 8px 10px !important; }
-    }
-
-
-    /* ── BARRE MOBILE ── */
     .mobile-bar { display: none; }
     @media (max-width: 768px) {
       .mobile-bar {
@@ -98,140 +51,199 @@
         background: #fff; border-top: 1px solid #f0f0f0;
         padding: 8px 4px 14px; z-index: 1000; align-items: center;
       }
-      .mobile-btn {
-        flex: 1; display: flex; flex-direction: column; align-items: center;
-        gap: 2px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600;
-      }
-      .mobile-btn:first-child { font-size: 22px; }
+      .mobile-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600; }
       .mobile-btn span { font-size: 10px; display: block; }
       .mobile-btn.active { color: #111; }
-      .mobile-btn.mobile-join {
-        flex: none; margin: 0 8px; background: #E8383A; color: #fff !important;
-        padding: 8px 14px; border-radius: 8px; font-size: 12px !important; font-weight: 700;
-        display: flex; flex-direction: column; align-items: center; gap: 1px;
-      }
+      .mobile-btn.mobile-join { flex: none; margin: 0 8px; background: #E8383A; color: #fff !important; padding: 8px 14px; border-radius: 8px; font-size: 12px !important; font-weight: 700; display: flex; flex-direction: column; align-items: center; gap: 1px; }
     }
   </style>
 </head>
 <body>
+
 <nav>
   <a href="/" class="logo">Show<span>One</span></a>
-  <div class="nav-right">Pas de compte ? <a href="inscription.html">S'inscrire gratuitement</a></div>
+  <div class="nav-right">
+    <div class="lang-switch">
+      <button class="lang-btn active" onclick="setLang('fr')">🇫🇷</button>
+      <button class="lang-btn" onclick="setLang('en')">🇺🇸</button>
+    </div>
+    <span id="navNoAccount" data-fr="Pas de compte ?" data-en="No account?">Pas de compte ?</span>
+    <a href="/inscription" id="navSignup" data-fr="S'inscrire gratuitement" data-en="Sign up for free">S'inscrire gratuitement</a>
+  </div>
 </nav>
+
 <div class="main">
   <div class="card">
-    <div class="card-title">Connexion</div>
-    <div class="card-sub">Accédez à votre espace ShowOne.</div>
+    <div class="card-title" data-fr="Connexion" data-en="Log in">Connexion</div>
+    <div class="card-sub" data-fr="Accédez à votre espace ShowOne." data-en="Access your ShowOne account.">Accédez à votre espace ShowOne.</div>
+
     <div class="type-selector">
       <div class="type-btn active" onclick="setType('talent', this)">
-        <div class="type-label">🌟 Talent</div>
+        <div class="type-label" data-fr="🌟 Talent" data-en="🌟 Talent">🌟 Talent</div>
       </div>
       <div class="type-btn" onclick="setType('recruteur', this)">
-        <div class="type-label">🔍 Recruteur</div>
+        <div class="type-label" data-fr="🔍 Recruteur" data-en="🔍 Recruiter">🔍 Recruteur</div>
       </div>
     </div>
+
     <div class="form-error" id="login-error"></div>
+
     <div class="form-group">
-      <label class="form-label">Email</label>
-      <input class="form-input" type="email" id="emailInput" placeholder="votre@email.com" autocomplete="email">
+      <label class="form-label" data-fr="Email" data-en="Email">Email</label>
+      <input class="form-input" type="email" id="emailInput" data-placeholder-fr="votre@email.com" data-placeholder-en="your@email.com" placeholder="votre@email.com" autocomplete="email">
     </div>
     <div class="form-group">
-      <label class="form-label">Mot de passe</label>
-      <input class="form-input" type="password" id="pwdInput" placeholder="Votre mot de passe" autocomplete="current-password">
+      <label class="form-label" data-fr="Mot de passe" data-en="Password">Mot de passe</label>
+      <input class="form-input" type="password" id="pwdInput" data-placeholder-fr="Votre mot de passe" data-placeholder-en="Your password" placeholder="Votre mot de passe" autocomplete="current-password">
     </div>
+
     <div class="form-options">
-      <a href="mot-de-passe-oublie.html" class="forgot">Mot de passe oublié ?</a>
+      <a href="/mot-de-passe-oublie" class="forgot" data-fr="Mot de passe oublié ?" data-en="Forgot your password?">Mot de passe oublié ?</a>
     </div>
-    <button class="btn-submit" id="btn-login" onclick="seConnecter()">Se connecter</button>
-    <div class="signup-link">Pas encore de compte ? <a href="inscription.html">S'inscrire gratuitement</a></div>
+
+    <button class="btn-submit" id="btn-login" onclick="seConnecter()" data-fr="Se connecter" data-en="Log in">Se connecter</button>
+
+    <div class="signup-link">
+      <span data-fr="Pas encore de compte ?" data-en="Don't have an account yet?">Pas encore de compte ?</span>
+      <a href="/inscription" data-fr="S'inscrire gratuitement" data-en="Sign up for free">S'inscrire gratuitement</a>
+    </div>
   </div>
 </div>
-<script>
-  const SUPABASE_URL = 'https://emiuzigtlomlrsofxqyf.supabase.co';
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtaXV6aWd0bG9tbHJzb2Z4cXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MDI4NTcsImV4cCI6MjA5MzQ3ODg1N30.Cwe-Z1vNGc-puz8jEnHdMMCwllNbl9fRAdwLe5zWyIY';
-  let currentType = 'talent';
-
-  function setType(type, btn) {
-    document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentType = type;
-  }
-
-  async function seConnecter() {
-    const email = document.getElementById('emailInput').value.trim();
-    const password = document.getElementById('pwdInput').value;
-    const errDiv = document.getElementById('login-error');
-    const btn = document.getElementById('btn-login');
-
-    if (!email || !password) { errDiv.textContent = 'Merci de remplir votre email et mot de passe.'; errDiv.style.display = 'block'; return; }
-
-    btn.disabled = true; btn.textContent = 'Connexion en cours…'; errDiv.style.display = 'none';
-
-    try {
-      const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
-        body: JSON.stringify({ email, password })
-      });
-      const data = await res.json();
-
-      if (data.error || !data.access_token) {
-        errDiv.textContent = 'Email ou mot de passe incorrect.';
-        errDiv.style.display = 'block';
-        btn.disabled = false; btn.textContent = 'Se connecter'; return;
-      }
-
-      const userId = data.user.id;
-      const token = data.access_token;
-      window.localStorage.setItem('showone_token', token);
-
-      let prenom = '', nom = '', photo_url = '', vraiType = currentType;
-      try {
-        const userRes = await fetch(`${SUPABASE_URL}/rest/v1/utilisateurs?id=eq.${userId}&select=prenom,nom,photo_url,type_compte`, {
-          headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` }
-        });
-        const userData = await userRes.json();
-        if (userData && userData.length > 0) {
-          prenom = userData[0].prenom || '';
-          nom = userData[0].nom || '';
-          photo_url = userData[0].photo_url || '';
-          vraiType = userData[0].type_compte || currentType;
-        }
-      } catch(e) {}
-
-      window.localStorage.setItem('showone_user', JSON.stringify({ id: userId, email: data.user.email, prenom, nom, photo_url, type_compte: vraiType }));
-
-      window.location.href = vraiType === 'recruteur' ? 'dashboard-recruteur.html' : 'dashboard-talent.html';
-
-    } catch(err) {
-      errDiv.textContent = 'Une erreur est survenue. Veuillez réessayer.';
-      errDiv.style.display = 'block';
-      btn.disabled = false; btn.textContent = 'Se connecter';
-    }
-  }
-</script>
 
 <!-- BARRE MOBILE -->
 <div class="mobile-bar" id="mobileBar">
-  <a href="/" class="mobile-btn" id="mb-home">🏠<span>Accueil</span></a>
-  <a href="/castings" class="mobile-btn" id="mb-castings">🎬<span>Castings</span></a>
-  <a href="/messagerie" class="mobile-btn" id="mb-msg">💬<span>Messages</span></a>
-  <a href="/inscription" class="mobile-btn mobile-join" id="mb-auth">S'inscrire</a>
+  <a href="/" class="mobile-btn" id="mb-home">🏠<span data-fr="Accueil" data-en="Home">Accueil</span></a>
+  <a href="/castings" class="mobile-btn" id="mb-castings">🎬<span data-fr="Castings" data-en="Castings">Castings</span></a>
+  <a href="/messagerie" class="mobile-btn" id="mb-msg">💬<span data-fr="Messages" data-en="Messages">Messages</span></a>
+  <a href="/inscription" class="mobile-btn mobile-join" id="mb-auth" data-fr="S'inscrire" data-en="Sign up">S'inscrire</a>
 </div>
+
 <script>
+const SUPABASE_URL = 'https://emiuzigtlomlrsofxqyf.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtaXV6aWd0bG9tbHJzb2Z4cXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MDI4NTcsImV4cCI6MjA5MzQ3ODg1N30.Cwe-Z1vNGc-puz8jEnHdMMCwllNbl9fRAdwLe5zWyIY';
+let currentType = 'talent';
+let currentLang = localStorage.getItem('showone_lang') || 'fr';
+
+const T = {
+  fr: {
+    pageTitle: 'Connexion — ShowOne',
+    errEmpty: 'Merci de remplir votre email et mot de passe.',
+    errCredentials: 'Email ou mot de passe incorrect.',
+    errGeneral: 'Une erreur est survenue. Veuillez réessayer.',
+    connecting: 'Connexion en cours…',
+    login: 'Se connecter',
+  },
+  en: {
+    pageTitle: 'Log in — ShowOne',
+    errEmpty: 'Please enter your email and password.',
+    errCredentials: 'Incorrect email or password.',
+    errGeneral: 'An error occurred. Please try again.',
+    connecting: 'Logging in…',
+    login: 'Log in',
+  }
+};
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('showone_lang', lang);
+  document.documentElement.lang = lang;
+  document.title = T[lang].pageTitle;
+
+  document.querySelectorAll('[data-fr]').forEach(el => {
+    const val = el.getAttribute('data-' + lang);
+    if (val !== null) el.textContent = val;
+  });
+
+  document.querySelectorAll('[data-placeholder-fr]').forEach(el => {
+    el.placeholder = el.getAttribute('data-placeholder-' + lang) || '';
+  });
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick').includes("'" + lang + "'"));
+  });
+}
+
+function setType(type, btn) {
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentType = type;
+}
+
+async function seConnecter() {
+  const email = document.getElementById('emailInput').value.trim();
+  const password = document.getElementById('pwdInput').value;
+  const errDiv = document.getElementById('login-error');
+  const btn = document.getElementById('btn-login');
+  const lang = currentLang;
+
+  if (!email || !password) {
+    errDiv.textContent = T[lang].errEmpty;
+    errDiv.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = T[lang].connecting;
+  errDiv.style.display = 'none';
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+
+    if (data.error || !data.access_token) {
+      errDiv.textContent = T[lang].errCredentials;
+      errDiv.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = T[lang].login;
+      return;
+    }
+
+    const userId = data.user.id;
+    const token = data.access_token;
+    localStorage.setItem('showone_token', token);
+
+    let prenom = '', nom = '', photo_url = '', vraiType = currentType;
+    try {
+      const userRes = await fetch(`${SUPABASE_URL}/rest/v1/utilisateurs?id=eq.${userId}&select=prenom,nom,photo_url,type_compte`, {
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` }
+      });
+      const userData = await userRes.json();
+      if (userData && userData.length > 0) {
+        prenom = userData[0].prenom || '';
+        nom = userData[0].nom || '';
+        photo_url = userData[0].photo_url || '';
+        vraiType = userData[0].type_compte || currentType;
+      }
+    } catch(e) {}
+
+    localStorage.setItem('showone_user', JSON.stringify({ id: userId, email: data.user.email, prenom, nom, photo_url, type_compte: vraiType }));
+    window.location.href = vraiType === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
+
+  } catch(err) {
+    errDiv.textContent = T[lang].errGeneral;
+    errDiv.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = T[lang].login;
+  }
+}
+
+// Init
 (function() {
+  setLang(currentLang);
   try {
     const u = JSON.parse(localStorage.getItem('showone_user') || '{}');
     const btn = document.getElementById('mb-auth');
     if (u && u.id) {
       const dashboard = u.type_compte === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
       btn.href = dashboard;
-      btn.textContent = '👤';
-      btn.innerHTML = '👤<span>Mon espace</span>';
+      btn.innerHTML = '👤<span>' + (currentLang === 'en' ? 'Dashboard' : 'Mon espace') + '</span>';
       btn.style.background = '#111';
     }
   } catch(e) {}
-  // Marquer page active
   const path = window.location.pathname;
   if (path === '/' || path === '/index') document.getElementById('mb-home').classList.add('active');
   else if (path.includes('castings')) document.getElementById('mb-castings').classList.add('active');
