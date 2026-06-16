@@ -8,7 +8,6 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Inter', sans-serif; background: #fff; color: #111; display: flex; height: 100vh; overflow: hidden; }
-
     .sidebar { width: 220px; background: #fff; border-right: 1px solid #f0f0f0; display: flex; flex-direction: column; flex-shrink: 0; }
     .sidebar-logo { padding: 20px; border-bottom: 1px solid #f0f0f0; }
     .sidebar-logo a { font-size: 18px; font-weight: 900; color: #111; text-decoration: none; }
@@ -24,6 +23,9 @@
     .sidebar-bottom { padding: 10px; border-top: 1px solid #f0f0f0; }
     .nav-item-danger { color: #E8383A; }
     .nav-item-danger:hover { background: #fff0f0; }
+    .s-lang { display: flex; gap: 4px; padding: 8px 10px; }
+    .s-lang-btn { flex: 1; padding: 6px; border-radius: 7px; border: 1.5px solid #e0e0e0; font-size: 11px; font-weight: 700; cursor: pointer; background: #fff; color: #888; text-align: center; transition: all 0.15s; }
+    .s-lang-btn.active { background: #111; border-color: #111; color: #fff; }
 
     .conv-panel { width: 300px; border-right: 1px solid #f0f0f0; display: flex; flex-direction: column; flex-shrink: 0; }
     .conv-header { padding: 16px 18px; border-bottom: 1px solid #f0f0f0; }
@@ -101,12 +103,7 @@
 
     .mobile-bar { display: none; }
     @media (max-width: 768px) {
-      .mobile-bar {
-        display: flex; position: fixed; bottom: 0; left: 0; right: 0;
-        background: #fff; border-top: 1px solid #f0f0f0;
-        padding: 8px 4px 14px; z-index: 1000; align-items: center;
-        justify-content: space-around;
-      }
+      .mobile-bar { display: flex; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #f0f0f0; padding: 8px 4px 14px; z-index: 1000; align-items: center; justify-content: space-around; }
       .mobile-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; text-decoration: none; color: #aaa; font-size: 10px; font-weight: 600; }
       .mobile-btn-icon { font-size: 20px; line-height: 1; display: block; }
       .mobile-btn-label { font-size: 10px; display: block; }
@@ -126,7 +123,11 @@
   </div>
   <nav class="sidebar-nav" id="sideNav"></nav>
   <div class="sidebar-bottom">
-    <a href="#" onclick="deconnecter()" class="nav-item nav-item-danger">🚪 Déconnexion</a>
+    <div class="s-lang">
+      <button class="s-lang-btn active" onclick="setLang('fr')">🇫🇷 FR</button>
+      <button class="s-lang-btn" onclick="setLang('en')">🇺🇸 EN</button>
+    </div>
+    <a href="#" onclick="deconnecter()" class="nav-item nav-item-danger" id="btnDeco">🚪 Déconnexion</a>
   </div>
 </div>
 
@@ -134,24 +135,24 @@
 <div class="conv-panel">
   <div class="conv-header">
     <div class="conv-header-top">
-      <div class="conv-title">💬 Messages</div>
+      <div class="conv-title" id="convTitle">💬 Messages</div>
       <button class="btn-new" id="btnNew" onclick="ouvrirModal('')">+ Nouveau</button>
     </div>
-    <input class="search-conv" type="text" placeholder="Rechercher…" oninput="filtrer(this.value)">
+    <input class="search-conv" type="text" id="searchConv" oninput="filtrer(this.value)">
   </div>
   <div class="conv-list" id="convItems">
-    <div class="conv-empty">Chargement…</div>
+    <div class="conv-empty" id="convLoading">Chargement…</div>
   </div>
 </div>
 
 <!-- VUE CONVERSATION -->
 <div class="conv-view" id="convView">
-  <div class="mobile-back" onclick="fermerConvMobile()">← Retour</div>
+  <div class="mobile-back" onclick="fermerConvMobile()" id="mobileBack">← Retour</div>
   <div class="conv-placeholder" id="placeholder">
     <div>
       <div style="font-size:36px;margin-bottom:12px;">💬</div>
-      <div style="font-weight:700;margin-bottom:6px;">Sélectionnez une conversation</div>
-      <div style="font-size:13px;">Choisissez une conversation dans la liste.</div>
+      <div style="font-weight:700;margin-bottom:6px;" id="placeholderTitle">Sélectionnez une conversation</div>
+      <div style="font-size:13px;" id="placeholderSub">Choisissez une conversation dans la liste.</div>
     </div>
   </div>
   <div class="conv-active" id="convActive">
@@ -161,7 +162,7 @@
     </div>
     <div class="msg-area" id="msgArea"></div>
     <div class="reply-bar">
-      <textarea class="reply-ta" id="replyTa" placeholder="Écrire un message…" rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();envoyer();}"></textarea>
+      <textarea class="reply-ta" id="replyTa" rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();envoyer();}"></textarea>
       <button class="btn-reply" id="btnReply" onclick="envoyer()">Envoyer →</button>
     </div>
   </div>
@@ -170,16 +171,19 @@
 <!-- MODAL NOUVEAU MESSAGE -->
 <div class="modal-overlay" id="modalOv">
   <div class="modal">
-    <div class="modal-head"><h2>Nouveau message</h2><button class="modal-close" onclick="fermerModal()">✕</button></div>
-    <label class="modal-label">Talent</label>
+    <div class="modal-head">
+      <h2 id="modalTitle">Nouveau message</h2>
+      <button class="modal-close" onclick="fermerModal()">✕</button>
+    </div>
+    <label class="modal-label" id="modalLabelTalent">Talent</label>
     <select class="modal-select" id="selTalent"></select>
-    <label class="modal-label">Objet</label>
-    <input class="modal-input" id="newObjet" type="text" placeholder="Ex : Proposition de casting">
-    <label class="modal-label">Message</label>
-    <textarea class="modal-textarea" id="newContenu" placeholder="Bonjour, nous avons découvert votre profil…"></textarea>
+    <label class="modal-label" id="modalLabelObjet">Objet</label>
+    <input class="modal-input" id="newObjet" type="text">
+    <label class="modal-label" id="modalLabelMessage">Message</label>
+    <textarea class="modal-textarea" id="newContenu"></textarea>
     <div class="modal-btns">
-      <button class="btn-cancel" onclick="fermerModal()">Annuler</button>
-      <button class="btn-send" onclick="envoyerNouveauMsg()">Envoyer ✓</button>
+      <button class="btn-cancel" id="btnCancelModal" onclick="fermerModal()">Annuler</button>
+      <button class="btn-send" id="btnSendModal" onclick="envoyerNouveauMsg()">Envoyer ✓</button>
     </div>
   </div>
 </div>
@@ -187,16 +191,16 @@
 <!-- BARRE MOBILE -->
 <div class="mobile-bar" id="mobileBar">
   <a href="/" class="mobile-btn">
-    <span class="mobile-btn-icon">🏠</span><span class="mobile-btn-label">Accueil</span>
+    <span class="mobile-btn-icon">🏠</span><span class="mobile-btn-label" id="mbHome">Accueil</span>
   </a>
   <a href="/castings" class="mobile-btn">
-    <span class="mobile-btn-icon">🎬</span><span class="mobile-btn-label">Castings</span>
+    <span class="mobile-btn-icon">🎬</span><span class="mobile-btn-label" id="mbCastings">Castings</span>
   </a>
   <a href="/messagerie" class="mobile-btn active">
-    <span class="mobile-btn-icon">💬</span><span class="mobile-btn-label">Messages</span>
+    <span class="mobile-btn-icon">💬</span><span class="mobile-btn-label" id="mbMessages">Messages</span>
   </a>
   <a href="/" class="mobile-btn mobile-join" id="mb-auth">
-    <span class="mobile-btn-icon">👤</span><span class="mobile-btn-label">Mon espace</span>
+    <span class="mobile-btn-icon">👤</span><span class="mobile-btn-label" id="mbAuth">Mon espace</span>
   </a>
 </div>
 
@@ -204,6 +208,132 @@
 const SB = 'https://emiuzigtlomlrsofxqyf.supabase.co';
 const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtaXV6aWd0bG9tbHJzb2Z4cXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MDI4NTcsImV4cCI6MjA5MzQ3ODg1N30.Cwe-Z1vNGc-puz8jEnHdMMCwllNbl9fRAdwLe5zWyIY';
 let role = null, profilId = null, token = null, convs = [], convActive = null;
+let currentLang = localStorage.getItem('showone_lang') || 'fr';
+
+const T = {
+  fr: {
+    pageTitle: 'Messagerie — ShowOne',
+    convTitle: '💬 Messages',
+    btnNew: '+ Nouveau',
+    searchPlaceholder: 'Rechercher…',
+    chargement: 'Chargement…',
+    aucuneConv: 'Aucune conversation.',
+    profilIntrouvable: 'Profil introuvable.',
+    selectConv: 'Sélectionnez une conversation',
+    selectConvSub: 'Choisissez une conversation dans la liste.',
+    envoyer: 'Envoyer →',
+    replyPlaceholder: 'Écrire un message…',
+    modalTitle: 'Nouveau message',
+    labelTalent: 'Talent',
+    labelObjet: 'Objet',
+    labelMessage: 'Message',
+    objetPlaceholder: 'Ex : Proposition de casting',
+    messagePlaceholder: 'Bonjour, nous avons découvert votre profil…',
+    selTalentDefault: 'Choisir un talent…',
+    annuler: 'Annuler',
+    envoyer2: 'Envoyer ✓',
+    remplisTout: 'Remplissez tous les champs.',
+    roleRecruteur: 'Recruteur',
+    roleTalent: 'Talent',
+    roleSubRecruteur: 'Recruteur',
+    roleSubTalent: 'Talent ShowOne',
+    retour: '← Retour',
+    deconnexion: '🚪 Déconnexion',
+    accueil: 'Accueil', castings: 'Castings', messages: 'Messages', monEspace: 'Mon espace',
+    navDashboard: '🏠 Tableau de bord',
+    navMessagerie: '💬 Messagerie',
+    navCastings: '🎬 Castings',
+    navTalents: '🔍 Talents',
+    tempsInstant: "À l'instant",
+    tempsHier: 'Hier',
+  },
+  en: {
+    pageTitle: 'Messaging — ShowOne',
+    convTitle: '💬 Messages',
+    btnNew: '+ New',
+    searchPlaceholder: 'Search…',
+    chargement: 'Loading…',
+    aucuneConv: 'No conversations.',
+    profilIntrouvable: 'Profile not found.',
+    selectConv: 'Select a conversation',
+    selectConvSub: 'Choose a conversation from the list.',
+    envoyer: 'Send →',
+    replyPlaceholder: 'Write a message…',
+    modalTitle: 'New message',
+    labelTalent: 'Talent',
+    labelObjet: 'Subject',
+    labelMessage: 'Message',
+    objetPlaceholder: 'E.g. Casting proposal',
+    messagePlaceholder: 'Hello, we discovered your ShowOne profile…',
+    selTalentDefault: 'Choose a talent…',
+    annuler: 'Cancel',
+    envoyer2: 'Send ✓',
+    remplisTout: 'Please fill in all fields.',
+    roleRecruteur: 'Recruiter',
+    roleTalent: 'Talent',
+    roleSubRecruteur: 'Recruiter',
+    roleSubTalent: 'ShowOne Talent',
+    retour: '← Back',
+    deconnexion: '🚪 Log out',
+    accueil: 'Home', castings: 'Castings', messages: 'Messages', monEspace: 'Dashboard',
+    navDashboard: '🏠 Dashboard',
+    navMessagerie: '💬 Messaging',
+    navCastings: '🎬 Castings',
+    navTalents: '🔍 Talents',
+    tempsInstant: 'Just now',
+    tempsHier: 'Yesterday',
+  }
+};
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('showone_lang', lang);
+  document.documentElement.lang = lang;
+  const t = T[lang];
+  document.title = t.pageTitle;
+
+  document.querySelectorAll('.s-lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick').includes("'" + lang + "'"));
+  });
+
+  document.getElementById('convTitle').textContent = t.convTitle;
+  document.getElementById('btnNew').textContent = t.btnNew;
+  document.getElementById('searchConv').placeholder = t.searchPlaceholder;
+  document.getElementById('convLoading').textContent = t.chargement;
+  document.getElementById('placeholderTitle').textContent = t.selectConv;
+  document.getElementById('placeholderSub').textContent = t.selectConvSub;
+  document.getElementById('btnReply').textContent = t.envoyer;
+  document.getElementById('replyTa').placeholder = t.replyPlaceholder;
+  document.getElementById('modalTitle').textContent = t.modalTitle;
+  document.getElementById('modalLabelTalent').textContent = t.labelTalent;
+  document.getElementById('modalLabelObjet').textContent = t.labelObjet;
+  document.getElementById('modalLabelMessage').textContent = t.labelMessage;
+  document.getElementById('newObjet').placeholder = t.objetPlaceholder;
+  document.getElementById('newContenu').placeholder = t.messagePlaceholder;
+  document.getElementById('btnCancelModal').textContent = t.annuler;
+  document.getElementById('btnSendModal').textContent = t.envoyer2;
+  document.getElementById('btnDeco').textContent = t.deconnexion;
+  document.getElementById('mobileBack').textContent = t.retour;
+  document.getElementById('mbHome').textContent = t.accueil;
+  document.getElementById('mbCastings').textContent = t.castings;
+  document.getElementById('mbMessages').textContent = t.messages;
+  document.getElementById('mbAuth').textContent = t.monEspace;
+
+  // Re-render conversations
+  if (convs.length > 0) afficher(convs);
+  // Update sidebar nav
+  if (role) mettreAJourNav();
+}
+
+function tempsDepuis(dateStr) {
+  const t = T[currentLang];
+  const d = new Date(dateStr);
+  const dh = Math.round((Date.now()-d)/36e5);
+  if (dh < 1) return t.tempsInstant;
+  if (dh < 24) return currentLang === 'fr' ? dh+'h' : dh+'h ago';
+  if (dh < 48) return t.tempsHier;
+  return d.toLocaleDateString(currentLang === 'fr' ? 'fr-FR' : 'en-US', {day:'numeric', month:'short'});
+}
 
 function fermerConvMobile() { document.getElementById('convView').classList.remove('mobile-open'); }
 
@@ -215,6 +345,25 @@ async function post(url, body) {
   return fetch(SB+url, { method:'POST', headers:{'Content-Type':'application/json',apikey:KEY,Authorization:'Bearer '+token,Prefer:'return=minimal'}, body:JSON.stringify(body) });
 }
 
+function mettreAJourNav() {
+  const lang = currentLang;
+  const t = T[lang];
+  const nav = document.getElementById('sideNav');
+  if (role === 'recruteur') {
+    nav.innerHTML = `
+      <a href="/dashboard-recruteur" class="nav-item">${t.navDashboard}</a>
+      <a href="/messagerie" class="nav-item active">${t.navMessagerie}</a>
+      <a href="/" class="nav-item">${t.navTalents}</a>`;
+    document.getElementById('btnNew').style.display = 'block';
+  } else {
+    nav.innerHTML = `
+      <a href="/dashboard-talent" class="nav-item">${t.navDashboard}</a>
+      <a href="/messagerie" class="nav-item active">${t.navMessagerie}</a>
+      <a href="/castings" class="nav-item">${t.navCastings}</a>`;
+  }
+  document.getElementById('sideRole').textContent = role === 'recruteur' ? t.roleRecruteur : t.roleTalent;
+}
+
 async function init() {
   token = localStorage.getItem('showone_token');
   const us = localStorage.getItem('showone_user');
@@ -222,12 +371,9 @@ async function init() {
   const u = JSON.parse(us);
   role = u.type_compte || 'talent';
 
-  // ── FIX : afficher prénom + nom, pas l'email ──
   const nomAffiche = ((u.prenom||'') + ' ' + (u.nom||'')).trim();
   document.getElementById('sideNom').textContent = nomAffiche || 'Mon compte';
-  document.getElementById('sideRole').textContent = role === 'recruteur' ? 'Recruteur' : 'Talent';
 
-  // Initiales ou photo
   const initiales = ((u.prenom?.[0]||'') + (u.nom?.[0]||'')).toUpperCase() || '?';
   if (u.photo_url) {
     document.getElementById('sideAv').innerHTML = `<img src="${u.photo_url}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">`;
@@ -235,27 +381,11 @@ async function init() {
     document.getElementById('sideAv').textContent = initiales;
   }
 
-  // Barre mobile — lien "Mon espace"
-  const mbAuth = document.getElementById('mb-auth');
   const dest = role === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
-  mbAuth.href = dest;
+  document.getElementById('mb-auth').href = dest;
 
-  // Sidebar nav — FIX : "Talents" pointe vers / au lieu de /categories
-  const nav = document.getElementById('sideNav');
-  if (role === 'recruteur') {
-    nav.innerHTML = `
-      <a href="/dashboard-recruteur" class="nav-item">🏠 Tableau de bord</a>
-      <a href="/messagerie" class="nav-item active">💬 Messagerie</a>
-      <a href="/" class="nav-item">🔍 Talents</a>`;
-    document.getElementById('btnNew').style.display = 'block';
-  } else {
-    nav.innerHTML = `
-      <a href="/dashboard-talent" class="nav-item">🏠 Tableau de bord</a>
-      <a href="/messagerie" class="nav-item active">💬 Messagerie</a>
-      <a href="/castings" class="nav-item">🎬 Castings</a>`;
-  }
+  setLang(currentLang);
 
-  // Charger l'ID du profil
   if (role === 'recruteur') {
     const d = await get(`/rest/v1/profils_recruteurs?utilisateur_id=eq.${u.id}&select=id&limit=1`);
     profilId = d[0]?.id;
@@ -266,18 +396,18 @@ async function init() {
 
   await charger();
 
-  // Si on arrive depuis /messagerie?talent_id=xxx
   const p = new URLSearchParams(location.search);
   if (p.get('talent_id') && role === 'recruteur') ouvrirModal(p.get('talent_id'));
 }
 
 async function charger() {
   const el = document.getElementById('convItems');
-  el.innerHTML = '<div class="conv-empty">Chargement…</div>';
-  if (!profilId) { el.innerHTML = '<div class="conv-empty">Profil introuvable.</div>'; return; }
+  const t = T[currentLang];
+  el.innerHTML = `<div class="conv-empty">${t.chargement}</div>`;
+  if (!profilId) { el.innerHTML = `<div class="conv-empty">${t.profilIntrouvable}</div>`; return; }
   const filtre = role === 'talent' ? `talent_id=eq.${profilId}` : `recruteur_id=eq.${profilId}`;
   const msgs = await get(`/rest/v1/messages?${filtre}&select=id,recruteur_id,talent_id,objet,contenu,lu,created_at&order=created_at.desc`);
-  if (!msgs.length) { el.innerHTML = '<div class="conv-empty">Aucune conversation.</div>'; return; }
+  if (!msgs.length) { el.innerHTML = `<div class="conv-empty">${t.aucuneConv}</div>`; return; }
   const map = {};
   msgs.forEach(m => {
     if (!m.recruteur_id || !m.talent_id) return;
@@ -289,7 +419,6 @@ async function charger() {
   convs = Object.values(map).sort((a,b) => new Date(b.last.created_at) - new Date(a.last.created_at));
   afficher(convs);
 
-  // Charger les noms en parallèle
   for (const c of convs) {
     const autreId = role === 'talent' ? c.rId : c.tId;
     const table = role === 'talent' ? 'profils_recruteurs' : 'profils_talents';
@@ -298,17 +427,14 @@ async function charger() {
     if (d.length) {
       c.photo = d[0].photo_url;
       if (role === 'talent') {
-        // FIX : chercher nom_societe (pas nom_entreprise qui n'existe pas)
         if (d[0].nom_societe) {
           c.nom = d[0].nom_societe;
         } else if (d[0].utilisateur_id) {
           const u2 = await get(`/rest/v1/utilisateurs?id=eq.${d[0].utilisateur_id}&select=prenom,nom&limit=1`);
-          c.nom = u2.length ? ((u2[0].prenom||'')+' '+(u2[0].nom||'')).trim() || 'Recruteur' : 'Recruteur';
-        } else {
-          c.nom = 'Recruteur';
-        }
+          c.nom = u2.length ? ((u2[0].prenom||'')+' '+(u2[0].nom||'')).trim() || T[currentLang].roleRecruteur : T[currentLang].roleRecruteur;
+        } else { c.nom = T[currentLang].roleRecruteur; }
       } else {
-        c.nom = d[0].nom_scene || 'Talent';
+        c.nom = d[0].nom_scene || T[currentLang].roleTalent;
       }
     }
     afficher(convs);
@@ -317,16 +443,15 @@ async function charger() {
 
 function afficher(liste) {
   const el = document.getElementById('convItems');
-  if (!liste.length) { el.innerHTML = '<div class="conv-empty">Aucune conversation.</div>'; return; }
+  const t = T[currentLang];
+  if (!liste.length) { el.innerHTML = `<div class="conv-empty">${t.aucuneConv}</div>`; return; }
   el.innerHTML = liste.map(c => {
     const ini = (c.nom[0]||'?').toUpperCase();
-    const d = new Date(c.last.created_at);
-    const dh = Math.round((Date.now()-d)/36e5);
-    const t = dh<1 ? "À l'instant" : dh<24 ? dh+'h' : dh<48 ? 'Hier' : d.toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
+    const temps = tempsDepuis(c.last.created_at);
     return `<div class="conv-item ${convActive===c.k?'active':''}" data-k="${c.k}" data-r="${c.rId}" data-t="${c.tId}" onclick="ouvrir(this)">
       <div class="conv-avatar">${c.photo ? `<img src="${c.photo}">` : ini}</div>
       <div class="conv-info">
-        <div class="conv-top"><div class="conv-name">${c.nom}</div><div class="conv-time">${t}</div></div>
+        <div class="conv-top"><div class="conv-name">${c.nom}</div><div class="conv-time">${temps}</div></div>
         <div class="conv-preview">${c.last.objet ? c.last.objet+' — ' : ''}${c.last.contenu}</div>
       </div>
       ${c.unread ? '<div class="conv-dot"></div>' : ''}
@@ -341,8 +466,9 @@ async function ouvrir(el) {
   const rId = el.dataset.r, tId = el.dataset.t, k = el.dataset.k;
   convActive = k;
   const c = convs.find(x => x.k === k);
-  document.getElementById('hNom').textContent = c?.nom || (role==='talent' ? 'Recruteur' : 'Talent');
-  document.getElementById('hSub').textContent = role==='talent' ? 'Recruteur' : 'Talent ShowOne';
+  const t = T[currentLang];
+  document.getElementById('hNom').textContent = c?.nom || (role==='talent' ? t.roleRecruteur : t.roleTalent);
+  document.getElementById('hSub').textContent = role==='talent' ? t.roleSubRecruteur : t.roleSubTalent;
   const hAv = document.getElementById('hAv');
   hAv.innerHTML = c?.photo ? `<img src="${c.photo}" style="width:40px;height:40px;object-fit:cover;">` : (c?.nom?.[0]||'?').toUpperCase();
   document.querySelectorAll('.conv-item').forEach(x => x.classList.toggle('active', x.dataset.k===k));
@@ -353,16 +479,17 @@ async function ouvrir(el) {
   }
   const area = document.getElementById('msgArea');
   area.innerHTML = ''; let lastDate = null;
+  const locale = currentLang === 'fr' ? 'fr-FR' : 'en-US';
   thread.forEach(m => {
     const d = new Date(m.created_at);
-    const ds = d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+    const ds = d.toLocaleDateString(locale, {weekday:'long', day:'numeric', month:'long'});
     if (ds !== lastDate) { area.innerHTML += `<div class="msg-date">${ds}</div>`; lastDate = ds; }
-    const isSent = role === 'recruteur'; // recruteur = envoyé, talent = reçu (dans ce sens)
-    const t = d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+    const isSent = role === 'recruteur';
+    const time = d.toLocaleTimeString(locale, {hour:'2-digit', minute:'2-digit'});
     const objetHtml = m.objet && !m.objet.startsWith('RE:') ? `<div class="msg-objet">📌 ${m.objet}</div>` : '';
     area.innerHTML += `<div class="msg-wrap ${isSent?'sent':''}">
       <div class="msg-av">${isSent ? 'R' : 'T'}</div>
-      <div class="msg-bubble ${isSent?'sent':'recv'}">${objetHtml}${m.contenu}<div class="msg-time">${t}</div></div>
+      <div class="msg-bubble ${isSent?'sent':'recv'}">${objetHtml}${m.contenu}<div class="msg-time">${time}</div></div>
     </div>`;
   });
   area.scrollTop = area.scrollHeight;
@@ -396,7 +523,8 @@ async function ouvrirModal(preId) {
   document.getElementById('modalOv').classList.add('open');
   const d = await get('/rest/v1/profils_talents?select=id,nom_scene&order=nom_scene.asc');
   const sel = document.getElementById('selTalent');
-  sel.innerHTML = '<option value="">Choisir un talent…</option>' + d.map(t => `<option value="${t.id}" ${t.id===preId?'selected':''}>${t.nom_scene||'Talent'}</option>`).join('');
+  const t = T[currentLang];
+  sel.innerHTML = `<option value="">${t.selTalentDefault}</option>` + d.map(talent => `<option value="${talent.id}" ${talent.id===preId?'selected':''}>${talent.nom_scene||'Talent'}</option>`).join('');
 }
 function fermerModal() { document.getElementById('modalOv').classList.remove('open'); }
 
@@ -404,7 +532,7 @@ async function envoyerNouveauMsg() {
   const tId = document.getElementById('selTalent').value;
   const objet = document.getElementById('newObjet').value.trim() || 'Message';
   const contenu = document.getElementById('newContenu').value.trim();
-  if (!tId || !contenu) { alert('Remplissez tous les champs.'); return; }
+  if (!tId || !contenu) { alert(T[currentLang].remplisTout); return; }
   await post('/rest/v1/messages', {recruteur_id:profilId, talent_id:tId, objet, contenu, lu:false});
   fermerModal();
   document.getElementById('newObjet').value = '';
