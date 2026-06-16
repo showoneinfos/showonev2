@@ -12,9 +12,6 @@
     html, body { height: 100%; }
     body { font-family: 'Inter', sans-serif; background: #fff; color: #111; }
 
-    /* ── MOBILE FIRST ── */
-
-    /* Barre nav top mobile */
     .top-nav {
       position: sticky; top: 0; z-index: 100;
       background: #fff; border-bottom: 1px solid #f0f0f0;
@@ -29,7 +26,18 @@
     .top-btn-fill { background: #E8383A; color: #fff; }
     #topUserBtn { display: none; padding: 7px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; background: #111; color: #fff; border: none; cursor: pointer; text-decoration: none; }
 
-    /* Filtres catégories */
+    /* Switch langue mobile */
+    .lang-switch {
+      display: flex; align-items: center; gap: 2px;
+      background: #f5f5f5; border-radius: 100px; padding: 3px;
+    }
+    .lang-btn {
+      padding: 4px 9px; border-radius: 100px; border: none;
+      cursor: pointer; font-size: 12px; font-weight: 700;
+      background: transparent; color: #888; transition: all 0.15s;
+    }
+    .lang-btn.active { background: #fff; color: #111; box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+
     .cats {
       display: flex; gap: 6px; padding: 10px 12px;
       overflow-x: auto; scrollbar-width: none;
@@ -42,13 +50,10 @@
       font-size: 12px; font-weight: 600; white-space: nowrap;
       border: 1.5px solid #e8e8e8; color: #888;
       cursor: pointer; background: #fff; flex-shrink: 0;
-      transition: all 0.15s;
-      /* Zone de tap plus grande */
-      min-height: 34px; display: flex; align-items: center;
+      transition: all 0.15s; min-height: 34px; display: flex; align-items: center;
     }
     .chip.active { background: #111; border-color: #111; color: #fff; }
 
-    /* Sous-filtres */
     .sous-cats {
       display: none; gap: 6px; padding: 8px 12px 10px;
       overflow-x: auto; scrollbar-width: none;
@@ -66,15 +71,12 @@
     }
     .sous-chip.active { background: #E8383A; border-color: #E8383A; color: #fff; }
 
-    /* Section header */
     .sec-head { padding: 12px 12px 8px; display: flex; align-items: baseline; gap: 8px; }
     .sec-title { font-size: 15px; font-weight: 900; color: #111; }
     .sec-count { font-size: 12px; color: #bbb; }
 
-    /* Grille — 2 colonnes sur mobile */
     .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; padding: 0 0 2px; }
 
-    /* Card talent */
     .tcard { position: relative; aspect-ratio: 3/4; overflow: hidden; cursor: pointer; background: #f0f0f0; }
     .tcard img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .tcard-bg { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 28px; color: rgba(0,0,0,0.1); font-weight: 900; background: #f5f5f5; }
@@ -83,7 +85,6 @@
     .tcard-info { position: absolute; bottom: 0; left: 0; right: 0; }
     .tcard-name { font-size: 13px; font-weight: 700; color: #fff; padding: 0 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .tcard-cat { font-size: 10px; color: rgba(255,255,255,0.7); padding: 2px 8px 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    /* Bouton Contacter — grande zone de tap */
     .tcard-btn {
       display: block; width: 100%; padding: 10px;
       background: #E8383A; color: #fff; border: none;
@@ -91,10 +92,8 @@
       text-align: center; letter-spacing: 0.2px;
     }
 
-    /* Section castings */
     .sec-sep { height: 8px; background: #f5f5f5; margin: 8px 0 0; }
 
-    /* Card casting */
     .ccard { background: #fff; border-radius: 0; overflow: hidden; border-bottom: 1px solid #f0f0f0; display: flex; gap: 12px; padding: 12px; cursor: pointer; align-items: flex-start; }
     .ccard-thumb { width: 70px; height: 90px; border-radius: 8px; overflow: hidden; flex-shrink: 0; background: #f5f5f5; }
     .ccard-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -108,24 +107,9 @@
     .loading { grid-column: 1/-1; text-align: center; padding: 40px; color: #bbb; font-size: 13px; }
     .loading-list { text-align: center; padding: 30px; color: #bbb; font-size: 13px; }
 
-    /* Modal vidéo plein écran */
-    .modal-ov {
-      display: none; position: fixed; inset: 0;
-      background: #000; z-index: 1000;
-    }
+    .modal-ov { display: none; position: fixed; inset: 0; background: #000; z-index: 1000; }
     .modal-ov.open { display: block; }
-    .modal-close {
-      position: absolute; top: 14px; right: 14px;
-      width: 36px; height: 36px; border-radius: 50%;
-      background: rgba(255,255,255,0.25); border: none;
-      color: #fff; font-size: 18px; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      z-index: 10; backdrop-filter: blur(4px);
-    }
-    .modal-vid {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: contain; display: block;
-    }
+    .modal-vid { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
     .modal-info {
       position: absolute; bottom: 0; left: 0; right: 0;
       padding: 20px 16px 28px;
@@ -136,11 +120,16 @@
     .modal-btn {
       display: block; width: 100%; padding: 14px;
       border-radius: 10px; background: #E8383A; color: #fff;
-      border: none; font-size: 14px; font-weight: 700; cursor: pointer;
-      text-align: center;
+      border: none; font-size: 14px; font-weight: 700; cursor: pointer; text-align: center;
+    }
+    .modal-tap {
+      position: absolute; top: 16px; left: 50%; transform: translateX(-50%);
+      background: rgba(0,0,0,0.6); border: 1.5px solid rgba(255,255,255,0.25);
+      color: #fff; font-size: 13px; font-weight: 700;
+      padding: 8px 20px; border-radius: 100px; z-index: 20;
+      white-space: nowrap; pointer-events: none;
     }
 
-    /* Barre mobile */
     .mobile-bar {
       position: fixed; bottom: 0; left: 0; right: 0;
       background: #fff; border-top: 1px solid #f0f0f0;
@@ -165,42 +154,24 @@
       gap: 2px; text-decoration: none;
     }
 
-    /* Padding bas pour la barre mobile */
     .page-wrap { padding-bottom: 72px; }
 
-    /* Hint scroll catégories — mobile seulement */
     .scroll-hint {
       display: flex; align-items: center; justify-content: center; gap: 6px;
       padding: 7px 12px 8px; background: #111;
-      font-size: 12px; font-weight: 700; color: #fff;
-      letter-spacing: 0.2px;
+      font-size: 12px; font-weight: 700; color: #fff; letter-spacing: 0.2px;
     }
-    .scroll-hint-arrow { animation: slideArrow 0.8s ease-in-out infinite; display:inline-block; }
+    .scroll-hint-arrow { animation: slideArrow 0.8s ease-in-out infinite; display: inline-block; }
     @keyframes slideArrow { 0%,100%{transform:translateX(0)} 50%{transform:translateX(6px)} }
     @media (min-width:769px) { .scroll-hint { display:none; } }
 
-    /* Tapotement modal — hint visible en haut */
-    .modal-tap {
-      position: absolute; top: 16px; left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.6);
-      border: 1.5px solid rgba(255,255,255,0.25);
-      color: #fff; font-size: 13px; font-weight: 700;
-      padding: 8px 20px; border-radius: 100px;
-      z-index: 20; white-space: nowrap;
-      pointer-events: none;
-    }
-
-    /* ── DESKTOP (sidebar) ── */
     @media (min-width: 769px) {
       body { display: flex; }
-
       .top-nav { display: none; }
       .mobile-bar { display: none; }
 
       .sidebar {
-        display: flex;
-        width: 240px; height: 100vh;
+        display: flex; width: 240px; height: 100vh;
         position: fixed; left: 0; top: 0;
         background: #fff; border-right: 1px solid #ececec;
         flex-direction: column; padding: 20px 14px; z-index: 50;
@@ -217,16 +188,16 @@
       .s-conn { display: block; width: 100%; padding: 10px; border-radius: 8px; background: transparent; color: #111; border: 1.5px solid #e0e0e0; font-size: 13px; font-weight: 600; cursor: pointer; text-align: center; text-decoration: none; }
       .s-copy { font-size: 11px; color: #ccc; }
 
+      /* Switch langue desktop sidebar */
+      .s-lang { display: flex; gap: 4px; margin-bottom: 4px; }
+      .s-lang-btn { flex: 1; padding: 7px; border-radius: 7px; border: 1.5px solid #e0e0e0; font-size: 12px; font-weight: 700; cursor: pointer; background: #fff; color: #888; text-align: center; transition: all 0.15s; }
+      .s-lang-btn.active { background: #111; border-color: #111; color: #fff; }
+
       .page-main { margin-left: 240px; flex: 1; }
       .page-wrap { padding-bottom: 0; }
-
       .cats { top: 0; }
       .sous-cats { top: 48px; }
-
-      /* Desktop : 4 colonnes */
       .grid { grid-template-columns: repeat(4, 1fr); }
-
-      /* Castings desktop : grille aussi */
       .castings-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; padding: 0 14px 32px; }
       .ccard { border-radius: 10px; border: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; flex-direction: column; gap: 0; padding: 0; }
       .ccard-thumb { width: 100%; height: 160px; border-radius: 0; }
@@ -236,29 +207,34 @@
 </head>
 <body>
 
-<!-- SIDEBAR DESKTOP UNIQUEMENT -->
+<!-- SIDEBAR DESKTOP -->
 <div class="sidebar" style="display:none;" id="sidebar">
   <a href="/" class="s-logo">Show<span>One</span></a>
   <nav class="s-nav">
-    <a href="/" class="s-item active">🏠 Accueil</a>
-    <a href="/castings" class="s-item">🎬 Castings</a>
-    <a href="/messagerie" class="s-item">💬 Messages</a>
+    <a href="/" class="s-item active" data-fr="🏠 Accueil" data-en="🏠 Home">🏠 Accueil</a>
+    <a href="/castings" class="s-item" data-fr="🎬 Castings" data-en="🎬 Castings">🎬 Castings</a>
+    <a href="/messagerie" class="s-item" data-fr="💬 Messages" data-en="💬 Messages">💬 Messages</a>
     <div class="s-sep"></div>
-    <a href="/inscription" class="s-item">Talents — S'inscrire gratuitement</a>
-    <a href="/inscription?type=recruteur" class="s-item">Recruteurs — Déposer votre agence</a>
+    <a href="/inscription" class="s-item" data-fr="Talents — S'inscrire gratuitement" data-en="Talents — Sign up for free">Talents — S'inscrire gratuitement</a>
+    <a href="/inscription?type=recruteur" class="s-item" data-fr="Recruteurs — Déposer votre agence" data-en="Recruiters — List your agency">Recruteurs — Déposer votre agence</a>
     <div class="s-sep"></div>
-    <a href="/qui-sommes-nous" class="s-item">ℹ️ Qui sommes-nous</a>
-    <a href="/contact" class="s-item">📩 Nous contacter</a>
-    <a href="/legal" class="s-item">📄 CGU</a>
-    <a href="#" class="s-item" id="sDashboard" style="display:none">👤 Mon espace</a>
-    <a href="#" class="s-item" onclick="seDeconnecter()" id="sDeco" style="display:none;color:#E8383A;">🚪 Déconnexion</a>
+    <a href="/qui-sommes-nous" class="s-item" data-fr="ℹ️ Qui sommes-nous" data-en="ℹ️ About us">ℹ️ Qui sommes-nous</a>
+    <a href="/contact" class="s-item" data-fr="📩 Nous contacter" data-en="📩 Contact us">📩 Nous contacter</a>
+    <a href="/legal" class="s-item" data-fr="📄 CGU" data-en="📄 Terms of Use">📄 CGU</a>
+    <a href="#" class="s-item" id="sDashboard" style="display:none" data-fr="👤 Mon espace" data-en="👤 My dashboard">👤 Mon espace</a>
+    <a href="#" class="s-item" onclick="seDeconnecter()" id="sDeco" style="display:none;color:#E8383A;" data-fr="🚪 Déconnexion" data-en="🚪 Log out">🚪 Déconnexion</a>
   </nav>
   <div class="s-bottom">
-    <div id="sAuth">
-      <a href="/inscription" class="s-join">S'inscrire gratuitement</a>
-      <a href="/connexion" class="s-conn" style="margin-top:6px;display:block;">Connexion</a>
+    <!-- Switch langue sidebar desktop -->
+    <div class="s-lang">
+      <button class="s-lang-btn active" onclick="setLang('fr')">🇫🇷 FR</button>
+      <button class="s-lang-btn" onclick="setLang('en')">🇺🇸 EN</button>
     </div>
-    <div id="sUser" style="display:none;font-size:13px;font-weight:700;color:#111;" id="sUserName"></div>
+    <div id="sAuth">
+      <a href="/inscription" class="s-join" data-fr="S'inscrire gratuitement" data-en="Sign up for free">S'inscrire gratuitement</a>
+      <a href="/connexion" class="s-conn" style="margin-top:6px;display:block;" data-fr="Connexion" data-en="Log in">Connexion</a>
+    </div>
+    <div id="sUser" style="display:none;font-size:13px;font-weight:700;color:#111;"></div>
     <span class="s-copy">© 2025 ShowOne</span>
   </div>
 </div>
@@ -270,30 +246,35 @@
   <div class="top-nav">
     <a href="/" class="top-logo">Show<span>One</span></a>
     <div class="top-actions">
-      <a href="#" id="topUserBtn" class="top-btn">Mon espace</a>
-      <a href="/connexion" class="top-btn top-btn-outline" id="topConnBtn">Connexion</a>
-      <a href="/inscription" class="top-btn top-btn-fill" id="topInscBtn">S'inscrire</a>
+      <!-- Switch langue mobile -->
+      <div class="lang-switch">
+        <button class="lang-btn active" onclick="setLang('fr')">🇫🇷</button>
+        <button class="lang-btn" onclick="setLang('en')">🇺🇸</button>
+      </div>
+      <a href="#" id="topUserBtn" class="top-btn" data-fr="Mon espace" data-en="Dashboard">Mon espace</a>
+      <a href="/connexion" class="top-btn top-btn-outline" id="topConnBtn" data-fr="Connexion" data-en="Log in">Connexion</a>
+      <a href="/inscription" class="top-btn top-btn-fill" id="topInscBtn" data-fr="S'inscrire" data-en="Sign up">S'inscrire</a>
     </div>
   </div>
 
-  <!-- FILTRES -->
+  <!-- FILTRES CATEGORIES -->
   <div class="cats" id="catsBar">
-    <div class="chip active" onclick="filtrerCat(this,'')">Tous</div>
-    <div class="chip" onclick="filtrerCat(this,'acting')">🎬 Acting</div>
-    <div class="chip" onclick="filtrerCat(this,'musique')">🎤 Musique</div>
-    <div class="chip" onclick="filtrerCat(this,'danse')">💃 Danse</div>
-    <div class="chip" onclick="filtrerCat(this,'sport')">⚽ Sport</div>
-    <div class="chip" onclick="filtrerCat(this,'createurs')">📱 Créateurs</div>
-    <div class="chip" onclick="filtrerCat(this,'mode')">👗 Mode</div>
-    <div class="chip" onclick="filtrerCat(this,'art')">🎨 Art</div>
-    <div class="chip" onclick="filtrerCat(this,'talents')">✨ Talents</div>
-    <div class="chip" onclick="filtrerCat(this,'animaux')">🐾 Animaux</div>
-    <div class="chip" onclick="filtrerCat(this,'pro')">🎙️ Animateur</div>
+    <div class="chip active" onclick="filtrerCat(this,'')" data-fr="Tous" data-en="All">Tous</div>
+    <div class="chip" onclick="filtrerCat(this,'acting')" data-fr="🎬 Acting" data-en="🎬 Acting">🎬 Acting</div>
+    <div class="chip" onclick="filtrerCat(this,'musique')" data-fr="🎤 Musique" data-en="🎤 Music">🎤 Musique</div>
+    <div class="chip" onclick="filtrerCat(this,'danse')" data-fr="💃 Danse" data-en="💃 Dance">💃 Danse</div>
+    <div class="chip" onclick="filtrerCat(this,'sport')" data-fr="⚽ Sport" data-en="⚽ Sport">⚽ Sport</div>
+    <div class="chip" onclick="filtrerCat(this,'createurs')" data-fr="📱 Créateurs" data-en="📱 Creators">📱 Créateurs</div>
+    <div class="chip" onclick="filtrerCat(this,'mode')" data-fr="👗 Mode" data-en="👗 Fashion">👗 Mode</div>
+    <div class="chip" onclick="filtrerCat(this,'art')" data-fr="🎨 Art" data-en="🎨 Art">🎨 Art</div>
+    <div class="chip" onclick="filtrerCat(this,'talents')" data-fr="✨ Talents" data-en="✨ Talents">✨ Talents</div>
+    <div class="chip" onclick="filtrerCat(this,'animaux')" data-fr="🐾 Animaux" data-en="🐾 Animals">🐾 Animaux</div>
+    <div class="chip" onclick="filtrerCat(this,'pro')" data-fr="🎙️ Animateur" data-en="🎙️ Host / MC">🎙️ Animateur</div>
   </div>
-  <!-- Hint glisser — disparaît après 1er scroll -->
+
   <div class="scroll-hint" id="scrollHint">
     <span class="scroll-hint-arrow">👉</span>
-    <span>Glissez pour voir toutes les catégories</span>
+    <span id="scrollHintText" data-fr="Glissez pour voir toutes les catégories" data-en="Swipe to see all categories">Glissez pour voir toutes les catégories</span>
   </div>
 
   <!-- SOUS-FILTRES -->
@@ -301,48 +282,51 @@
 
   <div class="page-wrap">
     <div class="sec-head">
-      <div class="sec-title">Talents</div>
+      <div class="sec-title" data-fr="Talents" data-en="Talents">Talents</div>
       <div class="sec-count" id="cntTalents"></div>
     </div>
     <div class="grid" id="gridTalents">
-      <div class="loading">Chargement…</div>
+      <div class="loading" data-fr="Chargement…" data-en="Loading…">Chargement…</div>
     </div>
 
     <div class="sec-sep"></div>
 
     <div class="sec-head">
-      <div class="sec-title">Castings recruteurs</div>
+      <div class="sec-title" data-fr="Castings recruteurs" data-en="Recruiter Castings">Castings recruteurs</div>
       <div class="sec-count" id="cntCastings"></div>
     </div>
     <div class="castings-list" id="castingsList">
-      <div class="loading-list">Chargement…</div>
+      <div class="loading-list" data-fr="Chargement…" data-en="Loading…">Chargement…</div>
     </div>
   </div>
 </div>
 
-<!-- MODAL VIDÉO -->
+<!-- MODAL VIDEO -->
 <div class="modal-ov" id="modal" onclick="fermerModalDirect()">
-  <div class="modal-tap">👆 Tapotez pour fermer</div>
+  <div class="modal-tap" id="modalTap" data-fr="👆 Tapotez pour fermer" data-en="👆 Tap to close">👆 Tapotez pour fermer</div>
   <video id="modalVid" controls playsinline class="modal-vid"></video>
   <div class="modal-info" onclick="event.stopPropagation()">
     <div class="modal-name" id="modalName"></div>
     <div class="modal-cat" id="modalCat"></div>
-    <button class="modal-btn" id="modalBtn">✉ Contacter</button>
+    <button class="modal-btn" id="modalBtn"></button>
   </div>
 </div>
 
 <!-- BARRE MOBILE -->
 <div class="mobile-bar" id="mobileBar">
   <a href="/" class="mb-btn active">
-    <span class="mb-ico">🏠</span><span class="mb-lbl">Accueil</span>
+    <span class="mb-ico">🏠</span>
+    <span class="mb-lbl" data-fr="Accueil" data-en="Home">Accueil</span>
   </a>
   <a href="/castings" class="mb-btn">
-    <span class="mb-ico">🎬</span><span class="mb-lbl">Castings</span>
+    <span class="mb-ico">🎬</span>
+    <span class="mb-lbl" data-fr="Castings" data-en="Castings">Castings</span>
   </a>
   <a href="/connexion" class="mb-btn" id="mb-conn">
-    <span class="mb-ico">🔑</span><span class="mb-lbl">Connexion</span>
+    <span class="mb-ico">🔑</span>
+    <span class="mb-lbl" data-fr="Connexion" data-en="Log in">Connexion</span>
   </a>
-  <a href="/inscription" class="mb-join" id="mb-auth">
+  <a href="/inscription" class="mb-join" id="mb-auth" data-fr="S'inscrire" data-en="Sign up">
     S'inscrire
   </a>
 </div>
@@ -352,29 +336,123 @@ const SB_URL = 'https://emiuzigtlomlrsofxqyf.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtaXV6aWd0bG9tbHJzb2Z4cXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MDI4NTcsImV4cCI6MjA5MzQ3ODg1N30.Cwe-Z1vNGc-puz8jEnHdMMCwllNbl9fRAdwLe5zWyIY';
 const sb = supabase.createClient(SB_URL, SB_KEY);
 let allTalents = [], _hls = null, catActive = '', sousCatActive = '';
+let currentLang = localStorage.getItem('showone_lang') || 'fr';
+
+// ── TOUTES LES TRADUCTIONS ──
+const T = {
+  fr: {
+    contact: '✉ Contacter',
+    contactTalent: '✉ Contacter ce talent',
+    voirCasting: '→ Voir le casting complet',
+    noTalent: 'Aucun talent ici.',
+    noCasting: 'Aucun casting.',
+    erreur: 'Erreur de chargement.',
+    talent: 'talent', talents: 'talents',
+    casting: 'casting', castings: 'castings',
+    par: 'Par ',
+    seulRecruteur: 'Seuls les recruteurs peuvent contacter les talents directement.',
+    voirBtn: 'Voir le casting →',
+    loading: 'Chargement…',
+    pageTitle: 'ShowOne — La plateforme des talents',
+  },
+  en: {
+    contact: '✉ Contact',
+    contactTalent: '✉ Contact this talent',
+    voirCasting: '→ View full casting',
+    noTalent: 'No talents here.',
+    noCasting: 'No castings available.',
+    erreur: 'Loading error.',
+    talent: 'talent', talents: 'talents',
+    casting: 'casting', castings: 'castings',
+    par: 'By ',
+    seulRecruteur: 'Only recruiters can contact talents directly.',
+    voirBtn: 'View casting →',
+    loading: 'Loading…',
+    pageTitle: 'ShowOne — The talent platform',
+  }
+};
 
 const catLabels = {
-  acting:'🎬 Acting / Cinéma', musique:'🎤 Musique / Chant', danse:'💃 Danse',
-  sport:'⚽ Sport', createurs:'📱 Créateurs', mode:'👗 Mode / Mannequinat',
-  art:'🎨 Art & Création', talents:'✨ Performances & Talents',
-  animaux:'🐾 Animaux', pro:'🎙️ Animateur / TV'
+  fr: {
+    acting:'🎬 Acting / Cinéma', musique:'🎤 Musique / Chant', danse:'💃 Danse',
+    sport:'⚽ Sport', createurs:'📱 Créateurs', mode:'👗 Mode / Mannequinat',
+    art:'🎨 Art & Création', talents:'✨ Performances & Talents',
+    animaux:'🐾 Animaux', pro:'🎙️ Animateur / TV'
+  },
+  en: {
+    acting:'🎬 Acting / Film', musique:'🎤 Music / Singing', danse:'💃 Dance',
+    sport:'⚽ Sport', createurs:'📱 Creators', mode:'👗 Fashion / Modeling',
+    art:'🎨 Art & Creation', talents:'✨ Performances & Talents',
+    animaux:'🐾 Animals', pro:'🎙️ Host / TV'
+  }
 };
 
 const sousCatsDef = {
-  acting:['Acteur cinéma','Acteur série TV','Acteur publicité','Figuration','Voix off / Doublage','Acteur théâtre','Comédie musicale'],
-  musique:['Chanteur solo','Rap / Hip-hop','Pop','Rock','R&B / Soul','Jazz / Blues','Électro / DJ','Groupe / Band','Compositeur','Musicien','Pianiste','Guitariste','Violoniste','Batteur'],
-  danse:['Hip-hop / Urbaine','Contemporaine','Classique / Ballet','Latino','Orientale','Africaine','Claquettes','Popping / Locking','Break dance','Chorégraphe'],
-  sport:['Football','Basketball','Tennis','Sports de combat','Fitness / Coaching','Freestyle','Skateboard','Sports extrêmes','Natation','Athlétisme','Rugby','Escalade','Équitation'],
-  createurs:['YouTuber','TikToker','Instagrameur','Streamer / Gaming','Lifestyle','Humour / Sketchs','Vlogger','Podcaster','Beauté / Mode','Food'],
-  mode:['Mannequin femme','Mannequin homme','Mannequin enfant','Curvy femme','Curvy homme','Défilé','Modèle fitness','Modèle pub','Lingerie','Beauté / Cosmétique'],
-  art:['Dessin / Illustration','Peinture','Sculpture','Photographie','Vidéaste','Monteur vidéo','Street art','Calligraphie','Art numérique'],
-  talents:['Magicien','Humoriste / Stand-up','Imitateur','Acrobate','Cascadeur','Cracheur de feu','Jongleur','Mime','Beatboxer','Artiste de rue'],
-  animaux:['Chien dressé','Chat','Cheval','Perroquet / Oiseaux','Animaux exotiques','Dresseur','Animal acteur'],
-  pro:['Animateur TV / Radio','Présentateur événements','MC / Maître de cérémonie','Coach vocal','Coach artistique','Directeur artistique','Maquilleur','Coiffeur styliste','Chef cuisinier','Barman / Flair']
+  fr: {
+    acting:['Acteur cinéma','Acteur série TV','Acteur publicité','Figuration','Voix off / Doublage','Acteur théâtre','Comédie musicale'],
+    musique:['Chanteur solo','Rap / Hip-hop','Pop','Rock','R&B / Soul','Jazz / Blues','Électro / DJ','Groupe / Band','Compositeur','Musicien','Pianiste','Guitariste','Violoniste','Batteur'],
+    danse:['Hip-hop / Urbaine','Contemporaine','Classique / Ballet','Latino','Orientale','Africaine','Claquettes','Popping / Locking','Break dance','Chorégraphe'],
+    sport:['Football','Basketball','Tennis','Sports de combat','Fitness / Coaching','Freestyle','Skateboard','Sports extrêmes','Natation','Athlétisme','Rugby','Escalade','Équitation'],
+    createurs:['YouTuber','TikToker','Instagrameur','Streamer / Gaming','Lifestyle','Humour / Sketchs','Vlogger','Podcaster','Beauté / Mode','Food'],
+    mode:['Mannequin femme','Mannequin homme','Mannequin enfant','Curvy femme','Curvy homme','Défilé','Modèle fitness','Modèle pub','Lingerie','Beauté / Cosmétique'],
+    art:['Dessin / Illustration','Peinture','Sculpture','Photographie','Vidéaste','Monteur vidéo','Street art','Calligraphie','Art numérique'],
+    talents:['Magicien','Humoriste / Stand-up','Imitateur','Acrobate','Cascadeur','Cracheur de feu','Jongleur','Mime','Beatboxer','Artiste de rue'],
+    animaux:['Chien dressé','Chat','Cheval','Perroquet / Oiseaux','Animaux exotiques','Dresseur','Animal acteur'],
+    pro:['Animateur TV / Radio','Présentateur événements','MC / Maître de cérémonie','Coach vocal','Coach artistique','Directeur artistique','Maquilleur','Coiffeur styliste','Chef cuisinier','Barman / Flair']
+  },
+  en: {
+    acting:['Film actor','TV series actor','Commercial actor','Extra / Background','Voice over / Dubbing','Theater actor','Musical theater'],
+    musique:['Solo singer','Rap / Hip-hop','Pop','Rock','R&B / Soul','Jazz / Blues','Electronic / DJ','Band / Group','Composer','Musician','Pianist','Guitarist','Violinist','Drummer'],
+    danse:['Hip-hop / Urban','Contemporary','Classical / Ballet','Latino','Oriental','African','Tap dance','Popping / Locking','Break dance','Choreographer'],
+    sport:['Football / Soccer','Basketball','Tennis','Combat sports','Fitness / Coaching','Freestyle','Skateboard','Extreme sports','Swimming','Athletics','Rugby','Climbing','Equestrian'],
+    createurs:['YouTuber','TikToker','Instagrammer','Streamer / Gaming','Lifestyle','Comedy / Sketches','Vlogger','Podcaster','Beauty / Fashion','Food'],
+    mode:['Female model','Male model','Child model','Plus-size female','Plus-size male','Runway','Fitness model','Ad model','Lingerie','Beauty / Cosmetics'],
+    art:['Drawing / Illustration','Painting','Sculpture','Photography','Videographer','Video editor','Street art','Calligraphy','Digital art'],
+    talents:['Magician','Stand-up comedian','Impressionist','Acrobat','Stuntman','Fire breather','Juggler','Mime','Beatboxer','Street performer'],
+    animaux:['Trained dog','Cat','Horse','Parrot / Birds','Exotic animals','Animal trainer','Acting animal'],
+    pro:['TV / Radio host','Event presenter','MC / Master of ceremonies','Vocal coach','Artistic coach','Artistic director','Makeup artist','Hair stylist','Chef','Bartender / Flair']
+  }
 };
 
+// ── SWITCH LANGUE ──
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('showone_lang', lang);
+  document.documentElement.lang = lang;
+  document.title = T[lang].pageTitle;
+
+  // Mettre à jour tous les éléments data-fr / data-en
+  document.querySelectorAll('[data-fr]').forEach(el => {
+    const val = el.getAttribute('data-' + lang);
+    if (val !== null) el.textContent = val;
+  });
+
+  // Boutons langue actif/inactif
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick').includes("'" + lang + "'"));
+  });
+  document.querySelectorAll('.s-lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick').includes("'" + lang + "'"));
+  });
+
+  // Rafraîchir contenu dynamique
+  afficherTalents(filtrer());
+  chargerCastings();
+
+  // Rafraîchir sous-catégories si ouvertes
+  const bar = document.getElementById('sousCatsBar');
+  if (bar.classList.contains('visible') && catActive) {
+    const defs = sousCatsDef[lang][catActive] || [];
+    bar.innerHTML = defs.map(s =>
+      `<div class="sous-chip${sousCatActive.toLowerCase()===s.toLowerCase()?' active':''}" onclick="filtrerSousCat(this,'${s.replace(/'/g,"\\'")}')"">${s}</div>`
+    ).join('');
+  }
+}
+
+// ── INIT ──
 async function init() {
-  // Desktop sidebar
+  setLang(currentLang);
+
   if (window.innerWidth >= 769) {
     document.getElementById('sidebar').style.display = 'flex';
   }
@@ -387,20 +465,18 @@ async function init() {
       const type = u.type_compte || 'talent';
       const dest = type === 'recruteur' ? '/dashboard-recruteur' : '/dashboard-talent';
 
-      // Mobile top nav
       document.getElementById('topConnBtn').style.display = 'none';
       document.getElementById('topInscBtn').style.display = 'none';
       const ub = document.getElementById('topUserBtn');
       ub.style.display = 'block'; ub.href = dest;
       ub.textContent = prenom + ' 👤';
 
-      // Barre mobile
       const mbAuth = document.getElementById('mb-auth');
-      mbAuth.href = dest; mbAuth.textContent = '👤 Mon espace';
+      mbAuth.href = dest;
+      mbAuth.textContent = currentLang === 'en' ? '👤 Dashboard' : '👤 Mon espace';
       mbAuth.style.background = '#111';
       document.getElementById('mb-conn').style.display = 'none';
 
-      // Desktop sidebar
       document.getElementById('sAuth').style.display = 'none';
       document.getElementById('sUser').style.display = 'block';
       document.getElementById('sUser').textContent = prenom;
@@ -423,7 +499,7 @@ async function chargerTalents() {
     allTalents = data || [];
     afficherTalents(filtrer());
   } catch(e) {
-    document.getElementById('gridTalents').innerHTML = '<div class="loading">Erreur chargement.</div>';
+    document.getElementById('gridTalents').innerHTML = `<div class="loading">${T[currentLang].erreur}</div>`;
   }
 }
 
@@ -439,9 +515,10 @@ function filtrerCat(el, cat) {
   el.classList.add('active');
   catActive = cat; sousCatActive = '';
   const bar = document.getElementById('sousCatsBar');
-  if (cat && sousCatsDef[cat]) {
-    bar.innerHTML = sousCatsDef[cat].map(s =>
-      `<div class="sous-chip" onclick="filtrerSousCat(this,'${s.replace(/'/g,"\\'")}')">${s}</div>`
+  const defs = sousCatsDef[currentLang];
+  if (cat && defs[cat]) {
+    bar.innerHTML = defs[cat].map(s =>
+      `<div class="sous-chip" onclick="filtrerSousCat(this,'${s.replace(/'/g,"\\'")}')"">${s}</div>`
     ).join('');
     bar.classList.add('visible');
   } else {
@@ -459,46 +536,48 @@ function filtrerSousCat(el, sc) {
 
 function afficherTalents(liste) {
   const g = document.getElementById('gridTalents');
-  document.getElementById('cntTalents').textContent = liste.length + ' talent' + (liste.length>1?'s':'');
-  if (!liste.length) { g.innerHTML = '<div class="loading">Aucun talent ici.</div>'; return; }
+  const lang = currentLang;
+  const cnt = liste.length;
+  document.getElementById('cntTalents').textContent = cnt + ' ' + (cnt > 1 ? T[lang].talents : T[lang].talent);
+  if (!liste.length) { g.innerHTML = `<div class="loading">${T[lang].noTalent}</div>`; return; }
   g.innerHTML = liste.map(v => {
     const p = v.profils_talents, u = p?.utilisateurs;
     const nom = p?.nom_scene || ((u?.prenom||'')+' '+(u?.nom||'')).trim() || 'Talent';
-    const cat = p?.sous_categorie || catLabels[p?.categorie] || p?.categorie || '';
+    const cat = p?.sous_categorie || catLabels[lang][p?.categorie] || p?.categorie || '';
     const thumb = v.playback_id ? `https://image.mux.com/${v.playback_id}/thumbnail.jpg?width=400&height=533&fit_mode=crop` : '';
     const pid = v.playback_id||'', tid = p?.id||'';
     const nomE = nom.replace(/'/g,"\\'"), catE = cat.replace(/'/g,"\\'");
     return `<div class="tcard" onclick="ouvrirVideo('${pid}','${nomE}','${catE}','${tid}')">
       ${thumb ? `<img src="${thumb}" alt="${nom}" loading="lazy">` : `<div class="tcard-bg">${nom.substring(0,2).toUpperCase()}</div>`}
       <div class="tcard-overlay"></div>
-      <div class="tcard-views">👁 ${(v.vues||0).toLocaleString('fr-FR')}</div>
+      <div class="tcard-views">👁 ${(v.vues||0).toLocaleString(lang === 'fr' ? 'fr-FR' : 'en-US')}</div>
       <div class="tcard-info">
         <div class="tcard-name">${nom}</div>
         <div class="tcard-cat">${cat}</div>
-        <button class="tcard-btn" onclick="event.stopPropagation();contacter('${tid}')">Contacter</button>
+        <button class="tcard-btn" onclick="event.stopPropagation();contacter('${tid}')">${T[lang].contact}</button>
       </div>
     </div>`;
   }).join('');
 }
 
 async function chargerCastings() {
+  const lang = currentLang;
   try {
     const { data } = await sb.from('castings')
       .select('id,titre,categorie,ville,video_playback_id,recruteur_id')
-      .eq('statut','actif')
-      .order('created_at',{ascending:false}).limit(20);
+      .eq('statut','actif').order('created_at',{ascending:false}).limit(20);
     const castings = data || [];
     for (const c of castings) {
       try { const {data:r}=await sb.from('profils_recruteurs').select('nom_societe').eq('id',c.recruteur_id).single(); c.rec=r?.nom_societe||'Recruteur'; }
       catch(e){c.rec='Recruteur';}
     }
     const g = document.getElementById('castingsList');
-    document.getElementById('cntCastings').textContent = castings.length + ' casting' + (castings.length>1?'s':'');
-    if (!castings.length) { g.innerHTML = '<div class="loading-list">Aucun casting.</div>'; return; }
+    const cnt = castings.length;
+    document.getElementById('cntCastings').textContent = cnt + ' ' + (cnt > 1 ? T[lang].castings : T[lang].casting);
+    if (!castings.length) { g.innerHTML = `<div class="loading-list">${T[lang].noCasting}</div>`; return; }
     g.innerHTML = castings.map(c => {
       const thumb = c.video_playback_id
-        ? `https://image.mux.com/${c.video_playback_id}/thumbnail.jpg?width=300&height=400&fit_mode=crop`
-        : null;
+        ? `https://image.mux.com/${c.video_playback_id}/thumbnail.jpg?width=300&height=400&fit_mode=crop` : null;
       const titreE = (c.titre||'Casting').replace(/'/g,"\\'");
       const recE = (c.rec||'').replace(/'/g,"\\'");
       const catE = (c.categorie||'').replace(/'/g,"\\'");
@@ -513,34 +592,27 @@ async function chargerCastings() {
             ${c.categorie?`<span class="ccard-tag">${c.categorie}</span>`:''}
             ${c.ville?`<span class="ccard-tag">📍 ${c.ville}</span>`:''}
           </div>
-          <a href="/casting-detail?id=${c.id}" class="ccard-btn" onclick="event.stopPropagation()">Voir le casting →</a>
+          <a href="/casting-detail?id=${c.id}" class="ccard-btn" onclick="event.stopPropagation()">${T[lang].voirBtn}</a>
         </div>
       </div>`;
     }).join('');
   } catch(e) {
-    document.getElementById('castingsList').innerHTML = '<div class="loading-list">Erreur chargement.</div>';
+    document.getElementById('castingsList').innerHTML = `<div class="loading-list">${T[lang].erreur}</div>`;
   }
 }
 
 function ouvrirVideo(pid, nom, cat, talentId) {
   if (!pid) return;
   jouer(pid);
-  // Incrémenter les vues
   const video = allTalents.find(v => v.playback_id === pid);
   if (video?.id) {
     sb.from('videos').update({ vues: (video.vues||0) + 1 }).eq('id', video.id).then(() => {
       video.vues = (video.vues||0) + 1;
-      // Mettre à jour le compteur affiché sur la carte
-      document.querySelectorAll('.tcard-views').forEach(el => {
-        if (el.closest('.tcard')?.onclick?.toString().includes(pid)) {
-          el.textContent = '👁 ' + video.vues.toLocaleString('fr-FR');
-        }
-      });
     });
   }
   document.getElementById('modalName').textContent = nom;
   document.getElementById('modalCat').textContent = cat;
-  document.getElementById('modalBtn').textContent = '✉ Contacter ce talent';
+  document.getElementById('modalBtn').textContent = T[currentLang].contactTalent;
   document.getElementById('modalBtn').onclick = () => { fermerModalDirect(); contacter(talentId); };
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -550,8 +622,8 @@ function ouvrirCasting(pid, rec, cat, id, titre) {
   if (!pid) return;
   jouer(pid);
   document.getElementById('modalName').textContent = titre;
-  document.getElementById('modalCat').textContent = 'Par '+rec+(cat?' · '+cat:'');
-  document.getElementById('modalBtn').textContent = '→ Voir le casting complet';
+  document.getElementById('modalCat').textContent = T[currentLang].par + rec + (cat?' · '+cat:'');
+  document.getElementById('modalBtn').textContent = T[currentLang].voirCasting;
   document.getElementById('modalBtn').onclick = () => { fermerModalDirect(); location.href='/casting-detail?id='+id; };
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -563,19 +635,10 @@ function jouer(pid) {
   if (_hls) { _hls.destroy(); _hls=null; }
   if (Hls.isSupported()) { _hls=new Hls(); _hls.loadSource(src); _hls.attachMedia(vid); _hls.on(Hls.Events.MANIFEST_PARSED,()=>vid.play()); }
   else if (vid.canPlayType('application/vnd.apple.mpegurl')) { vid.src=src; vid.play(); }
-
-  // Sur mobile : tap sur la vidéo = ferme la modal
-  // On utilise touchend pour éviter le conflit avec les contrôles natifs
   vid.ontouchend = function(e) {
-    // Si l'utilisateur touche la zone des contrôles (bas 15% de la vidéo), on ne ferme pas
     const rect = vid.getBoundingClientRect();
-    const touchY = e.changedTouches[0].clientY;
-    const fromBottom = rect.bottom - touchY;
-    if (fromBottom > rect.height * 0.15) {
-      // Tap sur la vidéo hors contrôles → fermer
-      e.preventDefault();
-      fermerModalDirect();
-    }
+    const fromBottom = rect.bottom - e.changedTouches[0].clientY;
+    if (fromBottom > rect.height * 0.15) { e.preventDefault(); fermerModalDirect(); }
   };
 }
 
@@ -589,7 +652,7 @@ function fermerModalDirect() {
 function contacter(talentId) {
   const u=JSON.parse(localStorage.getItem('showone_user')||'{}');
   if (!u.id) { location.href='/connexion'; return; }
-  if (u.type_compte!=='recruteur') { alert('Seuls les recruteurs peuvent contacter les talents directement.'); return; }
+  if (u.type_compte!=='recruteur') { alert(T[currentLang].seulRecruteur); return; }
   location.href=`/messagerie?talent_id=${talentId}`;
 }
 
@@ -601,7 +664,6 @@ function seDeconnecter() {
 
 init();
 
-// Hint scroll : disparaît dès que l'utilisateur scrolle les catégories
 (function() {
   const bar = document.getElementById('catsBar');
   const hint = document.getElementById('scrollHint');
