@@ -173,14 +173,12 @@
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
       padding: 20px;
-      cursor: pointer;
+      overflow-y: auto;
     }
-    #splash.open {
-      display: flex;
-      align-items: center; justify-content: center;
-    }
+    #splash.open { display: block; }
     .splash-card {
-      cursor: default;
+      position: relative;
+      margin: 5vh auto 0;
     }
 
     .splash-card {
@@ -290,12 +288,12 @@
 
 <!-- ===== SPLASH MODAL ===== -->
 <div id="splash" onclick="hideSplash()">
-  <div class="splash-card" onclick="event.stopPropagation()">
+  <div class="splash-card">
     <div class="splash-logo">Show<span>One</span></div>
     <div class="splash-tagline" id="splash-tag">La plateforme des talents</div>
     <div class="splash-langs">
-      <button class="splash-lang-btn active" onclick="setLang('fr');event.stopPropagation()">🇫🇷 FR</button>
-      <button class="splash-lang-btn" onclick="setLang('en');event.stopPropagation()">🇺🇸 EN</button>
+      <button class="splash-lang-btn active" onclick="setLang('fr')">🇫🇷 FR</button>
+      <button class="splash-lang-btn" onclick="setLang('en')">🇺🇸 EN</button>
     </div>
     <div class="splash-headline" id="splash-h">Tu as un talent ? Montre-le ! 🌟</div>
     <div class="splash-sub" id="splash-s">Dépose tes vidéos sur ShowOne. Des recruteurs, agences et professionnels peuvent découvrir ton profil. Peut-être que ta prochaine opportunité commence ici.</div>
@@ -304,10 +302,10 @@
       <span class="splash-pill">✅ Rapide</span>
       <span class="splash-pill">✅ Ouvert à tous</span>
     </div>
-    <a href="/inscription" class="splash-cta" id="splash-btn" onclick="event.stopPropagation()">🚀 Je crée mon profil gratuitement</a>
+    <a href="/inscription" class="splash-cta" id="splash-btn">🚀 Je crée mon profil gratuitement</a>
     <div class="splash-secondary">
-      <a href="/connexion" id="splash-login" onclick="event.stopPropagation()">J'ai déjà un compte</a>
-      <a href="/recruteur" id="splash-rec" onclick="event.stopPropagation()">Je suis recruteur</a>
+      <a href="/connexion" id="splash-login">J'ai déjà un compte</a>
+      <a href="/recruteur" id="splash-rec">Je suis recruteur</a>
     </div>
     <button class="splash-skip" id="splashSkip" onclick="hideSplash()">Voir les talents d'abord →</button>
   </div>
@@ -413,7 +411,7 @@
 <div class="modal-ov" id="modal" onclick="fermerModalDirect()">
   <div class="modal-tap" id="modalTap" data-fr="👆 Tapotez pour fermer" data-en="👆 Tap to close">👆 Tapotez pour fermer</div>
   <video id="modalVid" controls playsinline class="modal-vid"></video>
-  <div class="modal-info" onclick="event.stopPropagation()">
+  <div class="modal-info">
     <div class="modal-name" id="modalName"></div>
     <div class="modal-cat" id="modalCat"></div>
     <button class="modal-btn" id="modalBtn"></button>
@@ -655,36 +653,6 @@ function hideSplash() {
   splash.classList.remove('open');
   document.body.style.overflow = '';
 }
-
-// Listener robuste pour fermer la splash sur mobile et desktop
-(function() {
-  function setupSplashClose() {
-    const splash = document.getElementById('splash');
-    const card = splash ? splash.querySelector('.splash-card') : null;
-    if (!splash || !card) return;
-
-    function tryClose(target) {
-      if (!card.contains(target)) hideSplash();
-    }
-
-    splash.addEventListener('click', function(e) {
-      tryClose(e.target);
-    });
-
-    splash.addEventListener('touchend', function(e) {
-      e.preventDefault();
-      tryClose(e.changedTouches[0] ? document.elementFromPoint(
-        e.changedTouches[0].clientX, e.changedTouches[0].clientY
-      ) : e.target);
-    }, { passive: false });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setupSplashClose);
-  } else {
-    setupSplashClose();
-  }
-})();
 // ===== FIN SPLASH =====
 
 async function chargerTalents() {
@@ -789,7 +757,7 @@ async function chargerCastings() {
             ${c.categorie?`<span class="ccard-tag">${c.categorie}</span>`:''}
             ${c.ville?`<span class="ccard-tag">📍 ${c.ville}</span>`:''}
           </div>
-          <a href="/casting-detail?id=${c.id}" class="ccard-btn" onclick="event.stopPropagation()">${T[lang].voirBtn}</a>
+          <a href="/casting-detail?id=${c.id}" class="ccard-btn">${T[lang].voirBtn}</a>
         </div>
       </div>`;
     }).join('');
