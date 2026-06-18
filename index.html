@@ -211,6 +211,16 @@
       padding: 5px 12px; border-radius: 100px;
       background: #f5f5f5; font-size: 11px; font-weight: 700; color: #555;
     }
+    .splash-langs {
+      display: flex; gap: 6px; justify-content: center; margin-bottom: 16px;
+    }
+    .splash-lang-btn {
+      padding: 5px 14px; border-radius: 100px;
+      border: 1.5px solid #e0e0e0; background: #fff;
+      font-size: 12px; font-weight: 700; color: #888; cursor: pointer;
+      transition: all 0.15s;
+    }
+    .splash-lang-btn.active { background: #111; border-color: #111; color: #fff; }
     .splash-cta {
       display: block; width: 100%;
       padding: 15px; border-radius: 12px;
@@ -273,10 +283,14 @@
 <body>
 
 <!-- ===== SPLASH MODAL ===== -->
-<div id="splash" ontouchend="if(event.target===this){event.preventDefault();hideSplash()}" onclick="if(event.target===this)hideSplash()">
-  <div class="splash-card">
+<div id="splash" ontouchend="if(event.target===this){event.preventDefault();hideSplash()}" onclick="hideSplash()">
+  <div class="splash-card" onclick="event.stopPropagation()" ontouchend="event.stopPropagation()">
     <div class="splash-logo">Show<span>One</span></div>
     <div class="splash-tagline" id="splash-tag">La plateforme des talents</div>
+    <div class="splash-langs">
+      <button class="splash-lang-btn active" onclick="setLang('fr');event.stopPropagation()">🇫🇷 FR</button>
+      <button class="splash-lang-btn" onclick="setLang('en');event.stopPropagation()">🇺🇸 EN</button>
+    </div>
     <div class="splash-headline" id="splash-h">Tu as un talent ? Montre-le ! 🌟</div>
     <div class="splash-sub" id="splash-s">Dépose tes vidéos sur ShowOne. Des recruteurs, agences et professionnels peuvent découvrir ton profil. Peut-être que ta prochaine opportunité commence ici.</div>
     <div class="splash-pills">
@@ -284,10 +298,10 @@
       <span class="splash-pill">✅ Rapide</span>
       <span class="splash-pill">✅ Ouvert à tous</span>
     </div>
-    <a href="/inscription" class="splash-cta" id="splash-btn">🚀 Je crée mon profil gratuitement</a>
+    <a href="/inscription" class="splash-cta" id="splash-btn" onclick="event.stopPropagation()">🚀 Je crée mon profil gratuitement</a>
     <div class="splash-secondary">
-      <a href="/connexion" id="splash-login">J'ai déjà un compte</a>
-      <a href="/recruteur" id="splash-rec">Je suis recruteur</a>
+      <a href="/connexion" id="splash-login" onclick="event.stopPropagation()">J'ai déjà un compte</a>
+      <a href="/recruteur" id="splash-rec" onclick="event.stopPropagation()">Je suis recruteur</a>
     </div>
     <button class="splash-skip" id="splashSkip" onclick="hideSplash()">Voir les talents d'abord →</button>
   </div>
@@ -566,6 +580,10 @@ function setLang(lang) {
   if (el('splash-login')) el('splash-login').textContent = t.login;
   if (el('splash-rec'))   el('splash-rec').textContent   = t.rec;
   if (el('splashSkip'))   el('splashSkip').textContent   = t.skip;
+  // Mettre à jour les boutons langue dans la splash
+  document.querySelectorAll('.splash-lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick').includes("'" + lang + "'"));
+  });
 }
 
 // ── INIT ──
