@@ -224,7 +224,7 @@
     }
     .splash-secondary a { color: #999; text-decoration: none; }
     .splash-skip {
-      font-size: 11px; color: #ccc;
+      font-size: 11px; color: #888;
       cursor: pointer; background: none; border: none;
       text-decoration: underline; padding: 0;
     }
@@ -277,14 +277,14 @@
   <div class="splash-card">
     <div class="splash-logo">Show<span>One</span></div>
     <div class="splash-tagline" id="splash-tag">La plateforme des talents</div>
-    <div class="splash-headline" id="splash-h">Ton talent mérite d'être vu par les bons recruteurs</div>
-    <div class="splash-sub" id="splash-s">Des recruteurs professionnels consultent les profils chaque jour pour leurs castings, publicités et projets artistiques.</div>
+    <div class="splash-headline" id="splash-h">Tu as un talent ? Montre-le ! 🌟</div>
+    <div class="splash-sub" id="splash-s">Dépose tes vidéos sur ShowOne. Des recruteurs, agences et professionnels peuvent découvrir ton profil. Peut-être que ta prochaine opportunité commence ici.</div>
     <div class="splash-pills">
       <span class="splash-pill">✅ Gratuit</span>
-      <span class="splash-pill">🎬 Vidéo courte</span>
-      <span class="splash-pill">🎯 Recruteurs pro</span>
+      <span class="splash-pill">✅ Rapide</span>
+      <span class="splash-pill">✅ Ouvert à tous</span>
     </div>
-    <a href="/inscription" class="splash-cta" id="splash-btn">Je crée mon profil gratuitement →</a>
+    <a href="/inscription" class="splash-cta" id="splash-btn">🚀 Je crée mon profil gratuitement</a>
     <div class="splash-secondary">
       <a href="/connexion" id="splash-login">J'ai déjà un compte</a>
       <a href="/recruteur" id="splash-rec">Je suis recruteur</a>
@@ -591,9 +591,9 @@ function showSplash() {
   if (!splash) return;
   if (currentLang === 'en') {
     document.getElementById('splash-tag').textContent = 'The talent platform';
-    document.getElementById('splash-h').textContent = 'Your talent deserves to be seen by the right people';
-    document.getElementById('splash-s').textContent = 'Professional recruiters browse profiles every day for their castings, ads and artistic projects.';
-    document.getElementById('splash-btn').textContent = 'Create my free profile →';
+    document.getElementById('splash-h').textContent = 'Got a talent? Show it! 🌟';
+    document.getElementById('splash-s').textContent = 'Post your videos on ShowOne. Recruiters, agencies and professionals can discover your profile. Your next opportunity might start here.';
+    document.getElementById('splash-btn').textContent = '🚀 Create my free profile';
     document.getElementById('splash-login').textContent = 'I already have an account';
     document.getElementById('splash-rec').textContent = 'I am a recruiter';
     document.getElementById('splashSkip').textContent = 'Browse talents first →';
