@@ -200,7 +200,7 @@
       line-height: 1.25; margin-bottom: 10px; letter-spacing: -0.5px;
     }
     .splash-sub {
-      font-size: 13px; color: #888; line-height: 1.6;
+      font-size: 13px; color: #111; line-height: 1.6;
       margin-bottom: 22px;
     }
     .splash-pills {
@@ -224,7 +224,7 @@
     }
     .splash-secondary a { color: #999; text-decoration: none; }
     .splash-skip {
-      font-size: 11px; color: #888;
+      font-size: 12px; color: #111; font-weight: 600;
       cursor: pointer; background: none; border: none;
       text-decoration: underline; padding: 0;
     }
@@ -273,7 +273,7 @@
 <body>
 
 <!-- ===== SPLASH MODAL ===== -->
-<div id="splash" onclick="if(event.target===this)hideSplash()">
+<div id="splash" onclick="if(event.target===this)hideSplash()" ontouchend="if(event.target===this)hideSplash()">
   <div class="splash-card">
     <div class="splash-logo">Show<span>One</span></div>
     <div class="splash-tagline" id="splash-tag">La plateforme des talents</div>
