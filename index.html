@@ -173,10 +173,14 @@
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
       padding: 20px;
+      cursor: pointer;
     }
     #splash.open {
       display: flex;
       align-items: center; justify-content: center;
+    }
+    .splash-card {
+      cursor: default;
     }
 
     .splash-card {
@@ -651,6 +655,36 @@ function hideSplash() {
   splash.classList.remove('open');
   document.body.style.overflow = '';
 }
+
+// Listener robuste pour fermer la splash sur mobile et desktop
+(function() {
+  function setupSplashClose() {
+    const splash = document.getElementById('splash');
+    const card = splash ? splash.querySelector('.splash-card') : null;
+    if (!splash || !card) return;
+
+    function tryClose(target) {
+      if (!card.contains(target)) hideSplash();
+    }
+
+    splash.addEventListener('click', function(e) {
+      tryClose(e.target);
+    });
+
+    splash.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      tryClose(e.changedTouches[0] ? document.elementFromPoint(
+        e.changedTouches[0].clientX, e.changedTouches[0].clientY
+      ) : e.target);
+    }, { passive: false });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupSplashClose);
+  } else {
+    setupSplashClose();
+  }
+})();
 // ===== FIN SPLASH =====
 
 async function chargerTalents() {
