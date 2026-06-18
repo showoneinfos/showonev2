@@ -165,75 +165,70 @@
     @keyframes slideArrow { 0%,100%{transform:translateX(0)} 50%{transform:translateX(6px)} }
     @media (min-width:769px) { .scroll-hint { display:none; } }
 
-    /* ===== SPLASH PAGE ===== */
+    /* ===== SPLASH MODAL ===== */
     #splash {
       display: none;
       position: fixed; inset: 0; z-index: 9999;
-      background: #fff;
-      flex-direction: column;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
       align-items: center; justify-content: center;
-      padding: 24px 20px;
-      text-align: center;
+      padding: 20px;
     }
     #splash.visible { display: flex; }
-    .splash-logo { font-size: 32px; font-weight: 900; color: #111; letter-spacing: -1px; margin-bottom: 28px; }
+
+    .splash-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px 24px 24px;
+      width: 100%; max-width: 400px;
+      text-align: center;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.25);
+      animation: splashIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes splashIn {
+      from { opacity: 0; transform: scale(0.9) translateY(20px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .splash-logo { font-size: 26px; font-weight: 900; color: #111; letter-spacing: -1px; margin-bottom: 6px; }
     .splash-logo span { color: #E8383A; }
-    .splash-visual {
-      width: 100%; max-width: 340px;
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px;
-      border-radius: 16px; overflow: hidden; margin-bottom: 28px;
-    }
-    .splash-tile {
-      aspect-ratio: 3/4; background: #f0f0f0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 28px; overflow: hidden;
-    }
-    .splash-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .splash-tile:first-child { grid-row: span 2; }
+    .splash-tagline { font-size: 11px; font-weight: 700; color: #bbb; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 22px; }
+
     .splash-headline {
-      font-size: 24px; font-weight: 900; color: #111;
+      font-size: 22px; font-weight: 900; color: #111;
       line-height: 1.25; margin-bottom: 10px; letter-spacing: -0.5px;
-      max-width: 320px;
     }
     .splash-sub {
-      font-size: 14px; color: #777; line-height: 1.55;
-      margin-bottom: 28px; max-width: 300px;
+      font-size: 13px; color: #888; line-height: 1.6;
+      margin-bottom: 22px;
     }
     .splash-pills {
-      display: flex; gap: 8px; flex-wrap: wrap;
-      justify-content: center; margin-bottom: 28px;
+      display: flex; gap: 6px; flex-wrap: wrap;
+      justify-content: center; margin-bottom: 22px;
     }
     .splash-pill {
-      padding: 6px 14px; border-radius: 100px;
-      background: #f5f5f5; font-size: 12px; font-weight: 700; color: #555;
+      padding: 5px 12px; border-radius: 100px;
+      background: #f5f5f5; font-size: 11px; font-weight: 700; color: #555;
     }
     .splash-cta {
-      display: block; width: 100%; max-width: 320px;
-      padding: 16px; border-radius: 12px;
+      display: block; width: 100%;
+      padding: 15px; border-radius: 12px;
       background: #E8383A; color: #fff;
-      font-size: 16px; font-weight: 900; text-decoration: none;
-      margin-bottom: 12px; letter-spacing: 0.1px;
+      font-size: 15px; font-weight: 900; text-decoration: none;
+      margin-bottom: 10px;
     }
     .splash-secondary {
-      display: flex; gap: 20px; justify-content: center;
-      font-size: 13px; font-weight: 600;
+      display: flex; gap: 18px; justify-content: center;
+      font-size: 12px; font-weight: 600; margin-bottom: 18px;
     }
     .splash-secondary a { color: #999; text-decoration: none; }
     .splash-skip {
-      margin-top: 18px; font-size: 12px; color: #bbb;
-      cursor: pointer; text-decoration: underline; background: none; border: none;
+      font-size: 11px; color: #ccc;
+      cursor: pointer; background: none; border: none;
+      text-decoration: underline; padding: 0;
     }
-
-    @media (min-width: 769px) {
-      #splash { flex-direction: row; gap: 60px; padding: 40px; }
-      .splash-visual { max-width: 280px; margin-bottom: 0; }
-      .splash-content { text-align: left; max-width: 380px; }
-      .splash-headline { font-size: 30px; }
-      .splash-pills { justify-content: flex-start; }
-      .splash-cta { text-align: center; }
-      .splash-secondary { justify-content: flex-start; }
-    }
-    /* ===== FIN SPLASH ===== */
+    /* ===== FIN SPLASH MODAL ===== */
 
     @media (min-width: 769px) {
       body { display: flex; }
@@ -277,19 +272,13 @@
 </head>
 <body>
 
-<!-- ===== SPLASH PAGE ===== -->
+<!-- ===== SPLASH MODAL ===== -->
 <div id="splash">
-  <div class="splash-visual">
-    <div class="splash-tile">🎭</div>
-    <div class="splash-tile">🎤</div>
-    <div class="splash-tile">💃</div>
-    <div class="splash-tile">🎸</div>
-    <div class="splash-tile">🎬</div>
-  </div>
-  <div class="splash-content">
+  <div class="splash-card">
     <div class="splash-logo">Show<span>One</span></div>
+    <div class="splash-tagline" id="splash-tag">La plateforme des talents</div>
     <div class="splash-headline" id="splash-h">Ton talent mérite d'être vu par les bons recruteurs</div>
-    <div class="splash-sub" id="splash-s">Poste une courte vidéo de toi. Des recruteurs professionnels consultent les profils chaque jour pour leurs castings et projets.</div>
+    <div class="splash-sub" id="splash-s">Des recruteurs professionnels consultent les profils chaque jour pour leurs castings, publicités et projets artistiques.</div>
     <div class="splash-pills">
       <span class="splash-pill">✅ Gratuit</span>
       <span class="splash-pill">🎬 Vidéo courte</span>
@@ -303,7 +292,7 @@
     <button class="splash-skip" id="splashSkip" onclick="hideSplash()">Voir les talents d'abord →</button>
   </div>
 </div>
-<!-- ===== FIN SPLASH ===== -->
+<!-- ===== FIN SPLASH MODAL ===== -->
 
 
 <!-- SIDEBAR DESKTOP -->
@@ -600,10 +589,10 @@ async function init() {
 function showSplash() {
   const splash = document.getElementById('splash');
   if (!splash) return;
-  // Sync langue
   if (currentLang === 'en') {
+    document.getElementById('splash-tag').textContent = 'The talent platform';
     document.getElementById('splash-h').textContent = 'Your talent deserves to be seen by the right people';
-    document.getElementById('splash-s').textContent = 'Post a short video of yourself. Professional recruiters browse profiles every day for their castings and projects.';
+    document.getElementById('splash-s').textContent = 'Professional recruiters browse profiles every day for their castings, ads and artistic projects.';
     document.getElementById('splash-btn').textContent = 'Create my free profile →';
     document.getElementById('splash-login').textContent = 'I already have an account';
     document.getElementById('splash-rec').textContent = 'I am a recruiter';
