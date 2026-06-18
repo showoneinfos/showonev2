@@ -283,8 +283,8 @@
 <body>
 
 <!-- ===== SPLASH MODAL ===== -->
-<div id="splash">
-  <div class="splash-card">
+<div id="splash" onclick="hideSplash()">
+  <div class="splash-card" onclick="event.stopPropagation()">
     <div class="splash-logo">Show<span>One</span></div>
     <div class="splash-tagline" id="splash-tag">La plateforme des talents</div>
     <div class="splash-langs">
@@ -640,32 +640,6 @@ function showSplash() {
   if (!splash) return;
   splash.classList.add('visible');
   document.body.style.overflow = 'hidden';
-
-  // Fermer en tapotant/cliquant sur le fond (pas sur la card)
-  const card = splash.querySelector('.splash-card');
-  let touchMoved = false;
-
-  splash.addEventListener('touchstart', function(e) {
-    touchMoved = false;
-  }, { passive: true });
-
-  splash.addEventListener('touchmove', function(e) {
-    touchMoved = true;
-  }, { passive: true });
-
-  splash.addEventListener('touchend', function(e) {
-    if (touchMoved) return;
-    if (!card.contains(e.target)) {
-      e.preventDefault();
-      hideSplash();
-    }
-  });
-
-  splash.addEventListener('click', function(e) {
-    if (!card.contains(e.target)) {
-      hideSplash();
-    }
-  });
 }
 
 function hideSplash() {
