@@ -172,10 +172,12 @@
       background: rgba(0,0,0,0.55);
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
-      align-items: center; justify-content: center;
       padding: 20px;
     }
-    #splash.visible { display: flex; }
+    #splash.open {
+      display: flex;
+      align-items: center; justify-content: center;
+    }
 
     .splash-card {
       background: #fff;
@@ -638,7 +640,7 @@ async function init() {
 function showSplash() {
   const splash = document.getElementById('splash');
   if (!splash) return;
-  splash.classList.add('visible');
+  splash.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 
@@ -646,7 +648,7 @@ function hideSplash() {
   const splash = document.getElementById('splash');
   if (!splash) return;
   sessionStorage.setItem('splashSkipped', '1');
-  splash.classList.remove('visible');
+  splash.classList.remove('open');
   document.body.style.overflow = '';
 }
 // ===== FIN SPLASH =====
