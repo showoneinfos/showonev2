@@ -273,7 +273,7 @@
 <body>
 
 <!-- ===== SPLASH MODAL ===== -->
-<div id="splash" onclick="if(event.target===this)hideSplash()" ontouchend="if(event.target===this)hideSplash()">
+<div id="splash" ontouchend="if(event.target===this){event.preventDefault();hideSplash()}" onclick="if(event.target===this)hideSplash()">
   <div class="splash-card">
     <div class="splash-logo">Show<span>One</span></div>
     <div class="splash-tagline" id="splash-tag">La plateforme des talents</div>
@@ -535,6 +535,37 @@ function setLang(lang) {
       `<div class="sous-chip${sousCatActive.toLowerCase()===s.toLowerCase()?' active':''}" onclick="filtrerSousCat(this,'${s.replace(/'/g,"\\'")}')"">${s}</div>`
     ).join('');
   }
+
+  // Mettre à jour la splash selon la langue
+  const splashTexts = {
+    fr: {
+      tag: 'La plateforme des talents',
+      h: 'Tu as un talent ? Montre-le ! 🌟',
+      s: "Dépose tes vidéos sur ShowOne. Des recruteurs, agences et professionnels peuvent découvrir ton profil. Peut-être que ta prochaine opportunité commence ici.",
+      btn: '🚀 Je crée mon profil gratuitement',
+      login: "J'ai déjà un compte",
+      rec: 'Je suis recruteur',
+      skip: "Voir les talents d'abord →"
+    },
+    en: {
+      tag: 'The talent platform',
+      h: 'Got a talent? Show it! 🌟',
+      s: 'Post your videos on ShowOne. Recruiters, agencies and professionals can discover your profile. Your next opportunity might start here.',
+      btn: '🚀 Create my free profile',
+      login: 'I already have an account',
+      rec: 'I am a recruiter',
+      skip: 'Browse talents first →'
+    }
+  };
+  const t = splashTexts[lang] || splashTexts.fr;
+  const el = id => document.getElementById(id);
+  if (el('splash-tag'))   el('splash-tag').textContent   = t.tag;
+  if (el('splash-h'))     el('splash-h').textContent     = t.h;
+  if (el('splash-s'))     el('splash-s').textContent     = t.s;
+  if (el('splash-btn'))   el('splash-btn').textContent   = t.btn;
+  if (el('splash-login')) el('splash-login').textContent = t.login;
+  if (el('splash-rec'))   el('splash-rec').textContent   = t.rec;
+  if (el('splashSkip'))   el('splashSkip').textContent   = t.skip;
 }
 
 // ── INIT ──
@@ -589,15 +620,6 @@ async function init() {
 function showSplash() {
   const splash = document.getElementById('splash');
   if (!splash) return;
-  if (currentLang === 'en') {
-    document.getElementById('splash-tag').textContent = 'The talent platform';
-    document.getElementById('splash-h').textContent = 'Got a talent? Show it! 🌟';
-    document.getElementById('splash-s').textContent = 'Post your videos on ShowOne. Recruiters, agencies and professionals can discover your profile. Your next opportunity might start here.';
-    document.getElementById('splash-btn').textContent = '🚀 Create my free profile';
-    document.getElementById('splash-login').textContent = 'I already have an account';
-    document.getElementById('splash-rec').textContent = 'I am a recruiter';
-    document.getElementById('splashSkip').textContent = 'Browse talents first →';
-  }
   splash.classList.add('visible');
   document.body.style.overflow = 'hidden';
 }
