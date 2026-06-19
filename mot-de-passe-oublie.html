@@ -2,66 +2,140 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mot de passe oublié — ShowOne</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>ShowOne — Mot de passe oublié</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Inter', sans-serif; background: #fff; color: #111; min-height: 100vh; display: flex; flex-direction: column; }
-    nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; border-bottom: 1px solid #f0f0f0; }
-    .logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid #f0f0f0; }
+    .logo { font-size: 20px; font-weight: 900; color: #111; text-decoration: none; letter-spacing: -0.5px; }
     .logo span { color: #E8383A; }
     .main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
     .card { width: 100%; max-width: 400px; }
-    h1 { font-size: 28px; font-weight: 900; letter-spacing: -0.8px; margin-bottom: 8px; }
-    .sub { font-size: 14px; color: #999; margin-bottom: 28px; line-height: 1.6; }
-    .form-label { display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .form-input { width: 100%; padding: 12px 14px; border: 1.5px solid #e8e8e8; border-radius: 9px; font-size: 14px; font-family: 'Inter', sans-serif; outline: none; color: #111; }
+    .card-title { font-size: 22px; font-weight: 900; color: #111; margin-bottom: 8px; }
+    .card-sub { font-size: 14px; color: #888; line-height: 1.5; margin-bottom: 28px; }
+    .form-label { font-size: 12px; font-weight: 600; color: #555; margin-bottom: 6px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
+    .form-input { width: 100%; padding: 13px 16px; font-size: 14px; border: 1.5px solid #e8e8e8; border-radius: 10px; background: #fff; color: #111; outline: none; font-family: 'Inter', sans-serif; transition: border-color 0.15s; margin-bottom: 20px; }
     .form-input:focus { border-color: #111; }
-    .btn { width: 100%; padding: 14px; border-radius: 10px; background: #111; color: #fff; border: none; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 12px; }
-    .btn:disabled { background: #ccc; }
-    .success { display: none; background: #e8f8f0; border: 1px solid #b0e8cc; border-radius: 9px; padding: 14px; color: #0a7a56; font-weight: 600; font-size: 14px; margin-top: 16px; }
-    .error { display: none; background: #fff0f0; border: 1px solid #ffd0d0; border-radius: 9px; padding: 12px; color: #cc2e30; font-size: 13px; margin-bottom: 12px; }
-    .back { display: block; text-align: center; margin-top: 16px; font-size: 13px; color: #999; text-decoration: none; }
-    .back:hover { color: #111; }
+    .form-error { background: #fff0f0; border: 1px solid #ffd0d0; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #cc2e30; margin-bottom: 16px; display: none; }
+    .form-success { background: #f0fff4; border: 1px solid #b7ebc7; border-radius: 8px; padding: 16px; font-size: 14px; color: #1a7f3c; margin-bottom: 16px; display: none; text-align: center; line-height: 1.5; }
+    .form-success .success-icon { font-size: 32px; display: block; margin-bottom: 8px; }
+    .btn-submit { width: 100%; padding: 15px; font-size: 15px; font-weight: 700; border-radius: 10px; background: #111; color: #fff; border: none; cursor: pointer; transition: background 0.15s; }
+    .btn-submit:hover { background: #333; }
+    .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
+    .back-link { display: block; text-align: center; margin-top: 20px; font-size: 13px; color: #999; text-decoration: none; }
+    .back-link:hover { color: #111; }
   </style>
 </head>
 <body>
-<nav>
+
+<nav class="nav">
   <a href="/" class="logo">Show<span>One</span></a>
 </nav>
+
 <div class="main">
   <div class="card">
-    <h1>Mot de passe oublié</h1>
-    <p class="sub">Entrez votre email et nous vous enverrons un lien pour réinitialiser votre mot de passe.</p>
-    <div class="error" id="errMsg"></div>
-    <label class="form-label">Email</label>
-    <input class="form-input" type="email" id="emailInput" placeholder="votre@email.com">
-    <button class="btn" id="btnSend" onclick="envoyer()">Envoyer le lien</button>
-    <div class="success" id="successMsg">✅ Email envoyé ! Vérifiez votre boîte mail (et vos spams).</div>
-    <a href="/connexion" class="back">← Retour à la connexion</a>
+    <div class="card-title" id="pageTitle">Mot de passe oublié ?</div>
+    <div class="card-sub" id="pageSub">Saisis ton adresse email. On t'envoie un lien pour créer un nouveau mot de passe.</div>
+
+    <div class="form-error" id="errorDiv"></div>
+    <div class="form-success" id="successDiv">
+      <span class="success-icon">📬</span>
+      <span id="successMsg">Email envoyé ! Vérifie ta boite mail et clique sur le lien pour créer ton nouveau mot de passe.</span>
+    </div>
+
+    <div id="formSection">
+      <label class="form-label" id="emailLabel">Email</label>
+      <input class="form-input" type="email" id="emailInput" placeholder="votre@email.com" autocomplete="email">
+      <div class="form-error" id="login-error"></div>
+      <button class="btn-submit" id="btnSubmit" onclick="envoyerReset()">Envoyer le lien</button>
+    </div>
+
+    <a href="/connexion" class="back-link" id="backLink">← Retour à la connexion</a>
   </div>
 </div>
+
 <script>
 const SUPABASE_URL = 'https://emiuzigtlomlrsofxqyf.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVtaXV6aWd0bG9tbHJzb2Z4cXlmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MDI4NTcsImV4cCI6MjA5MzQ3ODg1N30.Cwe-Z1vNGc-puz8jEnHdMMCwllNbl9fRAdwLe5zWyIY';
 
-async function envoyer() {
+const lang = localStorage.getItem('showone_lang') || 'fr';
+const T = {
+  fr: {
+    title: 'Mot de passe oublié ?',
+    sub: "Saisis ton adresse email. On t'envoie un lien pour créer un nouveau mot de passe.",
+    emailLabel: 'Email',
+    btnText: 'Envoyer le lien',
+    successMsg: "Email envoyé ! Vérifie ta boite mail et clique sur le lien pour créer ton nouveau mot de passe.",
+    errEmpty: 'Saisis ton adresse email.',
+    errFail: 'Une erreur est survenue. Vérifie ton email et réessaie.',
+    back: '← Retour à la connexion',
+    sending: 'Envoi en cours...'
+  },
+  en: {
+    title: 'Forgot your password?',
+    sub: "Enter your email address. We'll send you a link to reset your password.",
+    emailLabel: 'Email',
+    btnText: 'Send reset link',
+    successMsg: "Email sent! Check your inbox and click the link to set a new password.",
+    errEmpty: 'Please enter your email address.',
+    errFail: 'Something went wrong. Check your email and try again.',
+    back: '← Back to login',
+    sending: 'Sending...'
+  }
+};
+
+const t = T[lang] || T.fr;
+document.getElementById('pageTitle').textContent = t.title;
+document.getElementById('pageSub').textContent = t.sub;
+document.getElementById('emailLabel').textContent = t.emailLabel;
+document.getElementById('btnSubmit').textContent = t.btnText;
+document.getElementById('successMsg').textContent = t.successMsg;
+document.getElementById('backLink').textContent = t.back;
+document.getElementById('emailInput').placeholder = lang === 'en' ? 'your@email.com' : 'votre@email.com';
+
+async function envoyerReset() {
   const email = document.getElementById('emailInput').value.trim();
-  const errDiv = document.getElementById('errMsg');
-  errDiv.style.display = 'none';
-  if (!email) { errDiv.innerHTML = 'Merci de renseigner votre email.'; errDiv.style.display='block'; return; }
-  const btn = document.getElementById('btnSend'); btn.disabled=true; btn.textContent='Envoi…';
+  const btn = document.getElementById('btnSubmit');
+  const errorDiv = document.getElementById('errorDiv');
+  const successDiv = document.getElementById('successDiv');
+
+  errorDiv.style.display = 'none';
+
+  if (!email) {
+    errorDiv.textContent = t.errEmpty;
+    errorDiv.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = t.sending;
+
   try {
     const res = await fetch(`${SUPABASE_URL}/auth/v1/recover`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
-      body: JSON.stringify({ email, redirectTo: 'https://showonev2.vercel.app/connexion' })
+      body: JSON.stringify({ email, gotrue_meta_security: {} })
     });
-    document.getElementById('successMsg').style.display = 'block';
-    btn.style.display = 'none';
-  } catch(e) { errDiv.innerHTML = 'Une erreur est survenue. Réessayez.'; errDiv.style.display='block'; btn.disabled=false; btn.textContent='Envoyer le lien'; }
+
+    // Supabase renvoie toujours 200 même si l'email n'existe pas (sécurité)
+    document.getElementById('formSection').style.display = 'none';
+    successDiv.style.display = 'block';
+
+  } catch(err) {
+    errorDiv.textContent = t.errFail;
+    errorDiv.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = t.btnText;
+  }
 }
+
+// Permettre d'appuyer sur Entrée
+document.getElementById('emailInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') envoyerReset();
+});
 </script>
+
 </body>
 </html>
