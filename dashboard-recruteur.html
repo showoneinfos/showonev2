@@ -185,22 +185,7 @@
   </div>
 </div>
 
-<!-- POPUP UPGRADE -->
-<div class="upgrade-overlay" id="upgradeOverlay">
-  <div class="upgrade-box">
-    <div style="font-size:40px;margin-bottom:12px;">🔒</div>
-    <h2 id="upgradeTitle">Passez Recruteur Pro</h2>
-    <p id="upgradeDesc">Vous avez <strong id="upgradeNbCands" style="color:#E8383A;">X</strong> candidature(s) en attente.<br>Passez Pro pour lire les messages et contacter les talents.</p>
-    <ul class="upgrade-features" id="upgradeFeatures">
-      <li>✅ Lire toutes les candidatures</li>
-      <li>✅ Contacter tous les talents</li>
-      <li>✅ Messagerie illimitée</li>
-      <li>✅ Castings illimités</li>
-    </ul>
-    <button class="btn-upgrade-big" id="btnUpgradeBig" onclick="lancerPaiementRecruteur()">🔍 Devenir Recruteur Pro — 19,99€/mois</button>
-    <button class="btn-close-upgrade" id="btnCloseUpgrade" onclick="document.getElementById('upgradeOverlay').classList.remove('open')">Fermer</button>
-  </div>
-</div>
+<!-- POPUP UPGRADE supprimée -->
 
 <!-- SIDEBAR -->
 <div class="sidebar">
@@ -257,7 +242,7 @@
       <div class="cand-count-num" id="bannerNbCands">0</div>
       <div class="cand-count-label" id="bannerCandLabel">candidature(s)</div>
     </div>
-    <button class="btn-pro-banner" id="btnVoirCands" onclick="document.getElementById('upgradeOverlay').classList.add('open');document.getElementById('upgradeNbCands').textContent=document.getElementById('bannerNbCands').textContent;">Voir les candidatures →</button>
+    <button class="btn-pro-banner" id="btnVoirCands" onclick="window.location.href='/castings'">Voir les candidatures →</button>
   </div>
 
   <div class="stats-grid">
@@ -296,28 +281,7 @@
     </div>
 
     <div class="right-col">
-      <div class="card">
-        <div class="card-head"><div class="card-title" id="cardAbonnementTitle">🧾 Abonnement</div></div>
-        <div id="subCardPro" style="display:none;" class="sub-card">
-          <h3 id="subProTitle">✅ Recruteur Pro</h3>
-          <p id="subProDesc">Accès illimité à tous les talents ShowOne</p>
-          <div style="display:flex;justify-content:space-between;font-size:12px;background:rgba(255,255,255,0.06);border-radius:8px;padding:9px 12px;">
-            <span style="color:rgba(255,255,255,0.4);" id="subMontantLabel">Montant</span>
-            <span style="color:#fff;font-weight:700;">19,99€ / mois</span>
-          </div>
-        </div>
-        <div id="subCardGratuit" class="sub-card">
-          <h3 id="subGratuitTitle">🔓 Passez Recruteur Pro</h3>
-          <p id="subGratuitDesc">Contactez tous les talents et lisez vos candidatures.</p>
-          <ul id="subFeaturesList">
-            <li>✓ Lire les candidatures reçues</li>
-            <li>✓ Contacter tous les talents</li>
-            <li>✓ Messagerie illimitée</li>
-            <li>✓ Castings illimités</li>
-          </ul>
-          <button class="btn-sub" id="btnPaiementRecruteur" onclick="lancerPaiementRecruteur()">🔍 Devenir Recruteur Pro — 19,99€/mois</button>
-        </div>
-      </div>
+      <!-- Carte abonnement supprimée -->
 
       <div class="card">
         <div class="card-head">
@@ -366,7 +330,7 @@ let tousVideos = [];
 let catActiveRec = 'Tous';
 let currentLang = localStorage.getItem('showone_lang') || 'fr';
 window.token = localStorage.getItem('showone_token');
-window.planRecruteur = 'gratuit';
+window.planRecruteur = 'pro'; // Accès gratuit total — tous les recruteurs ont accès complet
 
 const T = {
   fr: {
@@ -509,21 +473,9 @@ function setLang(lang) {
   document.getElementById('actionDeposer').textContent = t.actionDeposer;
   document.getElementById('cardTalentsTitle').textContent = t.cardTalents;
   document.getElementById('searchInput').placeholder = t.searchPlaceholder;
-  document.getElementById('cardAbonnementTitle').textContent = t.cardAbonnement;
-  document.getElementById('subProTitle').textContent = t.subProTitle;
-  document.getElementById('subProDesc').textContent = t.subProDesc;
-  document.getElementById('subMontantLabel').textContent = t.subMontant;
-  document.getElementById('subGratuitTitle').textContent = t.subGratuitTitle;
-  document.getElementById('subGratuitDesc').textContent = t.subGratuitDesc;
-  document.getElementById('subFeaturesList').innerHTML = t.subFeatures.map(f=>`<li>${f}</li>`).join('');
-  document.getElementById('btnPaiementRecruteur').textContent = t.btnPaiement;
   document.getElementById('cardConversationsTitle').textContent = t.cardConversations;
   document.getElementById('voirToutMsgs').textContent = t.voirTout;
   document.getElementById('cardFavorisTitle').textContent = t.cardFavoris;
-  document.getElementById('upgradeTitle').textContent = t.upgradeTitle;
-  document.getElementById('upgradeFeatures').innerHTML = t.upgradeFeatures.map(f=>`<li>${f}</li>`).join('');
-  document.getElementById('btnUpgradeBig').textContent = t.btnUpgradeBig;
-  document.getElementById('btnCloseUpgrade').textContent = t.btnCloseUpgrade;
   document.getElementById('modalContactTitle').textContent = t.modalContactTitle;
   document.getElementById('modalLabelObjet').textContent = t.modalLabelObjet;
   document.getElementById('modalLabelMessage').textContent = t.modalLabelMessage;
@@ -602,11 +554,7 @@ async function chargerDonnees() {
       document.getElementById('nbCandidatures').textContent = nbCands;
       const badge = document.getElementById('badgeCandidatures');
       if (badge && nbCands > 0) { badge.textContent = nbCands; badge.style.display = 'inline-flex'; }
-      if (plan === 'gratuit' && nbCands > 0) {
-        document.getElementById('bannerNbCands').textContent = nbCands;
-        document.getElementById('candidaturesBanner').style.display = 'flex';
-        document.getElementById('upgradeNbCands').textContent = nbCands;
-      }
+      // Bannière upgrade supprimée — accès gratuit total
     } else { document.getElementById('statCandidatures').textContent = 0; }
 
     await chargerMessages(recruteurId, token);
@@ -695,12 +643,6 @@ async function chargerFavoris(recruteurId, token) {
 }
 
 function ouvrirContact(playbackId, nom, cat, photo, talentId, ville, vues) {
-  if (window.planRecruteur !== 'pro') {
-    const nb = document.getElementById('bannerNbCands')?.textContent||'0';
-    document.getElementById('upgradeNbCands').textContent = nb;
-    document.getElementById('upgradeOverlay').classList.add('open');
-    return;
-  }
   ouvrirTalent(playbackId, nom, cat, photo, talentId, ville, vues);
 }
 
@@ -721,12 +663,6 @@ function ouvrirTalent(playbackId, nom, cat, photo, talentId, ville, vues) {
 }
 
 function voirCandidatures() {
-  if (window.planRecruteur !== 'pro') {
-    const nb=document.getElementById('bannerNbCands')?.textContent||'0';
-    document.getElementById('upgradeNbCands').textContent=nb;
-    document.getElementById('upgradeOverlay').classList.add('open');
-    return;
-  }
   window.location.href='/castings';
 }
 
@@ -774,7 +710,7 @@ function seDeconnecter() {
 }
 
 document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
-document.getElementById('upgradeOverlay').addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
+// overlay upgrade supprimé
 
 setLang(currentLang);
 chargerDonnees();
